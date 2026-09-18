@@ -1,3 +1,3 @@
-"""GenomeTagger v2."""
+"""GameTagger v2."""
 
 __version__ = "0.1.0"

@@ -1,5 +1,5 @@
-from genometagger_v2.decisions.policy import DecisionPolicy
-from genometagger_v2.domain import GenreDecision, PolicyAction, TagDecision, TagState
+from gametagger.decisions.policy import DecisionPolicy
+from gametagger.domain import GenreDecision, PolicyAction, TagDecision, TagState
 
 
 def tag_decision(state: TagState, **probs: float) -> TagDecision:

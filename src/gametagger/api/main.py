@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-from genometagger_v2.config import get_settings
-from genometagger_v2.taxonomy import load_taxonomy
+from gametagger.config import get_settings
+from gametagger.taxonomy import load_taxonomy
 
-app = FastAPI(title="GenomeTagger v2", version="0.1.0")
+app = FastAPI(title="GameTagger v2", version="0.1.0")
 
 
 @app.get("/health")

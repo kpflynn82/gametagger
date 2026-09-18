@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from genometagger_v2.domain import GenreDecision, PolicyAction, TagDecision, TagState
+from gametagger.domain import GenreDecision, PolicyAction, TagDecision, TagState
 
 
 @dataclass(frozen=True)

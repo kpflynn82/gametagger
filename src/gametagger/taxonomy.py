@@ -32,6 +32,9 @@ class Taxonomy:
 
 
 def default_taxonomy_path() -> Path:
+    bundled = Path(__file__).resolve().parent / "data" / "vgms_v4.yaml"
+    if bundled.exists():
+        return bundled
     return Path(__file__).resolve().parents[2] / "taxonomy" / "vgms_v4.yaml"
 
 

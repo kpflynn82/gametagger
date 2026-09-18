@@ -1,8 +1,8 @@
 import json
 
-from genometagger_v2.decisions.jev import JevQuestionCompiler
-from genometagger_v2.domain import Observation
-from genometagger_v2.taxonomy import load_taxonomy
+from gametagger.decisions.jev import JevQuestionCompiler
+from gametagger.domain import Observation
+from gametagger.taxonomy import load_taxonomy
 
 
 def test_compiler_builds_one_question_per_tag_plus_genre():

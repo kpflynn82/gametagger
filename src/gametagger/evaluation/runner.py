@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="GenomeTagger v2 evaluation harness")
+    parser = argparse.ArgumentParser(description="GameTagger v2 evaluation harness")
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument(
         "--pipelines",
@@ -19,7 +19,9 @@ def main() -> None:
     cases = [json.loads(line) for line in args.dataset.read_text().splitlines() if line.strip()]
     print(f"Loaded {len(cases)} benchmark cases")
     print(f"Requested pipelines: {', '.join(args.pipelines)}")
-    print("Scaffold only: pipeline execution is added in PR 3 after observer + legacy adapters exist.")
+    print(
+        "Scaffold only: pipeline execution is added in PR 3 after observer + legacy adapters exist."
+    )
 
 
 if __name__ == "__main__":

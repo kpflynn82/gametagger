@@ -1,6 +1,6 @@
 import pytest
 
-from genometagger_v2.evaluation.metrics import binary_tag_metrics, top1_accuracy
+from gametagger.evaluation.metrics import binary_tag_metrics, top1_accuracy
 
 
 def test_binary_metrics_count_abstention_separately():

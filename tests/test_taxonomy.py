@@ -1,4 +1,4 @@
-from genometagger_v2.taxonomy import load_taxonomy
+from gametagger.taxonomy import load_taxonomy
 
 
 def test_taxonomy_has_expected_pilot_shape():
