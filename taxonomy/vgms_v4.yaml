@@ -1,0 +1,294 @@
+version: "4.0-pilot"
+
+tag_states:
+  - present
+  - absent
+  - insufficient_evidence
+  - conflicting_evidence
+
+primary_genres:
+  - Action RPG
+  - Action Adventure
+  - First-Person Shooter
+  - Third-Person Shooter
+  - Bullet Hell
+  - Beat 'em Up
+  - Looter Shooter
+  - Extraction Shooter
+  - JRPG
+  - Turn-Based RPG
+  - Tactical RPG
+  - MMORPG
+  - Roguelike
+  - 2D Platformer
+  - 3D Platformer
+  - Metroidvania
+  - Real-Time Strategy
+  - Turn-Based Strategy
+  - Tower Defense
+  - 4X Strategy
+  - Grand Strategy
+  - Auto Battler
+  - MOBA
+  - Life Simulation
+  - Farm Simulation
+  - Management Simulation
+  - Racing Simulation
+  - Flight Simulation
+  - City Builder
+  - Puzzle
+  - Puzzle Platformer
+  - Match-3
+  - Physics Puzzle
+  - Adventure
+  - Narrative Adventure
+  - Visual Novel
+  - 2D Fighting
+  - 3D Fighting
+  - Arcade Racing
+  - Kart Racing
+  - Rally Racing
+  - Sports
+  - Horror
+  - Card Game
+  - Deck Builder
+  - Board Game
+  - Digital TCG
+  - Battle Royale
+  - Party Game
+  - Sandbox
+  - Survival
+  - Open World Survival Craft
+  - Arcade
+  - Rhythm Game
+  - Cozy Game
+  - Idle Game
+  - Souls-like
+  - Immersive Sim
+  - Educational
+
+tags:
+  - id: visual_pixel_art
+    label: Pixel art
+    category: visual
+    definition: Visual presentation intentionally constructed from discrete pixel-based sprites or pixel-grid artwork as a defining gameplay rendering style.
+    evidence_class: visual
+    preferred_evidence: [gameplay_image, gameplay_clip]
+    allowed_evidence: [gameplay_image, gameplay_clip, developer_documentation]
+    instructions: Marketing key art alone must not establish this tag if actual gameplay rendering is unavailable.
+
+  - id: visual_realistic
+    label: Realistic visual style
+    category: visual
+    definition: Gameplay rendering primarily pursues physically plausible proportions, materials, lighting, environments, and character depiction rather than overt abstraction or cartoon stylization.
+    evidence_class: visual
+    preferred_evidence: [gameplay_image, gameplay_clip]
+    allowed_evidence: [gameplay_image, gameplay_clip]
+    instructions: Judge gameplay rendering, not cinematic fidelity or promotional art alone.
+
+  - id: visual_stylized
+    label: Stylized visual presentation
+    category: visual
+    definition: Gameplay visuals intentionally depart from photorealism through exaggerated shape language, color, proportion, materials, or illustration-like rendering.
+    evidence_class: visual
+    preferred_evidence: [gameplay_image, gameplay_clip]
+    allowed_evidence: [gameplay_image, gameplay_clip]
+    instructions: This can coexist with other more specific visual tags.
+
+  - id: visual_first_person
+    label: First-person gameplay perspective
+    category: visual
+    definition: The player's primary gameplay camera represents the controlled character's eye-level point of view rather than showing the controlled body from outside.
+    evidence_class: visual
+    preferred_evidence: [gameplay_clip, gameplay_image]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: A temporary first-person mode is not enough to call the overall gameplay primarily first-person unless the evidence supports that scope.
+
+  - id: visual_third_person
+    label: Third-person gameplay perspective
+    category: visual
+    definition: The primary gameplay camera shows the controlled character from an external camera, commonly behind, above, or around the character.
+    evidence_class: visual
+    preferred_evidence: [gameplay_clip, gameplay_image]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: Distinguish actual controlled gameplay from cutscenes.
+
+  - id: visual_isometric
+    label: Isometric perspective
+    category: visual
+    definition: Gameplay is primarily presented from a fixed or semi-fixed angled overhead perspective that visually approximates isometric projection.
+    evidence_class: visual
+    preferred_evidence: [gameplay_image, gameplay_clip]
+    allowed_evidence: [gameplay_image, gameplay_clip]
+    instructions: Top-down perspective alone is not necessarily isometric.
+
+  - id: visual_side_scrolling
+    label: Side-scrolling perspective
+    category: visual
+    definition: Gameplay progression is primarily viewed from a lateral side-on camera, typically moving horizontally with the player through 2D or 2.5D space.
+    evidence_class: visual
+    preferred_evidence: [gameplay_clip, gameplay_image]
+    allowed_evidence: [gameplay_clip, gameplay_image]
+    instructions: A single side-on sequence is insufficient if the broader game uses another perspective.
+
+  - id: mechanic_melee_combat
+    label: Melee combat
+    category: mechanic
+    definition: The player directly engages enemies using close-range physical attacks such as swords, fists, clubs, spears, or equivalent short-range attacks.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: A weapon being visible is weaker evidence than an observed player-controlled attack sequence.
+
+  - id: mechanic_ranged_combat
+    label: Ranged combat
+    category: mechanic
+    definition: The player directly attacks targets at range using projectiles, firearms, bows, spells, thrown weapons, or equivalent ranged actions.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: Prefer observed player-controlled combat over promotional depictions.
+
+  - id: mechanic_real_time_combat
+    label: Real-time combat
+    category: mechanic
+    definition: Combat actions and enemy behavior unfold continuously in real time and require active timing, movement, aiming, or immediate input during encounters.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, developer_documentation]
+    instructions: Static imagery is usually insufficient to establish temporal combat flow.
+
+  - id: mechanic_turn_based_combat
+    label: Turn-based combat
+    category: mechanic
+    definition: Combat advances through discrete player/enemy turns, rounds, initiative phases, or command-resolution steps rather than continuous simultaneous action.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip, developer_documentation]
+    allowed_evidence: [gameplay_clip, developer_documentation, gameplay_image]
+    instructions: A command menu alone does not establish turn-based combat unless sequencing is supported.
+
+  - id: mechanic_parry
+    label: Parry mechanic
+    category: mechanic
+    definition: A timing-dependent defensive action performed against an incoming attack that, when successfully timed, provides an advantage such as negating damage, staggering the attacker, or opening a counterattack opportunity.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, developer_documentation]
+    instructions: A generic block animation or shield pose is not sufficient evidence of a parry.
+
+  - id: mechanic_dodge_roll
+    label: Dodge roll or timed evasive maneuver
+    category: mechanic
+    definition: The player can perform a deliberate short-duration evasive movement used to avoid attacks, commonly a roll, dash, sidestep, or equivalent combat dodge.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, developer_documentation]
+    instructions: Ordinary locomotion or jumping should not be treated as a combat dodge.
+
+  - id: mechanic_stamina
+    label: Stamina resource
+    category: mechanic
+    definition: Player actions consume or are constrained by a regenerating or finite stamina-like resource that materially affects combat, traversal, or action cadence.
+    evidence_class: system
+    preferred_evidence: [gameplay_clip, developer_documentation]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: A generic secondary HUD meter is insufficient unless its function is supported.
+
+  - id: mechanic_crafting
+    label: Crafting
+    category: mechanic
+    definition: The player can intentionally create items, equipment, consumables, structures, or upgrades by combining or transforming resources/components through a game system.
+    evidence_class: system
+    preferred_evidence: [gameplay_clip, developer_documentation]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation, store_metadata]
+    instructions: Looting or upgrading alone is not crafting.
+
+  - id: mechanic_inventory
+    label: Inventory system
+    category: mechanic
+    definition: The player manages a persistent collection of carried items, equipment, resources, or consumables through an inventory or comparable item-management system.
+    evidence_class: system
+    preferred_evidence: [gameplay_image, gameplay_clip]
+    allowed_evidence: [gameplay_image, gameplay_clip, developer_documentation]
+    instructions: A temporary pickup counter alone is not an inventory system.
+
+  - id: mechanic_dialogue_choices
+    label: Dialogue choices
+    category: mechanic
+    definition: The player can select among multiple dialogue responses or conversation choices that are presented as gameplay decisions.
+    evidence_class: system
+    preferred_evidence: [gameplay_image, gameplay_clip]
+    allowed_evidence: [gameplay_image, gameplay_clip, developer_documentation]
+    instructions: Passive dialogue or subtitles do not establish this tag.
+
+  - id: world_open_world
+    label: Open world
+    category: world
+    definition: The game provides a large interconnected playable world with meaningful non-linear freedom to choose destinations, routes, or activities rather than progressing mainly through discrete linear levels.
+    evidence_class: documentary
+    preferred_evidence: [developer_documentation, store_metadata]
+    allowed_evidence: [developer_documentation, store_metadata, gameplay_clip]
+    instructions: Expansive scenery or a large single level is not sufficient evidence of open-world structure.
+
+  - id: world_procedural
+    label: Procedural generation
+    category: world
+    definition: Meaningful game content such as levels, maps, encounters, worlds, or layouts is algorithmically generated or regenerated rather than entirely authored as a fixed layout.
+    evidence_class: documentary
+    preferred_evidence: [developer_documentation, store_metadata]
+    allowed_evidence: [developer_documentation, store_metadata]
+    instructions: Random loot or random enemy behavior alone does not establish procedural world/content generation.
+
+  - id: feature_multiplayer
+    label: Multiplayer
+    category: feature
+    definition: The game includes a mode in which multiple human players participate in the same gameplay session or shared play experience.
+    evidence_class: documentary
+    preferred_evidence: [developer_documentation, store_metadata]
+    allowed_evidence: [developer_documentation, store_metadata, gameplay_clip]
+    instructions: Spectators, asynchronous leaderboards, or AI companions alone are not multiplayer.
+
+  - id: engagement_co_op
+    label: Cooperative multiplayer
+    category: engagement
+    definition: Two or more human players can cooperate toward shared gameplay objectives in the same mode or session.
+    evidence_class: documentary
+    preferred_evidence: [developer_documentation, store_metadata]
+    allowed_evidence: [developer_documentation, store_metadata, gameplay_clip]
+    instructions: Multiplayer presence alone does not establish cooperative play.
+
+  - id: narrative_story_driven
+    label: Story-driven
+    category: narrative
+    definition: Plot, characters, authored narrative progression, or story delivery is a central organizing element of the player experience rather than merely incidental framing.
+    evidence_class: system
+    preferred_evidence: [developer_documentation, gameplay_clip, store_metadata]
+    allowed_evidence: [developer_documentation, gameplay_clip, store_metadata]
+    instructions: A cinematic trailer alone can overstate narrative centrality; prefer gameplay/documentary support.
+
+  - id: gameplay_rpg
+    label: Role-playing gameplay
+    category: gameplay
+    definition: Character progression, stats, equipment/build choices, abilities, or role-playing systems materially shape player power and play style over time.
+    evidence_class: system
+    preferred_evidence: [developer_documentation, gameplay_clip]
+    allowed_evidence: [developer_documentation, gameplay_clip, gameplay_image, store_metadata]
+    instructions: A fantasy setting alone is not evidence of RPG gameplay.
+
+  - id: gameplay_shooter
+    label: Shooter gameplay
+    category: gameplay
+    definition: A substantial part of the core gameplay loop centers on player-directed ranged weapon aiming/firing or projectile combat.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: One ranged weapon or isolated shooting scene is not enough if shooting is incidental.
+
+  - id: gameplay_platformer
+    label: Platformer gameplay
+    category: gameplay
+    definition: Precise movement across platforms, gaps, hazards, or traversal challenges centered on jumping and spatial movement forms a substantial part of the core gameplay.
+    evidence_class: temporal
+    preferred_evidence: [gameplay_clip]
+    allowed_evidence: [gameplay_clip, gameplay_image, developer_documentation]
+    instructions: Ordinary jumping in an action game is not sufficient unless platforming is a meaningful gameplay focus.

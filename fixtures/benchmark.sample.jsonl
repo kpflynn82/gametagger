@@ -1,0 +1,3 @@
+{"case_id":"sample-pixel","game_id":"blind-001","mode":"blind_media","observations":["Gameplay frame uses deliberately blocky low-resolution sprite art with visible pixel grid."],"truth":{"visual_pixel_art":true}}
+{"case_id":"sample-parry-unknown","game_id":"blind-002","mode":"blind_media","observations":["Player holds a shield during melee combat; a static frame shows weapon contact."],"truth":{"mechanic_parry":null}}
+{"case_id":"sample-fps","game_id":"blind-003","mode":"blind_media","observations":["Gameplay view is from the player's eyes with the weapon visible at the bottom of frame."],"truth":{"visual_first_person":true}}
