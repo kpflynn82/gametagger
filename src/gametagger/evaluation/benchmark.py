@@ -210,14 +210,16 @@ def benchmark_readiness(manifest, reports, taxonomy):
     complete_by_mode = dict(by_mode)
     references_missing = []
     tags = set(taxonomy.tags_by_id)
-    reviewed_cases = 0
+    reviewed_cases = reviewed_all_cases = 0
     for case in manifest.cases:
         reviewed_all = True
+        reviewed_any = False
         for mode in MODES:
             ref = reference_for(case, mode)
             reviewed = ref.origin == "human_review"
             by_mode[mode] += reviewed
             reviewed_all = reviewed_all and reviewed
+            reviewed_any = reviewed_any or reviewed
             missing = []
             if not reviewed:
                 missing.append("human_review")
@@ -233,7 +235,8 @@ def benchmark_readiness(manifest, reports, taxonomy):
                 references_missing.append({"case_id": case.id, "mode": mode, "fields": missing})
             else:
                 complete_by_mode[mode] += 1
-        reviewed_cases += reviewed_all
+        reviewed_cases += reviewed_any
+        reviewed_all_cases += reviewed_all
     required_case_modes = len(manifest.cases) * len(MODES)
     require(
         "human_references_incomplete",
@@ -308,6 +311,7 @@ def benchmark_readiness(manifest, reports, taxonomy):
         ),
         # Count case×mode references once, independently of the number of methods.
         "human_reviewed_references": reviewed_cases,
+        "cases_with_human_review_all_modes": reviewed_all_cases,
         "human_reviewed_references_by_mode": by_mode,
         "human_reviewed_reference_cells": sum(by_mode.values()),
         "complete_human_references_by_mode": complete_by_mode,

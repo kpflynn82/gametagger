@@ -75,7 +75,9 @@ authenticate a supplied reviewer's identity.
 `human_reviewed_references_by_mode` counts effective human-reviewed references once per
 case/mode, including `references_by_mode` overrides. `human_reviewed_reference_cells` sums
 those counts without multiplying by methods; `human_reviewed_references` counts cases with
-human review in **all three modes**. These are partial readiness counts, not qualification.
+human review in **at least one mode**, while `cases_with_human_review_all_modes` requires all
+three. A single mode-specific reference stays visible without qualifying other modes.
+These are partial readiness counts, not qualification.
 The mode override is the complete `Reference` for that mode. A case-wide fallback retains
 game-wide truth but clears supported labels, so it cannot certify unreviewed media truth.
 

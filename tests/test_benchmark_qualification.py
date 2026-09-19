@@ -170,6 +170,7 @@ def test_complete_mode_specific_human_references_qualify(tmp_path, pilot):
     assert report["benchmark_qualified"] is True
     assert not codes(report)
     assert a["human_reviewed_references"] == 30
+    assert a["cases_with_human_review_all_modes"] == 30
     assert a["human_reviewed_references_by_mode"] == dict.fromkeys(MODES, 30)
     assert a["human_reviewed_reference_cells"] == 90  # Not 180 method×mode cells.
     assert a["recorded_prediction_cells"] == a["required_prediction_cells"] == 180
@@ -223,7 +224,8 @@ def test_partial_readiness_is_not_qualification(tmp_path, pilot, change, expecte
         ]
     if change == "missing_reference":
         assert report["availability"]["human_reviewed_references_by_mode"]["media_only"] == 29
-        assert report["availability"]["human_reviewed_references"] == 29
+        assert report["availability"]["human_reviewed_references"] == 30
+        assert report["availability"]["cases_with_human_review_all_modes"] == 29
 
 
 @pytest.mark.parametrize(
@@ -270,6 +272,25 @@ def test_reviewed_empty_truth_and_cross_mode_fallback_do_not_qualify(tmp_path, p
     assert report["availability"]["complete_human_references_by_mode"]["media_only"] == 29
     assert not report["benchmark_qualified"]
     assert "human_references_incomplete" in codes(report)
+
+
+def test_one_mode_review_stays_visible_without_qualifying_other_modes(tmp_path, pilot):
+    pilot.cases = pilot.cases[:1]
+    pilot.cases[0].references_by_mode = {
+        "media_only": pilot.cases[0].references_by_mode["media_only"]
+    }
+    report = replay(tmp_path, pilot)
+    a = report["availability"]
+    assert a["human_reviewed_references"] == 1
+    assert a["human_reviewed_reference_cells"] == 1
+    assert a["human_reviewed_references_by_mode"] == {
+        "metadata_only": 0,
+        "media_only": 1,
+        "combined": 0,
+    }
+    assert a["cases_with_human_review_all_modes"] == 0
+    assert "human_references_incomplete" in codes(report)
+    assert not report["benchmark_qualified"]
 
 
 def test_explicit_reviewed_primary_boundary_remains_unresolved(tmp_path, pilot):
