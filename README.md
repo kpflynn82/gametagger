@@ -78,7 +78,7 @@ pytest -m live -s
 
 The smoke test runs all 26 questions against `jev-latest` and prints every distribution. The live test skips only when `TYPESAFE_API_KEY` is absent; with a key, API errors fail the test. Offline tests also execute the real SDK serialization and response parser with a mocked HTTP transport.
 
-See [Jev integration findings](docs/JEV_INTEGRATION.md) for what was verified and what still needs authenticated validation. Live Jev validation now passes with `jev-1.13.0`. Anthropic validation currently requires a workspace ID for the supplied key.
+See [Jev integration findings](docs/JEV_INTEGRATION.md) for what was verified and what still needs authenticated validation. Live validation passes with `claude-sonnet-5` and `jev-1.13.0`, including the complete image-to-policy pipeline on the synthetic sample. This verifies integration, not gameplay-classification accuracy.
 
 The development API still offers `/health` and `/taxonomy` (`uvicorn gametagger.api.main:app --reload`). Single-case analysis is exposed through the CLI; this milestone does not publish a hosted service.
 

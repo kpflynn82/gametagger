@@ -55,14 +55,33 @@ fail normally. No credentials or account identifiers are recorded in this reposi
 The first authenticated image-pipeline request returned HTTP 400 because the supplied key is not
 scoped to a workspace and requires an `anthropic-workspace-id` header. Read-only workspace
 discovery returned HTTP 403. This is a configuration prerequisite, not an observer response-schema
-failure; no successful authenticated image inference has occurred yet.
+failure; it was resolved by supplying the workspace header, as described below.
 
 The observer now accepts an optional workspace ID and the CLI reads it from
 `ANTHROPIC_WORKSPACE_ID`. Both workspace-header and no-header paths are covered through the real
 Anthropic SDK with mocked HTTP transport. Obtain the ID from Claude Console → Settings → Workspaces
 and put it in the local environment. Workspace-scoped keys can omit the setting.
 
-The PR remains a draft pending a successful authenticated image → observer → Jev → policy run.
+## Successful authenticated image pipeline
+
+On September 18, 2026 (Pacific time), the full CLI path completed successfully using
+`claude-sonnet-5` (Anthropic SDK 1.7.0) and `jev-1.13.0` (TypeSafe SDK 0.7.0).
+The configured placeholder `ClaudeVision` initially returned HTTP 404. The authenticated model
+listing confirmed `claude-sonnet-5` supports image input; that valid ID replaced the placeholder
+in the ignored local environment. No application model default or credential was committed.
+
+Input: the repository's synthetic `fixtures/sample.png` with `fixtures/sample.metadata.json`.
+The observer returned a factual description of the white circle on a dark gray square and an
+exact source-metadata quote, both linked to `image-1`. The complete result retained the image
+hash, observations, all 25 four-state tag distributions, all 60 genre probabilities, policy
+actions, provenance, model/prompt/SDK versions, and latency. The selected genre was null
+(`insufficient_evidence`), with no fallback genre.
+
+Observed latency: **2,571.18 ms** total, **2,238.35 ms** for observation, **332.66 ms** for Jev,
+and **0.17 ms** for policy. Jev usage was 9,788 input and 2,163 output tokens. This single synthetic
+case verifies the authenticated integration; it does not measure accuracy on real gameplay or
+establish a performance benchmark. All prior credential/workspace validation blockers are resolved.
+
 
 ## Primary references
 
