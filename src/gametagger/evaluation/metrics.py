@@ -29,7 +29,7 @@ def binary_tag_metrics(
 
     non_abstained = [a == "accept" for a in actions]
     tp = fp = tn = fn = 0
-    for y, p, accepted in zip(truth, predicted_present_probability, non_abstained):
+    for y, p, accepted in zip(truth, predicted_present_probability, non_abstained, strict=True):
         if not accepted:
             continue
         pred = p >= decision_threshold
@@ -43,7 +43,8 @@ def binary_tag_metrics(
             fn += 1
 
     brier = (
-        sum((float(y) - p) ** 2 for y, p in zip(truth, predicted_present_probability)) / len(truth)
+        sum((float(y) - p) ** 2 for y, p in zip(truth, predicted_present_probability, strict=True))
+        / len(truth)
         if truth
         else 0.0
     )
@@ -64,7 +65,7 @@ def top1_accuracy(truth: list[str], probability_rows: list[dict[str, float]]) ->
     if not truth:
         return 0.0
     correct = 0
-    for expected, probs in zip(truth, probability_rows):
+    for expected, probs in zip(truth, probability_rows, strict=True):
         candidates = {k: v for k, v in probs.items() if k != "insufficient_evidence"}
         predicted = max(candidates, key=candidates.get) if candidates else None
         correct += int(predicted == expected)

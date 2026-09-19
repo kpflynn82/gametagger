@@ -46,6 +46,10 @@ Hide the title, store genre labels, Wikipedia genre, and other identity cues whe
 
 Do not promote Jev to the user-facing path based on aggregate accuracy alone. The target is a useful precision/coverage frontier: high precision for automatically accepted tags, with explicit abstention where evidence is weak.
 
+## Live validation status
+
+See [Milestone 1 findings](JEV_INTEGRATION.md). Authenticated execution requires a key.
+
 ## First live call
 
 ```bash

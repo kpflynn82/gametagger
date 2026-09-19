@@ -6,8 +6,8 @@ legacy_v1 against observer->Jev using identical benchmark cases.
 
 from typing import Any
 
-from genometagger_v2.decisions.base import DecisionEngine
-from genometagger_v2.domain import GenreDecision, Observation, TagDecision
+from gametagger.decisions.base import DecisionEngine
+from gametagger.domain import DecisionBatch, Observation
 
 
 class LegacyDecisionEngine(DecisionEngine):
@@ -18,5 +18,5 @@ class LegacyDecisionEngine(DecisionEngine):
         game_title: str | None,
         observations: list[Observation],
         metadata: dict[str, Any] | None = None,
-    ) -> tuple[list[TagDecision], GenreDecision]:
+    ) -> DecisionBatch:
         raise NotImplementedError("Legacy v1 adapter lands in PR 3; do not reimplement it here.")

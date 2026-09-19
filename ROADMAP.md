@@ -1,18 +1,13 @@
-# Roadmap
+# GameTagger roadmap
 
-## PR 1 — Foundation (this scaffold)
-- Canonical taxonomy
-- Evidence-aware domain models
-- Jev question compiler/gateway
-- Policy engine
-- Evaluation metrics
-- Security-safe configuration
+## Milestone 1 — Platform-neutral vertical slice
 
-## PR 2 — Observer split
-- Adapt the existing multimodal path into an `Observer` interface
-- Produce structured factual observations with evidence IDs
-- No Genome tags or genre labels in observer output
-- Add deterministic observation fixtures for benchmark development
+Implemented: canonical taxonomy, image evidence hashing, structured Anthropic observer,
+deterministic mocks, Jev contract validation, policy, complete JSON results, single-case CLI,
+provenance, offline tests, and an environment-gated live test.
+
+Authenticated Jev and full image-to-policy validation pass on the synthetic sample; see
+[validation status](docs/JEV_INTEGRATION.md). No older repository or production service is changed.
 
 ## PR 3 — Jev shadow experiment
 - Run legacy and observer→Jev in parallel

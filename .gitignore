@@ -7,3 +7,8 @@ __pycache__/
 htmlcov/
 *.db
 .DS_Store
+.env.*
+!.env.example
+.ruff_cache/
+dist/
+*.egg-info/

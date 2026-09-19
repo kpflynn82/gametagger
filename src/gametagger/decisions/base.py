@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any
 
-from genometagger_v2.domain import GenreDecision, Observation, TagDecision
+from gametagger.domain import DecisionBatch, Observation
 
 
 class DecisionEngine(ABC):
@@ -15,5 +15,5 @@ class DecisionEngine(ABC):
         game_title: str | None,
         observations: list[Observation],
         metadata: dict[str, Any] | None = None,
-    ) -> tuple[list[TagDecision], GenreDecision]:
+    ) -> DecisionBatch:
         raise NotImplementedError

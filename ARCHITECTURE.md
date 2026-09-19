@@ -1,9 +1,9 @@
-# GenomeTagger v2 Architecture
+# GameTagger v2 Architecture
 
 ## Target flow
 
 ```text
-Steam / Xbox / Wikipedia / publisher uploads / video
+Store metadata / documentation / publisher images / video
                          |
                          v
                  Evidence acquisition
@@ -26,7 +26,7 @@ Steam / Xbox / Wikipedia / publisher uploads / video
 
 ## 1. Evidence is immutable input
 
-Every screenshot, clip, metadata record, or document becomes an `EvidenceItem` with a source, stable identifier/hash, and optional timestamps. Results must be reproducible against the exact evidence available at analysis time.
+In the target architecture, every screenshot, clip, metadata record, or document becomes an `EvidenceItem` with a source, stable identifier/hash, and optional timestamps. Results must be reproducible against the exact evidence available at analysis time.
 
 ## 2. Observation is separate from interpretation
 
@@ -55,7 +55,7 @@ Primary genre is a separate Choice across 59 allowed genres plus `insufficient_e
 
 ## 4. Code owns policy
 
-Jev provides judgment; application code owns operational rules. Initial thresholds are placeholders to be calibrated on GenomeTagger's own benchmark.
+Jev provides judgment; application code owns operational rules. Initial thresholds are placeholders to be calibrated on GameTagger's own benchmark.
 
 Examples:
 
@@ -79,3 +79,18 @@ Uses all authorized metadata and media. Goal: best available catalog Genome.
 Hides the title and existing genre metadata. Goal: measure whether the system can classify unfamiliar/prerelease material rather than rely on model memory.
 
 Both are required before production claims are made.
+
+## Milestone 1 implementation
+
+`gametagger.pipeline.AnalysisPipeline` validates and hashes a local image once, passes those
+same bytes to an injected `Observer`, validates observations through `ObservationBoundary`,
+invokes `JevDecisionEngine`, and applies `DecisionPolicy`. CLI credentials come only from the
+process environment. `MockObserver` and `MockJevGateway` support offline testing.
+
+Only single-image ingestion is implemented. The provider prompt prohibits temporal inference
+from a still. Visual facts cannot carry taxonomy labels; exact metadata quotations are kept as
+attributed source claims. The lexical boundary is deliberately conservative and does not prove
+arbitrary generated text is factual. See README for limits and the live-validation status.
+
+The canonical taxonomy remains `taxonomy/vgms_v4.yaml`. Wheel builds bundle this same file under
+`gametagger/data` so the installed CLI works outside the source checkout.

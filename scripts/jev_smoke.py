@@ -1,50 +1,50 @@
-"""Make one live Jev call against a tiny blind-media fixture.
+"""Run all pilot questions through the live SDK and print the complete decision batch."""
 
-Usage:
-    TYPESAFE_API_KEY=... python scripts/jev_smoke.py
-"""
-from __future__ import annotations
+import os
+from time import perf_counter
 
-import json
-
-from genometagger_v2.decisions.jev import JevDecisionEngine, TypeSafeGateway
-from genometagger_v2.decisions.policy import DecisionPolicy
-from genometagger_v2.domain import Observation
-from genometagger_v2.taxonomy import load_taxonomy
+from gametagger.decisions.jev import JevDecisionEngine, TypeSafeGateway
+from gametagger.decisions.policy import DecisionPolicy
+from gametagger.domain import EvidenceItem, EvidenceType, Observation
+from gametagger.taxonomy import load_taxonomy
 
 
 def main() -> None:
+    if not os.environ.get("TYPESAFE_API_KEY"):
+        raise SystemExit("TYPESAFE_API_KEY is not set; live Jev smoke test cannot run.")
     taxonomy = load_taxonomy()
     engine = JevDecisionEngine(taxonomy, TypeSafeGateway(model="jev-latest"))
-    observations = [
-        Observation(
-            id="obs-1",
-            evidence_id="clip-001",
-            observer_model="manual-smoke-fixture",
-            text=(
-                "Gameplay is viewed from the player's eyes. A firearm is visible at the bottom "
-                "of the screen. The player aims at an enemy and fires multiple shots."
-            ),
-        )
-    ]
-    tags, genre = engine.decide(
+    start = perf_counter()
+    batch = engine.decide(
         game_id="blind-smoke-001",
         game_title=None,
-        observations=observations,
         blind_media=True,
+        evidence=[
+            EvidenceItem(
+                id="clip-001", type=EvidenceType.GAMEPLAY_CLIP, source="manual-smoke-fixture"
+            )
+        ],
+        observations=[
+            Observation(
+                id="obs-1",
+                evidence_id="clip-001",
+                observer_model="manual-smoke-fixture",
+                text=(
+                    "Gameplay is viewed from the player's eyes. A firearm is visible at the bottom "
+                    "of the screen. The player aims at an enemy and fires multiple shots."
+                ),
+            )
+        ],
     )
-    tags, genre = DecisionPolicy().apply(tags, genre)
+    batch.tags, batch.genre = DecisionPolicy().apply(batch.tags, batch.genre)
+    import json
 
-    interesting = {
-        d.tag_id: {
-            "state": d.state.value,
-            "probabilities": {k.value: v for k, v in d.probabilities.items()},
-            "action": d.action.value if d.action else None,
-        }
-        for d in tags
-        if d.tag_id in {"visual_first_person", "gameplay_shooter", "mechanic_ranged_combat"}
-    }
-    print(json.dumps({"tags": interesting, "genre": genre.model_dump(mode="json")}, indent=2))
+    print(
+        json.dumps(
+            {"latency_ms": (perf_counter() - start) * 1000, **batch.model_dump(mode="json")},
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":
