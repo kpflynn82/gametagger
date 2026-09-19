@@ -41,6 +41,10 @@ gametagger --image /path/to/screenshot.png \
   --game-id case-001 --game-title "Example game"
 ```
 
+For a key that is not scoped to one Anthropic workspace, also set `ANTHROPIC_WORKSPACE_ID`
+from Claude Console → Settings → Workspaces. The observer sends it in the
+`anthropic-workspace-id` header; workspace-scoped keys can omit this setting.
+
 Metadata is an optional JSON object with string values. The Anthropic adapter sends the image and metadata to Anthropic; factual observations are then sent to TypeSafe. Image input is a single local PNG, JPEG, WEBP, or nonanimated GIF, at most 5 MiB and 8000 pixels per side. Remote URLs and video analysis are future adapters.
 
 `.env.example` is a template. Nothing loads `.env` implicitly. If you store credentials in an ignored local `.env`, explicitly load them into the command environment, for example `uv run --env-file .env gametagger ...`. The live integration test follows the same environment rule.
@@ -74,7 +78,7 @@ pytest -m live -s
 
 The smoke test runs all 26 questions against `jev-latest` and prints every distribution. The live test skips only when `TYPESAFE_API_KEY` is absent; with a key, API errors fail the test. Offline tests also execute the real SDK serialization and response parser with a mocked HTTP transport.
 
-See [Jev integration findings](docs/JEV_INTEGRATION.md) for what was verified and what still needs authenticated validation. The initial implementation environment had no Jev or Anthropic credentials.
+See [Jev integration findings](docs/JEV_INTEGRATION.md) for what was verified and what still needs authenticated validation. Live Jev validation now passes with `jev-1.13.0`. Anthropic validation currently requires a workspace ID for the supplied key.
 
 The development API still offers `/health` and `/taxonomy` (`uvicorn gametagger.api.main:app --reload`). Single-case analysis is exposed through the CLI; this milestone does not publish a hosted service.
 

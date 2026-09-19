@@ -116,7 +116,8 @@ def test_provider_boundary_fails_closed(taxonomy, evidence, response):
         AnthropicObserver(taxonomy, model="test", client=client).observe(evidence, image=data)
 
 
-def test_anthropic_real_sdk_transport(taxonomy, evidence):
+@pytest.mark.parametrize("workspace_id", [None, "wrkspc_test"])
+def test_anthropic_real_sdk_transport(taxonomy, evidence, workspace_id):
     import base64
     import json
 
@@ -127,6 +128,7 @@ def test_anthropic_real_sdk_transport(taxonomy, evidence):
 
     def handler(request):
         assert request.url.path == "/v1/messages"
+        assert request.headers.get("anthropic-workspace-id") == workspace_id
         body = json.loads(request.content)
         image = body["messages"][0]["content"][0]
         assert base64.b64decode(image["source"]["data"]) == data
@@ -166,7 +168,9 @@ def test_anthropic_real_sdk_transport(taxonomy, evidence):
             transport=httpx2.MockTransport(handler),
         ),
     ) as client:
-        observations = AnthropicObserver(taxonomy, model="test-model", client=client).observe(
+        observations = AnthropicObserver(
+            taxonomy, model="test-model", client=client, workspace_id=workspace_id
+        ).observe(
             evidence,
             image=data,
         )

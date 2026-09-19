@@ -38,8 +38,16 @@ class ObserverResponse(BaseModel):
 
 
 class AnthropicObserver(Observer):
-    def __init__(self, taxonomy: Taxonomy, *, model: str, client: Any | None = None):
+    def __init__(
+        self,
+        taxonomy: Taxonomy,
+        *,
+        model: str,
+        client: Any | None = None,
+        workspace_id: str | None = None,
+    ):
         self.model = model
+        self.workspace_id = workspace_id
         self._client = client
         self.boundary = ObservationBoundary(taxonomy)
 
@@ -71,6 +79,8 @@ class AnthropicObserver(Observer):
             ],
             tool_choice={"type": "tool", "name": "record_observations"},
         )
+        if self.workspace_id:
+            kwargs["extra_headers"] = {"anthropic-workspace-id": self.workspace_id}
         if self._client is None:
             from anthropic import Anthropic
 

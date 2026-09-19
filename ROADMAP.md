@@ -6,7 +6,7 @@ Implemented: canonical taxonomy, image evidence hashing, structured Anthropic ob
 deterministic mocks, Jev contract validation, policy, complete JSON results, single-case CLI,
 provenance, offline tests, and an environment-gated live test.
 
-Authenticated Jev and Anthropic validation remains pending credentials; see
+Authenticated Jev validation passes. Anthropic validation awaits workspace configuration; see
 [validation status](docs/JEV_INTEGRATION.md). No older repository or production service is changed.
 
 ## PR 3 — Jev shadow experiment

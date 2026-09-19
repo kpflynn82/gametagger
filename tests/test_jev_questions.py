@@ -43,3 +43,11 @@ def test_blind_state_omits_title():
     payload = json.loads(state)
     assert "game_title" not in payload
     assert payload["observations"][0]["evidence_id"] == "clip-1"
+
+
+def test_single_view_never_establishes_game_wide_absence():
+    specs = JevQuestionCompiler(load_taxonomy()).build_specs()
+    spec = specs["visual_third_person"]
+    assert "explicit negative source evidence" in spec.criteria["absent"]
+    assert "not mutually exclusive" in spec.instructions
+    assert JevQuestionCompiler.prompt_version == "jev-v2"

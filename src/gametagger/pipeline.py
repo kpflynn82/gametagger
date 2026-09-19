@@ -58,6 +58,7 @@ class AnalysisPipeline:
             observer_model=self.observer.model,
             decision_model=batch.model,
             prompt_version=self.observer.prompt_version,
+            decision_prompt_version=self.engine.compiler.prompt_version,
             requested_decision_model=self.engine.gateway.model,
             sdk_versions={
                 name: version(name) for name in ["typesafe-sdk", "anthropic", "gametagger"]

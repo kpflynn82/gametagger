@@ -9,6 +9,7 @@ class Settings(BaseSettings):
 
     typesafe_api_key: SecretStr | None = None
     anthropic_api_key: SecretStr | None = None
+    anthropic_workspace_id: str | None = None
     typesafe_model: str = "jev-latest"
     jev_shadow_mode: bool = True
     decision_engine: str = "jev"

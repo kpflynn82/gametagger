@@ -19,20 +19,50 @@ Distributions must sum to one within an absolute rounding tolerance of 0.001. Va
 
 Previously discarded confidence, returned model, token usage, genre evidence IDs, and latency are retained. The result also records observer/prompt/taxonomy/SDK versions and image provenance. Jev receives evidence types and observation kinds, allowing it to distinguish metadata claims from visual facts. Evidence IDs refer to all evaluated inputs, not a claim that every input positively supports every tag.
 
-## Live status and reproducible completion
+## Authenticated Jev validation
 
-The existing smoke test was attempted before changes. It stopped with `No API key was provided` because `TYPESAFE_API_KEY` was not set. No authenticated request was sent. The updated smoke test reports this condition directly, and the new live test is skipped without a key.
+On September 18, 2026, the saved environment key successfully authenticated against TypeSafe.
+Both the original smoke call and the live integration test returned `jev-1.13.0` for the requested
+`jev-latest` alias. All 25 tags had four probabilities; the genre response had all 59 labels plus
+`insufficient_evidence`. The observed distributions passed all contract checks without repair.
 
-**Still unverified:** server acceptance of this complete 26-question payload, account access to `jev-latest`, the server-returned model/version, real distribution shapes/rounding, and live latency. Documentation describes the alias, but this PR does not claim to have observed its resolution. The real Anthropic adapter is SDK-transport-tested but also lacks an authenticated run.
+The first smoke call completed in **427.64 ms**, using 7,969 input and 2,122 output tokens.
+It selected First-Person Shooter. It also marked three unshown camera perspectives absent,
+including an accepted third-person absence. This is an evidence-scope problem: seeing one
+perspective does not establish which camera modes exist elsewhere in a game.
 
-To finish validation, provide the key through the environment and run:
+The `jev-v2` compiler prompt now explicitly requires negative source evidence for absence and
+states that camera tags are not mutually exclusive. A follow-up authenticated call completed in
+**1,062.85 ms**, using 9,694 input and 2,137 output tokens. It selected First-Person Shooter,
+returned four `present` tags and 21 `insufficient_evidence` tags, and returned no `absent` or
+`conflicting_evidence` selections. All tag distributions and the genre distribution summed to 1.
+Returned probabilities are retained unchanged. These are individual smoke observations, not
+latency benchmarks or proof of general classification accuracy.
+
+To reproduce with credentials in the process environment:
 
 ```bash
 python scripts/jev_smoke.py
 pytest -m live -s
 ```
 
-For an ignored local `.env`, use `uv run --env-file .env python scripts/jev_smoke.py` and `uv run --env-file .env pytest -m live -s`. Record the returned model, SDK version, outcome, and latency here; never record credentials. A live failure must not be converted into a skip or silently replaced with mock output.
+For an ignored local `.env`, use `uv run --env-file .env python scripts/jev_smoke.py` and
+`uv run --env-file .env pytest -m live -s`. The live test skips without a key; real API failures
+fail normally. No credentials or account identifiers are recorded in this repository.
+
+## Anthropic workspace requirement
+
+The first authenticated image-pipeline request returned HTTP 400 because the supplied key is not
+scoped to a workspace and requires an `anthropic-workspace-id` header. Read-only workspace
+discovery returned HTTP 403. This is a configuration prerequisite, not an observer response-schema
+failure; no successful authenticated image inference has occurred yet.
+
+The observer now accepts an optional workspace ID and the CLI reads it from
+`ANTHROPIC_WORKSPACE_ID`. Both workspace-header and no-header paths are covered through the real
+Anthropic SDK with mocked HTTP transport. Obtain the ID from Claude Console → Settings → Workspaces
+and put it in the local environment. Workspace-scoped keys can omit the setting.
+
+The PR remains a draft pending a successful authenticated image → observer → Jev → policy run.
 
 ## Primary references
 
@@ -41,3 +71,4 @@ For an ignored local `.env`, use `uv run --env-file .env python scripts/jev_smok
 - [Choice request and response contract](https://docs.typesafe.ai/primitives/choice)
 - [TypeSafe models](https://docs.typesafe.ai/models)
 - [Anthropic vision input](https://platform.claude.com/docs/en/build-with-claude/vision)
+- [Anthropic workspace authentication](https://platform.claude.com/docs/en/manage-claude/authentication)

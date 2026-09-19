@@ -143,3 +143,20 @@ def test_mixed_distributions_preserved_through_policy(taxonomy, evidence):
         PolicyAction.HUMAN_REVIEW,
     ]
     assert all(tag.evidence_ids == [evidence.id] for tag in result.tags)
+
+
+def test_cli_passes_workspace_environment_to_observer(evidence, monkeypatch, capsys):
+    from gametagger import cli
+
+    constructor = Mock(return_value=MockObserver())
+    monkeypatch.setattr(cli, "AnthropicObserver", constructor)
+    monkeypatch.setattr(cli, "TypeSafeGateway", lambda **kwargs: MockJevGateway())
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "offline-test-key")
+    monkeypatch.setenv("TYPESAFE_API_KEY", "offline-test-key")
+    monkeypatch.setenv("ANTHROPIC_WORKSPACE_ID", "wrkspc_test")
+    monkeypatch.setattr(
+        sys, "argv", ["gametagger", "--image", evidence.uri, "--observer-model", "test-model"]
+    )
+    cli.main()
+    assert constructor.call_args.kwargs["workspace_id"] == "wrkspc_test"
+    assert json.loads(capsys.readouterr().out)["run"]["decision_prompt_version"] == "jev-v2"

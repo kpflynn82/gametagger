@@ -41,7 +41,13 @@ def main() -> None:
         parser.error("Metadata must be a JSON object with string values")
     taxonomy = load_taxonomy()
     observer = (
-        MockObserver() if args.offline else AnthropicObserver(taxonomy, model=args.observer_model)
+        MockObserver()
+        if args.offline
+        else AnthropicObserver(
+            taxonomy,
+            model=args.observer_model,
+            workspace_id=os.environ.get("ANTHROPIC_WORKSPACE_ID"),
+        )
     )
     gateway = MockJevGateway() if args.offline else TypeSafeGateway(model=args.jev_model)
     result = AnalysisPipeline(observer, JevDecisionEngine(taxonomy, gateway)).analyze(
