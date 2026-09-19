@@ -1,17 +1,17 @@
 {
-  "checked_at": "2026-09-19T09:23:53.608837+00:00",
+  "checked_at": "2026-09-19T21:36:18.759124+00:00",
   "timezone": "America/Los_Angeles",
   "runtime": "unknown",
-  "branch": "feat/paired-attribute-scorecards",
+  "branch": "fix/benchmark-qualification",
   "starting_sha": "1a928d600239a5343153d3df3eb41dc9b71d8250",
-  "head_sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd (tested application source; delivery head on PR #7)",
+  "head_sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3 (tested duplicate-game source; delivery head on PR #8)",
   "live_budget": "Not authorized",
   "milestones": [
     {
       "id": "M0",
       "name": "Establish the baseline",
       "goal": "Inspect existing work; preserve original evidence",
-      "status": "ready for review",
+      "status": "merged",
       "implemented": true,
       "tested": true,
       "quality_measured": false,
@@ -20,13 +20,13 @@
       "sha": "914678c63c218b13698dce208db8b07f3c75e8e8",
       "test_artifact": "177 passed, 1 skipped at baseline",
       "blocker": null,
-      "next_action": "Inspect existing work; preserve original evidence"
+      "next_action": "Use the existing pipeline for permitted, human-reviewed evidence packs"
     },
     {
       "id": "M1",
       "name": "Stable website contracts",
       "goal": "Durable jobs, review and provider-neutral contracts",
-      "status": "ready for review",
+      "status": "merged",
       "implemented": true,
       "tested": true,
       "quality_measured": false,
@@ -34,14 +34,14 @@
       "pr": "https://github.com/kpflynn82/gametagger/pull/5",
       "sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
       "test_artifact": "213 Python tests; 6 frontend tests; 5 browser flows; lint/build pass. Live skipped.",
-      "blocker": "Independent review not performed; no merge",
-      "next_action": "Review the exact feature-branch revision"
+      "blocker": null,
+      "next_action": "Use the existing pipeline for permitted, human-reviewed evidence packs"
     },
     {
       "id": "M2",
       "name": "Working website MVP",
       "goal": "Analyze \u2192 saved result \u2192 reopen/export",
-      "status": "ready for review",
+      "status": "merged",
       "implemented": true,
       "tested": true,
       "quality_measured": false,
@@ -49,14 +49,14 @@
       "pr": "https://github.com/kpflynn82/gametagger/pull/5",
       "sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
       "test_artifact": "213 Python tests; 6 frontend tests; 5 browser flows; lint/build pass. Live skipped.",
-      "blocker": "Independent review not performed; no merge",
-      "next_action": "Review the exact feature-branch revision"
+      "blocker": null,
+      "next_action": "Use the existing pipeline for permitted, human-reviewed evidence packs"
     },
     {
       "id": "M3",
       "name": "Required media workflow",
       "goal": "Bounded screenshots and ordered video windows",
-      "status": "ready for review",
+      "status": "merged",
       "implemented": true,
       "tested": true,
       "quality_measured": false,
@@ -64,8 +64,8 @@
       "pr": "https://github.com/kpflynn82/gametagger/pull/6",
       "sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d",
       "test_artifact": "PR #6 CI passed; 230 Python / 6 frontend / 6 browser checks; no paid calls",
-      "blocker": "Live temporal quality unmeasured; independent review pending",
-      "next_action": "Review ordered Observer and exact-media replay on PR #6"
+      "blocker": "Live temporal quality unmeasured",
+      "next_action": "Use the existing pipeline for permitted, human-reviewed evidence packs"
     },
     {
       "id": "M4",
@@ -76,11 +76,11 @@
       "tested": true,
       "quality_measured": false,
       "dependency": "M3",
-      "pr": "https://github.com/kpflynn82/gametagger/pull/7",
-      "sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd",
-      "test_artifact": "245 Python / 9 frontend / 7 browser checks; raw 257-file inventory verified unchanged",
-      "blocker": "Zero verified clean packs/approved labels; no paid call budget. Full matched-coverage and stage-trace adapters remain.",
-      "next_action": "Assemble one permitted evidence pack for actual human review; retain original replay unchanged"
+      "pr": "https://github.com/kpflynn82/gametagger/pull/8",
+      "sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+      "test_artifact": "273 Python passed, 1 paid-live skip; lint/format/offline build passed; PR #8 exact-head and integration CI",
+      "blocker": "No benchmark-qualified pack or human reference approvals; media rights must match intended use; no paid model budget",
+      "next_action": "Deliver the first development review packet, then resolve its exact permission, release identity and human-label decisions"
     },
     {
       "id": "M5",
@@ -91,28 +91,53 @@
       "tested": true,
       "quality_measured": false,
       "dependency": "M4",
-      "pr": "https://github.com/kpflynn82/gametagger/pull/7",
-      "sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd",
-      "test_artifact": "Desktop/phone screenshots, local lint/build/tests pass; PRs track exact-head CI",
-      "blocker": "Author self-review only; independent approval missing. No merges or deployment.",
-      "next_action": "Review stacked PRs #4 \u2192 #5 \u2192 #6 \u2192 #7 on their pinned heads"
+      "pr": "https://github.com/kpflynn82/gametagger/pull/8",
+      "sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+      "test_artifact": "273 Python passed, 1 paid-live skip; lint/format/offline build passed; PR #8 exact-head and integration CI",
+      "blocker": null,
+      "next_action": "Review qualification PR #8; previously stacked PRs #4\u2013#7 are merged"
     }
   ],
-  "tested_source_sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd",
-  "pull_request": "https://github.com/kpflynn82/gametagger/pull/7",
+  "tested_source_sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+  "pull_request": "https://github.com/kpflynn82/gametagger/pull/8",
   "local_checks": {
-    "python_passed": 245,
+    "python_passed": 273,
     "python_live_skipped": 1,
-    "frontend_tests_passed": 9,
-    "browser_flows_passed": 7,
     "lint": "passed",
-    "builds": "passed",
+    "python_build": "passed (offline)",
+    "frontend_browser": "unchanged; included in both GitHub CI events",
     "model_calls": 0
   },
   "reused_pr4_sha": "914678c63c218b13698dce208db8b07f3c75e8e8",
-  "ci_source_sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d",
-  "ci_status": "PR #6 exact head passed; PR #7 final delivery checks linked from its PR",
+  "ci_source_sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+  "ci_status": "Updated exact-head and PR-integration CI receipts tracked on PR #8",
   "reused_pr5_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3",
-  "continuation_start_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3",
-  "ordered_media_delivery_sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d"
+  "continuation_start_sha": "0d65e887de4e2bf6ca8917ae9abdc3ec15575fbc",
+  "ordered_media_delivery_sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d",
+  "benchmark_qualification": {
+    "policy": "clean30-qualification-v1",
+    "benchmark_qualified": false,
+    "assembled_cases": 0,
+    "human_reviewed_reference_cells": 0,
+    "recorded_prediction_cells": 0,
+    "target_prediction_cells": 180,
+    "artifact": "work/clean30-qualification-20260919-final/summary.json (private task workspace)",
+    "distinct_canonical_games": 0,
+    "distinct_mobile_first_games": 0,
+    "distinct_split_counts": {
+      "development": 0,
+      "holdout": 0
+    }
+  },
+  "merged_main_sha": "8db462445b57e02d8c398ca2931db6a214c5de95",
+  "merge_review_policy": "Explicit owner instruction to merge PRs waives independent review; passing checks and repository protections still apply. No new merge requested for PR #8.",
+  "development_pack_work": {
+    "scope": "Only the existing six development candidates; no holdout review or tuning",
+    "status": "Assembly in progress; approvals remain pending",
+    "first_subject": "Factorio",
+    "private_artifacts": "work/clean30-development in the task workspace",
+    "human_approvals": 0,
+    "benchmark_provider_permission": "Pending scope review; press/review permission is not automatic model-processing permission",
+    "paid_calls": 0
+  }
 }
