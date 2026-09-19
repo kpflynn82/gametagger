@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-09-19T20:22:09.601767+00:00",
+  "checked_at": "2026-09-19T21:36:18.759124+00:00",
   "timezone": "America/Los_Angeles",
   "runtime": "unknown",
   "branch": "fix/benchmark-qualification",
   "starting_sha": "1a928d600239a5343153d3df3eb41dc9b71d8250",
-  "head_sha": "bf156b93de40ce13532cea211e465d40c235962a (tested qualification source; delivery head on PR #8)",
+  "head_sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3 (tested duplicate-game source; delivery head on PR #8)",
   "live_budget": "Not authorized",
   "milestones": [
     {
@@ -77,10 +77,10 @@
       "quality_measured": false,
       "dependency": "M3",
       "pr": "https://github.com/kpflynn82/gametagger/pull/8",
-      "sha": "bf156b93de40ce13532cea211e465d40c235962a",
-      "test_artifact": "265 Python tests passed, 1 paid-live skip; qualification regression suite; offline build/lint passed",
-      "blocker": "Zero assembled clean packs, permitted assets or human reference labels; no paid model budget",
-      "next_action": "Assemble the first permitted identity-checked pack and obtain actual human review; no new Jev Impact features"
+      "sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+      "test_artifact": "273 Python passed, 1 paid-live skip; lint/format/offline build passed; PR #8 exact-head and integration CI",
+      "blocker": "No benchmark-qualified pack or human reference approvals; media rights must match intended use; no paid model budget",
+      "next_action": "Deliver the first development review packet, then resolve its exact permission, release identity and human-label decisions"
     },
     {
       "id": "M5",
@@ -92,16 +92,16 @@
       "quality_measured": false,
       "dependency": "M4",
       "pr": "https://github.com/kpflynn82/gametagger/pull/8",
-      "sha": "bf156b93de40ce13532cea211e465d40c235962a",
-      "test_artifact": "PR #8 exact push-head and PR-integration CI checks; author review only",
+      "sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+      "test_artifact": "273 Python passed, 1 paid-live skip; lint/format/offline build passed; PR #8 exact-head and integration CI",
       "blocker": null,
       "next_action": "Review qualification PR #8; previously stacked PRs #4\u2013#7 are merged"
     }
   ],
-  "tested_source_sha": "bf156b93de40ce13532cea211e465d40c235962a",
+  "tested_source_sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
   "pull_request": "https://github.com/kpflynn82/gametagger/pull/8",
   "local_checks": {
-    "python_passed": 265,
+    "python_passed": 273,
     "python_live_skipped": 1,
     "lint": "passed",
     "python_build": "passed (offline)",
@@ -109,10 +109,10 @@
     "model_calls": 0
   },
   "reused_pr4_sha": "914678c63c218b13698dce208db8b07f3c75e8e8",
-  "ci_source_sha": "bf156b93de40ce13532cea211e465d40c235962a",
-  "ci_status": "Push-head and PR-integration runs tracked on PR #8; final receipts in task handoff",
+  "ci_source_sha": "50dd28ee5a6cb537840cbd24ec976a24d41776c3",
+  "ci_status": "Updated exact-head and PR-integration CI receipts tracked on PR #8",
   "reused_pr5_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3",
-  "continuation_start_sha": "8db462445b57e02d8c398ca2931db6a214c5de95",
+  "continuation_start_sha": "0d65e887de4e2bf6ca8917ae9abdc3ec15575fbc",
   "ordered_media_delivery_sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d",
   "benchmark_qualification": {
     "policy": "clean30-qualification-v1",
@@ -121,8 +121,23 @@
     "human_reviewed_reference_cells": 0,
     "recorded_prediction_cells": 0,
     "target_prediction_cells": 180,
-    "artifact": "work/clean30-qualification-20260919-final/summary.json (private task workspace)"
+    "artifact": "work/clean30-qualification-20260919-final/summary.json (private task workspace)",
+    "distinct_canonical_games": 0,
+    "distinct_mobile_first_games": 0,
+    "distinct_split_counts": {
+      "development": 0,
+      "holdout": 0
+    }
   },
   "merged_main_sha": "8db462445b57e02d8c398ca2931db6a214c5de95",
-  "merge_review_policy": "Explicit owner instruction to merge PRs waives independent review; passing checks and repository protections still apply. No new merge requested for PR #8."
+  "merge_review_policy": "Explicit owner instruction to merge PRs waives independent review; passing checks and repository protections still apply. No new merge requested for PR #8.",
+  "development_pack_work": {
+    "scope": "Only the existing six development candidates; no holdout review or tuning",
+    "status": "Assembly in progress; approvals remain pending",
+    "first_subject": "Factorio",
+    "private_artifacts": "work/clean30-development in the task workspace",
+    "human_approvals": 0,
+    "benchmark_provider_permission": "Pending scope review; press/review permission is not automatic model-processing permission",
+    "paid_calls": 0
+  }
 }
