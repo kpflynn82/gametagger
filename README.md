@@ -1,6 +1,6 @@
 # GameTagger v2
 
-GameTagger classifies video game evidence across **PC, console, and mobile**. Milestone 1 provides a local, platform-neutral vertical slice:
+GameTagger classifies video game evidence across **PC, console, and mobile**. The local, platform-neutral vertical slice now uses [Genre Taxonomy v4.1](docs/GENRE_TAXONOMY_V4_1.md):
 
 ```text
 EvidenceItem → Observer → Observation[] → Jev → Policy → AnalysisResult
@@ -56,10 +56,10 @@ Metadata is an optional JSON object with string values. The Anthropic adapter se
 Every successful run includes:
 
 - All 25 pilot tags, each with its chosen state, **all four original probabilities**, Jev confidence, evidence IDs, decision model, and policy action.
-- All 59 genre probabilities plus `insufficient_evidence`; the selected genre is `null` when that option wins. Genre decisions also include confidence, provenance, and policy action.
+- Raw probabilities across 14 families plus insufficient evidence, per-family conditional genre distributions, and a normalized global ranking across 100 eligible genres plus insufficient evidence. One stable-ID primary and up to two secondary genres are retained; insufficient evidence leaves the primary null. See the [v4.1 contract](docs/GENRE_TAXONOMY_V4_1.md) for field names and selection rules.
 - Original evidence metadata, image SHA-256, factual observations, observer-returned model identifiers, requested observer/decision model, returned decision model, taxonomy/prompt versions, SDK versions, Jev token usage, and total/per-stage latency.
 
-The four states are `present`, `absent`, `insufficient_evidence`, and `conflicting_evidence`. No fallback genre is injected. Invalid provider distributions fail explicitly; they are never filled, truncated, or normalized.
+The four states are `present`, `absent`, `insufficient_evidence`, and `conflicting_evidence`. No fallback genre is injected. Invalid provider distributions fail explicitly; raw provider values are never filled, truncated, or normalized. Global genre probabilities are derived from normalized copies of the family and conditional distributions.
 
 Decision `evidence_ids` identify the **complete evaluated context**, not provider-generated per-tag supporting citations. Each observation points to its source evidence. A `metadata_quote` additionally carries its exact source key; a quoted genre remains an attributed claim, not a confirmed visual fact.
 
@@ -76,9 +76,9 @@ python scripts/jev_smoke.py
 pytest -m live -s
 ```
 
-The smoke test runs all 26 questions against `jev-latest` and prints every distribution. The live test skips only when `TYPESAFE_API_KEY` is absent; with a key, API errors fail the test. Offline tests also execute the real SDK serialization and response parser with a mocked HTTP transport.
+The smoke test runs 25 tag questions and the family question against `jev-latest`, then conditional genre questions for at least two families, and prints every raw and derived distribution. The live test skips only when `TYPESAFE_API_KEY` is absent; with a key, API errors fail the test. Offline tests also execute the real SDK serialization and response parser with a mocked HTTP transport.
 
-See [Jev integration findings](docs/JEV_INTEGRATION.md) for what was verified and what still needs authenticated validation. Live validation passes with `claude-sonnet-5` and `jev-1.13.0`, including the complete image-to-policy pipeline on the synthetic sample. This verifies integration, not gameplay-classification accuracy.
+See the [Milestone 1 integration record](docs/JEV_INTEGRATION.md) for historical live checks and the [v4.1 contract](docs/GENRE_TAXONOMY_V4_1.md) for the current hierarchy. Live validation passes with `claude-sonnet-5` and `jev-1.13.0`, including the complete image-to-policy pipeline on the synthetic sample. This verifies integration, not gameplay-classification accuracy.
 
 The development API still offers `/health` and `/taxonomy` (`uvicorn gametagger.api.main:app --reload`). Single-case analysis is exposed through the CLI; this milestone does not publish a hosted service.
 

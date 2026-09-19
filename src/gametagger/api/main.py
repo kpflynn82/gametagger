@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from fastapi import FastAPI
 
 from gametagger.config import get_settings
@@ -24,6 +26,8 @@ def taxonomy() -> dict:
         "version": spec.version,
         "pilot_tag_count": len(spec.tags),
         "primary_genre_count": len(spec.primary_genres),
+        "genre_family_count": len(spec.genre_families),
+        "genre_families": [asdict(family) for family in spec.genre_families],
         "tags": [
             {
                 "id": tag.id,

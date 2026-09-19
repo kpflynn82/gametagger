@@ -1,5 +1,5 @@
 from gametagger.decisions.policy import DecisionPolicy
-from gametagger.domain import GenreDecision, PolicyAction, TagDecision, TagState
+from gametagger.domain import PolicyAction, TagDecision, TagState
 
 
 def tag_decision(state: TagState, **probs: float) -> TagDecision:
@@ -43,17 +43,34 @@ def test_conflict_goes_to_human_review():
     assert policy.route_tag(decision) is PolicyAction.HUMAN_REVIEW
 
 
-def test_genre_requires_probability_and_margin():
+def test_genre_requires_probability_and_margin(taxonomy):
+    from genre_helpers import classify
+
     policy = DecisionPolicy()
-    good = GenreDecision(
-        primary_genre="Action RPG",
-        probabilities={"Action RPG": 0.78, "Souls-like": 0.10, "insufficient_evidence": 0.04},
-        decision_model="jev-test",
+    good, _ = classify(
+        taxonomy,
+        {"role_playing": 1.0},
+        {
+            "role_playing": {
+                "action_rpg": 0.78,
+                "souls_like": 0.10,
+                "jrpg": 0.08,
+                "insufficient_evidence": 0.04,
+            }
+        },
     )
-    close = GenreDecision(
-        primary_genre="Action RPG",
-        probabilities={"Action RPG": 0.51, "Souls-like": 0.44, "insufficient_evidence": 0.01},
-        decision_model="jev-test",
+    close, _ = classify(
+        taxonomy,
+        {"role_playing": 1.0},
+        {
+            "role_playing": {
+                "action_rpg": 0.51,
+                "souls_like": 0.44,
+                "jrpg": 0.04,
+                "insufficient_evidence": 0.01,
+            }
+        },
     )
-    assert policy.route_genre(good) is PolicyAction.ACCEPT
-    assert policy.route_genre(close) is PolicyAction.HUMAN_REVIEW
+    assert policy.route_genre(good.genre) is PolicyAction.ACCEPT
+    assert policy.route_genre(close.genre) is PolicyAction.HUMAN_REVIEW
+    assert good.genre.primary_genre == close.genre.primary_genre == "action_rpg"

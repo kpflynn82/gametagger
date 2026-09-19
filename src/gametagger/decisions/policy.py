@@ -47,12 +47,16 @@ class DecisionPolicy:
 
     def route_genre(self, decision: GenreDecision) -> PolicyAction:
         t = self.genre_thresholds
-        insufficient = decision.probabilities.get("insufficient_evidence", 0.0)
+        insufficient = decision.global_genre_probabilities.get("insufficient_evidence", 0.0)
         if decision.primary_genre is None or insufficient >= t.acquire_if_insufficient:
             return PolicyAction.ACQUIRE_EVIDENCE
 
         candidates = sorted(
-            ((g, p) for g, p in decision.probabilities.items() if g != "insufficient_evidence"),
+            (
+                (g, p)
+                for g, p in decision.global_genre_probabilities.items()
+                if g != "insufficient_evidence"
+            ),
             key=lambda item: item[1],
             reverse=True,
         )

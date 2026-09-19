@@ -30,7 +30,7 @@ def test_full_offline_pipeline(taxonomy, evidence):
         assert tag.state == TagState.INSUFFICIENT
         assert tag.action == PolicyAction.ACQUIRE_EVIDENCE
         assert tag.evidence_ids == [evidence.id]
-    assert len(result.genre.probabilities) == 60
+    assert len(result.genre.global_genre_probabilities) == 101
     assert result.genre.primary_genre is None
     assert result.genre.evidence_ids == [evidence.id]
     assert result.run.decision_model == "mock-jev-v1"
@@ -114,7 +114,7 @@ def test_cli_offline_json(evidence, tmp_path):
     assert result.run.offline
     assert len(result.tags) == 25
     assert result.observations[0].kind == "metadata_quote"
-    assert len(result.genre.probabilities) == 60
+    assert len(result.genre.global_genre_probabilities) == 101
 
 
 def test_mixed_distributions_preserved_through_policy(taxonomy, evidence):
@@ -123,6 +123,8 @@ def test_mixed_distributions_preserved_through_policy(taxonomy, evidence):
     class MixedGateway(MockJevGateway):
         def run(self, *, state, specs):
             payload = super().run(state=state, specs=specs).model_dump()
+            if "genre_family" not in specs:
+                return SystemOneResponse.model_validate(payload)
             for key, state in zip(list(specs)[:4], TagState, strict=True):
                 payload["answers"][key].update(
                     choice=state.value,
@@ -159,4 +161,4 @@ def test_cli_passes_workspace_environment_to_observer(evidence, monkeypatch, cap
     )
     cli.main()
     assert constructor.call_args.kwargs["workspace_id"] == "wrkspc_test"
-    assert json.loads(capsys.readouterr().out)["run"]["decision_prompt_version"] == "jev-v2"
+    assert json.loads(capsys.readouterr().out)["run"]["decision_prompt_version"] == "jev-genre-v4.1"
