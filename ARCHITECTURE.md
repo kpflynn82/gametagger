@@ -51,7 +51,7 @@ For each tag, Jev receives the same compact structured state and an atomic quest
 
 We store the entire probability distribution.
 
-Primary genre is a separate Choice across 59 allowed genres plus `insufficient_evidence`.
+Primary genre uses a 14-family Choice plus `insufficient_evidence`, followed by conditional genre Choices for at least the top two families and all other positive-probability families. Family × conditional probabilities produce the global ranking. Exactly one highest-supported eligible primary is retained when it outranks insufficient evidence; up to two secondary IDs remain separate. See [v4.1](docs/GENRE_TAXONOMY_V4_1.md).
 
 ## 4. Code owns policy
 

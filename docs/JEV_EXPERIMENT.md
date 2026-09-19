@@ -6,7 +6,7 @@ Does `observer → Jev → policy` make better, more useful Genome decisions tha
 
 ## First experiment
 
-Start with the 25 pilot tags and primary genre using the same existing screenshots/descriptions before changing the media pipeline. This isolates the decision-layer change.
+Use the 25 pilot tags and v4.1 hierarchical primary genre using the same existing screenshots/descriptions before changing the media pipeline. This isolates the decision-layer change.
 
 ### Pipelines
 

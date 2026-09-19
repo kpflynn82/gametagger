@@ -1,5 +1,8 @@
 # Jev integration validation — Milestone 1
 
+This is the historical Milestone 1 (flat taxonomy v4.0) validation record.
+For the current hierarchy and result schema, see [Genre Taxonomy v4.1](GENRE_TAXONOMY_V4_1.md).
+
 Checked on September 18, 2026 with `typesafe-sdk==0.7.0` and Python 3.11.14.
 
 ## Verified locally against the installed official SDK

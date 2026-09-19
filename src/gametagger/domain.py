@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import math
 from datetime import datetime, timezone
 from enum import StrEnum
 from typing import Any, Literal
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, computed_field, model_validator
 
 
 class EvidenceType(StrEnum):
@@ -58,15 +59,16 @@ class AnalysisRun(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     game_id: str
     game_title: str | None = None
-    taxonomy_version: str = "4.0-pilot"
+    taxonomy_version: str = "4.1"
     observer_model: str | None = None
     decision_model: str | None = None
     prompt_version: str = "observer-v1"
-    decision_prompt_version: str = "jev-v1"
+    decision_prompt_version: str = "jev-genre-v4.1"
     requested_decision_model: str | None = None
     sdk_versions: dict[str, str] = Field(default_factory=dict)
     stage_latency_ms: dict[str, float] = Field(default_factory=dict)
     usage: dict[str, int | None] = Field(default_factory=dict)
+    usage_by_stage: dict[str, dict[str, int | None]] = Field(default_factory=dict)
     offline: bool = False
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     latency_ms: float | None = None
@@ -83,13 +85,136 @@ class TagDecision(BaseModel):
     action: PolicyAction | None = None
 
 
+class GenreCandidate(BaseModel):
+    genre_id: str
+    probability: float
+
+
 class GenreDecision(BaseModel):
+    schema_version: Literal["4.1"] = "4.1"
     primary_genre: str | None
-    confidence: float | None = None
+    secondary_genres: list[str] = Field(default_factory=list, max_length=2)
+    confidence: float = Field(ge=0, le=1)
     evidence_ids: list[str] = Field(default_factory=list)
-    probabilities: dict[str, float]
+    family_probabilities: dict[str, float]
+    family_choice: str
+    family_confidence: float = Field(ge=0, le=1)
+    conditional_genre_probabilities: dict[str, dict[str, float]]
+    conditional_choices: dict[str, str]
+    conditional_confidences: dict[str, float]
+    global_genre_probabilities: dict[str, float]
+    evaluated_families: list[str]
+    family_model: str
+    conditional_models: dict[str, str]
     decision_model: str
     action: PolicyAction | None = None
+
+    @computed_field
+    @property
+    def global_genre_ranking(self) -> list[GenreCandidate]:
+        return [
+            GenreCandidate(genre_id=gid, probability=p)
+            for gid, p in sorted(
+                (
+                    (g, p)
+                    for g, p in self.global_genre_probabilities.items()
+                    if g != "insufficient_evidence"
+                ),
+                key=lambda item: (-item[1], item[0]),
+            )
+        ]
+
+    @model_validator(mode="after")
+    def validate_hierarchy(self) -> GenreDecision:
+        unknown = "insufficient_evidence"
+        distributions = [
+            self.family_probabilities,
+            *self.conditional_genre_probabilities.values(),
+            self.global_genre_probabilities,
+        ]
+        for probabilities in distributions:
+            if (
+                unknown not in probabilities
+                or any(not math.isfinite(p) or not 0 <= p <= 1 for p in probabilities.values())
+                or not math.isclose(sum(probabilities.values()), 1, abs_tol=0.001)
+            ):
+                raise ValueError("Genre distributions must be complete, finite, and normalized")
+        families = set(self.family_probabilities) - {unknown}
+        evaluated = set(self.evaluated_families)
+        if len(evaluated) < 2 or len(evaluated) != len(self.evaluated_families):
+            raise ValueError("Evaluate at least two distinct families")
+        if not evaluated <= families or any(
+            self.family_probabilities[f] > 0 for f in families - evaluated
+        ):
+            raise ValueError("Every positive-probability family must be evaluated")
+        if any(
+            set(mapping) != evaluated
+            for mapping in (
+                self.conditional_genre_probabilities,
+                self.conditional_choices,
+                self.conditional_confidences,
+                self.conditional_models,
+            )
+        ):
+            raise ValueError("Conditional metadata must match the evaluated families")
+        choices = [(self.family_choice, self.family_probabilities)] + [
+            (self.conditional_choices[f], self.conditional_genre_probabilities[f])
+            for f in self.evaluated_families
+        ]
+        if any(c not in p or p[c] != max(p.values()) for c, p in choices):
+            raise ValueError("Raw choices must match their distributions")
+        if any(
+            not math.isfinite(c) or not 0 <= c <= 1 for c in self.conditional_confidences.values()
+        ):
+            raise ValueError("Invalid conditional confidence")
+        # Validate the published global distribution against the preserved source values.
+        if not math.isclose(sum(self.global_genre_probabilities.values()), 1, abs_tol=1e-9):
+            raise ValueError("Global genre probabilities must be normalized")
+        family_total = sum(self.family_probabilities.values())
+        joint = {g: 0.0 for g in self.global_genre_probabilities}
+        joint[unknown] = self.family_probabilities[unknown] / family_total
+        seen = set()
+        for fid, probabilities in self.conditional_genre_probabilities.items():
+            weight = self.family_probabilities[fid] / family_total
+            total = sum(probabilities.values())
+            for gid, probability in probabilities.items():
+                if gid not in joint or (gid != unknown and gid in seen):
+                    raise ValueError("Conditional genres must have unique global IDs")
+                joint[gid] += weight * probability / total
+                if gid != unknown:
+                    seen.add(gid)
+        if any(
+            not math.isclose(self.global_genre_probabilities[g], p, abs_tol=1e-9)
+            for g, p in joint.items()
+        ):
+            raise ValueError(
+                "Global probabilities must equal family times conditional probabilities"
+            )
+        ranking = self.global_genre_ranking
+        if not ranking:
+            raise ValueError("A genre distribution requires eligible genres")
+        winner = ranking[0]
+        insufficient = self.global_genre_probabilities[unknown]
+        expected = winner.genre_id if winner.probability > insufficient else None
+        if self.primary_genre != expected:
+            raise ValueError("Primary must be the highest-supported eligible genre or insufficient")
+        if (
+            len(set(self.secondary_genres)) != len(self.secondary_genres)
+            or any(
+                g == self.primary_genre
+                or g == unknown
+                or g not in self.global_genre_probabilities
+                or self.global_genre_probabilities[g] < 0.1
+                or self.global_genre_probabilities[g] <= insufficient
+                for g in self.secondary_genres
+            )
+            or (self.primary_genre is None and self.secondary_genres)
+        ):
+            raise ValueError("Secondaries must be distinct supported alternatives to the primary")
+        expected_confidence = self.global_genre_probabilities[self.primary_genre or unknown]
+        if not math.isclose(self.confidence, expected_confidence, abs_tol=1e-9):
+            raise ValueError("Genre confidence must equal the selected global probability")
+        return self
 
 
 class Review(BaseModel):
@@ -106,6 +231,7 @@ class DecisionBatch(BaseModel):
     genre: GenreDecision
     model: str
     usage: dict[str, int | None] = Field(default_factory=dict)
+    usage_by_stage: dict[str, dict[str, int | None]] = Field(default_factory=dict)
 
 
 class AnalysisResult(BaseModel):

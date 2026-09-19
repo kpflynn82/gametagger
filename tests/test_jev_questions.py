@@ -9,8 +9,8 @@ def test_compiler_builds_one_question_per_tag_plus_genre():
     taxonomy = load_taxonomy()
     specs = JevQuestionCompiler(taxonomy).build_specs()
     assert len(specs) == len(taxonomy.tags) + 1
-    assert "primary_genre" in specs
-    assert len(specs["primary_genre"].criteria) == 60
+    assert "genre_family" in specs
+    assert len(specs["genre_family"].criteria) == 15
 
 
 def test_tag_choice_supports_unknown_and_conflict():
@@ -50,4 +50,4 @@ def test_single_view_never_establishes_game_wide_absence():
     spec = specs["visual_third_person"]
     assert "explicit negative source evidence" in spec.criteria["absent"]
     assert "not mutually exclusive" in spec.instructions
-    assert JevQuestionCompiler.prompt_version == "jev-v2"
+    assert JevQuestionCompiler.prompt_version == "jev-genre-v4.1"

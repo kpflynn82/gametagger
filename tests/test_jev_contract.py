@@ -9,6 +9,7 @@ from gametagger.decisions.jev import (
     JevDecisionEngine,
     JevQuestionCompiler,
     TypeSafeGateway,
+    select_families,
     validate_response,
 )
 from gametagger.decisions.mock import MockJevGateway
@@ -40,10 +41,16 @@ def test_real_sdk_http_serialization_and_parsing(taxonomy):
         assert request.url.path == "/v1/systemone"
         body = json.loads(request.content)
         assert body["model"] == "jev-latest"
-        assert len(body["questions"]) == 26
-        assert len(body["questions"]["primary_genre"]["criteria"]) == 60
-        assert body["questions"][taxonomy.tags[0].id]["type"] == "choice"
-        return httpx2.Response(200, json=payload)
+        if "genre_family" in body["questions"]:
+            assert len(body["questions"]) == 26
+            assert len(body["questions"]["genre_family"]["criteria"]) == 15
+            assert body["questions"][taxonomy.tags[0].id]["type"] == "choice"
+            return httpx2.Response(200, json=payload)
+        selected = select_families(taxonomy, payload["answers"]["genre_family"]["probabilities"])
+        conditional = JevQuestionCompiler(taxonomy).build_genre_specs(selected)
+        assert set(body["questions"]) == set(conditional)
+        assert all(len(q["criteria"]) < 24 for q in body["questions"].values())
+        return httpx2.Response(200, json=sdk_payload(conditional))
 
     with TypeSafeClient(
         api_key="offline-test-key", transport=httpx2.MockTransport(handler)
@@ -56,9 +63,9 @@ def test_real_sdk_http_serialization_and_parsing(taxonomy):
     assert batch.model == "jev-contract-fixture"
     assert batch.tags[0].probabilities == probabilities
     assert batch.tags[0].confidence == 0.9
-    assert batch.usage == {"input_tokens": 123, "output_tokens": 456}
+    assert batch.usage == {"input_tokens": 246, "output_tokens": 912}
     assert batch.genre.primary_genre is None
-    assert len(batch.genre.probabilities) == 60
+    assert len(batch.genre.global_genre_probabilities) == 101
 
 
 @pytest.mark.parametrize(

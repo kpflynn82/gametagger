@@ -70,6 +70,7 @@ class AnalysisPipeline:
                 "policy": (finished - classified_at) * 1000,
             },
             usage=batch.usage,
+            usage_by_stage=batch.usage_by_stage,
             offline=offline,
         )
         return AnalysisResult(

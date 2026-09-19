@@ -25,7 +25,7 @@ def test_live_jev_all_pilot_questions(taxonomy):
         ],
     )
     assert len(batch.tags) == 25
-    assert len(batch.genre.probabilities) == 60
+    assert len(batch.genre.global_genre_probabilities) == 101
     assert batch.model
     assert all(len(tag.probabilities) == 4 for tag in batch.tags)
     # No hard-coded semantic answer: this verifies live transport/schema, not model accuracy.

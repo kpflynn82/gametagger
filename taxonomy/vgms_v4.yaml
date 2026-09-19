@@ -1,71 +1,1234 @@
-version: "4.0-pilot"
-
+version: '4.1'
 tag_states:
-  - present
-  - absent
-  - insufficient_evidence
-  - conflicting_evidence
-
-primary_genres:
-  - Action RPG
-  - Action Adventure
-  - First-Person Shooter
-  - Third-Person Shooter
-  - Bullet Hell
-  - Beat 'em Up
-  - Looter Shooter
-  - Extraction Shooter
-  - JRPG
-  - Turn-Based RPG
-  - Tactical RPG
-  - MMORPG
-  - Roguelike
-  - 2D Platformer
-  - 3D Platformer
-  - Metroidvania
-  - Real-Time Strategy
-  - Turn-Based Strategy
-  - Tower Defense
-  - 4X Strategy
-  - Grand Strategy
-  - Auto Battler
-  - MOBA
-  - Life Simulation
-  - Farm Simulation
-  - Management Simulation
-  - Racing Simulation
-  - Flight Simulation
-  - City Builder
-  - Puzzle
-  - Puzzle Platformer
-  - Match-3
-  - Physics Puzzle
-  - Adventure
-  - Narrative Adventure
-  - Visual Novel
-  - 2D Fighting
-  - 3D Fighting
-  - Arcade Racing
-  - Kart Racing
-  - Rally Racing
-  - Sports
-  - Horror
-  - Card Game
-  - Deck Builder
-  - Board Game
-  - Digital TCG
-  - Battle Royale
-  - Party Game
-  - Sandbox
-  - Survival
-  - Open World Survival Craft
-  - Arcade
-  - Rhythm Game
-  - Cozy Game
-  - Idle Game
-  - Souls-like
-  - Immersive Sim
-  - Educational
+- present
+- absent
+- insufficient_evidence
+- conflicting_evidence
+genre_families:
+- id: action
+  display_name: Action
+  definition: Real-time execution, movement, aiming, or combat is the central challenge.
+  genres:
+  - id: first_person_shooter
+    display_name: First-Person Shooter
+    family: action
+    definition: Gunplay primarily viewed through the controlled character's eyes.
+    inclusion_criteria:
+    - Repeated aiming and shooting from an eye-level camera drive progress.
+    exclusion_notes:
+    - Prefer specialized shooter formats when team roles, extraction, or loot define the loop; camera
+      alone is insufficient.
+    example_games:
+    - DOOM
+    primary_eligible: true
+  - id: third_person_shooter
+    display_name: Third-Person Shooter
+    family: action
+    definition: Gunplay primarily viewed from outside the controlled character.
+    inclusion_criteria:
+    - Aiming and firing dominate play with the controlled body visible.
+    exclusion_notes:
+    - Do not infer from any third-person camera; specialized shooter loops can take precedence.
+    example_games:
+    - Gears of War
+    primary_eligible: true
+  - id: tactical_shooter
+    display_name: Tactical Shooter
+    family: action
+    definition: Deliberate positioning, coordinated engagement, and consequential gunplay define combat.
+    inclusion_criteria:
+    - Tactical planning, lethal encounters, and information management drive success.
+    exclusion_notes:
+    - A realistic weapon appearance alone is insufficient; distinguish character-role hero shooters.
+    example_games:
+    - Counter-Strike 2
+    primary_eligible: true
+  - id: hero_shooter
+    display_name: Hero Shooter
+    family: action
+    definition: Shooter competition revolves around distinct selectable heroes and combat abilities.
+    inclusion_criteria:
+    - Team composition and hero-specific kits materially determine engagements.
+    exclusion_notes:
+    - Cosmetic characters alone do not qualify; loot-first campaigns may instead be looter shooters.
+    example_games:
+    - Overwatch 2
+    primary_eligible: true
+  - id: looter_shooter
+    display_name: Looter Shooter
+    family: action
+    definition: Shooting and repeated acquisition of power-changing equipment form the main progression
+      loop.
+    inclusion_criteria:
+    - Repeatable combat rewards randomized or tiered weapons and builds.
+    exclusion_notes:
+    - Ordinary weapon pickups are insufficient; extraction stakes or last-player-standing rules may dominate
+      instead.
+    example_games:
+    - Destiny 2
+    primary_eligible: true
+  - id: extraction_shooter
+    display_name: Extraction Shooter
+    family: action
+    definition: Armed raids revolve around acquiring valuables and surviving an extraction.
+    inclusion_criteria:
+    - Persistent equipment risk, raid objectives, and explicit escape conditions organize play.
+    exclusion_notes:
+    - A mission evacuation alone is insufficient; distinguish battle-royale victory by survival to the
+      end.
+    example_games:
+    - Escape from Tarkov
+    primary_eligible: true
+  - id: shoot_em_up
+    display_name: Shoot 'em Up
+    family: action
+    definition: Continuous projectile combat with constrained movement or scrolling forms the core arcade
+      loop.
+    inclusion_criteria:
+    - Frequent firing, waves of targets, and pattern avoidance are central.
+    exclusion_notes:
+    - Bullet Hell requires dense patterns; free-camera shooters are not automatically shoot 'em ups.
+    example_games:
+    - R-Type
+    primary_eligible: true
+  - id: bullet_hell
+    display_name: Bullet Hell
+    family: action
+    definition: Navigating dense, patterned projectile fields is the defining combat challenge.
+    inclusion_criteria:
+    - Fine dodging through sustained enemy projectile patterns dominates encounters.
+    exclusion_notes:
+    - A few projectiles are insufficient; auto-attack swarm survival belongs to Survivor-like when that
+      loop dominates.
+    example_games:
+    - Ikaruga
+    primary_eligible: true
+  - id: survivor_like
+    display_name: Survivor-like / Bullet Heaven
+    family: action
+    definition: Timed survival against large swarms combines movement, frequent upgrades, and largely
+      automatic attacks.
+    inclusion_criteria:
+    - Repeated short runs emphasize crowd avoidance and escalating ability combinations.
+    exclusion_notes:
+    - Distinguish precision dodging of enemy bullet patterns and conventional aimed shooters.
+    example_games:
+    - Vampire Survivors
+    primary_eligible: true
+  - id: battle_royale
+    display_name: Battle Royale
+    family: action
+    definition: Many competitors enter a shared match whose central goal is to be the last survivor or
+      team.
+    inclusion_criteria:
+    - Elimination, scavenging or preparation, and a shrinking or otherwise converging arena structure
+      matches.
+    exclusion_notes:
+    - Do not reduce to camera perspective; extraction and respawning arena modes have different win conditions.
+    example_games:
+    - Fortnite
+    primary_eligible: true
+  - id: fighting_2d
+    display_name: 2D Fighting
+    family: action
+    definition: Discrete fighting matches constrain meaningful combat movement primarily to a plane.
+    inclusion_criteria:
+    - Direct opponent duels depend on spacing, move timing, and combos on a two-dimensional combat plane.
+    exclusion_notes:
+    - Rendered 3D models do not imply 3D Fighting; ring-out platform traversal suggests Platform Fighter.
+    example_games:
+    - Street Fighter 6
+    primary_eligible: true
+  - id: fighting_3d
+    display_name: 3D Fighting
+    family: action
+    definition: Discrete fighting matches use meaningful movement around opponents in three-dimensional
+      arenas.
+    inclusion_criteria:
+    - Sidestepping or circling on a ground plane is central to fighting matchups.
+    exclusion_notes:
+    - 3D rendering alone is insufficient; distinguish planar fighting and open-ended action combat.
+    example_games:
+    - Tekken 8
+    primary_eligible: true
+  - id: platform_fighter
+    display_name: Platform Fighter
+    family: action
+    definition: Fighting matches integrate platform movement and displacement or ring-out victory.
+    inclusion_criteria:
+    - Platform navigation and launching opponents organize competitive combat.
+    exclusion_notes:
+    - Ordinary traversal games with melee attacks are platformers, not platform fighters.
+    example_games:
+    - Super Smash Bros. Ultimate
+    primary_eligible: true
+  - id: beat_em_up
+    display_name: Beat 'em Up
+    family: action
+    definition: Progress through stages centers on close-range combat against groups of enemies.
+    inclusion_criteria:
+    - Repeated crowd brawls, stage advancement, and direct melee execution dominate.
+    exclusion_notes:
+    - Complex expressive combo grading may favor Character Action; statistical character building may
+      favor Action RPG.
+    example_games:
+    - Streets of Rage 4
+    primary_eligible: true
+  - id: character_action
+    display_name: Character Action
+    family: action
+    definition: Expressive real-time combat systems and mastery of complex move combinations dominate
+      play.
+    inclusion_criteria:
+    - Combos, cancels, timing, and performance-driven encounters organize progress.
+    exclusion_notes:
+    - Any playable character or melee attack is insufficient; build statistics alone point toward RPG.
+    example_games:
+    - Devil May Cry 5
+    primary_eligible: true
+  - id: platformer_2d
+    display_name: 2D Platformer
+    family: action
+    definition: Jumping and traversing arranged obstacles on a primarily two-dimensional movement plane
+      dominate play.
+    inclusion_criteria:
+    - Repeated platform timing, gaps, and spatial navigation are the main challenge.
+    exclusion_notes:
+    - Prefer Precision Platformer for exact repeated execution or Metroidvania for ability-gated exploration.
+    example_games:
+    - Super Mario Bros. Wonder
+    primary_eligible: true
+  - id: platformer_3d
+    display_name: 3D Platformer
+    family: action
+    definition: Navigating platforms and traversal challenges through three-dimensional space dominates
+      play.
+    inclusion_criteria:
+    - Depth-aware jumping, movement control, and spatial routes drive objectives.
+    exclusion_notes:
+    - Ordinary jumping inside adventure or combat games is insufficient.
+    example_games:
+    - Super Mario Odyssey
+    primary_eligible: true
+  - id: precision_platformer
+    display_name: Precision Platformer
+    family: action
+    definition: Dense traversal challenges demand exact execution and repeated short attempts.
+    inclusion_criteria:
+    - Tight movement timing, demanding obstacle sequences, and rapid retries are central.
+    exclusion_notes:
+    - General difficulty alone does not qualify; navigation and ability gating may instead define Metroidvania.
+    example_games:
+    - Celeste
+    primary_eligible: true
+  - id: metroidvania
+    display_name: Metroidvania
+    family: action
+    definition: Exploration of an interconnected map is structured by traversal abilities that unlock
+      prior barriers.
+    inclusion_criteria:
+    - Ability-gated routes, backtracking, and persistent world exploration form the main progression.
+    exclusion_notes:
+    - A connected map alone is insufficient; prefer RPG only when character-building systems dominate
+      the loop.
+    example_games:
+    - Hollow Knight
+    primary_eligible: true
+  - id: stealth_action
+    display_name: Stealth Action
+    family: action
+    definition: Avoiding or manipulating detection is the main means of completing real-time objectives.
+    inclusion_criteria:
+    - Concealment, enemy awareness, infiltration, and evasion structure most encounters.
+    exclusion_notes:
+    - An optional stealth move inside combat-led play is insufficient.
+    example_games:
+    - Metal Gear Solid V
+    primary_eligible: true
+  - id: action_adventure
+    display_name: Action Adventure
+    family: action
+    definition: A sustained blend of real-time action, exploration, and authored adventure progression
+      defines play.
+    inclusion_criteria:
+    - Combat or traversal and exploration or puzzles jointly organize objectives.
+    exclusion_notes:
+    - Do not use as a catch-all; prefer a more specific supported loop, especially Souls-like, Action
+      RPG, or Metroidvania.
+    example_games:
+    - 'The Legend of Zelda: Ocarina of Time'
+    primary_eligible: true
+  - id: arcade_action
+    display_name: Arcade Action
+    family: action
+    definition: Short, execution-driven action challenges define play without a more specific action structure.
+    inclusion_criteria:
+    - Immediate reflex challenges and compact stages dominate.
+    exclusion_notes:
+    - Prefer a specific shooter, fighter, or platformer when supported; score pursuit alone may favor
+      Arcade / Score Attack.
+    example_games:
+    - Bomberman
+    primary_eligible: true
+- id: role_playing
+  display_name: Role-Playing
+  definition: Character development, builds, party roles, or persistent role-playing systems organize
+    progress.
+  genres:
+  - id: action_rpg
+    display_name: Action RPG
+    family: role_playing
+    definition: Real-time action combat is materially shaped by persistent character statistics and build
+      choices.
+    inclusion_criteria:
+    - Equipment, abilities, and progression alter combat strategy across an ongoing role-playing journey.
+    exclusion_notes:
+    - Do not infer from fantasy art alone; Souls-like or loot-shooter structure can be more specific.
+    example_games:
+    - Diablo IV
+    primary_eligible: true
+  - id: souls_like
+    display_name: Souls-like
+    family: role_playing
+    definition: Methodical action-RPG encounters combine commitment-based combat with consequential death
+      and recovery loops.
+    inclusion_criteria:
+    - Combat learning, resource recovery after death, and checkpoint-based world progression are jointly
+      supported.
+    exclusion_notes:
+    - Difficulty or dark fantasy alone is insufficient; one dodge or shield motion cannot establish the
+      genre.
+    example_games:
+    - Elden Ring
+    primary_eligible: true
+  - id: turn_based_rpg
+    display_name: Turn-Based RPG
+    family: role_playing
+    definition: Role-playing progression is organized around explicitly sequenced combat turns.
+    inclusion_criteria:
+    - Party or character statistics, abilities, and command selection structure turn-based encounters.
+    exclusion_notes:
+    - A grid-centric positioning layer may favor Tactical RPG; strategic armies without RPG development
+      favor strategy.
+    example_games:
+    - Dragon Quest XI
+    primary_eligible: true
+  - id: tactical_rpg
+    display_name: Tactical RPG
+    family: role_playing
+    definition: Persistent role-playing characters develop through position-sensitive tactical battles.
+    inclusion_criteria:
+    - Unit builds and character progression combine with spatial, usually turn-based combat.
+    exclusion_notes:
+    - Without substantial persistent character development prefer Turn-Based Tactics.
+    example_games:
+    - 'Fire Emblem: Three Houses'
+    primary_eligible: true
+  - id: jrpg
+    display_name: JRPG
+    family: role_playing
+    definition: A party-focused, authored role-playing journey emphasizes character arcs and structured
+      progression.
+    inclusion_criteria:
+    - Party development, authored narrative arcs, and recognizable command or action-based RPG systems
+      define the experience.
+    exclusion_notes:
+    - Developer nationality or anime visuals are insufficient; prefer a more specific combat-led RPG category
+      when supported.
+    example_games:
+    - Persona 5 Royal
+    primary_eligible: true
+  - id: crpg
+    display_name: CRPG
+    family: role_playing
+    definition: Rules-driven role-playing emphasizes authored choices, character builds, and systemic
+      encounter resolution.
+    inclusion_criteria:
+    - Detailed character rules, dialogue choices, and multiple supported solutions shape a persistent
+      adventure.
+    exclusion_notes:
+    - Not every PC RPG qualifies; platform and camera are not eligibility criteria.
+    example_games:
+    - Baldur's Gate 3
+    primary_eligible: true
+  - id: mmorpg
+    display_name: MMORPG
+    family: role_playing
+    definition: Persistent role-playing progression takes place in a shared online world with many players.
+    inclusion_criteria:
+    - Persistent avatars, ongoing shared-world systems, and social progression are central.
+    exclusion_notes:
+    - Small-session co-op or online connectivity alone is insufficient.
+    example_games:
+    - World of Warcraft
+    primary_eligible: true
+  - id: dungeon_crawler
+    display_name: Dungeon Crawler
+    family: role_playing
+    definition: Repeated exploration and combat through dungeons organize role-playing progression.
+    inclusion_criteria:
+    - Dungeon routes, resource management, encounters, and equipment progression form the principal loop.
+    exclusion_notes:
+    - A single dungeon inside a broader adventure is insufficient; run-reset identity can favor Roguelike
+      or Roguelite.
+    example_games:
+    - Legend of Grimrock
+    primary_eligible: true
+  - id: creature_collector
+    display_name: Creature Collector / Monster Tamer
+    family: role_playing
+    definition: Collecting, developing, and deploying a roster of creatures drives progression.
+    inclusion_criteria:
+    - Acquiring creatures and building teams for battles or challenges are central.
+    exclusion_notes:
+    - A pet companion or cosmetic collection alone is insufficient.
+    example_games:
+    - Pokémon
+    primary_eligible: true
+  - id: roguelike
+    display_name: Roguelike
+    family: role_playing
+    definition: Self-contained runs emphasize procedural challenges and consequential run-ending death
+      with little permanent power carryover.
+    inclusion_criteria:
+    - Procedural runs, reset on defeat, and mastery of interacting systems dominate.
+    exclusion_notes:
+    - Prefer Roguelite when persistent power progression across attempts is central; procedural generation
+      alone is a tag.
+    example_games:
+    - NetHack
+    primary_eligible: true
+  - id: roguelite
+    display_name: Roguelite
+    family: role_playing
+    definition: Repeated reset-based runs are connected by meaningful persistent upgrades or progression.
+    inclusion_criteria:
+    - Run-based attempts, variable encounters or rewards, and cross-run development organize play.
+    exclusion_notes:
+    - Do not classify every randomized game as Roguelite; prefer a more defining card or swarm-survival
+      loop when supported.
+    example_games:
+    - Hades
+    primary_eligible: true
+- id: adventure_narrative
+  display_name: Adventure & Narrative
+  definition: Exploration, narrative interpretation, dialogue, or authored problem solving drives progress.
+  genres:
+  - id: adventure
+    display_name: Adventure
+    family: adventure_narrative
+    definition: Exploration and solving authored situations progress an unfolding journey.
+    inclusion_criteria:
+    - Discovery, interaction, and contextual problem solving organize objectives.
+    exclusion_notes:
+    - Do not use as a fallback for any story; more specific adventure formats take precedence when supported.
+    example_games:
+    - Myst
+    primary_eligible: true
+  - id: point_click_adventure
+    display_name: Point-and-Click Adventure
+    family: adventure_narrative
+    definition: Selecting objects and combining contextual interactions advances authored puzzles and
+      narrative.
+    inclusion_criteria:
+    - Pointing or selecting, inventory puzzles, and scene-based investigation dominate.
+    exclusion_notes:
+    - Mouse input alone is insufficient; hidden-object search and visual novels have different primary
+      loops.
+    example_games:
+    - The Secret of Monkey Island
+    primary_eligible: true
+  - id: narrative_adventure
+    display_name: Narrative Adventure
+    family: adventure_narrative
+    definition: Experiencing and influencing an authored story is the central interactive activity.
+    inclusion_criteria:
+    - Dialogue, narrative choices, investigation, and character development organize progression.
+    exclusion_notes:
+    - Incidental story in an action game is insufficient; primarily passive text may favor Visual Novel.
+    example_games:
+    - Life Is Strange
+    primary_eligible: true
+  - id: exploration_adventure
+    display_name: Exploration Adventure / Walking Sim
+    family: adventure_narrative
+    definition: Navigating and inspecting environments reveals an authored experience with limited combat.
+    inclusion_criteria:
+    - Environmental discovery and interpretation, rather than combat or demanding traversal, drive progress.
+    exclusion_notes:
+    - An open world or first-person camera alone does not qualify.
+    example_games:
+    - Gone Home
+    primary_eligible: true
+  - id: visual_novel
+    display_name: Visual Novel
+    family: adventure_narrative
+    definition: Reading authored narrative with illustrated presentation and occasional choices forms
+      the main loop.
+    inclusion_criteria:
+    - Text-led scenes, character dialogue, and branching or linear story progression dominate.
+    exclusion_notes:
+    - Extensive simulated relationships may favor Dating / Relationship Sim; free-form text commands favor
+      Interactive Fiction.
+    example_games:
+    - Steins;Gate
+    primary_eligible: true
+  - id: interactive_fiction
+    display_name: Interactive Fiction / Text Adventure
+    family: adventure_narrative
+    definition: Textual descriptions and textual choices or commands are the primary play interface.
+    inclusion_criteria:
+    - Reading and interacting with a text-defined world or branching narrative constitute most play.
+    exclusion_notes:
+    - Text-heavy interfaces inside other genres are insufficient; illustrated scene presentation may favor
+      Visual Novel.
+    example_games:
+    - Zork
+    primary_eligible: true
+  - id: interactive_movie
+    display_name: Interactive Movie / FMV
+    family: adventure_narrative
+    definition: Progression primarily selects or discovers filmed or movie-like narrative sequences.
+    inclusion_criteria:
+    - Video performance, scene selection, and branching filmed events organize interaction.
+    exclusion_notes:
+    - Cinematic cutscenes in an otherwise conventional game do not qualify.
+    example_games:
+    - Her Story
+    primary_eligible: true
+  - id: dating_sim
+    display_name: Dating / Relationship Sim
+    family: adventure_narrative
+    definition: Managing relationships and pursuing character connections is the main progression system.
+    inclusion_criteria:
+    - Repeated interpersonal choices, schedules, or relationship statistics drive outcomes.
+    exclusion_notes:
+    - Romance as a side plot is insufficient; mainly reading an authored romance can remain Visual Novel.
+    example_games:
+    - Tokimeki Memorial
+    primary_eligible: true
+  - id: immersive_sim
+    display_name: Immersive Sim
+    family: adventure_narrative
+    definition: Consistent interacting world systems enable multiple player-devised solutions to authored
+      situations.
+    inclusion_criteria:
+    - Systemic object interactions and meaningful alternative approaches are central and recurring.
+    exclusion_notes:
+    - First-person view, stealth, or branching dialogue alone is insufficient; a generic simulation label
+      does not qualify.
+    example_games:
+    - Deus Ex
+    primary_eligible: true
+- id: strategy
+  display_name: Strategy
+  definition: Planning, allocation, and commanding units or factions organize the main challenge.
+  genres:
+  - id: real_time_strategy
+    display_name: Real-Time Strategy
+    family: strategy
+    definition: Continuous-time command combines economic development and military or territorial strategy.
+    inclusion_criteria:
+    - Resource gathering, production, and simultaneous unit control shape victory.
+    exclusion_notes:
+    - With little economy and fixed forces prefer Real-Time Tactics.
+    example_games:
+    - StarCraft II
+    primary_eligible: true
+  - id: real_time_tactics
+    display_name: Real-Time Tactics
+    family: strategy
+    definition: Continuous-time encounters emphasize commanding and positioning limited forces.
+    inclusion_criteria:
+    - Tactical movement, coordination, and ability use dominate without substantial base economy.
+    exclusion_notes:
+    - Base building and resource production may instead define Real-Time Strategy.
+    example_games:
+    - Shadow Tactics
+    primary_eligible: true
+  - id: turn_based_strategy
+    display_name: Turn-Based Strategy
+    family: strategy
+    definition: Alternating turns govern broader resource, territorial, or faction decisions.
+    inclusion_criteria:
+    - Sequential strategic planning and resource allocation organize play.
+    exclusion_notes:
+    - Battlefield-only positioning favors Turn-Based Tactics; expansive empire pillars may favor 4X Strategy.
+    example_games:
+    - Advance Wars
+    primary_eligible: true
+  - id: turn_based_tactics
+    display_name: Turn-Based Tactics
+    family: strategy
+    definition: Sequential turns emphasize battlefield positioning and encounter-level unit decisions.
+    inclusion_criteria:
+    - Movement, cover, attacks, and limited tactical resources drive discrete battles.
+    exclusion_notes:
+    - Persistent role-playing builds may favor Tactical RPG; empire management is strategic rather than
+      tactical.
+    example_games:
+    - Into the Breach
+    primary_eligible: true
+  - id: four_x_strategy
+    display_name: 4X Strategy
+    family: strategy
+    definition: Building a faction or empire centers on exploration, expansion, exploitation, and extermination.
+    inclusion_criteria:
+    - Several interacting empire-development pillars and long-horizon competition define play.
+    exclusion_notes:
+    - A large map alone is insufficient; political historical simulation may favor Grand Strategy.
+    example_games:
+    - Civilization VI
+    primary_eligible: true
+  - id: grand_strategy
+    display_name: Grand Strategy
+    family: strategy
+    definition: Large-scale political, diplomatic, economic, and military systems model nations or dynasties.
+    inclusion_criteria:
+    - Long-horizon state management and interacting geopolitical systems dominate.
+    exclusion_notes:
+    - Broad map scale alone is insufficient; individual battles remain tactics or wargames.
+    example_games:
+    - Crusader Kings III
+    primary_eligible: true
+  - id: wargame
+    display_name: Wargame
+    family: strategy
+    definition: Modeling military operations and force capabilities is the central strategic subject.
+    inclusion_criteria:
+    - Military formations, operational constraints, logistics, or detailed combat modeling dominate.
+    exclusion_notes:
+    - Combat in an otherwise economic strategy game is insufficient.
+    example_games:
+    - Panzer Corps 2
+    primary_eligible: true
+  - id: tower_defense
+    display_name: Tower Defense
+    family: strategy
+    definition: Placing or improving defenses against approaching waves is the principal loop.
+    inclusion_criteria:
+    - Defensive placement, upgrades, and enemy-path planning structure repeated challenges.
+    exclusion_notes:
+    - Base defenses as one subsystem of a broader strategy game are insufficient.
+    example_games:
+    - Bloons TD 6
+    primary_eligible: true
+  - id: moba
+    display_name: MOBA
+    family: strategy
+    definition: Teams control distinct combatants in repeatable arena matches with lanes or objectives
+      and within-match progression.
+    inclusion_criteria:
+    - Team roles, objective pressure, and match-based character growth jointly shape victory.
+    exclusion_notes:
+    - A hero roster alone may be Hero Shooter; persistent-world progression belongs elsewhere.
+    example_games:
+    - League of Legends
+    primary_eligible: true
+  - id: auto_battler
+    display_name: Auto Battler
+    family: strategy
+    definition: Players assemble and position units whose battles resolve largely automatically.
+    inclusion_criteria:
+    - Drafting, composition, economy, and pre-combat positioning dominate decisions.
+    exclusion_notes:
+    - Idle progression alone does not qualify; direct continuous combat control points elsewhere.
+    example_games:
+    - Teamfight Tactics
+    primary_eligible: true
+- id: simulation_management
+  display_name: Simulation & Management
+  definition: Modeling ongoing activities, systems, or organizations is the central play loop.
+  genres:
+  - id: life_simulation
+    display_name: Life Simulation
+    family: simulation_management
+    definition: Managing the everyday activities, needs, and relationships of simulated lives defines
+      play.
+    inclusion_criteria:
+    - Life routines, household or character needs, and social development are central.
+    exclusion_notes:
+    - A social hub or romance subplot alone is insufficient.
+    example_games:
+    - The Sims 4
+    primary_eligible: true
+  - id: farm_simulation
+    display_name: Farm Simulation
+    family: simulation_management
+    definition: Cultivating and developing a farm organizes recurring progression.
+    inclusion_criteria:
+    - Crop or animal care, seasonal production, and farm improvements drive play.
+    exclusion_notes:
+    - Farming as a minor crafting resource is insufficient; broad life routines may instead dominate.
+    example_games:
+    - Stardew Valley
+    primary_eligible: true
+  - id: management_tycoon
+    display_name: Management / Tycoon
+    family: simulation_management
+    definition: Operating and expanding an organization or enterprise revolves around interconnected economic
+      decisions.
+    inclusion_criteria:
+    - Budgets, staffing, production, customer demand, and organizational growth dominate.
+    exclusion_notes:
+    - Prefer a specialized city, colony, factory, or sports-management loop when it defines the system.
+    example_games:
+    - RollerCoaster Tycoon
+    primary_eligible: true
+  - id: city_builder
+    display_name: City Builder
+    family: simulation_management
+    definition: Planning and operating a settlement at an urban infrastructure scale defines play.
+    inclusion_criteria:
+    - Zoning, roads, utilities, services, and population growth organize decisions.
+    exclusion_notes:
+    - Individual colonist needs and survival may favor Colony Sim.
+    example_games:
+    - 'Cities: Skylines'
+    primary_eligible: true
+  - id: colony_sim
+    display_name: Colony Sim
+    family: simulation_management
+    definition: Managing a small population's needs, tasks, and survival in a persistent settlement defines
+      play.
+    inclusion_criteria:
+    - Individual inhabitants, emergent events, work priorities, and colony infrastructure interact.
+    exclusion_notes:
+    - City-scale zoning without individual survival systems favors City Builder.
+    example_games:
+    - RimWorld
+    primary_eligible: true
+  - id: factory_automation_sim
+    display_name: Factory / Automation Sim
+    family: simulation_management
+    definition: Designing and expanding automated production networks is the primary progression loop.
+    inclusion_criteria:
+    - Throughput, logistics, recipes, and machine interconnection dominate optimization.
+    exclusion_notes:
+    - Crafting by itself is a Genome dimension; manual resource gathering alone is insufficient.
+    example_games:
+    - Factorio
+    primary_eligible: true
+  - id: flight_simulation
+    display_name: Flight Simulation
+    family: simulation_management
+    definition: Operating aircraft through modeled flight behavior and procedures defines play.
+    inclusion_criteria:
+    - Aircraft handling, navigation, and aviation tasks dominate.
+    exclusion_notes:
+    - Aircraft-themed arcade shooting or racing should use its more specific action or racing genre.
+    example_games:
+    - Microsoft Flight Simulator
+    primary_eligible: true
+  - id: driving_vehicle_simulation
+    display_name: Driving / Vehicle Simulation
+    family: simulation_management
+    definition: Operating ground vehicles through modeled handling and practical tasks defines play.
+    inclusion_criteria:
+    - Driving procedures, transport tasks, or vehicle operation dominate outside racing competition.
+    exclusion_notes:
+    - Competitive timed races favor a Racing genre.
+    example_games:
+    - Euro Truck Simulator 2
+    primary_eligible: true
+  - id: job_profession_simulation
+    display_name: Job / Profession Simulation
+    family: simulation_management
+    definition: Performing the activities and procedures of a specific occupation is the main loop.
+    inclusion_criteria:
+    - Repeated profession-specific tasks and tools organize progression.
+    exclusion_notes:
+    - Managing an entire enterprise rather than doing its work may favor Management / Tycoon.
+    example_games:
+    - PowerWash Simulator
+    primary_eligible: true
+- id: survival_sandbox
+  display_name: Survival & Sandbox
+  definition: Persistent resourceful survival or open-ended construction and experimentation organizes
+    play.
+  genres:
+  - id: survival
+    display_name: Survival
+    family: survival_sandbox
+    definition: Maintaining existence against environmental or resource pressures is the main progression
+      loop.
+    inclusion_criteria:
+    - Food, exposure, health, shelter, or scarce resources continually shape decisions.
+    exclusion_notes:
+    - Surviving a combat match alone is insufficient; prefer Open World Survival Craft when building and
+      open exploration define the loop.
+    example_games:
+    - The Long Dark
+    primary_eligible: true
+  - id: open_world_survival_craft
+    display_name: Open World Survival Craft
+    family: survival_sandbox
+    definition: Open-ended world exploration combines ongoing survival pressures with gathering and construction.
+    inclusion_criteria:
+    - Survival needs, substantial crafting or building, and freely explored persistent space jointly dominate.
+    exclusion_notes:
+    - Open world and crafting separately remain Genome tags; all three pillars must define the loop.
+    example_games:
+    - Valheim
+    primary_eligible: true
+  - id: sandbox
+    display_name: Sandbox
+    family: survival_sandbox
+    definition: Player-directed creation and experimentation in a persistent or configurable world is
+      the principal activity.
+    inclusion_criteria:
+    - Open-ended building, manipulation, and self-selected goals outweigh authored progression.
+    exclusion_notes:
+    - A large world alone is insufficient; survival pressure or social minigames can define more specific
+      genres.
+    example_games:
+    - Minecraft
+    primary_eligible: true
+- id: horror
+  display_name: Horror
+  definition: Sustained interactive fear is a central organizing design goal, not just a visual theme.
+  genres:
+  - id: survival_horror
+    display_name: Survival Horror
+    family: horror
+    definition: Vulnerability and scarce resources structure survival through threatening encounters.
+    inclusion_criteria:
+    - Resource conservation, danger avoidance, and sustained fear drive progress.
+    exclusion_notes:
+    - A frightening aesthetic alone is insufficient; empowered combat may favor Action Horror.
+    example_games:
+    - Resident Evil 2
+    primary_eligible: true
+  - id: psychological_horror
+    display_name: Psychological Horror
+    family: horror
+    definition: Perception, uncertainty, and psychological disturbance organize the interactive fear experience.
+    inclusion_criteria:
+    - Destabilizing interpretation, vulnerability, and tension are recurring central systems or situations.
+    exclusion_notes:
+    - Dark imagery alone is insufficient; choose the dominant supported play loop when horror is only
+      a theme.
+    example_games:
+    - Silent Hill 2
+    primary_eligible: true
+  - id: action_horror
+    display_name: Action Horror
+    family: horror
+    definition: Frequent active combat or execution challenges are deliberately organized around sustained
+      horror.
+    inclusion_criteria:
+    - Action encounters and fear-driven pacing jointly define progression.
+    exclusion_notes:
+    - Ordinary monsters in an action game do not automatically establish a horror primary.
+    example_games:
+    - Dead Space
+    primary_eligible: true
+  - id: horror_adventure
+    display_name: Horror Adventure
+    family: horror
+    definition: Exploration, investigation, or authored puzzles deliver a centrally horror-driven experience.
+    inclusion_criteria:
+    - Adventure interactions and recurring threatening or fearful situations dominate.
+    exclusion_notes:
+    - If resource-constrained survival or combat is central, prefer the corresponding horror subgenre.
+    example_games:
+    - SOMA
+    primary_eligible: true
+- id: puzzle
+  display_name: Puzzle
+  definition: Solving bounded logical, spatial, recognition, or knowledge challenges is the main loop.
+  genres:
+  - id: puzzle
+    display_name: Puzzle
+    family: puzzle
+    definition: Repeated reasoning challenges define play without a more specific supported puzzle form.
+    inclusion_criteria:
+    - Rules, deductions, and constructed problem solutions dominate progression.
+    exclusion_notes:
+    - Do not use as a fallback for occasional puzzles in an adventure.
+    example_games:
+    - The Witness
+    primary_eligible: true
+  - id: puzzle_platformer
+    display_name: Puzzle Platformer
+    family: puzzle
+    definition: Platform traversal and puzzle solving are inseparable in the main challenge loop.
+    inclusion_criteria:
+    - Movement through platforms resolves spatial or logical constructions.
+    exclusion_notes:
+    - Pure execution favors a platformer; puzzles without substantial platform traversal remain Puzzle.
+    example_games:
+    - Braid
+    primary_eligible: true
+  - id: physics_puzzle
+    display_name: Physics Puzzle
+    family: puzzle
+    definition: Reasoning about simulated physical interactions solves discrete challenges.
+    inclusion_criteria:
+    - Forces, trajectories, balance, or object dynamics determine solutions.
+    exclusion_notes:
+    - Physics used only for animation or incidental combat is insufficient.
+    example_games:
+    - World of Goo
+    primary_eligible: true
+  - id: match_3
+    display_name: Match-3
+    family: puzzle
+    definition: Creating runs or groups of matching pieces through constrained board moves is the main
+      loop.
+    inclusion_criteria:
+    - Repeated matching, board clearing, cascades, and move objectives dominate.
+    exclusion_notes:
+    - Combining pieces into upgraded items favors Merge.
+    example_games:
+    - Candy Crush
+    primary_eligible: true
+  - id: merge
+    display_name: Merge
+    family: puzzle
+    definition: Combining matching items into higher-tier items is the principal progression loop.
+    inclusion_criteria:
+    - Repeated merges, resulting item chains, and board or inventory constraints drive objectives.
+    exclusion_notes:
+    - Ordinary match-and-clear boards favor Match-3; isolated crafting combinations do not qualify.
+    example_games:
+    - Merge Mansion
+    primary_eligible: true
+  - id: hidden_object
+    display_name: Hidden Object
+    family: puzzle
+    definition: Locating specified or inferred objects within detailed scenes drives progression.
+    inclusion_criteria:
+    - Visual search and identifying concealed scene elements dominate.
+    exclusion_notes:
+    - Scene interaction for broader narrative puzzles may favor Point-and-Click Adventure.
+    example_games:
+    - Hidden Folks
+    primary_eligible: true
+  - id: escape_room
+    display_name: Escape Room
+    family: puzzle
+    definition: Solving linked clues and environmental puzzles unlocks confinement or successive chambers.
+    inclusion_criteria:
+    - Room-contained investigation, codes, mechanisms, and unlocking progression dominate.
+    exclusion_notes:
+    - An isolated escape sequence inside another genre is insufficient.
+    example_games:
+    - The Room
+    primary_eligible: true
+  - id: word_game
+    display_name: Word Game
+    family: puzzle
+    definition: Constructing, discovering, or manipulating words is the central challenge.
+    inclusion_criteria:
+    - Vocabulary, spelling, letter arrangements, or linguistic constraints drive play.
+    exclusion_notes:
+    - Text presentation alone is insufficient.
+    example_games:
+    - Wordle
+    primary_eligible: true
+  - id: trivia_quiz
+    display_name: Trivia / Quiz
+    family: puzzle
+    definition: Answering knowledge questions is the primary challenge loop.
+    inclusion_criteria:
+    - Repeated questions and correctness-based progression or scoring dominate.
+    exclusion_notes:
+    - Broad party collections may favor Party Game; word construction belongs to Word Game.
+    example_games:
+    - Trivia Crack
+    primary_eligible: true
+- id: racing
+  display_name: Racing
+  definition: Vehicle competition, racing performance, or vehicle-arena combat organizes matches.
+  genres:
+  - id: arcade_racing
+    display_name: Arcade Racing
+    family: racing
+    definition: Accessible, stylized racing prioritizes speed, direct handling, and immediate competition.
+    inclusion_criteria:
+    - Races and winning through simplified or exaggerated driving dominate.
+    exclusion_notes:
+    - Realistic handling-focused competition favors Racing Simulation; combat-led arenas favor Vehicular
+      Combat.
+    example_games:
+    - Burnout Paradise
+    primary_eligible: true
+  - id: racing_simulation
+    display_name: Racing Simulation
+    family: racing
+    definition: Competitive racing emphasizes detailed vehicle handling and racing procedures.
+    inclusion_criteria:
+    - Realistic traction, tuning, braking, and racecraft are central to performance.
+    exclusion_notes:
+    - Practical noncompetitive driving tasks favor Driving / Vehicle Simulation.
+    example_games:
+    - Assetto Corsa
+    primary_eligible: true
+  - id: kart_racing
+    display_name: Kart Racing
+    family: racing
+    definition: Compact racing combines accessible vehicle control with playful track interactions and
+      often items.
+    inclusion_criteria:
+    - Kart-style handling, position contests, and designed track obstacles define races.
+    exclusion_notes:
+    - Cartoon art alone is insufficient; unrestricted arena combat may favor Vehicular Combat.
+    example_games:
+    - Mario Kart 8 Deluxe
+    primary_eligible: true
+  - id: rally_racing
+    display_name: Rally Racing
+    family: racing
+    definition: Racing on rally-style stages and varied terrain is the central competitive loop.
+    inclusion_criteria:
+    - Timed stages, surface adaptation, and route navigation define competition.
+    exclusion_notes:
+    - Off-road scenery inside a broader racing game is insufficient.
+    example_games:
+    - DiRT Rally 2.0
+    primary_eligible: true
+  - id: vehicular_combat
+    display_name: Vehicular Combat
+    family: racing
+    definition: Weaponized vehicles compete primarily through damaging or eliminating opponents.
+    inclusion_criteria:
+    - Driving and vehicle-mounted attacks jointly define match objectives.
+    exclusion_notes:
+    - Racing with incidental contact remains Racing; vehicle sports can instead belong to Sports.
+    example_games:
+    - Twisted Metal
+    primary_eligible: true
+- id: sports
+  display_name: Sports
+  definition: Playing or managing organized athletic competition defines the central loop.
+  genres:
+  - id: team_sports
+    display_name: Team Sports
+    family: sports
+    definition: Player-controlled teams compete under an organized sport's rules.
+    inclusion_criteria:
+    - Coordinated team play, sport objectives, and recurring matches dominate.
+    exclusion_notes:
+    - Strategic roster operations without direct athletic control favor Sports Management.
+    example_games:
+    - EA Sports FC 25
+    primary_eligible: true
+  - id: individual_sports
+    display_name: Individual Sports
+    family: sports
+    definition: Individual athletic performance under sport-specific rules drives competition.
+    inclusion_criteria:
+    - Direct control of athletic technique and sport scoring or match objectives dominate.
+    exclusion_notes:
+    - Extreme trick-centered disciplines may favor Extreme Sports; vehicles usually belong to Racing.
+    example_games:
+    - Wii Sports Tennis
+    primary_eligible: true
+  - id: extreme_sports
+    display_name: Extreme Sports
+    family: sports
+    definition: Risky traversal, stunts, and expressive tricks organize athletic play.
+    inclusion_criteria:
+    - Skating, boarding, or comparable disciplines center on tricks and movement mastery.
+    exclusion_notes:
+    - A difficult conventional sport alone is insufficient.
+    example_games:
+    - Tony Hawk's Pro Skater
+    primary_eligible: true
+  - id: sports_management
+    display_name: Sports Management
+    family: sports
+    definition: Operating sporting teams, rosters, and tactics is the main interaction.
+    inclusion_criteria:
+    - Recruitment, training, strategy, and organizational decisions determine sporting outcomes.
+    exclusion_notes:
+    - Direct real-time control of athletes favors Team Sports or Individual Sports.
+    example_games:
+    - Football Manager
+    primary_eligible: true
+- id: card_tabletop
+  display_name: Card & Tabletop
+  definition: Card, board, dice, or tabletop-style rules organize the core decisions.
+  genres:
+  - id: card_game
+    display_name: Card Game
+    family: card_tabletop
+    definition: Playing hands of cards under repeatable card rules is the principal loop.
+    inclusion_criteria:
+    - Card values, hands, and turn decisions directly determine outcomes.
+    exclusion_notes:
+    - Deck construction as the dominant progression favors Deck Builder; collectible competitive ecosystems
+      favor Digital TCG / CCG.
+    example_games:
+    - Solitaire
+    primary_eligible: true
+  - id: deck_builder
+    display_name: Deck Builder
+    family: card_tabletop
+    definition: Constructing and modifying a deck during a run or match drives strategic progression.
+    inclusion_criteria:
+    - Acquiring or removing cards and exploiting deck synergies form the main loop.
+    exclusion_notes:
+    - Pre-match collectible deck construction alone favors Digital TCG / CCG; reset-based runs do not
+      override the card core.
+    example_games:
+    - Slay the Spire
+    primary_eligible: true
+  - id: digital_tcg_ccg
+    display_name: Digital TCG / CCG
+    family: card_tabletop
+    definition: Collecting a persistent card pool and constructing decks for repeatable card battles defines
+      play.
+    inclusion_criteria:
+    - Persistent collection, pre-match deck building, and competitive or structured card battles dominate.
+    exclusion_notes:
+    - In-run deck acquisition favors Deck Builder; card imagery alone is insufficient.
+    example_games:
+    - Hearthstone
+    primary_eligible: true
+  - id: board_game
+    display_name: Board Game
+    family: card_tabletop
+    definition: A shared board or tabletop-style state and discrete rules structure play.
+    inclusion_criteria:
+    - Turns, board positions, pieces, dice, or comparable tabletop interactions dominate.
+    exclusion_notes:
+    - A grid alone is insufficient; more specialized card or strategy loops can take precedence.
+    example_games:
+    - Ticket to Ride
+    primary_eligible: true
+  - id: casino
+    display_name: Casino
+    family: card_tabletop
+    definition: Simulated casino games and wagering-style chip or stake decisions form the main loop.
+    inclusion_criteria:
+    - Casino table or slot rules and repeated chance-based rounds define the activity.
+    exclusion_notes:
+    - A random reward or loot box elsewhere is not a Casino primary; monetization is separate.
+    example_games:
+    - Governor of Poker
+    primary_eligible: true
+- id: party_social
+  display_name: Party & Social
+  definition: Group participation, social interaction, or shared short-form activities organize play.
+  genres:
+  - id: party_game
+    display_name: Party Game
+    family: party_social
+    definition: Accessible group-oriented contests or varied minigames are the main experience.
+    inclusion_criteria:
+    - Rapid shared activities, local or online group play, and social competition dominate.
+    exclusion_notes:
+    - Multiplayer alone is insufficient; a consistent specialized sport or racing loop may take precedence.
+    example_games:
+    - Mario Party
+    primary_eligible: true
+  - id: social_deduction
+    display_name: Social Deduction
+    family: party_social
+    definition: Inferring hidden roles or intentions through discussion, deception, and evidence drives
+      matches.
+    inclusion_criteria:
+    - Secret roles, accusation or voting, and interpersonal deduction determine outcomes.
+    exclusion_notes:
+    - Hidden information without social inference is insufficient.
+    example_games:
+    - Among Us
+    primary_eligible: true
+  - id: social_party_sandbox
+    display_name: Social / Party Sandbox
+    family: party_social
+    definition: Social presence and player-directed shared activities dominate an open-ended virtual space.
+    inclusion_criteria:
+    - Social interaction, user-created spaces, and informal party activities are the principal goals.
+    exclusion_notes:
+    - Co-op in a progression-led game is only a tag; persistent RPG advancement may instead define MMORPG.
+    example_games:
+    - VRChat
+    primary_eligible: true
+- id: music_rhythm
+  display_name: Music & Rhythm
+  definition: Timed interaction with music or rhythmic patterns defines play.
+  genres:
+  - id: rhythm_game
+    display_name: Rhythm Game
+    family: music_rhythm
+    definition: Inputs synchronized to beats, musical phrases, or rhythmic cues are the central challenge.
+    inclusion_criteria:
+    - Timing accuracy against music or rhythm directly controls success.
+    exclusion_notes:
+    - A soundtrack or musical theme alone is insufficient.
+    example_games:
+    - Beat Saber
+    primary_eligible: true
+- id: casual_idle
+  display_name: Casual & Idle
+  definition: Accessible compact loops, incremental progression, or score-focused repetition organize
+    play.
+  genres:
+  - id: casual
+    display_name: Casual
+    family: casual_idle
+    definition: Lightweight, readily understood short-session interactions define play without a more
+      specific loop.
+    inclusion_criteria:
+    - Simple repeated activities and low-complexity goals dominate the supplied evidence.
+    exclusion_notes:
+    - Never use as a fallback for missing evidence or merely because a game is mobile; prefer specific
+      supported genres.
+    example_games:
+    - Neko Atsume
+    primary_eligible: true
+  - id: idle_incremental
+    display_name: Idle / Incremental
+    family: casual_idle
+    definition: Accumulating resources and purchasing compounding upgrades dominates progression, often
+      with limited input.
+    inclusion_criteria:
+    - Automation, repeated upgrades, and growing production or resource rates organize play.
+    exclusion_notes:
+    - Waiting timers or an optional auto-battle mode alone are insufficient.
+    example_games:
+    - Cookie Clicker
+    primary_eligible: true
+  - id: endless_runner
+    display_name: Endless Runner
+    family: casual_idle
+    definition: Continuous forward movement presents repeated obstacle-navigation challenges in score
+      or distance runs.
+    inclusion_criteria:
+    - Automatic or sustained forward travel, avoiding obstacles, and repeated attempts define play.
+    exclusion_notes:
+    - Finite platforming campaigns or freely directed movement do not automatically qualify.
+    example_games:
+    - Subway Surfers
+    primary_eligible: true
+  - id: time_management
+    display_name: Time Management
+    family: casual_idle
+    definition: Completing and sequencing a stream of tasks under time pressure is the primary loop.
+    inclusion_criteria:
+    - Queue management, rapid task switching, and service deadlines determine success.
+    exclusion_notes:
+    - Real-world waiting timers alone are insufficient; broad enterprise simulation may favor Management
+      / Tycoon.
+    example_games:
+    - Diner Dash
+    primary_eligible: true
+  - id: arcade_score_attack
+    display_name: Arcade / Score Attack
+    family: casual_idle
+    definition: Repeated compact attempts prioritize improving score through execution and risk-reward
+      choices.
+    inclusion_criteria:
+    - Score pursuit, replayable short sessions, and escalating challenge define the central goal.
+    exclusion_notes:
+    - If a specific shooter, racing, or rhythm loop is clearly dominant, prefer that genre; generic action
+      may favor Arcade Action.
+    example_games:
+    - Pac-Man
+    primary_eligible: true
 
 tags:
   - id: visual_pixel_art

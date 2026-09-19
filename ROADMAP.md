@@ -12,7 +12,7 @@ Authenticated Jev and full image-to-policy validation pass on the synthetic samp
 ## PR 3 — Jev shadow experiment
 - Run legacy and observer→Jev in parallel
 - Persist full Jev probability distributions
-- Compare 25 pilot tags + 59-way genre
+- Compare 25 pilot tags + hierarchical 14-family / 100-genre classification
 - Do not alter user-facing production answers yet
 
 ## PR 4 — Benchmark v1
