@@ -93,3 +93,17 @@ def test_literal_text_stays_attributed_in_blind_context(taxonomy, evidence):
         reviewed_at="2026-09-19",
     )
     assert not attributed(c, [o])  # an on-screen word alone cannot certify the genre
+
+
+def test_direct_rendering_description_is_not_a_genre_conclusion(taxonomy, evidence):
+    ObservationBoundary(taxonomy).validate(
+        [
+            Observation(
+                id="rendering",
+                evidence_id=evidence.id,
+                text="Pixel-based sprites are visible against a flat background.",
+                observer_model="fixture",
+            )
+        ],
+        evidence,
+    )

@@ -94,3 +94,7 @@ arbitrary generated text is factual. See README for limits and the live-validati
 
 The canonical taxonomy remains `taxonomy/vgms_v4.yaml`. Wheel builds bundle this same file under
 `gametagger/data` so the installed CLI works outside the source checkout.
+
+## Local product workspace
+
+`gametagger.workspace` adds a loopback-only FastAPI application, schema-v1 SQLite store, one bounded worker, private media storage and versioned reviews. `frontend/` is a React/TypeScript workspace built with Vite. Core browser contracts are generated from OpenAPI. The existing taxonomy, identity gate, provider-neutral Observer and strict Jev decision engine remain intact. Website offline jobs prepare evidence and persist explicit partial/not-evaluated results; they never invoke provider clients. Experiment reports recompute matched effects and separate historical replay from checked comparisons. See [runbook](docs/LOCAL_WORKSPACE.md) for operational/security boundaries.

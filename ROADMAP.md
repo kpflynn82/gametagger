@@ -52,3 +52,7 @@ Authenticated Jev and full image-to-policy validation pass on the synthetic samp
 - Natural-language discovery and reranking
 - Evidence-backed recommendation explanations
 - Taxonomy linting and active-learning queues
+
+## Bounded website build
+
+The current machine-readable snapshot is [docs/execution-status.json](docs/execution-status.json), rendered by `/roadmap`; it is not an agent heartbeat. Website implementation and passing workflow tests do not imply measured tagging quality. Live budget, independently checked evidence/labels, temporal recognition and independent review remain separate gates. See [owner brief](docs/CODEX_BUILD_PLAN.md) and [session report](docs/SESSION_REPORT.md).

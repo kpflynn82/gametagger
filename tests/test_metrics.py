@@ -183,3 +183,35 @@ def test_preserved_audit_totals_and_taxonomy_hash():
     assert len(audit["text_bearing_abstentions"]) == 8
     assert audit["genre_measurement"]["emitted_primary_accuracy"]["value"] is None
     assert audit["operational"]["completion"]["denominator"] == 100
+
+
+def test_ninety_percent_unknown_and_ten_percent_correct_candidate_is_not_accuracy():
+    r = row(
+        reference=truth(primary_genre="a"),
+        identity_eligible=True,
+        genre_execution="valid",
+        genre_probabilities={"a": 0.1, "insufficient_evidence": 0.9},
+    )
+    m = genre_metrics([r], {"a"})
+    assert m["forced_choice_candidate_accuracy_diagnostic"]["value"] == 1
+    assert m["actual_primary_correctness"]["value"] == 0
+    r.identity_eligible = False
+    m = genre_metrics([r], {"a"})
+    assert m["actual_primary_correctness"]["value"] is None
+    assert m["identity_excluded_human_labels"] == 1
+
+
+def test_one_accepted_and_99_deferred_positive_cases():
+    rows = [row(reference=truth(), tags={"test": tag()})]
+    rows += [row(reference=truth(), tags={"test": TagMeasurement()}) for _ in range(99)]
+    m = tag_metrics(rows, "test")
+    assert m["accepted_precision"]["value"] == 1
+    assert m["end_to_end_positive_recovery"]["value"] == 0.01
+
+
+def test_unapproved_identity_kept_operational_but_excluded_from_tag_quality():
+    r = row(identity_eligible=False, reference=truth(), tags={"test": tag()})
+    m = tag_metrics([r], "test")
+    assert m["records"] == 1 and m["new_outcomes"]["present"] == 1
+    assert m["accepted_precision"]["value"] is None
+    assert m["end_to_end_positive_recovery"]["value"] is None
