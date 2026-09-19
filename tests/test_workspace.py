@@ -276,3 +276,25 @@ def test_filtered_catalog_export_is_scoped_and_redacted(client):
     assert "description" not in str(value) and "assets" not in str(value)
     csv = client.get("/api/catalog/export?dataset=demo&format=csv").text
     assert "'=1+1" in csv and "Workspace project" not in csv
+
+
+def test_full_asset_set_still_deduplicates_and_refuses_a_ninth(client):
+    p = project(client)
+    for i in range(8):
+        out = io.BytesIO()
+        Image.new("RGB", (8, 8), (i, 0, 0)).save(out, "PNG")
+        r = client.post(
+            f"/api/projects/{p['id']}/assets?name=synthetic.png",
+            content=out.getvalue(),
+            headers=HEAD,
+        )
+        assert r.status_code == 200
+    same = client.post(
+        f"/api/projects/{p['id']}/assets?name=duplicate.png", content=out.getvalue(), headers=HEAD
+    )
+    assert same.status_code == 200
+    excess = client.post(
+        f"/api/projects/{p['id']}/assets?name=ninth.png", content=image_bytes(), headers=HEAD
+    )
+    assert excess.status_code == 409
+    assert len(client.get("/api/projects/" + p["id"]).json()["assets"]) == 8

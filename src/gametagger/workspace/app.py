@@ -188,8 +188,6 @@ def create_app(*, root=None, local_dev=None, role=None, owner="local-owner"):
     def add_project(data: ProjectCreate):
         if data.reference_url and not data.reference_url.startswith(("https://", "http://")):
             raise HTTPException(422, "Reference must be an HTTP(S) URL; it will not be fetched")
-        if len(ws().store.list_projects(owner)) >= 1000:
-            raise HTTPException(409, "Local limit: 1000 projects")
         p = data.model_dump() | {
             "id": uuid4().hex,
             "created_at": now(),
@@ -199,6 +197,12 @@ def create_app(*, root=None, local_dev=None, role=None, owner="local-owner"):
             else "unresolved",
         }
         with ws().store.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            if (
+                db.execute("SELECT count(*) FROM projects WHERE owner=?", (owner,)).fetchone()[0]
+                >= 1000
+            ):
+                raise HTTPException(409, "Local limit: 1000 projects")
             db.execute(
                 "INSERT INTO projects VALUES (?,?,?,?)",
                 (p["id"], owner, json.dumps(p), p["created_at"]),
@@ -321,8 +325,6 @@ def create_app(*, root=None, local_dev=None, role=None, owner="local-owner"):
         project(pid)
         if kind not in {"image", "video"}:
             raise HTTPException(422, "Unsupported media type")
-        if len(ws().store.asset_list(pid)) >= 8:
-            raise HTTPException(409, "Limit: 8 assets per project")
         if "/" in name or "\\" in name or ".." in name or len(name) > 200:
             raise HTTPException(422, "Unsafe filename")
         limit = 5 * 1024 * 1024 if kind == "image" else 40 * 1024 * 1024
@@ -338,6 +340,10 @@ def create_app(*, root=None, local_dev=None, role=None, owner="local-owner"):
         for a in ws().store.asset_list(pid):
             if a["sha256"] == sha:
                 return ws().asset_view(a)
+        # Recheck after the awaited upload body; concurrent streams may have finished first.
+        # This async handler has no further await through validation and database insertion.
+        if len(ws().store.asset_list(pid)) >= 8:
+            raise HTTPException(409, "Limit: 8 assets per project")
         aid = uuid4().hex
         file = aid + (".bin" if kind == "image" else ".mp4")
         path = ws().store.assets / file

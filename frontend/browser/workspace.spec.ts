@@ -80,11 +80,13 @@ test("offline upload → durable partial result → review → catalog → expor
   await expect(
     page.getByRole("heading", { name: "Puzzle", exact: true }),
   ).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "test-results/result-desktop.png",
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "test-results/result-phone.png",
     fullPage: true,
@@ -111,10 +113,16 @@ test("experiments retain all cases, disclose errors, and show both comparison fl
   await expect(
     page.getByText(/Actual deployed version is unverified/),
   ).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({
+    path: "test-results/pipelines-desktop.png",
+    fullPage: true,
+  });
   await page.getByLabel("Hold observations constant").check();
   await page
     .getByRole("button", { name: "Conventional classifier", exact: true })
     .click();
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "test-results/experiments-desktop.png",
     fullPage: true,
@@ -142,6 +150,7 @@ test("responsive overview, menu and empty/error states", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Analyze a game", exact: true }),
   ).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "test-results/overview-desktop.png",
     fullPage: true,
@@ -153,6 +162,7 @@ test("responsive overview, menu and empty/error states", async ({ page }) => {
         () => document.documentElement.scrollWidth <= window.innerWidth,
       ),
     ).toBe(true);
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({
       path: `test-results/overview-${width}.png`,
       fullPage: true,
@@ -201,13 +211,11 @@ test("invalid uploads surface an error without a fabricated analysis", async ({
     .getByLabel("Game or project name")
     .fill("Illustrative invalid-file test");
   await page.getByRole("checkbox").check();
-  await page
-    .getByLabel("Evidence files")
-    .setInputFiles({
-      name: "invalid.png",
-      mimeType: "image/png",
-      buffer: Buffer.from("<html>not an image</html>"),
-    });
+  await page.getByLabel("Evidence files").setInputFiles({
+    name: "invalid.png",
+    mimeType: "image/png",
+    buffer: Buffer.from("<html>not an image</html>"),
+  });
   await page.getByRole("button", { name: "Prepare analysis" }).click();
   await expect(page.getByRole("alert")).toContainText("Invalid media");
   await expect(page).toHaveURL(/\/analyze$/);
