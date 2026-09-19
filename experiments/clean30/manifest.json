@@ -1,0 +1,26 @@
+{
+  "schema_version": "benchmark-v1",
+  "experiment_id": "clean30-readiness-v1",
+  "taxonomy_sha256": "d91cc6c46ea998911dee8e9657d59cc1a4d8ebb1affe7aac84d7219acda0067b",
+  "code_version": "measurement-benchmark-readiness-v1",
+  "methods": [
+    "jev_hierarchical",
+    "non_jev"
+  ],
+  "modes": [
+    "metadata_only",
+    "media_only",
+    "combined"
+  ],
+  "target_cases": 30,
+  "minimum_mobile_first": 10,
+  "planned_development_cases": 6,
+  "cases": [],
+  "limitations": [
+    "No independently checked evidence packs or human-adjudicated labels are available yet.",
+    "Target 30 cases including at least 10 mobile-first; planned development 6 / holdout 24.",
+    "All media permissions, release mappings and evidence-supported annotations remain pending.",
+    "No paid calls authorized in this PR. Saved predictions from each method must bind the same observations.",
+    "Hierarchy and the frozen 100 genre vocabulary remain unchanged. No inference comparison has been run."
+  ]
+}

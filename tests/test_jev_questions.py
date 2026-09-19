@@ -50,4 +50,4 @@ def test_single_view_never_establishes_game_wide_absence():
     spec = specs["visual_third_person"]
     assert "explicit negative source evidence" in spec.criteria["absent"]
     assert "not mutually exclusive" in spec.instructions
-    assert JevQuestionCompiler.prompt_version == "jev-genre-v4.1"
+    assert JevQuestionCompiler.prompt_version == "jev-evidence-v1"

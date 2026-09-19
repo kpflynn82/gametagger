@@ -25,7 +25,11 @@ def test_full_offline_pipeline(taxonomy, evidence):
         evidence=[evidence],
         offline=True,
     )
-    assert len(result.tags) == 25
+    assert len(result.tags) == 17
+    assert all(
+        result.execution.questions[t.id].status in {"valid", "not_evaluated"} for t in taxonomy.tags
+    )
+    assert result.execution.questions["mechanic_parry"].answer is None
     for tag in result.tags:
         assert set(tag.probabilities) == set(TagState)
         assert tag.state == TagState.INSUFFICIENT
@@ -70,9 +74,8 @@ def test_blind_metadata_removed_before_observer_and_jev(taxonomy, evidence):
     assert result.observations == []
     assert result.identity_audit["eligibility"]["status"] == "eligible"
     assert result.run.game_title is None
-    state = gateway.run.call_args.kwargs["state"]
-    assert "Famous Game" not in state and "Souls-like" not in state
-    assert "game_title" not in json.loads(state)
+    gateway.run.assert_not_called()
+    assert result.execution.execution_status == "not_evaluated"
 
 
 @pytest.mark.parametrize("invalid", ["empty", "duplicate", "hash_mismatch", "missing_image"])
@@ -116,7 +119,12 @@ def test_cli_offline_json(evidence, tmp_path):
     )
     result = AnalysisResult.model_validate_json(completed.stdout)
     assert result.run.offline
-    assert len(result.tags) == 25
+    assert len(result.tags) == 0
+    assert all(
+        q.answer is None
+        for key, q in result.execution.questions.items()
+        if not key.startswith("genre")
+    )
     assert result.observations[0].kind == "metadata_quote"
     assert len(result.genre.global_genre_probabilities) == 101
 
@@ -136,7 +144,10 @@ def test_mixed_distributions_preserved_through_policy(taxonomy, evidence):
                 )
             return SystemOneResponse.model_validate(payload)
 
-    result = AnalysisPipeline(MockObserver(), JevDecisionEngine(taxonomy, MixedGateway())).analyze(
+    result = AnalysisPipeline(
+        MockObserver({evidence.id: ["A figure holds a shield."]}),
+        JevDecisionEngine(taxonomy, MixedGateway()),
+    ).analyze(
         game_id="test",
         project_id="test",
         evidence=[evidence],
@@ -166,4 +177,6 @@ def test_cli_passes_workspace_environment_to_observer(evidence, monkeypatch, cap
     )
     cli.main()
     assert constructor.call_args.kwargs["workspace_id"] == "wrkspc_test"
-    assert json.loads(capsys.readouterr().out)["run"]["decision_prompt_version"] == "jev-genre-v4.1"
+    assert (
+        json.loads(capsys.readouterr().out)["run"]["decision_prompt_version"] == "jev-evidence-v1"
+    )

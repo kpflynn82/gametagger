@@ -76,4 +76,8 @@ class DecisionPolicy:
         routed_genre = (
             genre.model_copy(update={"action": self.route_genre(genre)}) if genre else None
         )
+        for decision in [*routed_tags, *([routed_genre] if routed_genre else [])]:
+            decision.publishable = (
+                bool(decision.support_links) and decision.action == PolicyAction.ACCEPT
+            )
         return routed_tags, routed_genre

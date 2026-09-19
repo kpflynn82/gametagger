@@ -1,0 +1,978 @@
+{
+  "schema_version": "legacy-measurement-audit-v1",
+  "audit_code_sha256": "4fa1ab31dbe574e2cf2c093599eef066a4c29013a84acd8e614330a8dedd94b9",
+  "measurement_version": "measurement-v2",
+  "paid_calls": 0,
+  "reference_manifest_sha256": "bf0b8ec3df0ae2c2d0a3d8a246ece0ebc20f14c62bb30f3b74200bf54173edae",
+  "records": 100,
+  "taxonomy_sha256": "d91cc6c46ea998911dee8e9657d59cc1a4d8ebb1affe7aac84d7219acda0067b",
+  "new_outcomes_all_tags": {
+    "insufficient_evidence": 2241,
+    "absent": 8,
+    "present": 175,
+    "conflicting_evidence": 1
+  },
+  "source_title_review_flags": 77,
+  "source_title_review_note": "not a verified mismatch rate",
+  "identity_review_pending": 100,
+  "human_reviewed_truth": 0,
+  "end_to_end_latency_ms": null,
+  "per_tag": {
+    "visual_pixel_art": {
+      "allowed_types": [
+        "gameplay_image",
+        "gameplay_clip",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 24,
+      "missing_or_ambiguous_legacy_completed": 73,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "visual_realistic": {
+      "allowed_types": [
+        "gameplay_image",
+        "gameplay_clip"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 38,
+      "missing_or_ambiguous_legacy_completed": 59,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "visual_stylized": {
+      "allowed_types": [
+        "gameplay_image",
+        "gameplay_clip"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 63,
+      "missing_or_ambiguous_legacy_completed": 34,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "visual_first_person": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 2,
+      "missing_or_ambiguous_legacy_completed": 95,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 3,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 94,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "visual_third_person": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 1,
+      "missing_or_ambiguous_legacy_completed": 96,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 1,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 95,
+        "present": 1
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "visual_isometric": {
+      "allowed_types": [
+        "gameplay_image",
+        "gameplay_clip"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 0,
+      "missing_or_ambiguous_legacy_completed": 97,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "visual_side_scrolling": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 3,
+      "missing_or_ambiguous_legacy_completed": 94,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_melee_combat": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 0,
+      "missing_or_ambiguous_legacy_completed": 97,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 94,
+        "present": 3
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_ranged_combat": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 0,
+      "missing_or_ambiguous_legacy_completed": 97,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 95,
+        "present": 2
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_real_time_combat": {
+      "allowed_types": [
+        "gameplay_clip",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 4,
+      "missing_or_ambiguous_legacy_completed": 93,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 1,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 93,
+        "present": 3
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_turn_based_combat": {
+      "allowed_types": [
+        "gameplay_clip",
+        "developer_documentation",
+        "gameplay_image"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 1,
+      "missing_or_ambiguous_legacy_completed": 96,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 1,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 95,
+        "present": 1
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_parry": {
+      "allowed_types": [
+        "gameplay_clip",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 0,
+      "missing_or_ambiguous_legacy_completed": 97,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_dodge_roll": {
+      "allowed_types": [
+        "gameplay_clip",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 1,
+      "missing_or_ambiguous_legacy_completed": 96,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_stamina": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 1,
+      "missing_or_ambiguous_legacy_completed": 96,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 96,
+        "present": 1
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_crafting": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation",
+        "store_metadata"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 26,
+      "missing_or_ambiguous_legacy_completed": 71,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 84,
+        "present": 13
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_inventory": {
+      "allowed_types": [
+        "gameplay_image",
+        "gameplay_clip",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 6,
+      "missing_or_ambiguous_legacy_completed": 91,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "mechanic_dialogue_choices": {
+      "allowed_types": [
+        "gameplay_image",
+        "gameplay_clip",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 2,
+      "missing_or_ambiguous_legacy_completed": 95,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "world_open_world": {
+      "allowed_types": [
+        "developer_documentation",
+        "store_metadata",
+        "gameplay_clip"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 72,
+      "missing_or_ambiguous_legacy_completed": 25,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 83,
+        "present": 14
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "world_procedural": {
+      "allowed_types": [
+        "developer_documentation",
+        "store_metadata"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 19,
+      "missing_or_ambiguous_legacy_completed": 78,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 89,
+        "present": 8
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "feature_multiplayer": {
+      "allowed_types": [
+        "developer_documentation",
+        "store_metadata",
+        "gameplay_clip"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 86,
+      "missing_or_ambiguous_legacy_completed": 11,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 1,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 62,
+        "present": 34
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "engagement_co_op": {
+      "allowed_types": [
+        "developer_documentation",
+        "store_metadata",
+        "gameplay_clip"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 5,
+      "missing_or_ambiguous_legacy_completed": 92,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 1,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 76,
+        "present": 20
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "narrative_story_driven": {
+      "allowed_types": [
+        "developer_documentation",
+        "gameplay_clip",
+        "store_metadata"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 76,
+      "missing_or_ambiguous_legacy_completed": 21,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 52,
+        "present": 45
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "gameplay_rpg": {
+      "allowed_types": [
+        "developer_documentation",
+        "gameplay_clip",
+        "gameplay_image",
+        "store_metadata"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 84,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 35,
+      "missing_or_ambiguous_legacy_completed": 62,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 69,
+        "present": 28
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "gameplay_shooter": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 13,
+      "missing_or_ambiguous_legacy_completed": 84,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 1,
+        "insufficient_evidence": 94,
+        "present": 2
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    },
+    "gameplay_platformer": {
+      "allowed_types": [
+        "gameplay_clip",
+        "gameplay_image",
+        "developer_documentation"
+      ],
+      "available_source_types": {
+        "store_metadata": 84,
+        "wikipedia": 24
+      },
+      "available_modalities": {
+        "text": 85
+      },
+      "type_eligible_records_before_identity": 0,
+      "identity_and_type_eligible_records": 0,
+      "comparable_legacy_booleans_completed": 20,
+      "missing_or_ambiguous_legacy_completed": 77,
+      "reviewed_positive_claims": null,
+      "reviewed_negative_claims": null,
+      "claim_review_status": "pending; no human source-span adjudication",
+      "new_outcomes": {
+        "absent": 0,
+        "conflicting_evidence": 0,
+        "insufficient_evidence": 97,
+        "present": 0
+      },
+      "execution_errors": 3,
+      "not_evaluated": 0
+    }
+  },
+  "text_bearing_abstentions": [
+    {
+      "case_id": "955",
+      "result_sha256": "b66d4591a19314c5e01d6f727550cddcc7438e491dd22eab040d1b2d3c30aee7",
+      "family_unknown_mass": 0.18,
+      "weighted_conditional_unknown_mass": {
+        "puzzle": 0.1221,
+        "action": 0.0092,
+        "adventure_narrative": 0.0374
+      },
+      "global_unknown": 0.34869999999999995,
+      "top_nonnull": [
+        "adventure",
+        0.165
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "824",
+      "result_sha256": "e953d601a478a69fdd59f5a01d5378065e80b01de166e26f6663f78bae51b79b",
+      "family_unknown_mass": 0.15,
+      "weighted_conditional_unknown_mass": {
+        "action": 0.7031000000000001,
+        "simulation_management": 0.019,
+        "strategy": 0.015600000000000001,
+        "survival_sandbox": 0.019
+      },
+      "global_unknown": 0.9067000000000001,
+      "top_nonnull": [
+        "beat_em_up",
+        0.03950000000000001
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "756",
+      "result_sha256": "8fd09764f51d97b6329c4f8f80fa9135f0a6b6e2909fb65da5eb988f8aabd7ba",
+      "family_unknown_mass": 0.46,
+      "weighted_conditional_unknown_mass": {
+        "role_playing": 0.2756,
+        "adventure_narrative": 0.0017000000000000001
+      },
+      "global_unknown": 0.7373000000000001,
+      "top_nonnull": [
+        "mmorpg",
+        0.2544
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "548",
+      "result_sha256": "9e3b9e52e9dc4310a11e430fdfe6ea9c0ce7c2b5a148c5c654a5d8861bba770b",
+      "family_unknown_mass": 0.0,
+      "weighted_conditional_unknown_mass": {
+        "action": 0.34919999999999995,
+        "sports": 0.0128,
+        "role_playing": 0.0096
+      },
+      "global_unknown": 0.3716,
+      "top_nonnull": [
+        "hero_shooter",
+        0.3298000000000001
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "526",
+      "result_sha256": "dcc31338fd6cf30eb912e200353b286ab2abdcc3b6945336a0ec16a91258e378",
+      "family_unknown_mass": 0.01,
+      "weighted_conditional_unknown_mass": {
+        "action": 0.396,
+        "adventure_narrative": 0.0
+      },
+      "global_unknown": 0.406,
+      "top_nonnull": [
+        "action_adventure",
+        0.2475
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "409",
+      "result_sha256": "c901f9e06ac2cce484c2ff86e51a83fe5610df484ba81811a2f6b04fa60902f5",
+      "family_unknown_mass": 0.0,
+      "weighted_conditional_unknown_mass": {
+        "action": 0.24899999999999997,
+        "puzzle": 0.068
+      },
+      "global_unknown": 0.31699999999999995,
+      "top_nonnull": [
+        "platformer_3d",
+        0.29879999999999995
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "495",
+      "result_sha256": "42555978ad07aef47e99030c4e3e693c04e529f4c7039bb916843d664bea7cad",
+      "family_unknown_mass": 0.3,
+      "weighted_conditional_unknown_mass": {
+        "simulation_management": 0.0407,
+        "action": 0.005600000000000001,
+        "role_playing": 0.0092,
+        "survival_sandbox": 0.0078000000000000005
+      },
+      "global_unknown": 0.36329999999999996,
+      "top_nonnull": [
+        "farm_simulation",
+        0.3293
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    },
+    {
+      "case_id": "1272",
+      "result_sha256": "5f1a1622825dccfa911ba8a56c41a5b07974577e757ed59877c779e6924648b5",
+      "family_unknown_mass": 0.05,
+      "weighted_conditional_unknown_mass": {
+        "casual_idle": 0.33540000000000003,
+        "simulation_management": 0.1275,
+        "puzzle": 0.009300000000000001,
+        "role_playing": 0.0095
+      },
+      "global_unknown": 0.5317,
+      "top_nonnull": [
+        "casual",
+        0.42900000000000005
+      ],
+      "semantic_cause": "unresolved; identity and evidence review needed",
+      "conditional_unknown_meaning": "no eligible genre supported in that family"
+    }
+  ],
+  "limitations": [
+    "Original sample is an intake stress suite, not 100 verified games.",
+    "Historical agreement is not accuracy; labels are not human truth.",
+    "Type-only diagnostics precede identity gating. No new identity approvals.",
+    "No actual media was used; this is not a vision evaluation.",
+    "Explicit positive/negative source-span review pending; never infer from absence.",
+    "Original usage and final-call latency do not describe a bill or end-to-end pipeline.",
+    "Legacy labels lack matching saved observations; unpaired baseline only."
+  ],
+  "operational": {
+    "records": 100,
+    "completion": {
+      "numerator": 97,
+      "denominator": 100,
+      "value": 0.97
+    },
+    "first_attempt_success": {
+      "numerator": 88,
+      "denominator": 100,
+      "value": 0.88
+    },
+    "first_attempt_unknown": 0,
+    "retry_recovery": {
+      "numerator": 9,
+      "denominator": 12,
+      "value": 0.75
+    },
+    "retry_recovery_unknown": 0,
+    "terminal_errors": {
+      "numerator": 3,
+      "denominator": 100,
+      "value": 0.03
+    },
+    "partial_results": {
+      "numerator": 0,
+      "denominator": 100,
+      "value": 0.0
+    },
+    "not_evaluated": {
+      "numerator": 0,
+      "denominator": 100,
+      "value": 0.0
+    },
+    "identity_eligibility": {
+      "numerator": 0,
+      "denominator": 100,
+      "value": 0.0
+    },
+    "no_evidence": {
+      "numerator": 15,
+      "denominator": 100,
+      "value": 0.15
+    },
+    "evidence_availability_unknown": 0
+  },
+  "genre_measurement": {
+    "human_label_count": 0,
+    "execution_errors": 3,
+    "not_evaluated": 0,
+    "forced_choice_candidate_accuracy_diagnostic": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "emitted_primary_accuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "primary_coverage": {
+      "numerator": 74,
+      "denominator": 100,
+      "value": 0.74
+    },
+    "labelled_primary_coverage": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "end_to_end_correct_primary": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "publishable_precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "publication_coverage": {
+      "numerator": 0,
+      "denominator": 100,
+      "value": 0.0
+    },
+    "published_without_human_truth": 0,
+    "invalid_distributions": 0,
+    "confusion_counts": []
+  },
+  "private_full_audit_sha256": "34c273153b730c01a113949f09f358c775d56f6ff81b5e6735e953869e7d88bb"
+}

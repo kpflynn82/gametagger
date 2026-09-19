@@ -45,14 +45,38 @@ class EvidenceItem(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class ImageRegion(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    x: float = Field(ge=0, le=1)
+    y: float = Field(ge=0, le=1)
+    width: float = Field(gt=0, le=1)
+    height: float = Field(gt=0, le=1)
+
+    @model_validator(mode="after")
+    def inside_image(self):
+        if self.x + self.width > 1 or self.y + self.height > 1:
+            raise ValueError("Text region must be inside the image")
+        return self
+
+
 class Observation(BaseModel):
     model_config = ConfigDict(extra="forbid")
     id: str = Field(min_length=1)
     evidence_id: str = Field(min_length=1)
     text: str = Field(min_length=1)
-    kind: Literal["visual_fact", "metadata_quote"] = "visual_fact"
+    kind: Literal["visual_fact", "visual_text", "metadata_quote"] = "visual_fact"
     metadata_key: str | None = None
+    image_region: ImageRegion | None = None
     observer_model: str = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def attributed_text(self):
+        if self.kind == "visual_text":
+            if self.image_region is None or self.metadata_key is not None:
+                raise ValueError("Literal image text requires a region and no metadata key")
+        elif self.image_region is not None:
+            raise ValueError("Text regions belong only to literal image text")
+        return self
 
 
 class AnalysisRun(BaseModel):
@@ -69,6 +93,7 @@ class AnalysisRun(BaseModel):
     stage_latency_ms: dict[str, float] = Field(default_factory=dict)
     usage: dict[str, int | None] = Field(default_factory=dict)
     usage_by_stage: dict[str, dict[str, int | None]] = Field(default_factory=dict)
+    observer_requests: list[dict[str, Any]] = Field(default_factory=list)
     offline: bool = False
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     latency_ms: float | None = None
@@ -83,6 +108,8 @@ class TagDecision(BaseModel):
     evidence_ids: list[str] = Field(default_factory=list)
     decision_model: str
     action: PolicyAction | None = None
+    support_links: list[dict[str, Any]] = Field(default_factory=list)
+    publishable: bool = False
 
 
 class GenreCandidate(BaseModel):
@@ -108,6 +135,8 @@ class GenreDecision(BaseModel):
     conditional_models: dict[str, str]
     decision_model: str
     action: PolicyAction | None = None
+    support_links: list[dict[str, Any]] = Field(default_factory=list)
+    publishable: bool = False
 
     @computed_field
     @property
@@ -280,6 +309,7 @@ class DecisionBatch(BaseModel):
     genre_execution: QuestionExecution | None = None
     questions: dict[str, QuestionExecution] = Field(default_factory=dict)
     attempts: list[RequestAttempt] = Field(default_factory=list)
+    evidence_policy: dict[str, Any] = Field(default_factory=dict)
     identity_status: str = "reference_only"
     retry_policy: str = "first-valid-v1; max_attempts=2; strict-total-tolerance=0.001"
 
