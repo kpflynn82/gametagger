@@ -15,3 +15,7 @@
 Use the `gametagger` package. Run `pytest`, `ruff check .`, and `ruff format --check .`.
 Live tests require both `GAMETAGGER_RUN_LIVE=1` and `TYPESAFE_API_KEY`; otherwise they skip.
 Keep the observer and decision-provider interfaces injectable for offline tests.
+
+## Bounded product build
+
+Read [the owner build brief](docs/CODEX_BUILD_PLAN.md) and [current execution status](docs/EXECUTION_STATUS.md) before product work. Keep live inference budget-disabled without a numeric authorization. The local workspace is not a production deployment.
