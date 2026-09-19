@@ -224,3 +224,22 @@ test("invalid uploads surface an error without a fabricated analysis", async ({
     page.getByRole("button", { name: "Prepare analysis" }),
   ).toBeEnabled();
 });
+
+test("quality views keep unavailable and illustrative results unmeasured", async ({ page }) => {
+  await page.goto("/experiments");
+  await page.getByRole("button", { name: "quality", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Evidence-supported quality" })).toBeVisible();
+  await expect(page.getByText("Not measured", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("0%", { exact: true })).toHaveCount(0);
+  await page.getByText("Which change does this comparison measure?", { exact: true }).click();
+  await expect(page.getByText(/A → B: source\/data repairs/)).toBeVisible();
+  await expect(page.getByText(/C → D: conventional versus Jev/)).toBeVisible();
+  await page.getByLabel("Saved comparison").selectOption("illustrative-ui-test");
+  await expect(page.getByRole("status")).toContainText("Illustrative / UI test data");
+  await expect(page.getByText("Illustrative/unavailable data cannot establish an effect", {exact:true})).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path:"../docs/screenshots/quality-desktop.png", fullPage:true });
+  await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await page.screenshot({ path:"../docs/screenshots/quality-phone.png", fullPage:true });
+});
