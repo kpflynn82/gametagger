@@ -267,3 +267,18 @@ def test_invalid_stage_b_fails_instead_of_producing_partial_genre(taxonomy, fail
     assert batch.genre is None and len(batch.tags) == 25
     assert batch.execution_status == "partial"
     assert batch.genre_execution.error.code == "conditional_dependency"
+
+
+def test_wrong_family_rejection_mass_diagnostic_preserves_reference_formula(taxonomy):
+    batch, _ = classify(
+        taxonomy,
+        {"action": 0.51, "role_playing": 0.49},
+        {
+            "action": {"action_adventure": 0.8, "insufficient_evidence": 0.2},
+            "role_playing": {"insufficient_evidence": 1.0},
+        },
+    )
+    assert batch.genre.global_genre_probabilities["action_adventure"] == pytest.approx(0.408)
+    assert batch.genre.global_genre_probabilities["insufficient_evidence"] == pytest.approx(0.592)
+    assert batch.genre.primary_genre is None
+    # Arithmetic regression only: no claim that wrong-family rejection is calibrated uncertainty.
