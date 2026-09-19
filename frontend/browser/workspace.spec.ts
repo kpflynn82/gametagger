@@ -76,7 +76,8 @@ test("offline upload → durable partial result → review → catalog → expor
   await expect(
     page.getByText("Illustrative UI test data", { exact: true }),
   ).toBeVisible();
-  await page.getByRole("link", { name: "2 runs →" }).click();
+  await page.getByRole("row").filter({ hasText: "Illustrative UI test data" })
+    .getByRole("link", { name: "2 runs →" }).click();
   await expect(
     page.getByRole("heading", { name: "Puzzle", exact: true }),
   ).toBeVisible();

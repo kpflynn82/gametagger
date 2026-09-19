@@ -93,6 +93,8 @@ class RunView(Contract):
     events: list[dict[str, Any]] = Field(default_factory=list)
     tags: list[TagView] = Field(default_factory=list)
     observations: list[dict[str, Any]] = Field(default_factory=list)
+    observation_windows: list[dict[str, Any]] = Field(default_factory=list)
+    observation_executions: list[dict[str, Any]] = Field(default_factory=list)
     assets: list[AssetView] = Field(default_factory=list)
     provenance: dict[str, Any] = Field(default_factory=dict)
     alternatives: list[dict[str, Any]] = Field(default_factory=list)

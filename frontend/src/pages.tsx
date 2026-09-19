@@ -1,3 +1,4 @@
+import { ObservationReplayPanel } from "./observation-replay";
 import { useEffect, useRef, useState } from "react";
 import {
   Link,
@@ -757,6 +758,7 @@ export function ResultPage({ cap }: { cap?: Capabilities }) {
   const [selected, setSelected] = useState("");
   const [review, setReview] = useState(false);
   const video = useRef<HTMLVideoElement>(null);
+  const [seek, setSeek] = useState<number>();
   const navigate = useNavigate();
   useEffect(() => {
     let stopped = false;
@@ -834,7 +836,11 @@ export function ResultPage({ cap }: { cap?: Capabilities }) {
         <div className="result-badges">
           <Badge tone="amber">{words(r.status)}</Badge>
           <Badge>{words(r.identity_status)}</Badge>
-          <Badge>Offline · no recognition</Badge>
+          <Badge>
+            {r.mode === "observation_replay"
+              ? "Saved observation replay · unverified"
+              : "Offline · no recognition"}
+          </Badge>
           {r.dataset === "demo" && (
             <Badge tone="amber">Demo / UI test data</Badge>
           )}
@@ -914,6 +920,11 @@ export function ResultPage({ cap }: { cap?: Capabilities }) {
                 {a.kind === "video" ? (
                   <video
                     ref={video}
+                    data-asset={a.id}
+                    onLoadedMetadata={() => {
+                      if (video.current && seek !== undefined)
+                        video.current.currentTime = seek;
+                    }}
                     key={a.id}
                     src={a.url}
                     controls
@@ -970,6 +981,26 @@ export function ResultPage({ cap }: { cap?: Capabilities }) {
                   <Badge>{words(String(o.kind))}</Badge>
                   <p>{String(o.text)}</p>
                   <small>Source: {String(o.evidence_id)}</small>
+                  {Boolean(o.context) && (
+                    <p>Proposed context: {String(o.context)} · not reviewed</p>
+                  )}
+                  {Boolean(o.provenance_status) && (
+                    <p className="field-note">{String(o.provenance_status)}</p>
+                  )}
+                  {typeof o.timestamp_start === "number" && (
+                    <button
+                      onClick={() => {
+                        const assetId = String(o.evidence_id);
+                        const time = Number(o.timestamp_start);
+                        setSelected(assetId);
+                        setSeek(time);
+                        if (video.current?.dataset.asset === assetId)
+                          video.current.currentTime = time;
+                      }}
+                    >
+                      View source at {Number(o.timestamp_start).toFixed(2)}s
+                    </button>
+                  )}
                 </blockquote>
               ))
             ) : (
@@ -979,6 +1010,11 @@ export function ResultPage({ cap }: { cap?: Capabilities }) {
               </p>
             )}
           </section>
+          <ObservationReplayPanel
+            key={r.id}
+            run={r}
+            reviewer={cap?.role === "reviewer"}
+          />
           <section className="panel trace">
             <h2>Run trace</h2>
             <ol>

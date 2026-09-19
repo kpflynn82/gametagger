@@ -41,6 +41,7 @@ jobs:
       - run: git diff --exit-code -- frontend/openapi.json frontend/src/api-schema.d.ts
       - run: npm run lint && npm test && npm run build
         working-directory: frontend
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: npx playwright install --with-deps chromium
         working-directory: frontend
       - run: npm run test:browser

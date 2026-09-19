@@ -9,9 +9,12 @@ from uuid import uuid4
 
 from gametagger.domain import EvidenceItem, EvidenceType, Observation
 from gametagger.identity import project_upload_manifest
+from gametagger.observers.anthropic_ordered import PROMPT_SHA256, PROMPT_VERSION
+from gametagger.observers.ordered import digest
 from gametagger.taxonomy import default_taxonomy_path, load_taxonomy
 from gametagger.workspace.contracts import AssetView, ProjectView, RunView, TagView
 from gametagger.workspace.media import extract_windows
+from gametagger.workspace.observation_replay import validate_replay, window_views
 from gametagger.workspace.store import now
 
 
@@ -135,10 +138,119 @@ class Workspace:
                 for t in self.taxonomy.tags
             ],
             observations=result.get("observations", []),
+            observation_windows=window_views(r["assets"]),
+            observation_executions=result.get("observation_executions", []),
             assets=[self.asset_view(a, r["id"]) for a in r["assets"]],
             provenance=result.get("provenance", {}),
             reviews=reviews,
         )
+
+    def replay_observations(self, parent, owner, request):
+        from copy import deepcopy
+
+        start = perf_counter()
+        bundle = request.replay
+        current = self.store.project(parent["project_id"], owner)
+        if current["identity_status"] != "associated_project":
+            raise ValueError("Current identity requires review")
+        if parent["mode"] != "offline":
+            raise ValueError("Select the original prepared run; replay cannot be layered")
+        taxonomy_sha = hashlib.sha256(default_taxonomy_path().read_bytes()).hexdigest()
+        observations, executions = validate_replay(
+            bundle, parent, self.store, self.taxonomy, taxonomy_sha
+        )
+        input_hash = digest({"parent": parent["id"], "replay": bundle.model_dump(mode="json")})
+        with self.lock, self.store.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            latest = db.execute(
+                "SELECT body FROM projects WHERE id=? AND owner=?", (parent["project_id"], owner)
+            ).fetchone()
+            if not latest or json.loads(latest["body"])["identity_status"] != "associated_project":
+                raise ValueError("Identity association changed during replay validation")
+            existing = db.execute(
+                "SELECT body,input_hash FROM runs WHERE owner=? AND idempotency_key=?",
+                (owner, request.idempotency_key),
+            ).fetchone()
+            if existing:
+                if existing["input_hash"] != input_hash:
+                    raise ValueError("Idempotency key already used for different inputs")
+                return json.loads(existing["body"])
+            count = db.execute(
+                "SELECT count(*) FROM runs WHERE owner=? "
+                "AND datetime(created_at)>datetime('now','-1 minute')",
+                (owner,),
+            ).fetchone()[0]
+            if count >= 30:
+                raise ValueError("Rate limit: 30 runs per minute")
+            r = deepcopy(parent)
+            r.update(
+                id=uuid4().hex,
+                mode="observation_replay",
+                input_hash=input_hash,
+                status="partial",
+                created_at=now(),
+                events=[],
+            )
+            r["events"] = [
+                {"stage": "validating_sources", "at": now(), "execution": "completed"},
+                {"stage": "observing", "at": now(), "execution": "replayed"},
+                {
+                    "stage": "classifying",
+                    "at": now(),
+                    "execution": "not_evaluated",
+                    "reason": "live_budget_disabled",
+                },
+                {"stage": "partial", "at": now()},
+            ]
+            r["observation_replay"] = bundle.model_dump(mode="json")
+            result = r["result"]
+            result["observations"] += observations
+            result["observation_executions"] = executions
+            result["blocker"] = (
+                "Saved observations replayed; claims are unverified. "
+                "Classification remains not evaluated."
+            )
+            result["provenance"].update(
+                execution_mode="saved-observation-replay",
+                parent_run_id=parent["id"],
+                code_version=os.getenv("GAMETAGGER_BUILD_SHA", "unrecorded"),
+                input_sha256=input_hash,
+                parent_input_sha256=parent["input_hash"],
+                replay_sha256=digest(bundle.model_dump(mode="json")),
+                replay_kind=bundle.kind,
+                observer=PROMPT_VERSION,
+                observer_prompt_sha256=PROMPT_SHA256,
+                historical_observer_attempts=[
+                    a.model_dump(exclude={"output"}, mode="json") for a in bundle.attempts
+                ],
+                provenance_status=(
+                    "Supplied provenance; hashes verified, provider origin not authenticated"
+                ),
+                end_to_end_latency_ms=None,
+                replay_validation_latency_ms=(perf_counter() - start) * 1000,
+                queue_latency_ms=0,
+                latency_scope=(
+                    "local replay validation only; "
+                    "total request and original inference latency unmeasured"
+                ),
+                cache_condition="saved observation replay; original request timings separate",
+                usage=None,
+                provider_calls=0,
+            )
+            db.execute(
+                "INSERT INTO runs VALUES (?,?,?,?,?,?,?,?)",
+                (
+                    r["id"],
+                    r["project_id"],
+                    owner,
+                    request.idempotency_key,
+                    input_hash,
+                    "partial",
+                    json.dumps(r),
+                    r["created_at"],
+                ),
+            )
+        return r
 
     def enqueue(self, p, owner, key, mode):
         if mode == "live":
