@@ -1456,3 +1456,9 @@ blockquote {
 .result-grid > * { min-width: 0; }
 .observation-replay input { max-width: 100%; }
 .observation-replay code { overflow-wrap: anywhere; }
+
+.quality-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.quality-pair > * { min-width: 0; }
+.quality-pair svg { width: 100%; max-width: 400px; font-size: 10px; }
+.quality-pair g:focus circle { stroke: #1b2333; stroke-width: 3px; }
+@media (max-width: 600px) { .quality-pair { grid-template-columns: minmax(0, 1fr); } }

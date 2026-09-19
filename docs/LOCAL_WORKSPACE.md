@@ -74,3 +74,7 @@ To reproduce the public historical ledger from the preserved private snapshot, u
 ## Saved ordered observations
 
 Results now offers an exact-window manifest and reviewer-only saved JSON import for prepared clips. A replay is a new durable run, never an overwrite. Its observations remain unverified, and selecting one seeks its real source timestamp. See [the replay contract and boundaries](ORDERED_OBSERVATIONS.md). No key or import enables live inference.
+
+## Detailed Jev Impact reports
+
+Saved `paired-report-v2` files may include the exact per-case measurements from both methods. The Quality tab then shows per-tag precision/recovery with denominators, raw execution counts, evidence-supported Brier/reliability and genre confusion counts. Missing labels stay unknown, incomplete distributions stay errors and incompatible pairs cannot produce quality changes. `docs/METRICS.md` defines the contract and the create-only offline report command. The default workspace still has no checked comparison; its scorecard remains Not measured. All illustrative browser fixtures are excluded from effects.

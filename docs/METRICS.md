@@ -49,3 +49,27 @@ Median total latency in saved comparisons requires at least two matched complete
 - Family Action .51 / RPG .49, Action child .80 / unknown .20, RPG unknown 1.0 still yields genre .408 and global unknown .592. This tests arithmetic, not whether wrong-family rejection means genuinely insufficient game evidence.
 
 See [replay contracts](PR_B_MEASUREMENT.md), [original audit](LEGACY100_EVIDENCE_AUDIT.md), and [local runbook](LOCAL_WORKSPACE.md).
+
+## Paired case scorecards (v2)
+
+`paired-report-v2` can carry `case_measurements` for each method using the existing typed `CaseMeasurement` contract. Every assigned case must be present for paired quality; case IDs, evidence/observation hashes, taxonomy, conditions, reference version, input mode, platform, identity eligibility and reference annotations must agree. Method/case IDs, detailed SHA-256 hashes and the frozen tag/genre vocabulary are checked. Run execution-error rates include malformed tag/genre distributions; partial-output rates remain separately visible. `paired-report-v1` remains readable for historical summary-only reports and cannot carry v2 case rows.
+
+The website reuses `evaluation.metrics` for per-tag accepted precision, accepted-only recall, end-to-end positive recovery, raw outcomes, errors, four-state Brier, reliability buckets and genre confusion **counts**. It shows micro tag precision/recall in the headline, per-tag denominators in the quality table, and macro values in the full report inspector. Paired n is games, never games × 25 tags. Undefined denominators remain null. One accepted positive and 99 deferred positives yields 100% accepted precision but only 1% end-to-end recall. Identity-excluded and pending-label cases remain visible in assigned/operational counts.
+
+Detailed rows take precedence over summary booleans for emitted-primary correctness, useful coverage and the accepted-result denominator of cost. A null primary cannot become correct/usable through a contradictory summary flag. A missing or mismatched detailed pair cannot fall back to those summary booleans. A known candidate metric may be displayed even when the baseline denominator is undefined; its **change remains undefined**.
+
+Four-state calibration uses only valid distributions and evidence-supported human references. Game-truth positive recovery is reported separately. Invalid totals such as 0.99 stay invalid, count as errors and do not enter Brier/reliability. No raw distribution is renormalized by this adapter. The visual reliability plot requires at least two buckets with five scored cases each; this is a display guard, **not** sufficient evidence of calibration. Sparse bins remain in the table with counts. No per-genre accuracy or independent tag-level confidence interval is inferred.
+
+Saved reports declare `comparison_question`: source repair (A→B), Observer separation (B→C), classifier increment (C→D), end-to-end, Jev method, or unassigned. Claiming a Jev increment requires declared conventional→Jev method roles and identical nonempty classification-criteria hashes, as well as the shared evidence/observations/conditions contract. Reports remain descriptive and cannot automatically attribute an effect to a vendor. Changed-evidence source-repair studies need a separately reviewed design; this viewer deliberately does not weaken matched-evidence gates to produce a number.
+
+To prepare a report from permitted existing method files without network calls:
+
+```bash
+python -m gametagger.workspace.experiments \
+  --baseline /private/conventional-method.json \
+  --candidate /private/jev-method.json \
+  --question classifier_increment \
+  --output .local/reports/new-comparison.json
+```
+
+Output is create-only and private. The website never loads raw source bodies or full case-reference payloads to draw these charts. Model/method records and allowlisted case identifiers/status/primary choices remain inspectable. Imported reference provenance is declared data; this code cannot turn AI suggestions into actual human review. No new reviewed labels or real effect sizes were produced to implement this interface.

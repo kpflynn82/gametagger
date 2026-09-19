@@ -1,5 +1,168 @@
 {
   "$defs": {
+    "CaseMeasurement": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "mode": {
+          "title": "Mode",
+          "type": "string"
+        },
+        "platform": {
+          "default": "unknown",
+          "title": "Platform",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "error",
+            "not_evaluated",
+            "pending"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "identity_eligible": {
+          "default": false,
+          "title": "Identity Eligible",
+          "type": "boolean"
+        },
+        "evidence_available": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Available"
+        },
+        "first_attempt_success": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Attempt Success"
+        },
+        "retried": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retried"
+        },
+        "retry_recovered": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retry Recovered"
+        },
+        "primary_genre": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Primary Genre"
+        },
+        "genre_execution": {
+          "default": "not_evaluated",
+          "enum": [
+            "valid",
+            "error",
+            "not_evaluated"
+          ],
+          "title": "Genre Execution",
+          "type": "string"
+        },
+        "genre_probabilities": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Genre Probabilities"
+        },
+        "genre_action": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Genre Action"
+        },
+        "genre_evidence_eligible": {
+          "default": false,
+          "title": "Genre Evidence Eligible",
+          "type": "boolean"
+        },
+        "genre_support_verified": {
+          "default": false,
+          "title": "Genre Support Verified",
+          "type": "boolean"
+        },
+        "tags": {
+          "additionalProperties": {
+            "$ref": "#/$defs/TagMeasurement"
+          },
+          "title": "Tags",
+          "type": "object"
+        },
+        "reference": {
+          "$ref": "#/$defs/Reference"
+        }
+      },
+      "required": [
+        "case_id",
+        "method",
+        "mode",
+        "status"
+      ],
+      "title": "CaseMeasurement",
+      "type": "object"
+    },
     "MethodRecord": {
       "additionalProperties": false,
       "properties": {
@@ -10,6 +173,30 @@
         "version": {
           "title": "Version",
           "type": "string"
+        },
+        "method_family": {
+          "default": "other",
+          "enum": [
+            "legacy_combined",
+            "conventional",
+            "jev_hierarchical",
+            "jev_direct",
+            "other"
+          ],
+          "title": "Method Family",
+          "type": "string"
+        },
+        "criteria_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Criteria Hash"
         },
         "cohort": {
           "title": "Cohort",
@@ -112,6 +299,14 @@
           "default": false,
           "title": "Accounting Complete",
           "type": "boolean"
+        },
+        "case_measurements": {
+          "items": {
+            "$ref": "#/$defs/CaseMeasurement"
+          },
+          "maxItems": 1000,
+          "title": "Case Measurements",
+          "type": "array"
         }
       },
       "required": [
@@ -128,18 +323,200 @@
       ],
       "title": "MethodRecord",
       "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "origin": {
+          "default": "unavailable",
+          "enum": [
+            "human_review",
+            "ai_suggestion",
+            "legacy_reference",
+            "unavailable"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "reviewer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "primary_genre": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Primary Genre"
+        },
+        "boundary_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Boundary Note"
+        },
+        "game_truth": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Game Truth",
+          "type": "object"
+        },
+        "supported_truth": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "enum": [
+                  "present",
+                  "absent",
+                  "insufficient_evidence",
+                  "conflicting_evidence"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Supported Truth",
+          "type": "object"
+        }
+      },
+      "title": "Reference",
+      "type": "object"
+    },
+    "TagMeasurement": {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State"
+        },
+        "execution": {
+          "default": "not_evaluated",
+          "enum": [
+            "valid",
+            "error",
+            "not_evaluated"
+          ],
+          "title": "Execution",
+          "type": "string"
+        },
+        "probabilities": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Probabilities"
+        },
+        "action": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Action"
+        },
+        "evidence_eligible": {
+          "default": false,
+          "title": "Evidence Eligible",
+          "type": "boolean"
+        },
+        "support_verified": {
+          "default": false,
+          "title": "Support Verified",
+          "type": "boolean"
+        }
+      },
+      "title": "TagMeasurement",
+      "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "paired-report-v1",
-      "default": "paired-report-v1",
+      "default": "paired-report-v2",
+      "enum": [
+        "paired-report-v1",
+        "paired-report-v2"
+      ],
       "title": "Schema Version",
       "type": "string"
     },
     "report_id": {
       "title": "Report Id",
+      "type": "string"
+    },
+    "comparison_question": {
+      "default": "unassigned",
+      "enum": [
+        "unassigned",
+        "source_repair",
+        "observer_separation",
+        "classifier_increment",
+        "end_to_end",
+        "jev_method"
+      ],
+      "title": "Comparison Question",
       "type": "string"
     },
     "kind": {
