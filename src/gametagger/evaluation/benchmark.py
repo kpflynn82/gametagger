@@ -120,7 +120,7 @@ class SavedPrediction(Contract):
 class BenchmarkCase(Contract):
     id: str
     split: Literal["development", "holdout"]
-    canonical_game_id: str | None = None
+    canonical_game_id: str | None = Field(default=None, min_length=1, pattern=r"^\S(?:.*\S)?$")
     franchise_group: str | None = None
     asset_groups: list[str] = Field(default_factory=list)
     platform: Literal["pc", "console", "mobile", "unknown"]
@@ -168,6 +168,8 @@ class BenchmarkManifest(Contract):
                 group = (kind, key)
                 if group in groups and groups[group] != case.split:
                     raise ValueError("Canonical/franchise/asset/observation group crosses splits")
+                if kind == "canonical" and group in groups:
+                    raise ValueError("Duplicate canonical game within a split")
                 groups[group] = case.split
         return self
 
@@ -191,12 +193,26 @@ def benchmark_readiness(manifest, reports, taxonomy):
             failures.append(failure)
 
     # This is the declared clean diagnostic pilot, not a tunable pass threshold.
-    require("target_cohort_size", len(manifest.cases), 30)
-    mobile = sum(c.mobile_first is True for c in manifest.cases)
+    games = {c.canonical_game_id for c in manifest.cases if c.canonical_game_id is not None}
+    require("target_cohort_size", len(games), 30)
+    mobile = len(
+        {
+            c.canonical_game_id
+            for c in manifest.cases
+            if c.canonical_game_id is not None and c.mobile_first is True
+        }
+    )
     if mobile < 10:
         failures.append({"code": "minimum_mobile_first", "actual": mobile, "minimum": 10})
     split = {
-        name: sum(c.split == name for c in manifest.cases) for name in ("development", "holdout")
+        name: len(
+            {
+                c.canonical_game_id
+                for c in manifest.cases
+                if c.canonical_game_id is not None and c.split == name
+            }
+        )
+        for name in ("development", "holdout")
     }
     require("development_holdout_split", split, {"development": 6, "holdout": 24})
     require(
@@ -295,11 +311,16 @@ def benchmark_readiness(manifest, reports, taxonomy):
         "qualification_policy": QUALIFICATION_POLICY,
         "qualification_failure_reasons": failures,
         "actual_cases": len(manifest.cases),
-        "cases_not_yet_assembled": max(0, 30 - len(manifest.cases)),
+        "distinct_canonical_games": len(games),
+        "unresolved_canonical_cases": sum(c.canonical_game_id is None for c in manifest.cases),
+        "cohort_count_unit": "distinct canonical game",
+        "cases_not_yet_assembled": max(0, 30 - len(games)),
         "target_cases": 30,
         "mobile_first_cases": mobile,
+        "distinct_mobile_first_games": mobile,
         "minimum_mobile_first": 10,
         "split_counts": split,
+        "distinct_split_counts": split,
         "required_methods": manifest.methods,
         "required_modes": list(MODES),
         "declared_modes": manifest.modes,

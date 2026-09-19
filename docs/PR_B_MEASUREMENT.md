@@ -66,11 +66,21 @@ never silently reused as media-only truth.
 
 The runner emits `benchmark_qualified` and `qualification_failure_reasons` in both the
 summary and its CLI-visible `availability` object. Policy `clean30-qualification-v1` requires
-exactly 30 cases, at least ten explicitly mobile-first cases, six development and 24 holdout
-cases, and all three evidence modes. Lowering the manifest's planned targets or removing a
+exactly 30 distinct canonical games, at least ten explicitly mobile-first games, six development
+and 24 holdout games, and all three evidence modes. Lowering the manifest's planned targets or removing a
 mode cannot qualify a smaller pilot. Every declared method must have a recorded prediction
 cell for every case and required mode. Qualification does not certify model quality or
 authenticate a supplied reviewer's identity.
+
+Different case IDs cannot duplicate a canonical game, even within the same split. Such a
+manifest is rejected before replay/output creation. Existing cross-split canonical, franchise,
+asset and observation-group leakage protection remains. Blank or padded canonical IDs are
+invalid; unresolved IDs stay null rather than being guessed or normalized from titles.
+`actual_cases` retains the raw record count, while `distinct_canonical_games`,
+`distinct_mobile_first_games` and `distinct_split_counts` identify the qualification units.
+The existing `mobile_first_cases` and `split_counts` fields also use distinct canonical games;
+`unresolved_canonical_cases` records excluded unknown identities. Unknown identities cannot
+inflate cohort size, the mobile-first minimum, or either split's quota.
 
 `human_reviewed_references_by_mode` counts effective human-reviewed references once per
 case/mode, including `references_by_mode` overrides. `human_reviewed_reference_cells` sums

@@ -16,6 +16,7 @@ from gametagger.evaluation.benchmark import (
     BenchmarkManifest,
     ObservationBundle,
     SavedPrediction,
+    benchmark_readiness,
     context_for,
     replay_manifest,
     sha256,
@@ -175,6 +176,57 @@ def test_complete_mode_specific_human_references_qualify(tmp_path, pilot):
     assert a["human_reviewed_reference_cells"] == 90  # Not 180 method×mode cells.
     assert a["recorded_prediction_cells"] == a["required_prediction_cells"] == 180
     assert a["paid_calls"] == 0
+    assert a["distinct_canonical_games"] == a["actual_cases"] == 30
+    assert a["distinct_mobile_first_games"] == a["mobile_first_cases"] == 10
+    assert a["distinct_split_counts"] == a["split_counts"] == {"development": 6, "holdout": 24}
+    assert a["unresolved_canonical_cases"] == 0
+
+
+@pytest.mark.parametrize("indices", [(0, 1), (6, 7)])
+def test_same_split_canonical_duplicate_rejected_before_replay(tmp_path, pilot, indices):
+    first, second = (pilot.cases[i] for i in indices)
+    assert first.id != second.id
+    second.canonical_game_id = first.canonical_game_id
+    with pytest.raises(ValueError, match="Duplicate canonical game within a split"):
+        replay(tmp_path, pilot)
+    assert not (tmp_path / "output").exists()
+
+
+def test_duplicate_cannot_inflate_mobile_minimum(tmp_path, pilot):
+    # Ten mobile case IDs but only nine mobile games; duplicate stays in holdout.
+    pilot.cases[9].canonical_game_id = pilot.cases[8].canonical_game_id
+    assert sum(c.mobile_first is True for c in pilot.cases) == 10
+    with pytest.raises(ValueError, match="Duplicate canonical game within a split"):
+        replay(tmp_path, pilot)
+    # Defensive counting also stays distinct if an internal caller bypasses deserialization.
+    counts = benchmark_readiness(pilot, [], load_taxonomy())
+    assert counts["actual_cases"] == 30
+    assert counts["distinct_canonical_games"] == 29
+    assert counts["mobile_first_cases"] == counts["distinct_mobile_first_games"] == 9
+    assert counts["split_counts"] == {"development": 6, "holdout": 23}
+    assert not counts["benchmark_qualified"]
+    assert {"target_cohort_size", "minimum_mobile_first", "development_holdout_split"} <= {
+        f["code"] for f in counts["qualification_failure_reasons"]
+    }
+
+
+def test_unresolved_identity_does_not_count_as_a_distinct_game(tmp_path, pilot):
+    pilot.cases[9].canonical_game_id = None
+    report = replay(tmp_path, pilot)
+    a = report["availability"]
+    assert a["actual_cases"] == 30
+    assert a["distinct_canonical_games"] == 29
+    assert a["distinct_mobile_first_games"] == 9
+    assert a["unresolved_canonical_cases"] == 1
+    assert not report["benchmark_qualified"]
+
+
+@pytest.mark.parametrize("canonical", ["", " ", " game", "game "])
+def test_canonical_ids_cannot_use_blank_or_padding_aliases(canonical):
+    with pytest.raises(ValueError):
+        BenchmarkCase(
+            id="unresolved", split="development", platform="pc", canonical_game_id=canonical
+        )
 
 
 @pytest.mark.parametrize(
