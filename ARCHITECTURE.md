@@ -87,7 +87,7 @@ same bytes to an injected `Observer`, validates observations through `Observatio
 invokes `JevDecisionEngine`, and applies `DecisionPolicy`. CLI credentials come only from the
 process environment. `MockObserver` and `MockJevGateway` support offline testing.
 
-Only single-image ingestion is implemented. The provider prompt prohibits temporal inference
+The original pipeline supports single-image ingestion; the local workspace additionally prepares bounded video windows and replays exact saved observations. The provider prompt prohibits temporal inference
 from a still. Visual facts cannot carry taxonomy labels; exact metadata quotations are kept as
 attributed source claims. The lexical boundary is deliberately conservative and does not prove
 arbitrary generated text is factual. See README for limits and the live-validation status.
@@ -98,3 +98,7 @@ The canonical taxonomy remains `taxonomy/vgms_v4.yaml`. Wheel builds bundle this
 ## Local product workspace
 
 `gametagger.workspace` adds a loopback-only FastAPI application, schema-v1 SQLite store, one bounded worker, private media storage and versioned reviews. `frontend/` is a React/TypeScript workspace built with Vite. Core browser contracts are generated from OpenAPI. The existing taxonomy, identity gate, provider-neutral Observer and strict Jev decision engine remain intact. Website offline jobs prepare evidence and persist explicit partial/not-evaluated results; they never invoke provider clients. Experiment reports recompute matched effects and separate historical replay from checked comparisons. See [runbook](docs/LOCAL_WORKSPACE.md) for operational/security boundaries.
+
+## Ordered-window extension
+
+The `OrderedObserver` boundary returns a typed `WindowAttempt`, with factual frame references, proposed footage context and explicit per-window execution. `AnthropicOrderedObserver` implements multi-image transport without merging sparse windows into a continuous event. Website replay creates immutable child runs against exact media/prompt/model/taxonomy provenance; genre/tag classification remains not evaluated. See [ordered observations](docs/ORDERED_OBSERVATIONS.md).

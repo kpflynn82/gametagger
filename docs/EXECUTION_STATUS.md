@@ -1,6 +1,6 @@
 # Execution checkpoint
 
-Starting main: `1a928d600239a5343153d3df3eb41dc9b71d8250`. Reused checkout: `914678c63c218b13698dce208db8b07f3c75e8e8` (unmerged PR #4). Starting main: `1a928d600239a5343153d3df3eb41dc9b71d8250`. Branch: `feat/local-product-workspace`, stacked on PR #4 to reuse its completed measurement work. No other active coding worker was found. No independent review or merge has occurred.
+Starting main: `1a928d600239a5343153d3df3eb41dc9b71d8250`. Reused checkout: `914678c63c218b13698dce208db8b07f3c75e8e8` (unmerged PR #4). Branch: `feat/local-product-workspace`, stacked on PR #4 to reuse its completed measurement work. No other active coding worker was found. No independent review or merge has occurred.
 
 M0 inspected repository instructions, README, architecture, roadmap, source-integrity/taxonomy/measurement docs, source and open PR #4. Baseline: 177 Python tests passed, one paid live test skipped. Legacy source inspected read-only. The reference site initially failed in the web reader, then rendered in the in-app browser: Dashboard/Browse/Add/Glossary/About and confidence-derived metrics were visible. No analysis/debug action or database mutation was invoked; deployment revision/media settings remain unverified.
 
@@ -13,3 +13,5 @@ M4 partial: compatible saved-report scorecards, historical 100-row ledger, paire
 M5: self-review and local checks complete. [PR #5](https://github.com/kpflynn82/gametagger/pull/5) is open, stacked on #4; no independent review or merge. Final application source is `d8bf3fedf58bccb1ca1e136a42c358c55cc13c47`; the PR head also contains the documentation handoff. Remote CI passed the final application source; the PR exposes the current exact-head checks. No public deployment is configured or authorized; deployment inventory was empty before push. The website's status file is a saved snapshot, not an agent heartbeat.
 
 Next runnable action: `GAMETAGGER_LOCAL_ROLE=reviewer ./scripts/start_workspace.sh`, then inspect the local website at http://127.0.0.1:8000. See SESSION_REPORT for final revision/PR/CI and LOCAL_WORKSPACE for setup and boundaries.
+
+Continuation: PR #6 (`feat/ordered-observation-replay`) adds the real ordered-window adapter, tested through mocked SDK transport, and immutable website saved-observation replay. Source `46abdee02ec154615e5b882be8bd8f94363cd530`: 230 Python passed, one live skipped; six frontend and six browser workflows passed. Desktop/phone video replay captures are saved. M3 implementation is ready for review; temporal quality remains unmeasured. M4 offline measurement adapters continue separately. No merges or paid calls.

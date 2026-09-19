@@ -39,19 +39,13 @@ def test_synthetic_video_full_timeline_timestamps_hashes_and_idempotence(tmp_pat
     assert times[0] < 0.3 and times[-1] > duration * 0.8
     assert len(times) <= 48 and not result["temporal_claims_validated"]
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
-    OrderedWindow(
-        source_asset_sha256=sha,
-        duration_seconds=duration,
-        selection_strategy=result["strategy"],
-        frames=[
-            TimedFrame(
-                evidence_id=str(i),
-                asset_sha256=sha,
-                frame_sha256=f["sha256"],
-                timestamp_seconds=f["timestamp"],
-            )
-            for i, f in enumerate(result["frames"])
-        ],
+    from gametagger.workspace.observation_replay import prepared_windows
+
+    windows = prepared_windows([{"id": "synthetic", "sha256": sha, "video": result}])
+    assert len(windows) == 3
+    assert all(len(w.frames) >= 2 for _, _, w in windows)
+    assert all(
+        w.frames[-1].timestamp_seconds - w.frames[0].timestamp_seconds <= 1 for _, _, w in windows
     )
     assert extract_windows(path, tmp_path / "frames")["frames"] == result["frames"]
     for f in result["frames"]:
@@ -62,10 +56,15 @@ def test_synthetic_video_full_timeline_timestamps_hashes_and_idempotence(tmp_pat
 
 
 def test_unordered_windows_cannot_establish_timing():
-    f = TimedFrame(evidence_id="x", asset_sha256="a", frame_sha256="b", timestamp_seconds=1)
+    f = TimedFrame(
+        evidence_id="x", asset_sha256="a" * 64, frame_sha256="b" * 64, timestamp_seconds=1
+    )
     with pytest.raises(ValueError):
         OrderedWindow(
-            source_asset_sha256="a", duration_seconds=3, selection_strategy="test", frames=[f, f]
+            source_asset_sha256="a" * 64,
+            duration_seconds=3,
+            selection_strategy="test",
+            frames=[f, f],
         )
 
 

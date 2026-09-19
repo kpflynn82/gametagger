@@ -805,7 +805,7 @@ td small {
 }
 .result-grid {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: 26px;
   margin-top: 32px;
 }
@@ -1451,3 +1451,8 @@ blockquote {
     font-size: 0.65rem;
   }
 }
+
+/* Media filmstrips scroll inside their track; never widen the workspace. */
+.result-grid > * { min-width: 0; }
+.observation-replay input { max-width: 100%; }
+.observation-replay code { overflow-wrap: anywhere; }

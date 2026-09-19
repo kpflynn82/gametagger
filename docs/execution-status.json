@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-09-19T08:42:19.683433+00:00",
+  "checked_at": "2026-09-19T09:05:28.755461+00:00",
   "timezone": "America/Los_Angeles",
   "runtime": "unknown",
-  "branch": "feat/local-product-workspace",
+  "branch": "feat/ordered-observation-replay",
   "starting_sha": "1a928d600239a5343153d3df3eb41dc9b71d8250",
-  "head_sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47 (tested application source; see PR #5 for delivery head)",
+  "head_sha": "46abdee02ec154615e5b882be8bd8f94363cd530",
   "live_budget": "Not authorized",
   "milestones": [
     {
@@ -56,16 +56,16 @@
       "id": "M3",
       "name": "Required media workflow",
       "goal": "Bounded screenshots and ordered video windows",
-      "status": "in progress",
-      "implemented": false,
+      "status": "ready for review",
+      "implemented": true,
       "tested": true,
       "quality_measured": false,
       "dependency": "M2",
-      "pr": "https://github.com/kpflynn82/gametagger/pull/5",
-      "sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
-      "test_artifact": "Multiple-image intake and synthetic video end-to-end processing pass",
-      "blocker": "Real ordered-video recognition and gameplay validation deferred",
-      "next_action": "Implement an ordered-window Observer adapter with offline fixtures; live validation needs budget"
+      "pr": "https://github.com/kpflynn82/gametagger/pull/6",
+      "sha": "46abdee02ec154615e5b882be8bd8f94363cd530",
+      "test_artifact": "230 Python / 6 frontend / 6 browser checks pass; SDK mocked, no paid calls",
+      "blocker": "Live temporal quality unmeasured; independent review pending",
+      "next_action": "Review ordered Observer and exact-media replay on PR #6"
     },
     {
       "id": "M4",
@@ -98,18 +98,19 @@
       "next_action": "Review the exact feature-branch revision"
     }
   ],
-  "tested_source_sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
-  "pull_request": "https://github.com/kpflynn82/gametagger/pull/5",
+  "tested_source_sha": "46abdee02ec154615e5b882be8bd8f94363cd530",
+  "pull_request": "https://github.com/kpflynn82/gametagger/pull/6",
   "local_checks": {
-    "python_passed": 213,
+    "python_passed": 230,
     "python_live_skipped": 1,
     "frontend_tests_passed": 6,
-    "browser_flows_passed": 5,
+    "browser_flows_passed": 6,
     "lint": "passed",
     "builds": "passed",
     "model_calls": 0
   },
   "reused_pr4_sha": "914678c63c218b13698dce208db8b07f3c75e8e8",
   "ci_source_sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
-  "ci_status": "Python and website checks passed on the tested application source; see PR #5 for delivery-head checks"
+  "ci_status": "PR #6 exact-head checks pending; no independent review or merge",
+  "reused_pr5_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3"
 }

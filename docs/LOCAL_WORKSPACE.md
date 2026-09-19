@@ -30,7 +30,7 @@ One worker, at most ten queued/active jobs, 30 new jobs per minute, idempotency 
 
 Limits: eight assets/project; nonanimated PNG/JPEG/WebP <=5 MiB, <=24 megapixels and 8,000 pixels per side; MP4 <=40 MiB/60 seconds/1080p-area, one supported video stream; 1 GiB local media quota with a conservative frame-output reserve; 100-row CSV/JSON dry runs; 1 MiB structured requests. Uploads use safe generated filenames, content decoding, original byte hashes, private storage and sanitized image previews. No arbitrary URL fetch. FFmpeg/FFprobe use local-file protocols, disabled external data references, one thread, fixed timeout, allocation/CPU/file/descriptor limits, plus Linux address-space limits. macOS has no equivalent hard address-space cap in this implementation; do not expose the decoder as a public upload service.
 
-Video strategy `uniform-three-ordered-windows-v1` samples the start, midpoint and end, at most 5 Hz and 48 frames. Frames retain decoder presentation timestamps and content hashes. This is uniform sampling, not automatic meaningful-scene detection. `OrderedObserver` is an injectable contract; a real temporal observer is **not implemented/validated**. Menus, cinematics and overlays remain unreviewed context. The video player can seek to actual sampled frame times. Synthetic tests validate transport, selection and timestamp integrity only.
+Video strategy `uniform-three-ordered-windows-v1` samples the start, midpoint and end, at most 5 Hz and 48 frames. Frames retain decoder presentation timestamps and content hashes. This is uniform sampling, not automatic meaningful-scene detection. `OrderedObserver` returns independently validated window attempts; the real multi-image adapter is **implemented and offline-tested**, with live temporal accuracy unvalidated and spending disabled. Menus, cinematics and overlays remain unreviewed context. The video player can seek to actual sampled frame times. Synthetic tests validate transport, selection and timestamp integrity only.
 
 ## Replay and comparisons
 
@@ -70,3 +70,7 @@ Browser tests start an isolated localhost server and temporary database; stop an
 No live test runs on keys alone; the explicit live opt-in remains required. No new billable call is authorized for this session. A numeric cap and a reviewed spend ledger/executor are still needed before enabling a website live path. Existing CLI/manual smoke tools are separate developer surfaces, not the budget-disabled website.
 
 To reproduce the public historical ledger from the preserved private snapshot, use `python scripts/export_legacy_ledger.py --snapshot /private/genre-evaluation-100 --manifest experiments/legacy100/manifest.json --output /private/new-redacted-ledger.json`. It verifies the complete immutable inventory first and writes an allowlist of IDs, decisions and hashes only. The checked ledger was reproduced exactly; never publish the original source pack.
+
+## Saved ordered observations
+
+Results now offers an exact-window manifest and reviewer-only saved JSON import for prepared clips. A replay is a new durable run, never an overwrite. Its observations remain unverified, and selecting one seeks its real source timestamp. See [the replay contract and boundaries](ORDERED_OBSERVATIONS.md). No key or import enables live inference.

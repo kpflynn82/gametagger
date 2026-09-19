@@ -210,6 +210,40 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/runs/{rid}/observation-request": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Observation Request */
+    get: operations["observation_request_api_runs__rid__observation_request_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/runs/{rid}/observation-replay": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Observation Replay */
+    post: operations["observation_replay_api_runs__rid__observation_replay_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/runs/{rid}/cancel": {
     parameters: {
       query?: never;
@@ -442,6 +476,37 @@ export interface components {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][];
     };
+    /** ImageRegion */
+    ImageRegion: {
+      /** X */
+      x: number;
+      /** Y */
+      y: number;
+      /** Width */
+      width: number;
+      /** Height */
+      height: number;
+    };
+    /** ObservationReplay */
+    ObservationReplay: {
+      /**
+       * Schema Version
+       * @default ordered-observation-replay-v1
+       * @constant
+       */
+      schema_version: "ordered-observation-replay-v1";
+      /** Input Sha256 */
+      input_sha256: string;
+      /** Taxonomy Sha256 */
+      taxonomy_sha256: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "saved_provider" | "illustrative";
+      /** Attempts */
+      attempts: components["schemas"]["WindowAttempt"][];
+    };
     /** ProjectCreate */
     ProjectCreate: {
       /** Title */
@@ -517,6 +582,12 @@ export interface components {
       /** Assets */
       assets?: components["schemas"]["AssetView"][];
     };
+    /** ReplayCreate */
+    ReplayCreate: {
+      /** Idempotency Key */
+      idempotency_key: string;
+      replay: components["schemas"]["ObservationReplay"];
+    };
     /** ReviewCreate */
     ReviewCreate: {
       /**
@@ -590,6 +661,14 @@ export interface components {
       observations?: {
         [key: string]: unknown;
       }[];
+      /** Observation Windows */
+      observation_windows?: {
+        [key: string]: unknown;
+      }[];
+      /** Observation Executions */
+      observation_executions?: {
+        [key: string]: unknown;
+      }[];
       /** Assets */
       assets?: components["schemas"]["AssetView"][];
       /** Provenance */
@@ -653,6 +732,74 @@ export interface components {
       input?: unknown;
       /** Context */
       ctx?: Record<string, never>;
+    };
+    /** WindowAttempt */
+    WindowAttempt: {
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "valid" | "error";
+      /** Window Sha256 */
+      window_sha256: string;
+      /** Request Sha256 */
+      request_sha256: string;
+      /** Prompt Version */
+      prompt_version: string;
+      /** Prompt Sha256 */
+      prompt_sha256: string;
+      /** Requested Model */
+      requested_model: string;
+      /** Returned Model */
+      returned_model?: string | null;
+      /** Sdk Version */
+      sdk_version: string;
+      /** Request Id Sha256 */
+      request_id_sha256?: string | null;
+      /** Response Sha256 */
+      response_sha256?: string | null;
+      /** Output Sha256 */
+      output_sha256?: string | null;
+      /** Latency Ms */
+      latency_ms?: number | null;
+      /** Usage */
+      usage?: {
+        [key: string]: number | null;
+      } | null;
+      /** Error Code */
+      error_code?:
+        ("transport" | "provider_contract" | "observation_contract") | null;
+      output?: components["schemas"]["WindowOutput"] | null;
+    };
+    /** WindowOutput */
+    WindowOutput: {
+      /**
+       * Context
+       * @enum {string}
+       */
+      context:
+        | "gameplay"
+        | "menu"
+        | "cinematic"
+        | "title_card"
+        | "creator_overlay"
+        | "mixed"
+        | "unknown";
+      /** Observations */
+      observations: components["schemas"]["WindowStatement"][];
+    };
+    /** WindowStatement */
+    WindowStatement: {
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "visual_fact" | "visual_text" | "sequence_fact";
+      /** Text */
+      text: string;
+      /** Frame Ids */
+      frame_ids: string[];
+      image_region?: components["schemas"]["ImageRegion"] | null;
     };
   };
   responses: never;
@@ -1079,6 +1226,72 @@ export interface operations {
     responses: {
       /** @description Successful Response */
       200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["RunView"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  observation_request_api_runs__rid__observation_request_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        rid: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": unknown;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  observation_replay_api_runs__rid__observation_replay_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        rid: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ReplayCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      201: {
         headers: {
           [name: string]: unknown;
         };

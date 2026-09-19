@@ -127,7 +127,7 @@ const modern = [
   [
     "Factual Observer",
     "Offline / live gated",
-    "Exact text quotes are retained. Real image recognition requires separate spending authorization. Jev does not see raw media.",
+    "Image and ordered-window adapters are offline-tested; exact saved window responses can be replayed. Live recognition needs spending authorization. Jev does not see raw media.",
   ],
   [
     "Jev decisions",
