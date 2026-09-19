@@ -42,6 +42,12 @@ Median total latency in saved comparisons requires at least two matched complete
 
 ## Current availability
 
+Clean-pilot readiness is separate from `benchmark_qualified`. The offline runner now emits a
+versioned all-requirements gate plus machine-readable failures; incomplete cohorts continue to
+produce partial metrics. Mode-specific human references are counted once per case/mode, never
+per method. See [the exact qualification contract](PR_B_MEASUREMENT.md#clean-pilot-qualification).
+Recorded provider failures stay in the evaluation ledger; qualification is not model success.
+
 - Original stress suite: 100 records retained, 97 completed, three terminal errors. All 2,425 completed tag outcomes are counted; only 498 legacy booleans are comparable.
 - Clean pilot: zero checked packs/approved labels, 30 planning candidates; all assets, release mappings, rights and labels pending. No fake screenshots or approvals were generated.
 - New provider calls in this build: **zero**. Existing `typesafe-sdk==0.7.0`, Observer prompt `observer-v2-literal-text`, Jev prompt `jev-evidence-v1` remain; no new resolved live model version was observed.

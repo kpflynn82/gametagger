@@ -30,6 +30,7 @@ from gametagger.observers.boundary import ObservationBoundary
 from gametagger.taxonomy import default_taxonomy_path, load_taxonomy
 
 MODES = ("metadata_only", "media_only", "combined")
+QUALIFICATION_POLICY = "clean30-qualification-v1"
 
 
 def sha256(data: bytes) -> str:
@@ -171,6 +172,154 @@ class BenchmarkManifest(Contract):
         return self
 
 
+def reference_for(case, mode):
+    # Game-wide truth may be shared; evidence-supported truth never crosses modes.
+    return case.references_by_mode.get(
+        mode, case.reference.model_copy(update={"supported_truth": {}})
+    )
+
+
+def benchmark_readiness(manifest, reports, taxonomy):
+    """Qualification is a conjunction, never a synonym for partial readiness or accuracy."""
+    failures = []
+
+    def require(code, actual, expected, *, missing=None):
+        if actual != expected:
+            failure = {"code": code, "actual": actual, "expected": expected}
+            if missing is not None:
+                failure["missing"] = missing
+            failures.append(failure)
+
+    # This is the declared clean diagnostic pilot, not a tunable pass threshold.
+    require("target_cohort_size", len(manifest.cases), 30)
+    mobile = sum(c.mobile_first is True for c in manifest.cases)
+    if mobile < 10:
+        failures.append({"code": "minimum_mobile_first", "actual": mobile, "minimum": 10})
+    split = {
+        name: sum(c.split == name for c in manifest.cases) for name in ("development", "holdout")
+    }
+    require("development_holdout_split", split, {"development": 6, "holdout": 24})
+    require(
+        "qualification_plan_mismatch",
+        [manifest.target_cases, manifest.minimum_mobile_first, manifest.planned_development_cases],
+        [30, 10, 6],
+    )
+    require("required_evidence_modes", sorted(manifest.modes), sorted(MODES))
+
+    by_mode = {mode: 0 for mode in MODES}
+    complete_by_mode = dict(by_mode)
+    references_missing = []
+    tags = set(taxonomy.tags_by_id)
+    reviewed_cases = 0
+    for case in manifest.cases:
+        reviewed_all = True
+        for mode in MODES:
+            ref = reference_for(case, mode)
+            reviewed = ref.origin == "human_review"
+            by_mode[mode] += reviewed
+            reviewed_all = reviewed_all and reviewed
+            missing = []
+            if not reviewed:
+                missing.append("human_review")
+            if ref.primary_genre not in taxonomy.genres_by_id and not (
+                ref.primary_genre is None and ref.boundary_note and ref.boundary_note.strip()
+            ):
+                missing.append("primary_or_unresolved_boundary")
+            if tags - {k for k, v in ref.supported_truth.items() if v in STATES}:
+                missing.append("mode_supported_tag_labels")
+            if tags - {k for k, v in ref.game_truth.items() if type(v) is bool}:
+                missing.append("game_truth_tag_labels")
+            if missing:
+                references_missing.append({"case_id": case.id, "mode": mode, "fields": missing})
+            else:
+                complete_by_mode[mode] += 1
+        reviewed_cases += reviewed_all
+    required_case_modes = len(manifest.cases) * len(MODES)
+    require(
+        "human_references_incomplete",
+        sum(complete_by_mode.values()),
+        required_case_modes,
+        missing=references_missing,
+    )
+
+    groups = {}
+    for report in reports:
+        groups.setdefault((report["case_id"], report["mode"]), []).append(report)
+    checks = (
+        ("observation_bundles_unavailable", "observation_bundle_valid", False),
+        ("mode_evidence_unavailable", "mode_evidence_available", False),
+        ("identity_not_approved", "identity_approved", False),
+        ("media_rights_not_permitted", "media_rights_permitted", True),
+        ("permitted_media_assets_unavailable", "media_assets_verified", True),
+    )
+    readiness_counts = {}
+    for code, field, media_only in checks:
+        relevant = [
+            (c.id, mode)
+            for c in manifest.cases
+            for mode in MODES
+            if not media_only or mode != "metadata_only"
+        ]
+        missing = [
+            {"case_id": cid, "mode": mode}
+            for cid, mode in relevant
+            if not groups.get((cid, mode))
+            or not all(r["readiness"][field] for r in groups[(cid, mode)])
+        ]
+        ready = len(relevant) - len(missing)
+        readiness_counts[field] = {"ready": ready, "required": len(relevant)}
+        require(code, ready, len(relevant), missing=missing)
+    recorded = {
+        (r["case_id"], r["method"], r["mode"])
+        for r in reports
+        if r["readiness"]["prediction_cell_recorded"]
+    }
+    missing_cells = [
+        {"case_id": c.id, "method": method, "mode": mode}
+        for c in manifest.cases
+        for method in manifest.methods
+        for mode in MODES
+        if (c.id, method, mode) not in recorded
+    ]
+    required_cells = required_case_modes * len(manifest.methods)
+    require("prediction_cells_unavailable", len(recorded), required_cells, missing=missing_cells)
+    pending = [
+        {"case_id": c.id, "reasons": c.pending_reasons} for c in manifest.cases if c.pending_reasons
+    ]
+    require("case_readiness_pending", len(pending), 0, missing=pending)
+    return {
+        "benchmark_qualified": not failures,
+        "qualification_policy": QUALIFICATION_POLICY,
+        "qualification_failure_reasons": failures,
+        "actual_cases": len(manifest.cases),
+        "cases_not_yet_assembled": max(0, 30 - len(manifest.cases)),
+        "target_cases": 30,
+        "mobile_first_cases": mobile,
+        "minimum_mobile_first": 10,
+        "split_counts": split,
+        "required_methods": manifest.methods,
+        "required_modes": list(MODES),
+        "declared_modes": manifest.modes,
+        "required_prediction_cells": required_cells,
+        "target_prediction_cells": 30 * len(manifest.methods) * len(MODES),
+        "recorded_prediction_cells": len(recorded),
+        "ready_prediction_cells": sum(
+            r["measurement"]["status"] in {"complete", "partial"} for r in reports
+        ),
+        # Count case×mode references once, independently of the number of methods.
+        "human_reviewed_references": reviewed_cases,
+        "human_reviewed_references_by_mode": by_mode,
+        "human_reviewed_reference_cells": sum(by_mode.values()),
+        "complete_human_references_by_mode": complete_by_mode,
+        "required_reference_cells": required_case_modes,
+        "readiness_counts": readiness_counts,
+        "pending_result_cells": sum(r["measurement"]["status"] == "pending" for r in reports),
+        "error_result_cells": sum(r["measurement"]["status"] == "error" for r in reports),
+        "paid_calls": 0,
+        "limitations": manifest.limitations,
+    }
+
+
 def context_for(bundle, mode, taxonomy):
     if mode == "media_only" and bundle.observer_input != "media_blind":
         raise ValueError("Blind media requires observations made without metadata")
@@ -285,9 +434,7 @@ def replay_manifest(manifest_path: Path, output: Path) -> dict:
     for case in manifest.cases:
         for mode in manifest.modes:
             for method in manifest.methods:
-                reference = case.references_by_mode.get(
-                    mode, case.reference.model_copy(update={"supported_truth": {}})
-                )
+                reference = reference_for(case, mode)
                 row = CaseMeasurement(
                     case_id=case.id,
                     method=method,
@@ -312,6 +459,14 @@ def replay_manifest(manifest_path: Path, output: Path) -> dict:
                     "end_to_end_latency_ms": None,
                     "usage_status": "unknown",
                     "latency_scope": "unknown",
+                    "readiness": {
+                        "observation_bundle_valid": False,
+                        "mode_evidence_available": False,
+                        "identity_approved": False,
+                        "media_rights_permitted": False,
+                        "media_assets_verified": False,
+                        "prediction_cell_recorded": False,
+                    },
                 }
                 try:
                     obs_ref = case.observations.get(mode)
@@ -333,17 +488,34 @@ def replay_manifest(manifest_path: Path, output: Path) -> dict:
                             or case.canonical_game_id != bundle.identity.subject.canonical_game_id
                         ):
                             raise ValueError("Case and evidence subject identities differ")
+                        readiness = report["readiness"]
+                        readiness["observation_bundle_valid"] = True
+                        readiness["identity_approved"] = bool(case.canonical_game_id) and (
+                            gate.status == "eligible"
+                        )
+                        has_text = any(o.kind == "metadata_quote" for o in observations)
+                        has_media = any(o.kind != "metadata_quote" for o in observations)
+                        readiness["mode_evidence_available"] = (
+                            has_text
+                            if mode == "metadata_only"
+                            else has_media
+                            if mode == "media_only"
+                            else has_text and has_media
+                        )
                         report["observer_requests"] = [
                             r.model_dump(mode="json") for r in bundle.observer_requests
                         ]
                         row.identity_eligible = gate.status == "eligible"
                         row.evidence_available = bool(observations)
                         if mode != "metadata_only":
+                            used = {o.evidence_id for o in observations}
                             media = [
                                 e
                                 for e in bundle.evidence
                                 if e.type.value in {"gameplay_image", "gameplay_clip"}
+                                and e.id in used
                             ]
+                            readiness["media_rights_permitted"] = bundle.media_rights == "permitted"
                             if bundle.media_rights != "permitted" or not media:
                                 report["pending_reasons"].append("permitted_media_unavailable")
                             for e in media:
@@ -352,6 +524,9 @@ def replay_manifest(manifest_path: Path, output: Path) -> dict:
                                     report["pending_reasons"].append("media_asset_unavailable")
                                 elif sha256(asset.read(root)) != e.sha256:
                                     raise ValueError("Evidence media hash mismatch")
+                            readiness["media_assets_verified"] = bool(media) and all(
+                                e.id in bundle.assets for e in media
+                            )
                         result_ref = case.results.get(method, {}).get(mode)
                         if result_ref is None:
                             report["pending_reasons"].append("missing_saved_prediction")
@@ -426,6 +601,12 @@ def replay_manifest(manifest_path: Path, output: Path) -> dict:
                                 code_version=prediction.code_version,
                             )
                             report["evidence_policy"] = policy
+                            # Failed/partial attempts belong in the benchmark denominator too.
+                            readiness["prediction_cell_recorded"] = row.status in {
+                                "complete",
+                                "partial",
+                                "error",
+                            }
                 except (ValueError, OSError, KeyError) as exc:
                     row = CaseMeasurement(
                         case_id=case.id,
@@ -473,27 +654,15 @@ def replay_manifest(manifest_path: Path, output: Path) -> dict:
         }
         for method in manifest.methods
     }
-    availability = {
-        "actual_cases": len(manifest.cases),
-        "cases_not_yet_assembled": max(0, manifest.target_cases - len(manifest.cases)),
-        "target_cases": manifest.target_cases,
-        "mobile_first_cases": sum(c.mobile_first is True for c in manifest.cases),
-        "minimum_mobile_first": manifest.minimum_mobile_first,
-        "ready_prediction_cells": sum(r.status in {"complete", "partial"} for r in rows),
-        "human_reviewed_references": sum(
-            c.reference.origin == "human_review" for c in manifest.cases
-        ),
-        "pending_result_cells": sum(r.status == "pending" for r in rows),
-        "error_result_cells": sum(r.status == "error" for r in rows),
-        "paid_calls": 0,
-        "limitations": manifest.limitations,
-    }
+    availability = benchmark_readiness(manifest, reports, taxonomy)
     output.mkdir(parents=True, exist_ok=False)
     (output / "cases.jsonl").write_text(
         "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in reports)
     )
     result = {
         "manifest_sha256": sha256(raw_manifest),
+        "benchmark_qualified": availability["benchmark_qualified"],
+        "qualification_failure_reasons": availability["qualification_failure_reasons"],
         "availability": availability,
         "metrics": metrics,
         "metrics_by_split": split_metrics,

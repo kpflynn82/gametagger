@@ -62,6 +62,45 @@ cannot claim human review. Game truth and evidence-supported four-state truth ar
 Mode-specific supported labels belong in `references_by_mode`; a combined annotation is
 never silently reused as media-only truth.
 
+### Clean-pilot qualification
+
+The runner emits `benchmark_qualified` and `qualification_failure_reasons` in both the
+summary and its CLI-visible `availability` object. Policy `clean30-qualification-v1` requires
+exactly 30 cases, at least ten explicitly mobile-first cases, six development and 24 holdout
+cases, and all three evidence modes. Lowering the manifest's planned targets or removing a
+mode cannot qualify a smaller pilot. Every declared method must have a recorded prediction
+cell for every case and required mode. Qualification does not certify model quality or
+authenticate a supplied reviewer's identity.
+
+`human_reviewed_references_by_mode` counts effective human-reviewed references once per
+case/mode, including `references_by_mode` overrides. `human_reviewed_reference_cells` sums
+those counts without multiplying by methods; `human_reviewed_references` counts cases with
+human review in **all three modes**. These are partial readiness counts, not qualification.
+The mode override is the complete `Reference` for that mode. A case-wide fallback retains
+game-wide truth but clears supported labels, so it cannot certify unreviewed media truth.
+
+A complete reference requires named/date-stamped human review, a canonical primary or an
+explicit unresolved-boundary note, and all 25 pilot annotations: known binary game truth and
+four-state evidence-supported truth for that mode. Unknown/missing game truth remains pending;
+it is never converted to false. Unobservable features can receive a human-reviewed
+`insufficient_evidence` supported-state label. Explicit primary boundaries stay unresolved
+and are excluded from primary-accuracy denominators rather than assigned invented labels.
+
+The other gates require a matching approved subject/source identity, hash-valid observation
+bundles with the appropriate text/media context, permitted media rights and available,
+hash-verified eligible assets in media/combined modes, and provenance-valid saved prediction
+cells. A bundle or prediction being listed is insufficient. Source readiness remains visible
+when a later prediction fails. Machine-readable failure objects contain stable `code`,
+`actual`/`expected` (or `minimum`) and affected case/mode/method identifiers where applicable.
+
+`required_prediction_cells` covers assembled cases × declared methods × three required modes;
+`target_prediction_cells` covers the full 30-case target. A recorded provider error or partial
+answer remains an attempted cell and in the failure/accuracy denominators. Missing, corrupt,
+unbound or unattempted predictions do not count as recorded cells. `ready_prediction_cells`
+retains its narrower completed/partial meaning; neither count is `benchmark_qualified`.
+Existing per-method/mode/split metrics are still emitted for incomplete pilots and must be
+read alongside qualification. No success-rate or accuracy threshold is part of this gate.
+
 - Operational: completion/all cases, first success/known first attempts, recovery/known
   retry outcomes, terminal errors, partials, pending/not evaluated, identity eligibility,
   no evidence/known availability, and unknown counts.
