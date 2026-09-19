@@ -190,7 +190,8 @@ def test_default_identity_unresolved_has_no_fake_probabilities(taxonomy):
 def test_project_upload_works_without_store_resolution_and_observes_once(evidence, taxonomy):
     from gametagger.observers.mock import MockObserver
 
-    observer = Mock(wraps=MockObserver())
+    observer = Mock(wraps=MockObserver({evidence.id: ["A figure holds a shield."]}))
+    observer.last_usage = None
     observer.model = "fixture"
     observer.prompt_version = "fixture"
     batch = AnalysisPipeline(observer, JevDecisionEngine(taxonomy, MockJevGateway())).analyze(
@@ -226,13 +227,15 @@ def test_jev_retry_does_not_rerun_observer(evidence, taxonomy):
                 ] = 0.99
             return raw
 
-    observer = Mock(wraps=MockObserver())
+    observer = Mock(wraps=MockObserver({evidence.id: ["A figure holds a shield."]}))
+    observer.last_usage = None
     observer.model = "fixture"
     observer.prompt_version = "fixture"
     result = AnalysisPipeline(observer, JevDecisionEngine(taxonomy, Recovering())).analyze(
         game_id="opaque", evidence=[evidence], project_id="project", offline=True
     )
-    assert result.execution.execution_status == "complete"
+    assert result.execution.execution_status == "partial"
+    assert result.execution.questions["mechanic_ranged_combat"].status == "valid"
     assert len(result.execution.attempts) == 3
     observer.observe.assert_called_once()
 

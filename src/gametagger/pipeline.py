@@ -26,6 +26,8 @@ class AnalysisPipeline:
         offline: bool = False,
         identity: IdentityManifest | None = None,
         project_id: str | None = None,
+        evidence_profiles=(),
+        claims=(),
     ) -> AnalysisResult:
         start = perf_counter()
         if not evidence or len({e.id for e in evidence}) != len(evidence):
@@ -41,6 +43,7 @@ class AnalysisPipeline:
         gate = validate_identity(identity, [e for e, _ in prepared])
         eligible = {s.evidence_id for s in gate.sources if s.eligible}
         reviewed = []
+        observer_requests = []
         for item, image in prepared:
             reviewed.append(item)
             if item.id not in eligible:
@@ -48,7 +51,21 @@ class AnalysisPipeline:
             # Blind runs strip metadata before observation, not just before classification.
             if blind_media:
                 item = item.model_copy(update={"metadata": {}, "source": "blind-media"})
+            request_start = perf_counter()
             observed = self.observer.observe(item, image=image)
+            observer_requests.append(
+                {
+                    "evidence_id": item.id,
+                    "latency_ms": (perf_counter() - request_start) * 1000,
+                    "requested_model": self.observer.model,
+                    "returned_models": sorted({o.observer_model for o in observed}),
+                    "component": "observer",
+                    "attempt_id": f"observer:{len(observer_requests) + 1}",
+                    "usage_scope": "single observer response; unknown for injected adapters",
+                    "prompt_version": self.observer.prompt_version,
+                    "usage": getattr(self.observer, "last_usage", None),
+                }
+            )
             self.boundary.validate(observed, item)
             observations.extend(observed)
         prepared = reviewed
@@ -63,6 +80,8 @@ class AnalysisPipeline:
             evidence=prepared,
             identity=identity,
             require_identity=True,
+            evidence_profiles=evidence_profiles,
+            claims=claims,
         )
         classified_at = perf_counter()
         tags, genre = DecisionPolicy().apply(batch.tags, batch.genre)
@@ -88,6 +107,7 @@ class AnalysisPipeline:
             },
             usage=batch.usage,
             usage_by_stage=batch.usage_by_stage,
+            observer_requests=observer_requests,
             offline=offline,
         )
         return AnalysisResult(

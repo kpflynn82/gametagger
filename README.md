@@ -28,7 +28,7 @@ Alternatively, use `python -m venv .venv`, activate it, and run `pip install -e 
 gametagger --image fixtures/sample.png --metadata fixtures/sample.metadata.json --offline
 ```
 
-This prints the complete JSON result. Offline mode explicitly uses `mock-observer-v1` and `mock-jev-v1`, marks the run `offline: true`, and assigns all probability to `insufficient_evidence`. It exercises serialization, provenance, and policy; it is **not model inference**. The mock observer quotes supplied metadata and accepts injected visual facts in Python tests. It never invents image observations.
+This prints the complete JSON result. Offline mode explicitly uses `mock-observer-v1` and `mock-jev-v1`, marks the run `offline: true`, and assigns all probability to `insufficient_evidence` for eligible mock questions. It exercises serialization, provenance, and policy; it is **not model inference**. The mock observer quotes supplied metadata and accepts injected visual facts in Python tests. It never invents image observations.
 
 ## Analyze a real image
 
@@ -57,11 +57,11 @@ Milestone 2 PR A adds [source-identity eligibility and isolated execution](docs/
 Library analysis requires an approved source manifest or an explicit uploaded-project association.
 The image CLI associates user-supplied files with `--project-id` (defaulting to the local case ID).
 Imported source associations remain unverified until reviewed; unrelated sources are excluded
-before classification. The taxonomy and Observer prompt are unchanged.
+before classification. PR B adds [evidence policy and trustworthy measurement](docs/PR_B_MEASUREMENT.md) while keeping the taxonomy fixed.
 
 Every successful run includes:
 
-- All 25 pilot tags, each with its chosen state, **all four original probabilities**, Jev confidence, evidence IDs, decision model, and policy action.
+- Execution status for all 25 pilot tags. Each valid answer includes its chosen state, **all four original probabilities**, Jev confidence, evidence IDs, decision model, and policy action.
 - Raw probabilities across 14 families plus insufficient evidence, per-family conditional genre distributions, and a normalized global ranking across 100 eligible genres plus insufficient evidence. One stable-ID primary and up to two secondary genres are retained; insufficient evidence leaves the primary null. See the [v4.1 contract](docs/GENRE_TAXONOMY_V4_1.md) for field names and selection rules.
 - Original evidence metadata, image SHA-256, factual observations, observer-returned model identifiers, requested observer/decision model, returned decision model, taxonomy/prompt versions, SDK versions, Jev token usage, and total/per-stage latency.
 
@@ -76,9 +76,19 @@ Decision `evidence_ids` identify the **complete evaluated context**, not provide
 
 ## Observer boundary
 
-The real provider uses a forced structured tool with separate `visual_fact` and `metadata_quote` kinds. Metadata quotations must exactly match the named source value. Known taxonomy labels, tag IDs, and common classification terms are rejected in visual facts, including when using an injected observer. Extra structured fields such as `genre` or `tags` are rejected.
+The real provider uses a forced structured tool with separate `visual_fact`, attributed `visual_text`, and `metadata_quote` kinds. Metadata quotations must exactly match the named source value. Known taxonomy labels, tag IDs, and common classification terms are rejected in visual facts, including when using an injected observer. Extra structured fields such as `genre` or `tags` are rejected.
 
 This is a conservative lexical guard plus prompting, not a guarantee that every paraphrase is factual. Novel synonyms and subtle inference require benchmark review. Single-image prompting forbids temporal claims: one still cannot establish that a shield was raised immediately before a strike. Clip-based observations are a future milestone.
+
+Literal screen text has a normalized bounding region and remains a transcription; it cannot alone support a genre or feature conclusion. `support_links` are separate reviewed attributions; context evidence IDs and a high-confidence `accept` do not by themselves make a result publishable.
+
+## Offline benchmark replay
+
+```bash
+gametagger-eval --manifest experiments/clean30/manifest.json --output /tmp/gametagger-readiness
+```
+
+This validates saved artifacts only; it makes no model calls. See the [manifest contracts and metrics](docs/PR_B_MEASUREMENT.md) and [preserved 100-record audit](docs/LEGACY100_EVIDENCE_AUDIT.md). The clean benchmark currently has zero checked packs or human-reviewed labels; 30 are planned.
 
 ## Live Jev validation
 

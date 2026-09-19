@@ -59,6 +59,13 @@ class ObservationBoundary:
                     raise ObserverBoundaryError("Visual facts cannot claim metadata provenance")
                 if evidence.type.value != "gameplay_image":
                     raise ObserverBoundaryError("Visual facts require image evidence")
+                if observation.kind == "visual_text":
+                    if observation.image_region is None:
+                        raise ObserverBoundaryError(
+                            "Literal text requires image-region attribution"
+                        )
+                    # This is an attributed transcription, never a gameplay/genre assertion.
+                    continue
                 text = f" {normalized(observation.text)} "
                 if any(f" {term} " in text for term in self.terms):
                     raise ObserverBoundaryError("Observer emitted a taxonomy conclusion")
