@@ -13,6 +13,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
+from gametagger.observers.anthropic_ordered import PROMPT_SHA256, PROMPT_VERSION
 from gametagger.workspace.contracts import (
     Capabilities,
     CatalogPage,
@@ -24,6 +25,7 @@ from gametagger.workspace.contracts import (
 )
 from gametagger.workspace.experiments import ComparisonReport
 from gametagger.workspace.media import inspect_image, inspect_video, video_available
+from gametagger.workspace.observation_replay import ReplayCreate
 from gametagger.workspace.service import SpendDisabled, Workspace
 from gametagger.workspace.store import Store, now
 
@@ -428,6 +430,33 @@ def create_app(*, root=None, local_dev=None, role=None, owner="local-owner"):
     @app.get("/api/runs/{rid}", response_model=RunView)
     def get_run(rid: str):
         return ws().run_view(run(rid), owner)
+
+    @app.get("/api/runs/{rid}/observation-request")
+    def observation_request(rid: str):
+        r = run(rid)
+        view = ws().run_view(r, owner)
+        return {
+            "schema_version": "ordered-observation-request-v1",
+            "input_sha256": r["input_hash"],
+            "taxonomy_sha256": view.provenance.get("taxonomy_sha256"),
+            "prompt_version": PROMPT_VERSION,
+            "prompt_sha256": PROMPT_SHA256,
+            "windows": view.observation_windows,
+            "live_enabled": False,
+            "note": "Request manifest only, no observations or provider calls",
+        }
+
+    @app.post("/api/runs/{rid}/observation-replay", response_model=RunView, status_code=201)
+    def observation_replay(rid: str, data: ReplayCreate):
+        reviewer()
+        try:
+            r = ws().replay_observations(run(rid), owner, data)
+        except (ValueError, OSError) as exc:
+            # No source text, filesystem paths or provider bodies in errors.
+            raise HTTPException(
+                409, "Replay rejected: provenance, media, identity or observation contract mismatch"
+            ) from exc
+        return ws().run_view(r, owner)
 
     @app.post("/api/runs/{rid}/cancel", response_model=RunView)
     def cancel(rid: str):

@@ -59,7 +59,7 @@ For a key that is not scoped to one Anthropic workspace, also set `ANTHROPIC_WOR
 from Claude Console → Settings → Workspaces. The observer sends it in the
 `anthropic-workspace-id` header; workspace-scoped keys can omit this setting.
 
-Metadata is an optional JSON object with string values. The Anthropic adapter sends the image and metadata to Anthropic; factual observations are then sent to TypeSafe. Image input is a single local PNG, JPEG, WEBP, or nonanimated GIF, at most 5 MiB and 8000 pixels per side. The website additionally supports bounded local MP4 preprocessing; real temporal recognition and remote URL adapters remain pending.
+Metadata is an optional JSON object with string values. The Anthropic adapter sends the image and metadata to Anthropic; factual observations are then sent to TypeSafe. Image input is a single local PNG, JPEG, WEBP, or nonanimated GIF, at most 5 MiB and 8000 pixels per side. The website additionally supports bounded local MP4 preprocessing; an ordered-frame Observer adapter is offline-tested, while live recognition quality and remote URL adapters remain pending.
 
 `.env.example` is a template. Nothing loads `.env` implicitly. If you store credentials in an ignored local `.env`, explicitly load them into the command environment, for example `uv run --env-file .env gametagger ...`. The live integration test follows the same environment rule.
 
@@ -92,7 +92,7 @@ Decision `evidence_ids` identify the **complete evaluated context**, not provide
 
 The real provider uses a forced structured tool with separate `visual_fact`, attributed `visual_text`, and `metadata_quote` kinds. Metadata quotations must exactly match the named source value. Known taxonomy labels, tag IDs, and common classification terms are rejected in visual facts, including when using an injected observer. Extra structured fields such as `genre` or `tags` are rejected.
 
-This is a conservative lexical guard plus prompting, not a guarantee that every paraphrase is factual. Novel synonyms and subtle inference require benchmark review. Single-image prompting forbids temporal claims: one still cannot establish that a shield was raised immediately before a strike. Clip-based observations are a future milestone.
+This is a conservative lexical guard plus prompting, not a guarantee that every paraphrase is factual. Novel synonyms and subtle inference require benchmark review. Single-image prompting forbids temporal claims: one still cannot establish that a shield was raised immediately before a strike. The [ordered-window adapter and saved replay](docs/ORDERED_OBSERVATIONS.md) extend factual observation to bounded clips; temporal recognition quality remains unvalidated.
 
 Literal screen text has a normalized bounding region and remains a transcription; it cannot alone support a genre or feature conclusion. `support_links` are separate reviewed attributions; context evidence IDs and a high-confidence `accept` do not by themselves make a result publishable.
 
