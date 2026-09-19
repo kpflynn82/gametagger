@@ -9,9 +9,13 @@ from gametagger.domain import Observation
 
 
 @pytest.mark.live
-@pytest.mark.skipif(not os.environ.get("TYPESAFE_API_KEY"), reason="TYPESAFE_API_KEY is not set")
+@pytest.mark.skipif(
+    os.environ.get("GAMETAGGER_RUN_LIVE") != "1" or not os.environ.get("TYPESAFE_API_KEY"),
+    reason="GAMETAGGER_RUN_LIVE=1 and TYPESAFE_API_KEY are required",
+)
 def test_live_jev_all_pilot_questions(taxonomy):
     batch = JevDecisionEngine(taxonomy, TypeSafeGateway(model="jev-latest")).decide(
+        require_identity=False,
         game_id="live-contract-001",
         game_title=None,
         blind_media=True,

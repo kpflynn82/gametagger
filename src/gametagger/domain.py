@@ -226,12 +226,62 @@ class Review(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+class ExecutionError(BaseModel):
+    code: str
+    message: str
+
+
+class QuestionExecution(BaseModel):
+    status: Literal["valid", "error", "not_evaluated"]
+    error: ExecutionError | None = None
+    answer: dict[str, Any] | None = None
+    model: str | None = None
+    selected_attempt_id: str | None = None
+    context_evidence_ids: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def execution_is_not_semantics(self):
+        if self.status != "valid" and (self.answer is not None or self.selected_attempt_id):
+            raise ValueError("Failed/not-evaluated questions cannot contain semantic answers")
+        if self.status == "valid" and self.error is not None:
+            raise ValueError("A valid question cannot contain an execution error")
+        return self
+
+
+class RequestAttempt(BaseModel):
+    id: str
+    stage: str
+    ordinal: int
+    question_ids: list[str]
+    evidence_hash: str
+    spec_hashes: dict[str, str]
+    requested_model: str
+    returned_model: str | None = None
+    pinning: str
+    sdk_version: str = "0.7.0"
+    request_id_sha256: str | None = None
+    started_at: datetime
+    latency_ms: float
+    usage: dict[str, int | None] | None = None
+    error: ExecutionError | None = None
+    question_errors: dict[str, ExecutionError] = Field(default_factory=dict)
+    raw_answers: dict[str, Any] | None = None
+    response_sha256: str | None = None
+    response_representation: str = "sdk_parsed"
+
+
 class DecisionBatch(BaseModel):
     tags: list[TagDecision]
-    genre: GenreDecision
-    model: str
+    genre: GenreDecision | None
+    model: str | None
     usage: dict[str, int | None] = Field(default_factory=dict)
     usage_by_stage: dict[str, dict[str, int | None]] = Field(default_factory=dict)
+    execution_status: Literal["complete", "partial", "failed", "not_evaluated"] = "complete"
+    genre_execution: QuestionExecution | None = None
+    questions: dict[str, QuestionExecution] = Field(default_factory=dict)
+    attempts: list[RequestAttempt] = Field(default_factory=list)
+    identity_status: str = "reference_only"
+    retry_policy: str = "first-valid-v1; max_attempts=2; strict-total-tolerance=0.001"
 
 
 class AnalysisResult(BaseModel):
@@ -239,4 +289,6 @@ class AnalysisResult(BaseModel):
     evidence: list[EvidenceItem]
     observations: list[Observation]
     tags: list[TagDecision]
-    genre: GenreDecision
+    genre: GenreDecision | None
+    execution: DecisionBatch | None = None
+    identity_audit: dict[str, Any] | None = None

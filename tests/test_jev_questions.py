@@ -42,7 +42,7 @@ def test_blind_state_omits_title():
     )
     payload = json.loads(state)
     assert "game_title" not in payload
-    assert payload["observations"][0]["evidence_id"] == "clip-1"
+    assert payload["observations"][0]["evidence_id"] == "evidence-0"
 
 
 def test_single_view_never_establishes_game_wide_absence():

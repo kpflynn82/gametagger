@@ -70,8 +70,10 @@ class DecisionPolicy:
         return PolicyAction.HUMAN_REVIEW
 
     def apply(
-        self, tags: list[TagDecision], genre: GenreDecision
-    ) -> tuple[list[TagDecision], GenreDecision]:
+        self, tags: list[TagDecision], genre: GenreDecision | None
+    ) -> tuple[list[TagDecision], GenreDecision | None]:
         routed_tags = [d.model_copy(update={"action": self.route_tag(d)}) for d in tags]
-        routed_genre = genre.model_copy(update={"action": self.route_genre(genre)})
+        routed_genre = (
+            genre.model_copy(update={"action": self.route_genre(genre)}) if genre else None
+        )
         return routed_tags, routed_genre

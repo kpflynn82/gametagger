@@ -40,7 +40,9 @@ def test_real_sdk_http_serialization_and_parsing(taxonomy):
     def handler(request):
         assert request.url.path == "/v1/systemone"
         body = json.loads(request.content)
-        assert body["model"] == "jev-latest"
+        assert body["model"] == (
+            "jev-latest" if "genre_family" in body["questions"] else "jev-contract-fixture"
+        )
         if "genre_family" in body["questions"]:
             assert len(body["questions"]) == 26
             assert len(body["questions"]["genre_family"]["criteria"]) == 15
@@ -56,6 +58,7 @@ def test_real_sdk_http_serialization_and_parsing(taxonomy):
         api_key="offline-test-key", transport=httpx2.MockTransport(handler)
     ) as client:
         batch = JevDecisionEngine(taxonomy, TypeSafeGateway(client=client)).decide(
+            require_identity=False,
             game_id="test",
             game_title=None,
             observations=[],
@@ -120,7 +123,6 @@ def test_bad_distributions_never_silently_repaired(taxonomy, mutation):
 
 
 def test_authentication_failure_is_not_replaced_with_mock(taxonomy):
-    from typesafe_sdk import TypeSafeAPIError
 
     def handler(request):
         return httpx2.Response(401, json={"error": "Unauthorized"})
@@ -128,7 +130,10 @@ def test_authentication_failure_is_not_replaced_with_mock(taxonomy):
     with TypeSafeClient(
         api_key="offline-test-key", transport=httpx2.MockTransport(handler)
     ) as client:
-        with pytest.raises(TypeSafeAPIError):
-            JevDecisionEngine(taxonomy, TypeSafeGateway(client=client)).decide(
-                game_id="test", game_title=None, observations=[]
-            )
+        batch = JevDecisionEngine(taxonomy, TypeSafeGateway(client=client)).decide(
+            require_identity=False, game_id="test", game_title=None, observations=[]
+        )
+    assert batch.execution_status == "failed"
+    assert batch.tags == [] and batch.genre is None
+    assert len(batch.attempts) == 1
+    assert batch.attempts[0].error.code == "authentication"

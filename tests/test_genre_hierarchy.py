@@ -246,7 +246,7 @@ def test_invalid_stage_b_fails_instead_of_producing_partial_genre(taxonomy, fail
     from genre_helpers import ScriptedGenreGateway
     from typesafe_sdk import SystemOneResponse
 
-    from gametagger.decisions.jev import JevContractError, JevDecisionEngine
+    from gametagger.decisions.jev import JevDecisionEngine
 
     class BrokenGateway(ScriptedGenreGateway):
         def run(self, *, state, specs):
@@ -261,7 +261,9 @@ def test_invalid_stage_b_fails_instead_of_producing_partial_genre(taxonomy, fail
                 raw["answers"][key]["probabilities"]["another_family_genre"] = 0.0
             return SystemOneResponse.model_validate(raw)
 
-    with pytest.raises(JevContractError):
-        JevDecisionEngine(taxonomy, BrokenGateway({"action": 1.0}, {})).decide(
-            game_id="fixture", game_title=None, observations=[]
-        )
+    batch = JevDecisionEngine(taxonomy, BrokenGateway({"action": 1.0}, {})).decide(
+        require_identity=False, game_id="fixture", game_title=None, observations=[]
+    )
+    assert batch.genre is None and len(batch.tags) == 25
+    assert batch.execution_status == "partial"
+    assert batch.genre_execution.error.code == "conditional_dependency"
