@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-09-19T09:05:28.755461+00:00",
+  "checked_at": "2026-09-19T09:23:53.608837+00:00",
   "timezone": "America/Los_Angeles",
   "runtime": "unknown",
-  "branch": "feat/ordered-observation-replay",
+  "branch": "feat/paired-attribute-scorecards",
   "starting_sha": "1a928d600239a5343153d3df3eb41dc9b71d8250",
-  "head_sha": "46abdee02ec154615e5b882be8bd8f94363cd530",
+  "head_sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd (tested application source; delivery head on PR #7)",
   "live_budget": "Not authorized",
   "milestones": [
     {
@@ -62,8 +62,8 @@
       "quality_measured": false,
       "dependency": "M2",
       "pr": "https://github.com/kpflynn82/gametagger/pull/6",
-      "sha": "46abdee02ec154615e5b882be8bd8f94363cd530",
-      "test_artifact": "230 Python / 6 frontend / 6 browser checks pass; SDK mocked, no paid calls",
+      "sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d",
+      "test_artifact": "PR #6 CI passed; 230 Python / 6 frontend / 6 browser checks; no paid calls",
       "blocker": "Live temporal quality unmeasured; independent review pending",
       "next_action": "Review ordered Observer and exact-media replay on PR #6"
     },
@@ -76,11 +76,11 @@
       "tested": true,
       "quality_measured": false,
       "dependency": "M3",
-      "pr": "https://github.com/kpflynn82/gametagger/pull/5",
-      "sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
-      "test_artifact": "Manifest replay, saved reports, historical 100-row ledger and metric regressions pass",
-      "blocker": "Zero checked evidence packs or approved labels; no live API budget",
-      "next_action": "Review a first permitted evidence pack, then freeze its labels and provenance"
+      "pr": "https://github.com/kpflynn82/gametagger/pull/7",
+      "sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd",
+      "test_artifact": "245 Python / 9 frontend / 7 browser checks; raw 257-file inventory verified unchanged",
+      "blocker": "Zero verified clean packs/approved labels; no paid call budget. Full matched-coverage and stage-trace adapters remain.",
+      "next_action": "Assemble one permitted evidence pack for actual human review; retain original replay unchanged"
     },
     {
       "id": "M5",
@@ -91,26 +91,28 @@
       "tested": true,
       "quality_measured": false,
       "dependency": "M4",
-      "pr": "https://github.com/kpflynn82/gametagger/pull/5",
-      "sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
-      "test_artifact": "213 Python tests; 6 frontend tests; 5 browser flows; lint/build pass. Live skipped.",
-      "blocker": "Independent review not performed; no merge",
-      "next_action": "Review the exact feature-branch revision"
+      "pr": "https://github.com/kpflynn82/gametagger/pull/7",
+      "sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd",
+      "test_artifact": "Desktop/phone screenshots, local lint/build/tests pass; PRs track exact-head CI",
+      "blocker": "Author self-review only; independent approval missing. No merges or deployment.",
+      "next_action": "Review stacked PRs #4 \u2192 #5 \u2192 #6 \u2192 #7 on their pinned heads"
     }
   ],
-  "tested_source_sha": "46abdee02ec154615e5b882be8bd8f94363cd530",
-  "pull_request": "https://github.com/kpflynn82/gametagger/pull/6",
+  "tested_source_sha": "7d1bcca943b2b9d0f141aeee8dd52f93588e66dd",
+  "pull_request": "https://github.com/kpflynn82/gametagger/pull/7",
   "local_checks": {
-    "python_passed": 230,
+    "python_passed": 245,
     "python_live_skipped": 1,
-    "frontend_tests_passed": 6,
-    "browser_flows_passed": 6,
+    "frontend_tests_passed": 9,
+    "browser_flows_passed": 7,
     "lint": "passed",
     "builds": "passed",
     "model_calls": 0
   },
   "reused_pr4_sha": "914678c63c218b13698dce208db8b07f3c75e8e8",
-  "ci_source_sha": "d8bf3fedf58bccb1ca1e136a42c358c55cc13c47",
-  "ci_status": "PR #6 exact-head checks pending; no independent review or merge",
-  "reused_pr5_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3"
+  "ci_source_sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d",
+  "ci_status": "PR #6 exact head passed; PR #7 final delivery checks linked from its PR",
+  "reused_pr5_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3",
+  "continuation_start_sha": "a71b1f5c171957d3f7cc1cdc0a6fd05e85d3a1a3",
+  "ordered_media_delivery_sha": "7300362ceba77edec2db5c25ab2a8897e5c0625d"
 }

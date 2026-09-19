@@ -7,3 +7,5 @@ Overview captures show an empty workspace. Result captures show **Illustrative U
 Browser tests are workflow evidence, not independent code review or accessibility certification.
 
 `video-replay-desktop.png` and `video-replay-phone.png` show the new ordered-window import and source viewer. Both use a locally generated color-bar clip plus clearly labelled scripted UI-test observations; they demonstrate neither gameplay recognition nor human-reviewed labels.
+
+`quality-desktop.png` and `quality-phone.png` verify the comparison-question explanation and unavailable quality view with a labelled illustrative saved report. These contain no fabricated accuracy scores.

@@ -1,3 +1,4 @@
+import { QualityView, type Quality } from "./quality";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
@@ -6,7 +7,7 @@ import {
   GitCompareArrows,
 } from "lucide-react";
 import { api, words } from "./api";
-import { Badge, Empty, ErrorMessage, PageHead } from "./App";
+import { Badge, ErrorMessage, PageHead } from "./App";
 type Audit = {
   records: number;
   new_outcomes_all_tags: Record<string, number>;
@@ -41,6 +42,8 @@ type LedgerCase = {
   }[];
 };
 type SavedReport = {
+  quality?: Quality;
+  comparison_question?: string;
   id: string;
   kind: string;
   recommendation: string;
@@ -300,6 +303,18 @@ export function Experiments() {
       {data?.report_errors?.map((e, i) => (
         <ErrorMessage key={i} error={e} />
       ))}
+      <details>
+        <summary>Which change does this comparison measure?</summary>
+        <p>Declared question: {words(activeReport?.comparison_question ?? "unassigned")}.</p>
+        <ul>
+          <li>A → B: source/data repairs; this alone cannot establish a Jev benefit.</li>
+          <li>B → C: separating observation from classification; declare taxonomy and prompt changes.</li>
+          <li>C → D: conventional versus Jev decisions on identical saved observations and criteria.</li>
+          <li>Legacy → new: full product effect; all stages, retries and coverage matter.</li>
+        </ul>
+        <p>Changed evidence or unmatched conditions cannot produce a paired effect in this viewer.
+          Repair and end-to-end studies need their own reviewed comparison design. A scorecard is descriptive, not automatic causal attribution.</p>
+      </details>
       <div className="comparison-controls">
         <label>
           Baseline
@@ -361,7 +376,7 @@ export function Experiments() {
                 <tr>
                   <th>Measure</th>
                   <th>Baseline</th>
-                  <th>Jev</th>
+                  <th>Candidate</th>
                   <th>Change</th>
                   <th>Paired n</th>
                 </tr>
@@ -474,31 +489,7 @@ export function Experiments() {
           </div>
         </section>
       )}
-      {tab === "quality" && (
-        <div className="taxonomy-grid">
-          {[
-            [
-              "Quality versus coverage",
-              "Matched precision or coverage curves require reviewed paired cases.",
-            ],
-            [
-              "Where Jev helps",
-              "Per-tag deltas and genre confusion remain unmeasured. Sparse slices will show counts, not rankings.",
-            ],
-            [
-              "Calibration",
-              "Four-state Brier and reliability require compatible probabilities and evidence-supported human labels. Legacy confidence badges are not probabilities.",
-            ],
-          ].map(([t, p]) => (
-            <section className="panel" key={t}>
-              <Empty title={t}>
-                <p>{p}</p>
-                <Badge>0 paired cases · {slice}</Badge>
-              </Empty>
-            </section>
-          ))}
-        </div>
-      )}
+      {tab === "quality" && <QualityView key={activeReport?.id ?? "empty"} quality={activeReport?.quality} />}
       <section className="panel historical">
         <div className="section-head">
           <div>
