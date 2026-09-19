@@ -162,7 +162,16 @@ def genre_metrics(rows, genre_ids):
         (r.reference.primary_genre, r.primary_genre if emitted(r) else "<no emitted primary>")
         for r in labelled
     )
+    eligible_labelled = [r for r in labelled if r.identity_eligible]
     return {
+        "actual_primary_correctness": measure(
+            sum(
+                emitted(r) and r.primary_genre == r.reference.primary_genre
+                for r in eligible_labelled
+            ),
+            len(eligible_labelled),
+        ),
+        "identity_excluded_human_labels": len(labelled) - len(eligible_labelled),
         "human_label_count": len(labelled),
         "execution_errors": sum(r.genre_execution == "error" for r in rows),
         "not_evaluated": sum(r.genre_execution == "not_evaluated" for r in rows),
@@ -225,7 +234,8 @@ def tag_metrics(rows, tag_id):
     labelled = [
         r
         for r in rows
-        if r.reference.origin == "human_review"
+        if r.identity_eligible
+        and r.reference.origin == "human_review"
         and r.reference.supported_truth.get(tag_id) in STATES
     ]
 
@@ -265,7 +275,9 @@ def tag_metrics(rows, tag_id):
     game_positive = [
         r
         for r in rows
-        if r.reference.origin == "human_review" and r.reference.game_truth.get(tag_id) is True
+        if r.identity_eligible
+        and r.reference.origin == "human_review"
+        and r.reference.game_truth.get(tag_id) is True
     ]
     outcomes = Counter(tag(r).state for r in rows if good(r))
     conf = Counter(

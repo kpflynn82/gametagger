@@ -8,6 +8,20 @@ EvidenceItem → Observer → Observation[] → Jev → Policy → AnalysisResul
 
 The observer describes visible facts. Jev interprets them against the canonical VGMS taxonomy. Application policy decides whether to accept a decision, acquire evidence, or request review. A feature that is not observed is never automatically marked absent.
 
+
+## Local website
+
+A responsive, private workspace is available in this repository: Analyze → saved result → review → catalog/history/export, plus Taxonomy, Jev Impact and Roadmap. Live inference is budget-disabled; arbitrary uploads receive explicit not-evaluated states, not canned classifications.
+
+```bash
+uv sync --frozen --extra dev
+npm --prefix frontend ci
+npm --prefix frontend run build
+GAMETAGGER_LOCAL_ROLE=reviewer ./scripts/start_workspace.sh
+```
+
+Open **http://127.0.0.1:8000**. See the [local runbook](docs/LOCAL_WORKSPACE.md), [measurement contract](docs/METRICS.md), and [execution status](docs/EXECUTION_STATUS.md). This is a working local application, not a public deployment or a newly validated model experiment.
+
 ## Setup
 
 Python 3.11 or newer is required. The checked-in `uv.lock` records the tested dependencies.
@@ -45,7 +59,7 @@ For a key that is not scoped to one Anthropic workspace, also set `ANTHROPIC_WOR
 from Claude Console → Settings → Workspaces. The observer sends it in the
 `anthropic-workspace-id` header; workspace-scoped keys can omit this setting.
 
-Metadata is an optional JSON object with string values. The Anthropic adapter sends the image and metadata to Anthropic; factual observations are then sent to TypeSafe. Image input is a single local PNG, JPEG, WEBP, or nonanimated GIF, at most 5 MiB and 8000 pixels per side. Remote URLs and video analysis are future adapters.
+Metadata is an optional JSON object with string values. The Anthropic adapter sends the image and metadata to Anthropic; factual observations are then sent to TypeSafe. Image input is a single local PNG, JPEG, WEBP, or nonanimated GIF, at most 5 MiB and 8000 pixels per side. The website additionally supports bounded local MP4 preprocessing; real temporal recognition and remote URL adapters remain pending.
 
 `.env.example` is a template. Nothing loads `.env` implicitly. If you store credentials in an ignored local `.env`, explicitly load them into the command environment, for example `uv run --env-file .env gametagger ...`. The live integration test follows the same environment rule.
 

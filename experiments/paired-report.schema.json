@@ -1,0 +1,178 @@
+{
+  "$defs": {
+    "MethodRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "method_id": {
+          "title": "Method Id",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "cohort": {
+          "title": "Cohort",
+          "type": "string"
+        },
+        "case_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Case Ids",
+          "type": "array"
+        },
+        "evidence_hashes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Evidence Hashes",
+          "type": "object"
+        },
+        "observation_hashes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Observation Hashes",
+          "type": "object"
+        },
+        "taxonomy_hash": {
+          "title": "Taxonomy Hash",
+          "type": "string"
+        },
+        "label_origin": {
+          "enum": [
+            "human_review",
+            "legacy_machine",
+            "unavailable"
+          ],
+          "title": "Label Origin",
+          "type": "string"
+        },
+        "label_version": {
+          "default": "unavailable",
+          "title": "Label Version",
+          "type": "string"
+        },
+        "conditions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "object"
+        },
+        "kind": {
+          "enum": [
+            "measured",
+            "replayed",
+            "illustrative",
+            "unavailable"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "correct": {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "title": "Correct",
+          "type": "object"
+        },
+        "accepted_primary": {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "title": "Accepted Primary",
+          "type": "object"
+        },
+        "execution_error": {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "title": "Execution Error",
+          "type": "object"
+        },
+        "total_latency_ms": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Total Latency Ms",
+          "type": "object"
+        },
+        "complete_cost_usd": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Complete Cost Usd",
+          "type": "object"
+        },
+        "accounting_complete": {
+          "default": false,
+          "title": "Accounting Complete",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method_id",
+        "version",
+        "cohort",
+        "case_ids",
+        "evidence_hashes",
+        "observation_hashes",
+        "taxonomy_hash",
+        "label_origin",
+        "conditions",
+        "kind"
+      ],
+      "title": "MethodRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "paired-report-v1",
+      "default": "paired-report-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "report_id": {
+      "title": "Report Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "measured",
+        "replayed",
+        "illustrative",
+        "unavailable"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "baseline": {
+      "$ref": "#/$defs/MethodRecord"
+    },
+    "candidate": {
+      "$ref": "#/$defs/MethodRecord"
+    },
+    "input_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Input Hashes",
+      "type": "object"
+    }
+  },
+  "required": [
+    "report_id",
+    "kind",
+    "baseline",
+    "candidate",
+    "input_hashes"
+  ],
+  "title": "ComparisonReport",
+  "type": "object"
+}
