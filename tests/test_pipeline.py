@@ -21,6 +21,7 @@ def test_full_offline_pipeline(taxonomy, evidence):
         MockObserver(facts), JevDecisionEngine(taxonomy, MockJevGateway())
     ).analyze(
         game_id="test",
+        project_id="test",
         evidence=[evidence],
         offline=True,
     )
@@ -48,6 +49,7 @@ def test_pipeline_checks_injected_observers_before_jev(taxonomy, evidence):
     with pytest.raises(ObserverBoundaryError):
         AnalysisPipeline(observer, JevDecisionEngine(taxonomy, gateway)).analyze(
             game_id="test",
+            project_id="test",
             evidence=[evidence],
         )
     gateway.run.assert_not_called()
@@ -60,12 +62,13 @@ def test_blind_metadata_removed_before_observer_and_jev(taxonomy, evidence):
     gateway.model = "mock-jev-v1"
     result = AnalysisPipeline(MockObserver(), JevDecisionEngine(taxonomy, gateway)).analyze(
         game_id="blind-1",
+        project_id="blind-1",
         game_title="Famous Game",
         evidence=[evidence],
         blind_media=True,
     )
     assert result.observations == []
-    assert result.evidence[0].metadata == {}
+    assert result.identity_audit["eligibility"]["status"] == "eligible"
     assert result.run.game_title is None
     state = gateway.run.call_args.kwargs["state"]
     assert "Famous Game" not in state and "Souls-like" not in state
@@ -87,6 +90,7 @@ def test_invalid_evidence_stops_before_classification(taxonomy, evidence, invali
     with pytest.raises(ValueError):
         AnalysisPipeline(MockObserver(), JevDecisionEngine(taxonomy, gateway)).analyze(
             game_id="test",
+            project_id="test",
             evidence=items,
         )
     gateway.run.assert_not_called()
@@ -134,6 +138,7 @@ def test_mixed_distributions_preserved_through_policy(taxonomy, evidence):
 
     result = AnalysisPipeline(MockObserver(), JevDecisionEngine(taxonomy, MixedGateway())).analyze(
         game_id="test",
+        project_id="test",
         evidence=[evidence],
         offline=True,
     )

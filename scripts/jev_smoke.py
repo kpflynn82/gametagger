@@ -16,6 +16,7 @@ def main() -> None:
     engine = JevDecisionEngine(taxonomy, TypeSafeGateway(model="jev-latest"))
     start = perf_counter()
     batch = engine.decide(
+        require_identity=False,
         game_id="blind-smoke-001",
         game_title=None,
         blind_media=True,

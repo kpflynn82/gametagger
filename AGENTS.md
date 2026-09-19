@@ -13,5 +13,5 @@
 ## Development
 
 Use the `gametagger` package. Run `pytest`, `ruff check .`, and `ruff format --check .`.
-Live tests require `TYPESAFE_API_KEY` in the environment and are skipped without it.
+Live tests require both `GAMETAGGER_RUN_LIVE=1` and `TYPESAFE_API_KEY`; otherwise they skip.
 Keep the observer and decision-provider interfaces injectable for offline tests.

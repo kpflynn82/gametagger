@@ -18,6 +18,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Analyze one image with GameTagger")
     parser.add_argument("--image", required=True, type=Path)
     parser.add_argument("--game-id", default="local-case")
+    parser.add_argument("--project-id", help="Associate uploads with this opaque project")
     parser.add_argument("--game-title")
     parser.add_argument("--metadata", type=Path, help="JSON object of textual source metadata")
     parser.add_argument("--source", default="local-upload")
@@ -55,6 +56,7 @@ def main() -> None:
         game_title=args.game_title,
         blind_media=args.blind_media,
         offline=args.offline,
+        project_id=args.project_id or args.game_id,
         evidence=[
             EvidenceItem(
                 id="image-1",

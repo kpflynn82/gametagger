@@ -135,6 +135,26 @@ class JevQuestionCompiler:
         blind_media: bool = False,
         evidence: list[EvidenceItem] | None = None,
     ) -> str:
+        if blind_media:
+            # Auditable identity lives outside model context. Even imported IDs may contain names.
+            ids = list(
+                dict.fromkeys(
+                    [e.id for e in (evidence or [])] + [o.evidence_id for o in observations]
+                )
+            )
+            aliases = {eid: f"evidence-{i}" for i, eid in enumerate(ids)}
+            evidence = [
+                e.model_copy(update={"id": aliases[e.id], "source": "blind-media"})
+                for e in (evidence or [])
+            ]
+            observations = [
+                o.model_copy(
+                    update={"id": f"observation-{i}", "evidence_id": aliases[o.evidence_id]}
+                )
+                for i, o in enumerate(observations)
+                if o.kind == "visual_fact"
+            ]
+            game_id = "blind-case"
         payload: dict[str, Any] = {
             "game_id": game_id,
             "observations": [o.model_dump(mode="json") for o in observations],
@@ -195,6 +215,43 @@ class TypeSafeGateway:
     def __init__(self, *, model: str = "jev-latest", client: Any | None = None):
         self.model = model
         self._client = client
+        self.last_transport = {}
+
+    def run_pinned(self, *, state, specs, model):
+        """Use SDK's public custom-response hook so one malformed answer cannot erase others."""
+        import hashlib
+
+        import httpx2
+        from typesafe_sdk import Choice, RetryPolicy, TypeSafeClient
+
+        from gametagger.decisions.execution import RawEnvelope
+
+        self.last_transport = {}
+        questions = {
+            k: Choice(instructions=s.instructions, criteria=s.criteria) for k, s in specs.items()
+        }
+        kwargs = dict(
+            state=state,
+            questions=questions,
+            model=model,
+            response_model=RawEnvelope,
+            retry=RetryPolicy(max_retries=0),
+        )
+        if self._client is not None:
+            return self._client.system_one(**kwargs)
+
+        def capture(response):
+            response.read()
+            rid = response.headers.get("x-request-id") or response.headers.get("request-id")
+            self.last_transport = {
+                "response_sha256": hashlib.sha256(response.content).hexdigest(),
+                "request_id_sha256": hashlib.sha256(rid.encode()).hexdigest() if rid else None,
+                "representation": "http_json_parsed; original_body_hash_recorded",
+            }
+
+        with httpx2.Client(event_hooks={"response": [capture]}) as http:
+            with TypeSafeClient(timeout=60, http_client=http) as client:
+                return client.system_one(**kwargs)
 
     def run(self, *, state: str, specs: dict[str, QuestionSpec]) -> SystemOneResponse:
         from typesafe_sdk import Choice, TypeSafeClient
@@ -224,19 +281,35 @@ class JevDecisionEngine:
         metadata: dict[str, Any] | None = None,
         blind_media: bool = False,
         evidence: list[EvidenceItem] | None = None,
+        identity=None,
+        max_attempts: int = 2,
+        require_identity: bool = True,
     ) -> DecisionBatch:
+        from gametagger.decisions.execution import QuestionExecutor
+        from gametagger.domain import ExecutionError, QuestionExecution
+        from gametagger.identity import validate_identity
+
         specs = self.compiler.build_specs()
-        state = self.compiler.build_state(
-            game_id=game_id,
-            game_title=game_title,
-            observations=observations,
-            metadata=metadata,
-            blind_media=blind_media,
-            evidence=evidence,
+        executor = QuestionExecutor(self.gateway, max_attempts=max_attempts)
+        gate = (
+            validate_identity(identity, evidence or [])
+            if identity is not None or require_identity
+            else None
         )
-        response = self.gateway.run(state=state, specs=specs)
-        validate_response(response, specs)
-        evidence_ids = list(
+        if identity is not None and metadata:
+            raise ValueError("Put context metadata in reviewed evidence, not an unbound argument")
+        if identity is not None:
+            # Imported labels are audit annotations, not independently verified classifier context.
+            game_id = identity.subject.canonical_game_id if identity.subject else "unresolved"
+            game_title = None
+            from gametagger.observers.boundary import ObservationBoundary
+
+            boundary = ObservationBoundary(self.taxonomy)
+            permitted = {s.evidence_id for s in gate.sources if s.eligible}
+            for item in evidence or []:
+                if item.id in permitted:
+                    boundary.validate([o for o in observations if o.evidence_id == item.id], item)
+        ids = list(
             dict.fromkeys(
                 [e.id for e in evidence]
                 if evidence is not None
@@ -244,51 +317,121 @@ class JevDecisionEngine:
             )
         )
 
-        decisions: list[TagDecision] = []
-        for tag in self.taxonomy.tags:
-            answer = response.answers[tag.id]
-            probabilities = {
-                TagState(key): float(value) for key, value in answer.probabilities.items()
-            }
-            decisions.append(
-                TagDecision(
-                    tag_id=tag.id,
-                    state=TagState(answer.choice),
-                    probabilities=probabilities,
-                    evidence_ids=evidence_ids,
-                    confidence=answer.confidence,
-                    decision_model=response.model,
-                )
-            )
+        def context(property_id):
+            permitted = gate.evidence_for(property_id) if gate else set(ids)
+            if gate and not permitted:
+                return None, []
+            chosen_evidence = [e for e in (evidence or []) if e.id in permitted]
+            chosen_observations = [o for o in observations if o.evidence_id in permitted]
+            return self.compiler.build_state(
+                game_id=game_id,
+                game_title=game_title,
+                observations=chosen_observations,
+                evidence=chosen_evidence,
+                metadata=metadata,
+                blind_media=blind_media,
+            ), [i for i in ids if i in permitted]
 
-        family_answer = response.answers["genre_family"]
-        selected = select_families(self.taxonomy, family_answer.probabilities)
-        genre_specs = self.compiler.build_genre_specs(selected)
-        conditional = self.gateway.run(state=state, specs=genre_specs)
-        validate_response(conditional, genre_specs)
-        genre = aggregate_genres(
-            self.taxonomy,
-            family_answer,
-            conditional,
-            family_model=response.model,
-            evidence_ids=evidence_ids,
+        states, contexts = {}, {}
+        for key in specs:
+            state, context_ids = context("genre" if key == "genre_family" else key)
+            contexts[key] = context_ids
+            if state is not None:
+                states[key] = state
+        outcomes = executor.execute(specs, states, stage="tags_and_families", evidence_ids=contexts)
+        tags = []
+        for tag in self.taxonomy.tags:
+            result = outcomes[tag.id]
+            if result.status == "valid":
+                answer = result.answer
+                tags.append(
+                    TagDecision(
+                        tag_id=tag.id,
+                        state=TagState(answer["choice"]),
+                        probabilities=answer["probabilities"],
+                        confidence=answer["confidence"],
+                        evidence_ids=result.context_evidence_ids,
+                        decision_model=result.model,
+                    )
+                )
+        family = outcomes["genre_family"]
+        genre = None
+        genre_execution = QuestionExecution(
+            status="not_evaluated",
+            error=ExecutionError(
+                code="family_dependency", message="Genre requires a valid family answer"
+            ),
         )
-        usage_by_stage = {
-            "tags_and_families": response.usage.model_dump(),
-            "conditional_genres": conditional.usage.model_dump(),
-        }
-        usage = {
-            key: (
-                sum(stage[key] for stage in usage_by_stage.values())
-                if all(stage[key] is not None for stage in usage_by_stage.values())
-                else None
+        if family.status == "valid":
+            family_answer = ChoiceAnswer.model_validate(family.answer)
+            selected = select_families(self.taxonomy, family_answer.probabilities)
+            children = self.compiler.build_genre_specs(selected)
+            conditional = executor.execute(
+                children,
+                {k: states["genre_family"] for k in children},
+                stage="conditional_genres",
+                evidence_ids={k: contexts["genre_family"] for k in children},
             )
-            for key in ("input_tokens", "output_tokens")
-        }
+            outcomes.update(conditional)
+            if all(r.status == "valid" for r in conditional.values()):
+                response = SystemOneResponse.model_validate(
+                    {
+                        "model": next(iter(conditional.values())).model,
+                        "usage": {},
+                        "answers": {k: r.answer for k, r in conditional.items()},
+                    }
+                )
+                genre = aggregate_genres(
+                    self.taxonomy,
+                    family_answer,
+                    response,
+                    family_model=family.model,
+                    evidence_ids=contexts["genre_family"],
+                )
+                genre.conditional_models = {
+                    k.removeprefix("genre:"): r.model for k, r in conditional.items()
+                }
+                genre_execution = QuestionExecution(
+                    status="valid",
+                    model=genre.decision_model,
+                    context_evidence_ids=contexts["genre_family"],
+                )
+            else:
+                genre_execution = QuestionExecution(
+                    status="error",
+                    error=ExecutionError(
+                        code="conditional_dependency",
+                        message="Incomplete genre: failed conditional branch; no mass pruned",
+                    ),
+                    context_evidence_ids=contexts["genre_family"],
+                )
+        valid = sum(r.status == "valid" for r in outcomes.values())
+        status = (
+            "complete"
+            if valid == len(outcomes) and genre is not None
+            else "partial"
+            if valid
+            else "failed"
+            if executor.attempts
+            else "not_evaluated"
+        )
         return DecisionBatch(
-            tags=decisions,
+            tags=tags,
             genre=genre,
-            model=conditional.model,
-            usage=usage,
-            usage_by_stage=usage_by_stage,
+            model=executor.pinned_model
+            or next(
+                (a.returned_model for a in reversed(executor.attempts) if a.returned_model), None
+            ),
+            usage=executor.usage_total(),
+            usage_by_stage={
+                stage: executor.usage_total(stage) for stage in {a.stage for a in executor.attempts}
+            },
+            execution_status=status,
+            genre_execution=genre_execution,
+            questions=outcomes,
+            attempts=executor.attempts,
+            retry_policy=(
+                f"first-valid-v1; max_attempts={max_attempts}; strict-total-tolerance=0.001"
+            ),
+            identity_status=gate.status if gate else "reference_only",
         )

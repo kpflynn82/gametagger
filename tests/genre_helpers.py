@@ -50,6 +50,7 @@ class ScriptedGenreGateway:
 def classify(taxonomy, family, conditional):
     gateway = ScriptedGenreGateway(family, conditional)
     batch = JevDecisionEngine(taxonomy, gateway).decide(
+        require_identity=False,
         game_id="anonymous-case",
         game_title=None,
         observations=[],

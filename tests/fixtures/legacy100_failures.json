@@ -1,0 +1,4584 @@
+{
+  "provenance": "Actual preserved 20260918 run; labels not adjudicated truth",
+  "first_attempt_failures": [
+    {
+      "record_id": 1095,
+      "attempt_id": "legacy100:1095:attempt-1",
+      "source_sha256": "f9601c1920099a72cb099b9b5ec6830f70872bf738fd0d113dfaaa70621ec056",
+      "error": "JevContractError: mechanic_crafting: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 1101,
+      "attempt_id": "legacy100:1101:attempt-1",
+      "source_sha256": "0e9909d43c3b4ae8f48313f2ee29e668d3e0d3c7a98afbd2cef0eff49c1e2727",
+      "error": "JevContractError: world_open_world: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 1139,
+      "attempt_id": "legacy100:1139:attempt-1",
+      "source_sha256": "5eba87be1f27b88da6a02ac9e0a16793cd2234bef6f75c82262047159d802ac3",
+      "error": "JevContractError: genre_family: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 1201,
+      "attempt_id": "legacy100:1201:attempt-1",
+      "source_sha256": "3ed2b8d6fffbd1c42ec2457be8487ce0c6526eaaa093a9229f74c1ae9bec35da",
+      "error": "JevContractError: gameplay_rpg: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 335,
+      "attempt_id": "legacy100:335:attempt-1",
+      "source_sha256": "7784e4f54819b9b8f53fdd97c3bb86a1684747a95eff61c105242ce51b5f52d2",
+      "error": "JevContractError: gameplay_rpg: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 347,
+      "attempt_id": "legacy100:347:attempt-1",
+      "source_sha256": "bbae00498acf5a17b23b1480ef091e42ee5b64fde0b9672b820161a7240011a4",
+      "error": "JevContractError: genre:puzzle: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 391,
+      "attempt_id": "legacy100:391:attempt-1",
+      "source_sha256": "83331b6a53e9fe536e051d220eedd7b24080eb9e37bab16e2c1df366a8ddf0f7",
+      "error": "JevContractError: genre:action: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 495,
+      "attempt_id": "legacy100:495:attempt-1",
+      "source_sha256": "47c8a05b46964451a371c1fe4c485e103298dfa822e76f81dcf69f0f492c4442",
+      "error": "JevContractError: genre_family: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 603,
+      "attempt_id": "legacy100:603:attempt-1",
+      "source_sha256": "4387421f1c21a190c5222605d4e89ef435c5b5662167323a76b1581f0e0e21b2",
+      "error": "JevContractError: genre:role_playing: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 824,
+      "attempt_id": "legacy100:824:attempt-1",
+      "source_sha256": "efe98d5edb4fedddee4ec2e6ef71dce7642b5e47a5c2e86330116cfacea1a84e",
+      "error": "JevContractError: genre_family: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 830,
+      "attempt_id": "legacy100:830:attempt-1",
+      "source_sha256": "415d8d9d76e5a8a4f0cb06625cad038bba9256e83d67786eb13a3dda0e390703",
+      "error": "JevContractError: genre:action: probabilities do not sum to approximately one",
+      "response_body_available": false
+    },
+    {
+      "record_id": 972,
+      "attempt_id": "legacy100:972:attempt-1",
+      "source_sha256": "e081323cdcdab1390b3053b53e95e5d16416129ba73b6dbbc27dfe8cea8ae815",
+      "error": "JevContractError: genre:action: probabilities do not sum to approximately one",
+      "response_body_available": false
+    }
+  ],
+  "retry_responses": [
+    {
+      "path": "retry-raw/1095-stage-1.json",
+      "source_sha256": "65f10a6905bcc1866fd0dff82cee9b01a319f2b7a091741226a55c704a28ec6f",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 14207,
+          "output_tokens": 1711
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.01,
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.86,
+            "probabilities": {
+              "present": 0.1,
+              "absent": 0.0,
+              "insufficient_evidence": 0.9,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.01,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "present": 0.01,
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "present": 0.02,
+              "absent": 0.0,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.01,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.67,
+            "probabilities": {
+              "present": 0.25,
+              "absent": 0.0,
+              "insufficient_evidence": 0.75,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.53,
+            "probabilities": {
+              "present": 0.35,
+              "absent": 0.0,
+              "insufficient_evidence": 0.65,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "absent",
+            "confidence": 0.63,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.72,
+              "insufficient_evidence": 0.28,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.35,
+            "probabilities": {
+              "present": 0.52,
+              "absent": 0.0,
+              "insufficient_evidence": 0.48,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.7,
+            "probabilities": {
+              "present": 0.21,
+              "absent": 0.01,
+              "insufficient_evidence": 0.78,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.92,
+            "probabilities": {
+              "present": 0.05,
+              "absent": 0.01,
+              "insufficient_evidence": 0.94,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.76,
+            "probabilities": {
+              "present": 0.18,
+              "absent": 0.0,
+              "insufficient_evidence": 0.82,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.77,
+            "probabilities": {
+              "present": 0.83,
+              "absent": 0.0,
+              "insufficient_evidence": 0.17,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 1.0,
+              "absent": 0.0,
+              "insufficient_evidence": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 1.0,
+              "absent": 0.0,
+              "insufficient_evidence": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.84,
+            "probabilities": {
+              "present": 0.88,
+              "absent": 0.0,
+              "insufficient_evidence": 0.12,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.93,
+            "probabilities": {
+              "present": 0.95,
+              "absent": 0.0,
+              "insufficient_evidence": 0.05,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.89,
+            "probabilities": {
+              "present": 0.92,
+              "absent": 0.0,
+              "insufficient_evidence": 0.08,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.76,
+            "probabilities": {
+              "present": 0.05,
+              "absent": 0.12,
+              "insufficient_evidence": 0.83,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.03,
+              "insufficient_evidence": 0.97,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "strategy",
+            "confidence": 1.0,
+            "probabilities": {
+              "adventure_narrative": 0.0,
+              "racing": 0.0,
+              "casual_idle": 0.0,
+              "simulation_management": 0.0,
+              "sports": 0.0,
+              "role_playing": 0.0,
+              "survival_sandbox": 0.0,
+              "action": 0.0,
+              "card_tabletop": 0.0,
+              "insufficient_evidence": 0.0,
+              "puzzle": 0.0,
+              "party_social": 0.0,
+              "strategy": 1.0,
+              "music_rhythm": 0.0,
+              "horror": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/1095-stage-2.json",
+      "source_sha256": "4356912fdc2bedadcd3976a267c317491d97eca51ea303af10618f676c282880",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 8009,
+          "output_tokens": 392
+        },
+        "answers": {
+          "genre:strategy": {
+            "type": "choice",
+            "choice": "turn_based_strategy",
+            "confidence": 0.62,
+            "probabilities": {
+              "grand_strategy": 0.0,
+              "real_time_tactics": 0.0,
+              "four_x_strategy": 0.31,
+              "turn_based_strategy": 0.66,
+              "insufficient_evidence": 0.0,
+              "auto_battler": 0.0,
+              "real_time_strategy": 0.0,
+              "moba": 0.0,
+              "tower_defense": 0.0,
+              "turn_based_tactics": 0.03,
+              "wargame": 0.0
+            }
+          },
+          "genre:action": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "beat_em_up": 0.0,
+              "action_adventure": 0.0,
+              "platformer_2d": 0.0,
+              "platformer_3d": 0.0,
+              "first_person_shooter": 0.0,
+              "tactical_shooter": 0.0,
+              "fighting_2d": 0.0,
+              "precision_platformer": 0.0,
+              "extraction_shooter": 0.0,
+              "bullet_hell": 0.0,
+              "character_action": 0.0,
+              "insufficient_evidence": 1.0,
+              "fighting_3d": 0.0,
+              "third_person_shooter": 0.0,
+              "looter_shooter": 0.0,
+              "hero_shooter": 0.0,
+              "stealth_action": 0.0,
+              "battle_royale": 0.0,
+              "shoot_em_up": 0.0,
+              "metroidvania": 0.0,
+              "arcade_action": 0.0,
+              "survivor_like": 0.0,
+              "platform_fighter": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/1101-stage-1.json",
+      "source_sha256": "ff2be194478fa1cd91573f010f01247997c078b6a037a6017fb5af5ae4ae0b3a",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 11813,
+          "output_tokens": 1737
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "insufficient_evidence": 0.96,
+              "present": 0.03,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.84,
+            "probabilities": {
+              "insufficient_evidence": 0.88,
+              "present": 0.11,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_evidence": 0.97,
+              "present": 0.02,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "present": 0.01,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "present": 0.04,
+              "insufficient_evidence": 0.96,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "conflicting_evidence": 0.01,
+              "absent": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.87,
+            "probabilities": {
+              "insufficient_evidence": 0.91,
+              "present": 0.07,
+              "absent": 0.0,
+              "conflicting_evidence": 0.02
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.91,
+            "probabilities": {
+              "insufficient_evidence": 0.93,
+              "present": 0.05,
+              "conflicting_evidence": 0.01,
+              "absent": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.88,
+            "probabilities": {
+              "insufficient_evidence": 0.91,
+              "present": 0.05,
+              "conflicting_evidence": 0.04,
+              "absent": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.79,
+            "probabilities": {
+              "insufficient_evidence": 0.84,
+              "present": 0.15,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.92,
+            "probabilities": {
+              "insufficient_evidence": 0.95,
+              "present": 0.0,
+              "conflicting_evidence": 0.03,
+              "absent": 0.02
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.91,
+            "probabilities": {
+              "insufficient_evidence": 0.06,
+              "present": 0.93,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.84,
+            "probabilities": {
+              "insufficient_evidence": 0.04,
+              "present": 0.88,
+              "absent": 0.0,
+              "conflicting_evidence": 0.08
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.93,
+            "probabilities": {
+              "insufficient_evidence": 0.03,
+              "present": 0.95,
+              "absent": 0.0,
+              "conflicting_evidence": 0.02
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.22,
+            "probabilities": {
+              "insufficient_evidence": 0.41,
+              "present": 0.41,
+              "conflicting_evidence": 0.17,
+              "absent": 0.01
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.62,
+            "probabilities": {
+              "insufficient_evidence": 0.15,
+              "present": 0.72,
+              "absent": 0.0,
+              "conflicting_evidence": 0.13
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "insufficient_evidence": 0.97,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.03
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "insufficient_evidence": 0.97,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.03
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "role_playing",
+            "confidence": 0.65,
+            "probabilities": {
+              "survival_sandbox": 0.0,
+              "card_tabletop": 0.0,
+              "racing": 0.0,
+              "horror": 0.0,
+              "action": 0.01,
+              "adventure_narrative": 0.0,
+              "puzzle": 0.09,
+              "insufficient_evidence": 0.22,
+              "sports": 0.0,
+              "party_social": 0.0,
+              "strategy": 0.0,
+              "casual_idle": 0.01,
+              "music_rhythm": 0.0,
+              "simulation_management": 0.0,
+              "role_playing": 0.67
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/1139-stage-1.json",
+      "source_sha256": "81acd720c9b198ee2c539cd0fa79766a6579c6132c11ebbf99a958149bca094a",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 10233,
+          "output_tokens": 1731
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "absent": 0.01,
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "absent",
+            "confidence": 0.52,
+            "probabilities": {
+              "absent": 0.64,
+              "insufficient_evidence": 0.36,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.34,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.49,
+              "present": 0.51,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.74,
+            "probabilities": {
+              "absent": 0.19,
+              "insufficient_evidence": 0.81,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.57,
+            "probabilities": {
+              "absent": 0.32,
+              "insufficient_evidence": 0.68,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.98,
+              "present": 0.02,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.74,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.81,
+              "present": 0.19,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "absent": 0.04,
+              "insufficient_evidence": 0.96,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "present": 0.01,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.45,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.41,
+              "present": 0.59,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "absent": 0.01,
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.9,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.01,
+              "present": 0.93,
+              "conflicting_evidence": 0.06
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.69,
+            "probabilities": {
+              "absent": 0.08,
+              "insufficient_evidence": 0.78,
+              "present": 0.14,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.91,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.07,
+              "present": 0.93,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.98,
+              "present": 0.02,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "horror",
+            "confidence": 0.79,
+            "probabilities": {
+              "insufficient_evidence": 0.0,
+              "card_tabletop": 0.0,
+              "simulation_management": 0.0,
+              "action": 0.17,
+              "racing": 0.0,
+              "survival_sandbox": 0.0,
+              "casual_idle": 0.0,
+              "sports": 0.0,
+              "horror": 0.81,
+              "party_social": 0.0,
+              "role_playing": 0.0,
+              "music_rhythm": 0.0,
+              "adventure_narrative": 0.01,
+              "strategy": 0.0,
+              "puzzle": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/1201-stage-1.json",
+      "source_sha256": "b05aa6dc89f18fb6598b027de8b55ce87eea497490165e052508e74c5cf90ea1",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 11428,
+          "output_tokens": 1740
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0,
+              "absent": 0.01
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "present": 0.02,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0,
+              "absent": 0.02
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0,
+              "absent": 0.01
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "present": 0.01,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "insufficient_evidence": 1.0,
+              "absent": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0,
+              "absent": 0.02
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "present": 0.01,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0,
+              "absent": 0.01
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.69,
+            "probabilities": {
+              "present": 0.23,
+              "insufficient_evidence": 0.77,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.52,
+            "probabilities": {
+              "present": 0.36,
+              "insufficient_evidence": 0.64,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.7,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.78,
+              "conflicting_evidence": 0.0,
+              "absent": 0.22
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "present": 0.02,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.01,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.93,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.95,
+              "conflicting_evidence": 0.0,
+              "absent": 0.05
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 1.0,
+              "insufficient_evidence": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.99,
+              "insufficient_evidence": 0.01,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.96,
+            "probabilities": {
+              "present": 0.97,
+              "insufficient_evidence": 0.03,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.38,
+            "probabilities": {
+              "present": 0.41,
+              "insufficient_evidence": 0.54,
+              "conflicting_evidence": 0.0,
+              "absent": 0.05
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.97,
+              "conflicting_evidence": 0.0,
+              "absent": 0.03
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "present": 0.0,
+              "insufficient_evidence": 0.97,
+              "conflicting_evidence": 0.0,
+              "absent": 0.03
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "strategy",
+            "confidence": 1.0,
+            "probabilities": {
+              "card_tabletop": 0.0,
+              "adventure_narrative": 0.0,
+              "role_playing": 0.0,
+              "casual_idle": 0.0,
+              "insufficient_evidence": 0.0,
+              "strategy": 1.0,
+              "survival_sandbox": 0.0,
+              "simulation_management": 0.0,
+              "sports": 0.0,
+              "action": 0.0,
+              "horror": 0.0,
+              "racing": 0.0,
+              "party_social": 0.0,
+              "music_rhythm": 0.0,
+              "puzzle": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/1201-stage-2.json",
+      "source_sha256": "0151def1b06b409d8d1226627b521122df26c72075253bd51076e9dc56a9e7e4",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 5230,
+          "output_tokens": 392
+        },
+        "answers": {
+          "genre:strategy": {
+            "type": "choice",
+            "choice": "real_time_strategy",
+            "confidence": 0.74,
+            "probabilities": {
+              "moba": 0.0,
+              "four_x_strategy": 0.0,
+              "wargame": 0.01,
+              "turn_based_tactics": 0.0,
+              "tower_defense": 0.0,
+              "auto_battler": 0.0,
+              "grand_strategy": 0.0,
+              "real_time_strategy": 0.77,
+              "real_time_tactics": 0.21,
+              "insufficient_evidence": 0.01,
+              "turn_based_strategy": 0.0
+            }
+          },
+          "genre:action": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "tactical_shooter": 0.02,
+              "survivor_like": 0.0,
+              "metroidvania": 0.0,
+              "platformer_3d": 0.0,
+              "stealth_action": 0.0,
+              "first_person_shooter": 0.0,
+              "insufficient_evidence": 0.98,
+              "character_action": 0.0,
+              "third_person_shooter": 0.0,
+              "shoot_em_up": 0.0,
+              "fighting_2d": 0.0,
+              "battle_royale": 0.0,
+              "looter_shooter": 0.0,
+              "extraction_shooter": 0.0,
+              "beat_em_up": 0.0,
+              "bullet_hell": 0.0,
+              "hero_shooter": 0.0,
+              "precision_platformer": 0.0,
+              "platformer_2d": 0.0,
+              "action_adventure": 0.0,
+              "arcade_action": 0.0,
+              "platform_fighter": 0.0,
+              "fighting_3d": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/335-stage-1.json",
+      "source_sha256": "891f1124d7d8f90de8a8b05764982395f35c90b303fffe85909f81e4988886cd",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 11008,
+          "output_tokens": 1734
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "insufficient_evidence": 0.96,
+              "absent": 0.0,
+              "conflicting_evidence": 0.03,
+              "present": 0.01
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "absent": 0.01,
+              "conflicting_evidence": 0.01,
+              "present": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.86,
+            "probabilities": {
+              "insufficient_evidence": 0.9,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.1
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "absent": 0.02,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.91,
+            "probabilities": {
+              "insufficient_evidence": 0.93,
+              "absent": 0.0,
+              "conflicting_evidence": 0.04,
+              "present": 0.03
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "absent": 0.02,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.79,
+            "probabilities": {
+              "insufficient_evidence": 0.84,
+              "absent": 0.0,
+              "conflicting_evidence": 0.1,
+              "present": 0.06
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.91,
+            "probabilities": {
+              "insufficient_evidence": 0.9400000000000001,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.06
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.68,
+            "probabilities": {
+              "insufficient_evidence": 0.76,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01,
+              "present": 0.23
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.82,
+            "probabilities": {
+              "insufficient_evidence": 0.87,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.13
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "absent": 0.02,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.5,
+            "probabilities": {
+              "insufficient_evidence": 0.64,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.36
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.64,
+            "probabilities": {
+              "insufficient_evidence": 0.24,
+              "absent": 0.0,
+              "conflicting_evidence": 0.03,
+              "present": 0.73
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.74,
+            "probabilities": {
+              "insufficient_evidence": 0.81,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.19
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.72,
+            "probabilities": {
+              "insufficient_evidence": 0.14,
+              "absent": 0.0,
+              "conflicting_evidence": 0.07,
+              "present": 0.79
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.73,
+            "probabilities": {
+              "insufficient_evidence": 0.19,
+              "absent": 0.0,
+              "conflicting_evidence": 0.02,
+              "present": 0.79
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.77,
+            "probabilities": {
+              "insufficient_evidence": 0.15,
+              "absent": 0.0,
+              "conflicting_evidence": 0.02,
+              "present": 0.83
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "insufficient_evidence": 0.95,
+              "absent": 0.01,
+              "conflicting_evidence": 0.01,
+              "present": 0.03
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.45,
+            "probabilities": {
+              "insufficient_evidence": 0.59,
+              "absent": 0.0,
+              "conflicting_evidence": 0.05,
+              "present": 0.36
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "action",
+            "confidence": 0.76,
+            "probabilities": {
+              "role_playing": 0.04,
+              "music_rhythm": 0.0,
+              "simulation_management": 0.0,
+              "horror": 0.0,
+              "sports": 0.0,
+              "puzzle": 0.0,
+              "survival_sandbox": 0.0,
+              "racing": 0.0,
+              "card_tabletop": 0.0,
+              "adventure_narrative": 0.04,
+              "strategy": 0.0,
+              "insufficient_evidence": 0.13,
+              "casual_idle": 0.0,
+              "action": 0.79,
+              "party_social": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/335-stage-2.json",
+      "source_sha256": "676a8d078df12da6ff7fc5d5f79b6ed9fae2408843ee519082132a4e5726f435",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 5793,
+          "output_tokens": 531
+        },
+        "answers": {
+          "genre:action": {
+            "type": "choice",
+            "choice": "metroidvania",
+            "confidence": 0.56,
+            "probabilities": {
+              "action_adventure": 0.2,
+              "stealth_action": 0.0,
+              "beat_em_up": 0.0,
+              "arcade_action": 0.0,
+              "platformer_3d": 0.16,
+              "battle_royale": 0.0,
+              "fighting_2d": 0.0,
+              "platformer_2d": 0.04,
+              "first_person_shooter": 0.0,
+              "hero_shooter": 0.0,
+              "tactical_shooter": 0.0,
+              "insufficient_evidence": 0.01,
+              "extraction_shooter": 0.0,
+              "shoot_em_up": 0.0,
+              "fighting_3d": 0.0,
+              "looter_shooter": 0.0,
+              "metroidvania": 0.59,
+              "character_action": 0.0,
+              "bullet_hell": 0.0,
+              "platform_fighter": 0.0,
+              "third_person_shooter": 0.0,
+              "precision_platformer": 0.0,
+              "survivor_like": 0.0
+            }
+          },
+          "genre:adventure_narrative": {
+            "type": "choice",
+            "choice": "adventure",
+            "confidence": 0.48,
+            "probabilities": {
+              "immersive_sim": 0.0,
+              "interactive_fiction": 0.0,
+              "narrative_adventure": 0.01,
+              "exploration_adventure": 0.03,
+              "visual_novel": 0.0,
+              "interactive_movie": 0.0,
+              "adventure": 0.53,
+              "insufficient_evidence": 0.42,
+              "dating_sim": 0.0,
+              "point_click_adventure": 0.01
+            }
+          },
+          "genre:role_playing": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.65,
+            "probabilities": {
+              "mmorpg": 0.0,
+              "jrpg": 0.0,
+              "roguelite": 0.0,
+              "crpg": 0.0,
+              "creature_collector": 0.0,
+              "roguelike": 0.0,
+              "souls_like": 0.01,
+              "tactical_rpg": 0.0,
+              "insufficient_evidence": 0.6900000000000001,
+              "turn_based_rpg": 0.0,
+              "action_rpg": 0.3,
+              "dungeon_crawler": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/347-stage-1.json",
+      "source_sha256": "fbb963eb7290841b6727a44c8e5f223e0f2a16d73fa08631b351b307911262c8",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 12298,
+          "output_tokens": 1754
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.9,
+            "probabilities": {
+              "absent": 0.07,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 0.93
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.02,
+              "insufficient_evidence": 0.98
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.81,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.01,
+              "present": 0.13,
+              "insufficient_evidence": 0.86
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.45,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.08,
+              "present": 0.33,
+              "insufficient_evidence": 0.59
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.83,
+            "probabilities": {
+              "absent": 0.01,
+              "conflicting_evidence": 0.09,
+              "present": 0.02,
+              "insufficient_evidence": 0.88
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "absent": 0.04,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 0.96
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "absent": 0.03,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 0.97
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.01,
+              "insufficient_evidence": 0.99
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.89,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.08,
+              "insufficient_evidence": 0.92
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.6,
+            "probabilities": {
+              "absent": 0.01,
+              "conflicting_evidence": 0.03,
+              "present": 0.26,
+              "insufficient_evidence": 0.7
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.66,
+            "probabilities": {
+              "absent": 0.25,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 0.75
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.74,
+            "probabilities": {
+              "absent": 0.19,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 0.81
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.92,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.01,
+              "present": 0.94,
+              "insufficient_evidence": 0.05
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.01,
+              "insufficient_evidence": 0.99
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "absent": 0.0,
+              "conflicting_evidence": 0.0,
+              "present": 0.02,
+              "insufficient_evidence": 0.98
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "horror",
+            "confidence": 0.92,
+            "probabilities": {
+              "survival_sandbox": 0.0,
+              "insufficient_evidence": 0.02,
+              "racing": 0.0,
+              "strategy": 0.0,
+              "music_rhythm": 0.0,
+              "card_tabletop": 0.0,
+              "sports": 0.0,
+              "party_social": 0.0,
+              "puzzle": 0.01,
+              "role_playing": 0.0,
+              "casual_idle": 0.0,
+              "horror": 0.93,
+              "adventure_narrative": 0.04,
+              "simulation_management": 0.0,
+              "action": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/347-stage-2.json",
+      "source_sha256": "28c798e6972a7aab3cd130b30c94cd73da77548e823be5c18f309a740dedd8d1",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 5460,
+          "output_tokens": 328
+        },
+        "answers": {
+          "genre:horror": {
+            "type": "choice",
+            "choice": "survival_horror",
+            "confidence": 0.56,
+            "probabilities": {
+              "survival_horror": 0.66,
+              "horror_adventure": 0.27,
+              "action_horror": 0.0,
+              "psychological_horror": 0.04,
+              "insufficient_evidence": 0.03
+            }
+          },
+          "genre:adventure_narrative": {
+            "type": "choice",
+            "choice": "adventure",
+            "confidence": 0.36,
+            "probabilities": {
+              "interactive_fiction": 0.0,
+              "interactive_movie": 0.0,
+              "visual_novel": 0.0,
+              "point_click_adventure": 0.04,
+              "exploration_adventure": 0.25,
+              "narrative_adventure": 0.06,
+              "adventure": 0.43,
+              "dating_sim": 0.0,
+              "immersive_sim": 0.0,
+              "insufficient_evidence": 0.22
+            }
+          },
+          "genre:puzzle": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.63,
+            "probabilities": {
+              "insufficient_evidence": 0.66,
+              "puzzle_platformer": 0.01,
+              "trivia_quiz": 0.0,
+              "puzzle": 0.28,
+              "match_3": 0.0,
+              "escape_room": 0.05,
+              "merge": 0.0,
+              "word_game": 0.0,
+              "physics_puzzle": 0.0,
+              "hidden_object": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/391-stage-1.json",
+      "source_sha256": "1853092c551ea645866e7b9d1ddd6c81aade398b056a089c36e7d120fdeae5ae",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 11263,
+          "output_tokens": 1751
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "present": 0.01,
+              "conflicting_evidence": 0.0,
+              "absent": 0.01
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.87,
+            "probabilities": {
+              "insufficient_evidence": 0.91,
+              "present": 0.02,
+              "conflicting_evidence": 0.07,
+              "absent": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.83,
+            "probabilities": {
+              "insufficient_evidence": 0.88,
+              "present": 0.05,
+              "conflicting_evidence": 0.07,
+              "absent": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.74,
+            "probabilities": {
+              "insufficient_evidence": 0.81,
+              "present": 0.03,
+              "conflicting_evidence": 0.16,
+              "absent": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "insufficient_evidence": 0.95,
+              "present": 0.03,
+              "conflicting_evidence": 0.02,
+              "absent": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.01
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.83,
+            "probabilities": {
+              "insufficient_evidence": 0.88,
+              "present": 0.05,
+              "conflicting_evidence": 0.07,
+              "absent": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.23,
+            "probabilities": {
+              "insufficient_evidence": 0.43,
+              "present": 0.41,
+              "conflicting_evidence": 0.16,
+              "absent": 0.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.46,
+            "probabilities": {
+              "insufficient_evidence": 0.6,
+              "present": 0.17,
+              "conflicting_evidence": 0.23,
+              "absent": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.56,
+            "probabilities": {
+              "insufficient_evidence": 0.67,
+              "present": 0.32,
+              "conflicting_evidence": 0.01,
+              "absent": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.89,
+            "probabilities": {
+              "insufficient_evidence": 0.92,
+              "present": 0.0,
+              "conflicting_evidence": 0.01,
+              "absent": 0.07
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.61,
+            "probabilities": {
+              "insufficient_evidence": 0.71,
+              "present": 0.28,
+              "conflicting_evidence": 0.01,
+              "absent": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.89,
+            "probabilities": {
+              "insufficient_evidence": 0.91,
+              "present": 0.08,
+              "conflicting_evidence": 0.01,
+              "absent": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.85,
+            "probabilities": {
+              "insufficient_evidence": 0.88,
+              "present": 0.06,
+              "conflicting_evidence": 0.04,
+              "absent": 0.02
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.92,
+            "probabilities": {
+              "insufficient_evidence": 0.94,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.06
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_evidence": 0.97,
+              "present": 0.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.03
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.78,
+            "probabilities": {
+              "insufficient_evidence": 0.83,
+              "present": 0.09,
+              "conflicting_evidence": 0.07,
+              "absent": 0.01
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.61,
+            "probabilities": {
+              "insufficient_evidence": 0.15,
+              "present": 0.71,
+              "conflicting_evidence": 0.14,
+              "absent": 0.0
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "conflicting_evidence",
+            "confidence": 0.33,
+            "probabilities": {
+              "insufficient_evidence": 0.42,
+              "present": 0.08,
+              "conflicting_evidence": 0.5,
+              "absent": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.2,
+            "probabilities": {
+              "insufficient_evidence": 0.4,
+              "present": 0.28,
+              "conflicting_evidence": 0.32,
+              "absent": 0.0
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "action",
+            "confidence": 0.82,
+            "probabilities": {
+              "casual_idle": 0.0,
+              "sports": 0.0,
+              "card_tabletop": 0.0,
+              "action": 0.84,
+              "party_social": 0.0,
+              "role_playing": 0.05,
+              "horror": 0.0,
+              "music_rhythm": 0.0,
+              "survival_sandbox": 0.0,
+              "strategy": 0.0,
+              "racing": 0.0,
+              "adventure_narrative": 0.0,
+              "puzzle": 0.0,
+              "insufficient_evidence": 0.11,
+              "simulation_management": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/391-stage-2.json",
+      "source_sha256": "334872296113d35fe7b469ac278e35193f426788e2869596ee7316055ee34e18",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 5215,
+          "output_tokens": 406
+        },
+        "answers": {
+          "genre:action": {
+            "type": "choice",
+            "choice": "metroidvania",
+            "confidence": 0.78,
+            "probabilities": {
+              "insufficient_evidence": 0.03,
+              "precision_platformer": 0.02,
+              "character_action": 0.0,
+              "beat_em_up": 0.0,
+              "battle_royale": 0.0,
+              "fighting_2d": 0.0,
+              "third_person_shooter": 0.09,
+              "survivor_like": 0.0,
+              "extraction_shooter": 0.0,
+              "arcade_action": 0.0,
+              "action_adventure": 0.0,
+              "looter_shooter": 0.0,
+              "fighting_3d": 0.0,
+              "stealth_action": 0.0,
+              "shoot_em_up": 0.01,
+              "first_person_shooter": 0.04,
+              "tactical_shooter": 0.0,
+              "bullet_hell": 0.0,
+              "metroidvania": 0.8,
+              "hero_shooter": 0.0,
+              "platformer_2d": 0.0,
+              "platformer_3d": 0.01,
+              "platform_fighter": 0.0
+            }
+          },
+          "genre:role_playing": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.73,
+            "probabilities": {
+              "action_rpg": 0.23,
+              "creature_collector": 0.0,
+              "insufficient_evidence": 0.75,
+              "jrpg": 0.0,
+              "turn_based_rpg": 0.0,
+              "tactical_rpg": 0.0,
+              "mmorpg": 0.0,
+              "dungeon_crawler": 0.01,
+              "roguelite": 0.0,
+              "crpg": 0.0,
+              "souls_like": 0.01,
+              "roguelike": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/495-stage-1.json",
+      "source_sha256": "2126fc5814113d6913592d2ccaa575dacf8f30e1777b273a3df162ce9b50bf9c",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 11581,
+          "output_tokens": 1747
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "present": 0.01,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.93,
+            "probabilities": {
+              "insufficient_evidence": 0.95,
+              "present": 0.04,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.01,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.48,
+            "probabilities": {
+              "insufficient_evidence": 0.61,
+              "present": 0.35,
+              "absent": 0.0,
+              "conflicting_evidence": 0.04
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.43,
+            "probabilities": {
+              "insufficient_evidence": 0.58,
+              "present": 0.38,
+              "absent": 0.0,
+              "conflicting_evidence": 0.04
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.77,
+            "probabilities": {
+              "insufficient_evidence": 0.83,
+              "present": 0.0,
+              "absent": 0.16,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.59,
+            "probabilities": {
+              "insufficient_evidence": 0.69,
+              "present": 0.3,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.01,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.93,
+            "probabilities": {
+              "insufficient_evidence": 0.95,
+              "present": 0.03,
+              "absent": 0.0,
+              "conflicting_evidence": 0.02
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.01,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "insufficient_evidence": 0.96,
+              "present": 0.02,
+              "absent": 0.0,
+              "conflicting_evidence": 0.02
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "absent": 0.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.66,
+            "probabilities": {
+              "insufficient_evidence": 0.11,
+              "present": 0.74,
+              "absent": 0.0,
+              "conflicting_evidence": 0.15
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.61,
+            "probabilities": {
+              "insufficient_evidence": 0.22,
+              "present": 0.7,
+              "absent": 0.0,
+              "conflicting_evidence": 0.08
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_evidence": 0.97,
+              "present": 0.0,
+              "absent": 0.01,
+              "conflicting_evidence": 0.02
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "present": 0.0,
+              "absent": 0.0,
+              "conflicting_evidence": 0.01
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "simulation_management",
+            "confidence": 0.31,
+            "probabilities": {
+              "insufficient_evidence": 0.3,
+              "puzzle": 0.0,
+              "racing": 0.0,
+              "card_tabletop": 0.0,
+              "adventure_narrative": 0.0,
+              "sports": 0.0,
+              "action": 0.28,
+              "role_playing": 0.04,
+              "strategy": 0.0,
+              "casual_idle": 0.0,
+              "horror": 0.0,
+              "music_rhythm": 0.0,
+              "party_social": 0.0,
+              "simulation_management": 0.37,
+              "survival_sandbox": 0.01
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/495-stage-2.json",
+      "source_sha256": "c738f32d4bba68349a7324c80cf0dadb8b7b2545601912d69c34a78eb9d062a7",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 6727,
+          "output_tokens": 598
+        },
+        "answers": {
+          "genre:simulation_management": {
+            "type": "choice",
+            "choice": "farm_simulation",
+            "confidence": 0.87,
+            "probabilities": {
+              "management_tycoon": 0.0,
+              "job_profession_simulation": 0.0,
+              "life_simulation": 0.0,
+              "city_builder": 0.0,
+              "insufficient_evidence": 0.11,
+              "factory_automation_sim": 0.0,
+              "flight_simulation": 0.0,
+              "driving_vehicle_simulation": 0.0,
+              "farm_simulation": 0.89,
+              "colony_sim": 0.0
+            }
+          },
+          "genre:action": {
+            "type": "choice",
+            "choice": "character_action",
+            "confidence": 0.96,
+            "probabilities": {
+              "survivor_like": 0.0,
+              "battle_royale": 0.0,
+              "action_adventure": 0.01,
+              "insufficient_evidence": 0.02,
+              "precision_platformer": 0.0,
+              "shoot_em_up": 0.0,
+              "beat_em_up": 0.0,
+              "hero_shooter": 0.0,
+              "first_person_shooter": 0.0,
+              "tactical_shooter": 0.0,
+              "stealth_action": 0.0,
+              "bullet_hell": 0.0,
+              "platformer_2d": 0.0,
+              "metroidvania": 0.0,
+              "looter_shooter": 0.0,
+              "platform_fighter": 0.0,
+              "extraction_shooter": 0.0,
+              "fighting_2d": 0.0,
+              "fighting_3d": 0.0,
+              "character_action": 0.97,
+              "arcade_action": 0.0,
+              "platformer_3d": 0.0,
+              "third_person_shooter": 0.0
+            }
+          },
+          "genre:role_playing": {
+            "type": "choice",
+            "choice": "action_rpg",
+            "confidence": 0.74,
+            "probabilities": {
+              "action_rpg": 0.76,
+              "souls_like": 0.01,
+              "roguelite": 0.0,
+              "insufficient_evidence": 0.23,
+              "roguelike": 0.0,
+              "turn_based_rpg": 0.0,
+              "tactical_rpg": 0.0,
+              "crpg": 0.0,
+              "jrpg": 0.0,
+              "creature_collector": 0.0,
+              "dungeon_crawler": 0.0,
+              "mmorpg": 0.0
+            }
+          },
+          "genre:survival_sandbox": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.71,
+            "probabilities": {
+              "open_world_survival_craft": 0.01,
+              "sandbox": 0.2,
+              "survival": 0.01,
+              "insufficient_evidence": 0.78
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/603-stage-1.json",
+      "source_sha256": "e4feb936e2364e72d8f605dfe23fabd0b51599948a5704520a56160920893a9c",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 9749,
+          "output_tokens": 1743
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.01,
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "present": 0.01,
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "present": 0.02,
+              "absent": 0.0,
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.91,
+            "probabilities": {
+              "present": 0.94,
+              "absent": 0.0,
+              "insufficient_evidence": 0.06,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.53,
+            "probabilities": {
+              "present": 0.35,
+              "absent": 0.0,
+              "insufficient_evidence": 0.65,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.01,
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.95,
+            "probabilities": {
+              "present": 0.96,
+              "absent": 0.0,
+              "insufficient_evidence": 0.04,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.86,
+            "probabilities": {
+              "present": 0.9,
+              "absent": 0.0,
+              "insufficient_evidence": 0.1,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "conflicting_evidence": 0.0,
+              "absent": 0.01,
+              "insufficient_evidence": 0.99,
+              "present": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "role_playing",
+            "confidence": 1.0,
+            "probabilities": {
+              "role_playing": 1.0,
+              "insufficient_evidence": 0.0,
+              "casual_idle": 0.0,
+              "racing": 0.0,
+              "card_tabletop": 0.0,
+              "simulation_management": 0.0,
+              "sports": 0.0,
+              "survival_sandbox": 0.0,
+              "adventure_narrative": 0.0,
+              "party_social": 0.0,
+              "horror": 0.0,
+              "music_rhythm": 0.0,
+              "action": 0.0,
+              "strategy": 0.0,
+              "puzzle": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/603-stage-2.json",
+      "source_sha256": "d43d69e7c869628b5763e165ba16836d9bb3130048f9aacb2e421f4358cfcd80",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 3701,
+          "output_tokens": 405
+        },
+        "answers": {
+          "genre:role_playing": {
+            "type": "choice",
+            "choice": "jrpg",
+            "confidence": 0.77,
+            "probabilities": {
+              "mmorpg": 0.0,
+              "tactical_rpg": 0.0,
+              "insufficient_evidence": 0.12,
+              "jrpg": 0.8,
+              "crpg": 0.0,
+              "turn_based_rpg": 0.06,
+              "souls_like": 0.0,
+              "roguelite": 0.0,
+              "roguelike": 0.0,
+              "creature_collector": 0.0,
+              "dungeon_crawler": 0.0,
+              "action_rpg": 0.02
+            }
+          },
+          "genre:action": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "platform_fighter": 0.0,
+              "bullet_hell": 0.0,
+              "character_action": 0.0,
+              "fighting_3d": 0.0,
+              "metroidvania": 0.0,
+              "looter_shooter": 0.0,
+              "first_person_shooter": 0.0,
+              "hero_shooter": 0.0,
+              "beat_em_up": 0.0,
+              "extraction_shooter": 0.0,
+              "shoot_em_up": 0.0,
+              "platformer_3d": 0.0,
+              "platformer_2d": 0.0,
+              "tactical_shooter": 0.0,
+              "battle_royale": 0.0,
+              "precision_platformer": 0.0,
+              "action_adventure": 0.03,
+              "fighting_2d": 0.0,
+              "arcade_action": 0.0,
+              "third_person_shooter": 0.0,
+              "survivor_like": 0.0,
+              "stealth_action": 0.0,
+              "insufficient_evidence": 0.97
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/824-stage-1.json",
+      "source_sha256": "77aa9028f315187f13c259790bd160d87fa2a14a944de1feb7f9110f48f0ec4e",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 9343,
+          "output_tokens": 1758
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "present": 0.01,
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "present": 0.0,
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "action",
+            "confidence": 0.77,
+            "probabilities": {
+              "adventure_narrative": 0.0,
+              "strategy": 0.02,
+              "action": 0.79,
+              "sports": 0.0,
+              "insufficient_evidence": 0.15,
+              "horror": 0.0,
+              "card_tabletop": 0.0,
+              "party_social": 0.0,
+              "simulation_management": 0.02,
+              "music_rhythm": 0.0,
+              "survival_sandbox": 0.02,
+              "role_playing": 0.0,
+              "casual_idle": 0.0,
+              "puzzle": 0.0,
+              "racing": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/824-stage-2.json",
+      "source_sha256": "c83a80bdabe5e448d44d6dfd5094000ad45e189381583d74657d6ff470e64d6d",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 4339,
+          "output_tokens": 596
+        },
+        "answers": {
+          "genre:action": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.87,
+            "probabilities": {
+              "battle_royale": 0.0,
+              "action_adventure": 0.0,
+              "metroidvania": 0.0,
+              "fighting_3d": 0.0,
+              "character_action": 0.0,
+              "insufficient_evidence": 0.89,
+              "hero_shooter": 0.0,
+              "platform_fighter": 0.0,
+              "tactical_shooter": 0.0,
+              "arcade_action": 0.0,
+              "first_person_shooter": 0.01,
+              "fighting_2d": 0.0,
+              "survivor_like": 0.02,
+              "bullet_hell": 0.0,
+              "precision_platformer": 0.0,
+              "stealth_action": 0.0,
+              "shoot_em_up": 0.01,
+              "beat_em_up": 0.05,
+              "looter_shooter": 0.0,
+              "third_person_shooter": 0.02,
+              "platformer_2d": 0.0,
+              "extraction_shooter": 0.0,
+              "platformer_3d": 0.0
+            }
+          },
+          "genre:simulation_management": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.94,
+            "probabilities": {
+              "life_simulation": 0.0,
+              "farm_simulation": 0.0,
+              "flight_simulation": 0.0,
+              "job_profession_simulation": 0.01,
+              "management_tycoon": 0.0,
+              "driving_vehicle_simulation": 0.0,
+              "factory_automation_sim": 0.0,
+              "insufficient_evidence": 0.95,
+              "city_builder": 0.01,
+              "colony_sim": 0.03
+            }
+          },
+          "genre:strategy": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.75,
+            "probabilities": {
+              "auto_battler": 0.0,
+              "real_time_strategy": 0.0,
+              "moba": 0.0,
+              "real_time_tactics": 0.02,
+              "tower_defense": 0.2,
+              "insufficient_evidence": 0.78,
+              "four_x_strategy": 0.0,
+              "grand_strategy": 0.0,
+              "wargame": 0.0,
+              "turn_based_strategy": 0.0,
+              "turn_based_tactics": 0.0
+            }
+          },
+          "genre:survival_sandbox": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.93,
+            "probabilities": {
+              "insufficient_evidence": 0.95,
+              "open_world_survival_craft": 0.0,
+              "sandbox": 0.0,
+              "survival": 0.05
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/830-stage-1.json",
+      "source_sha256": "b1d4cfb6b92e20f4f8b8403a7248b082da51e2977261fbecb59979294e6e8892",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 9527,
+          "output_tokens": 1746
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.77,
+            "probabilities": {
+              "insufficient_evidence": 0.83,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.17
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.01
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.78,
+            "probabilities": {
+              "insufficient_evidence": 0.84,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.16
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.87,
+            "probabilities": {
+              "insufficient_evidence": 0.9,
+              "conflicting_evidence": 0.0,
+              "absent": 0.1,
+              "present": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_evidence": 0.97,
+              "conflicting_evidence": 0.0,
+              "absent": 0.03,
+              "present": 0.0
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 0.99,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.01
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_evidence": 0.03,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.97
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.02,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.98
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.92,
+            "probabilities": {
+              "insufficient_evidence": 0.94,
+              "conflicting_evidence": 0.0,
+              "absent": 0.04,
+              "present": 0.02
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.89,
+            "probabilities": {
+              "insufficient_evidence": 0.92,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.08
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "conflicting_evidence": 0.0,
+              "absent": 0.0,
+              "present": 0.02
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "action",
+            "confidence": 0.99,
+            "probabilities": {
+              "simulation_management": 0.0,
+              "casual_idle": 0.0,
+              "role_playing": 0.0,
+              "card_tabletop": 0.0,
+              "music_rhythm": 0.0,
+              "racing": 0.0,
+              "survival_sandbox": 0.0,
+              "adventure_narrative": 0.0,
+              "puzzle": 0.0,
+              "party_social": 0.0,
+              "insufficient_evidence": 0.0,
+              "sports": 0.0,
+              "horror": 0.0,
+              "strategy": 0.0,
+              "action": 1.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/830-stage-2.json",
+      "source_sha256": "f01833f1377b5949f06d77952dfbcb27be5895b1cf7711b2493084d89b0586b9",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 3307,
+          "output_tokens": 392
+        },
+        "answers": {
+          "genre:action": {
+            "type": "choice",
+            "choice": "beat_em_up",
+            "confidence": 0.94,
+            "probabilities": {
+              "extraction_shooter": 0.0,
+              "action_adventure": 0.02,
+              "hero_shooter": 0.0,
+              "fighting_2d": 0.0,
+              "survivor_like": 0.0,
+              "looter_shooter": 0.0,
+              "third_person_shooter": 0.0,
+              "precision_platformer": 0.0,
+              "platformer_3d": 0.0,
+              "tactical_shooter": 0.0,
+              "stealth_action": 0.0,
+              "insufficient_evidence": 0.03,
+              "platform_fighter": 0.0,
+              "battle_royale": 0.0,
+              "bullet_hell": 0.0,
+              "beat_em_up": 0.95,
+              "first_person_shooter": 0.0,
+              "shoot_em_up": 0.0,
+              "fighting_3d": 0.0,
+              "character_action": 0.0,
+              "arcade_action": 0.0,
+              "platformer_2d": 0.0,
+              "metroidvania": 0.0
+            }
+          },
+          "genre:adventure_narrative": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_evidence": 0.98,
+              "interactive_movie": 0.0,
+              "immersive_sim": 0.0,
+              "point_click_adventure": 0.0,
+              "adventure": 0.02,
+              "interactive_fiction": 0.0,
+              "visual_novel": 0.0,
+              "exploration_adventure": 0.0,
+              "narrative_adventure": 0.0,
+              "dating_sim": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/972-stage-1.json",
+      "source_sha256": "5438ad0ef0e6b62bc6c49d3502da7d423b4daa515bdb6c6b5aa63fd17d7a8beb",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 12523,
+          "output_tokens": 1738
+        },
+        "answers": {
+          "visual_pixel_art": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "absent": 0.03,
+              "insufficient_evidence": 0.97,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_realistic": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.98,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.99,
+              "present": 0.01,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_stylized": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.9,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.93,
+              "present": 0.07,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_first_person": {
+            "type": "choice",
+            "choice": "absent",
+            "confidence": 0.48,
+            "probabilities": {
+              "absent": 0.62,
+              "insufficient_evidence": 0.38,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_third_person": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.35,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.48,
+              "present": 0.52,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_isometric": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.87,
+            "probabilities": {
+              "absent": 0.09,
+              "insufficient_evidence": 0.91,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "visual_side_scrolling": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.77,
+            "probabilities": {
+              "absent": 0.17,
+              "present": 0.0,
+              "insufficient_evidence": 0.83,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_melee_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.93,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.05,
+              "insufficient_evidence": 0.95,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_ranged_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.95,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.03,
+              "insufficient_evidence": 0.97,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_real_time_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.6,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.7,
+              "present": 0.3,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_turn_based_combat": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.54,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.66,
+              "present": 0.34,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_parry": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.66,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.75,
+              "present": 0.25,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dodge_roll": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.45,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.59,
+              "present": 0.41,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_stamina": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_crafting": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_inventory": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.9,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.08,
+              "insufficient_evidence": 0.92,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "mechanic_dialogue_choices": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_open_world": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.7,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.78,
+              "present": 0.22,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "world_procedural": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "feature_multiplayer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.0,
+              "insufficient_evidence": 1.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "engagement_co_op": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 1.0,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "narrative_story_driven": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.89,
+            "probabilities": {
+              "absent": 0.0,
+              "present": 0.92,
+              "insufficient_evidence": 0.08,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_rpg": {
+            "type": "choice",
+            "choice": "present",
+            "confidence": 0.78,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 0.16,
+              "present": 0.84,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_shooter": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.96,
+            "probabilities": {
+              "absent": 0.02,
+              "insufficient_evidence": 0.97,
+              "present": 0.01,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "gameplay_platformer": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.99,
+            "probabilities": {
+              "absent": 0.0,
+              "insufficient_evidence": 1.0,
+              "present": 0.0,
+              "conflicting_evidence": 0.0
+            }
+          },
+          "genre_family": {
+            "type": "choice",
+            "choice": "role_playing",
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_evidence": 0.0,
+              "card_tabletop": 0.0,
+              "action": 0.0,
+              "adventure_narrative": 0.0,
+              "strategy": 0.0,
+              "music_rhythm": 0.0,
+              "casual_idle": 0.0,
+              "party_social": 0.0,
+              "survival_sandbox": 0.0,
+              "horror": 0.0,
+              "puzzle": 0.0,
+              "role_playing": 1.0,
+              "racing": 0.0,
+              "simulation_management": 0.0,
+              "sports": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "retry-raw/972-stage-2.json",
+      "source_sha256": "fcb2fa3ae4fecc888f82b6b50894b5a16c27a5f8da85f0ab243a71fb81eaa098",
+      "representation": "SDK model_dump; HTTP body unavailable",
+      "request_id": null,
+      "model": "jev-1.13.0",
+      "sdk_version": "0.7.0",
+      "response": {
+        "model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 6475,
+          "output_tokens": 407
+        },
+        "answers": {
+          "genre:role_playing": {
+            "type": "choice",
+            "choice": "turn_based_rpg",
+            "confidence": 0.89,
+            "probabilities": {
+              "action_rpg": 0.02,
+              "turn_based_rpg": 0.89,
+              "jrpg": 0.09,
+              "roguelike": 0.0,
+              "mmorpg": 0.0,
+              "creature_collector": 0.0,
+              "dungeon_crawler": 0.0,
+              "roguelite": 0.0,
+              "crpg": 0.0,
+              "insufficient_evidence": 0.0,
+              "souls_like": 0.0,
+              "tactical_rpg": 0.0
+            }
+          },
+          "genre:action": {
+            "type": "choice",
+            "choice": "insufficient_evidence",
+            "confidence": 0.8,
+            "probabilities": {
+              "platformer_2d": 0.0,
+              "platformer_3d": 0.0,
+              "stealth_action": 0.0,
+              "battle_royale": 0.0,
+              "third_person_shooter": 0.0,
+              "beat_em_up": 0.0,
+              "fighting_2d": 0.0,
+              "extraction_shooter": 0.0,
+              "bullet_hell": 0.0,
+              "survivor_like": 0.0,
+              "arcade_action": 0.0,
+              "metroidvania": 0.0,
+              "platform_fighter": 0.0,
+              "hero_shooter": 0.0,
+              "precision_platformer": 0.0,
+              "first_person_shooter": 0.0,
+              "action_adventure": 0.04,
+              "shoot_em_up": 0.0,
+              "tactical_shooter": 0.0,
+              "fighting_3d": 0.0,
+              "insufficient_evidence": 0.81,
+              "looter_shooter": 0.0,
+              "character_action": 0.14
+            }
+          }
+        }
+      }
+    }
+  ]
+}
