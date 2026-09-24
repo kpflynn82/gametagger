@@ -21,7 +21,7 @@ from typing import Any
 from urllib.parse import urlencode
 
 from gametagger.genome.net import SourceError, fetch_json, fetch_text
-from gametagger.genome.sources import normal_title
+from gametagger.genome.sources import normal_title, steam_app_entry
 
 STEAM_CHART_URL = "https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/"
 STEAM_DETAILS_URL = "https://store.steampowered.com/api/appdetails?"
@@ -118,7 +118,7 @@ def parse_appbrain(page: str) -> tuple[str | None, list[dict[str, Any]]]:
 def steam_basics(appid: int, *, fetch: Callable[[str], Any] = fetch_json) -> dict[str, Any]:
     """Name, store type and developers for one Steam app (no screenshots, cheap)."""
     url = STEAM_DETAILS_URL + urlencode({"appids": appid, "l": "english", "cc": "us"})
-    entry = (fetch(url) or {}).get(str(appid)) or {}
+    entry = steam_app_entry(fetch(url), str(appid))
     data = entry.get("data") if entry.get("success") else None
     if not isinstance(data, dict):
         return {"available": False}

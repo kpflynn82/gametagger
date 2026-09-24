@@ -445,6 +445,16 @@ def test_steam_source_rejects_bad_ids_and_missing_listings(app, payload):
         steam_source(app, fetch=lambda url: payload)
 
 
+def test_steam_source_accepts_reply_keyed_by_another_id_only_when_appid_matches():
+    entry = STEAM["12345"]
+    data = {**entry["data"], "steam_appid": 12345}
+    rekeyed = {"777": {**entry, "data": data}}
+    assert steam_source("12345", fetch=lambda url: rekeyed).text.reported_title == "Synthetic Game"
+    other = {"777": {**entry, "data": {**data, "steam_appid": 777}}}
+    with pytest.raises(SourceError):
+        steam_source("12345", fetch=lambda url: other)
+
+
 def test_wikipedia_source_parses_intro_and_infobox():
     wikitext = (
         "{{Infobox video game\n| genre = [[Farm simulation|Farming sim]], [[Role-playing game]]"

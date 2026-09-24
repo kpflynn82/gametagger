@@ -97,6 +97,25 @@ def _steam_trailer(movies: Any) -> MediaRef | None:
     return None
 
 
+def steam_app_entry(payload: Any, app: str) -> dict[str, Any]:
+    """The appdetails entry for ``app``, or an empty dict.
+
+    Steam normally keys the reply by the requested ID, but since September 2026 it sometimes
+    keys it by another ID (a DLC or package) while the entry's ``steam_appid`` is still the
+    requested app. Such an entry is accepted only when that ``steam_appid`` matches exactly.
+    """
+    if not isinstance(payload, dict):
+        return {}
+    entry = payload.get(app)
+    if isinstance(entry, dict):
+        return entry
+    for other in payload.values():
+        data = other.get("data") if isinstance(other, dict) else None
+        if isinstance(data, dict) and str(data.get("steam_appid")) == app:
+            return other
+    return {}
+
+
 def steam_source(app_id: str | int, *, fetch: Fetch = fetch_json) -> Fetched:
     app = str(app_id).strip()
     if not app.isdigit():
@@ -104,7 +123,7 @@ def steam_source(app_id: str | int, *, fetch: Fetch = fetch_json) -> Fetched:
     url = "https://store.steampowered.com/api/appdetails?" + urlencode(
         {"appids": app, "l": "english", "cc": "us"}
     )
-    entry = (fetch(url) or {}).get(app) or {}
+    entry = steam_app_entry(fetch(url), app)
     data = entry.get("data") if entry.get("success") else None
     if not isinstance(data, dict) or not data.get("name"):
         raise SourceError(f"Steam has no public listing for app {app}")
