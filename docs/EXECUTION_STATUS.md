@@ -29,3 +29,15 @@ text claims and screenshot facts. `vgms_v4.yaml`, the pilot pipeline, experiment
 unchanged. Offline tests only; no paid or live calls were made, and live quality, cost and latency
 remain unmeasured. See [GENOME_RICH_MODE](GENOME_RICH_MODE.md). Next step: a small live comparison
 against the original site's tags once the owner sets a budget.
+
+### Rich mode media (September 24, 2026)
+
+At the owner's request, rich mode now reads Steam and App Store pages by exact ID. It downloads
+their screenshots and store trailer, and samples trailers into short frame bursts. Timing
+attributes can therefore use `gameplay_clip` evidence. Cinematic and title-card bursts are left
+out. The YouTube backup uses the Data API only, as the owner chose: it records a reference and
+YouTube's published stills, and downloads no video. Google Play is a link-only slot until the owner
+chooses a data service. The shared image loader no longer crashes on JPEG input, and ordered
+windows accept source videos up to 30 minutes (website uploads keep their 60-second limit).
+Offline tests only; no live provider, store or YouTube request was made. See
+[GENOME_RICH_MODE](GENOME_RICH_MODE.md).

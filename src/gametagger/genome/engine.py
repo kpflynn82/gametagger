@@ -8,12 +8,17 @@ validation, bounded retries and attempt records, and JevDecisionEngine for genre
 
 from __future__ import annotations
 
+import io
 import json
 import re
+import subprocess
+import tempfile
 from dataclasses import dataclass, field
+from pathlib import Path
 from time import perf_counter
 from typing import Any, Literal, get_args
 
+from PIL import Image
 from pydantic import BaseModel, ConfigDict, Field
 
 from gametagger.decisions.execution import QuestionExecutor
@@ -34,10 +39,17 @@ from gametagger.evidence import prepare_evidence
 from gametagger.genome.dossier import (
     Claim,
     Dossier,
+    Reference,
     build_state,
     claims_from_observations,
     claims_from_source,
     source_evidence,
+)
+from gametagger.genome.media import (
+    WINDOW_STRATEGY,
+    burst_claims,
+    ffmpeg_available,
+    frame_bursts,
 )
 from gametagger.genome.vocabulary import (
     EVIDENCE_POLICY_VERSION,
@@ -129,6 +141,8 @@ class GenomeProfile(BaseModel):
     claims: list[Claim]
     claims_dropped: dict[str, int]
     quarantined_observations: list[dict[str, str]]
+    media: list[dict[str, Any]] = Field(default_factory=list)
+    references: list[Reference] = Field(default_factory=list)
     warnings: list[str]
     provenance: dict[str, Any]
     attempts: list[RequestAttempt]
@@ -307,60 +321,200 @@ def _normal_title(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", value.casefold())
 
 
+def _image_tokens(width: int, height: int) -> int:
+    # Anthropic's documented approximation for image input: (width x height) / 750.
+    return max(1, width * height // 750)
+
+
+@dataclass
+class Prepared:
+    """Evidence and claims for one dossier, plus what the Observer did or would do."""
+
+    evidence: list[EvidenceItem] = field(default_factory=list)
+    claims: list[Claim] = field(default_factory=list)
+    dropped: dict[str, int] = field(default_factory=dict)
+    quarantined: list[dict[str, str]] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    observer_requests: list[dict[str, Any]] = field(default_factory=list)
+    media: list[dict[str, Any]] = field(default_factory=list)
+    observer_image_sizes: list[tuple[int, int]] = field(default_factory=list)
+    observer_calls: int = 0
+
+    def observer_estimate(self) -> dict[str, Any]:
+        """Rough Claude vision input tokens for describing every screenshot and burst."""
+        image = sum(_image_tokens(w, h) for w, h in self.observer_image_sizes)
+        overhead = 900 * self.observer_calls  # instructions, schema and labels per request
+        return {
+            "method": "(width x height) / 750 per image plus about 900 tokens per request",
+            "requests": self.observer_calls,
+            "images": len(self.observer_image_sizes),
+            "approx_input_tokens_total": image + overhead,
+        }
+
+
 class GenomePipeline:
-    def __init__(self, engine: GenomeEngine, observer: Observer | None = None):
+    def __init__(
+        self,
+        engine: GenomeEngine,
+        observer: Observer | None = None,
+        ordered_observer=None,
+        *,
+        bursts: int = 6,
+        frames_per_burst: int = 6,
+    ):
         self.engine = engine
         self.observer = observer
+        self.ordered_observer = ordered_observer
+        self.bursts = bursts
+        self.frames_per_burst = frames_per_burst
         self.boundary = ObservationBoundary(engine.taxonomy)
 
-    def prepare(self, dossier: Dossier, *, observe: bool = True):
-        """Build evidence and claims. Screenshots are observed only when ``observe`` is set."""
-        evidence, claims, dropped, quarantined, warnings, requests = [], [], {}, [], [], []
+    def prepare(self, dossier: Dossier, *, observe: bool = True) -> Prepared:
+        """Build evidence and claims. The Observer is called only when ``observe`` is set."""
+        p = Prepared(warnings=list(dossier.notes))
         for source in dossier.sources:
-            item = source_evidence(source)
-            kept, dropped[source.id] = claims_from_source(source)
-            evidence.append(item)
-            claims.extend(kept)
+            kept, p.dropped[source.id] = claims_from_source(source)
+            p.evidence.append(source_evidence(source))
+            p.claims.extend(kept)
             if dossier.title and source.reported_title:
                 a, b = _normal_title(dossier.title), _normal_title(source.reported_title)
                 if a and b and a not in b and b not in a:
-                    warnings.append(
+                    p.warnings.append(
                         f"Source '{source.id}' reports title '{source.reported_title}', not "
                         f"'{dossier.title}'. Check it is the same game before trusting results."
                     )
         for image in dossier.images:
-            item, data = prepare_evidence(
-                EvidenceItem(
-                    id=image.id,
-                    type=EvidenceType.GAMEPLAY_IMAGE,
-                    source=image.provider,
-                    uri=image.path,
-                )
+            self._image(image, p, observe)
+        if dossier.videos:
+            with tempfile.TemporaryDirectory(prefix="gametagger-frames-") as frames:
+                for video in dossier.videos:
+                    self._video(video, Path(frames), p, observe)
+        return p
+
+    def _image(self, image, p: Prepared, observe: bool) -> None:
+        item, data = prepare_evidence(
+            EvidenceItem(
+                id=image.id,
+                type=EvidenceType.GAMEPLAY_IMAGE,
+                source=image.provider,
+                uri=image.path,
+                sha256=image.sha256,
             )
-            evidence.append(item)
-            if not observe or self.observer is None:
-                warnings.append(f"Screenshot '{image.id}' was not observed in this run.")
-                continue
-            start = perf_counter()
-            observed = self.observer.observe(item, image=data)
-            kept, rejected = self.boundary.partition(observed, item)
-            quarantined.extend({"evidence_id": item.id, **r} for r in rejected)
-            claims.extend(claims_from_observations(kept, item))
-            requests.append(
+        )
+        p.evidence.append(item)
+        with Image.open(io.BytesIO(data)) as decoded:
+            p.observer_image_sizes.append(decoded.size)
+        p.observer_calls += 1
+        summary = {
+            "id": image.id,
+            "kind": "image",
+            "role": image.role,
+            "provider": image.provider,
+            "uri": image.uri,
+            "observed": False,
+            "claims": 0,
+        }
+        p.media.append(summary)
+        if not observe or self.observer is None:
+            p.warnings.append(f"Screenshot '{image.id}' was not observed in this run.")
+            return
+        start = perf_counter()
+        observed = self.observer.observe(item, image=data)
+        kept, rejected = self.boundary.partition(observed, item)
+        p.quarantined.extend({"evidence_id": item.id, **r} for r in rejected)
+        new = claims_from_observations(kept, item)
+        p.claims.extend(new)
+        summary.update(observed=True, claims=len(new))
+        p.observer_requests.append(
+            {
+                "evidence_id": item.id,
+                "latency_ms": (perf_counter() - start) * 1000,
+                "requested_model": self.observer.model,
+                "usage": getattr(self.observer, "last_usage", None),
+            }
+        )
+
+    def _video(self, video, frames_dir: Path, p: Prepared, observe: bool) -> None:
+        summary = {
+            "id": video.id,
+            "kind": "video",
+            "role": video.role,
+            "provider": video.provider,
+            "title": video.title,
+            "uri": video.uri,
+            "bursts": 0,
+            "frames": 0,
+            "observed": False,
+            "contexts": {},
+            "excluded_statements": 0,
+            "errors": 0,
+            "claims": 0,
+        }
+        p.media.append(summary)
+        if not ffmpeg_available():
+            p.warnings.append(f"Video '{video.id}' skipped: install ffmpeg to sample trailers.")
+            return
+        try:
+            bursts = frame_bursts(
+                video, frames_dir, windows=self.bursts, frames=self.frames_per_burst
+            )
+        except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+            p.warnings.append(f"Video '{video.id}' could not be sampled: {exc}")
+            return
+        if not bursts:
+            p.warnings.append(f"Video '{video.id}' produced no usable frame bursts.")
+            return
+        p.evidence.append(
+            EvidenceItem(
+                id=video.id,
+                type=EvidenceType.GAMEPLAY_CLIP,
+                source=video.provider,
+                uri=video.path,
+                sha256=bursts[0][0].source_asset_sha256,
+            )
+        )
+        summary.update(bursts=len(bursts), frames=sum(len(w.frames) for w, _ in bursts))
+        for _, frames in bursts:
+            for data in frames:
+                with Image.open(io.BytesIO(data)) as decoded:
+                    p.observer_image_sizes.append(decoded.size)
+        p.observer_calls += len(bursts)
+        if not observe or self.ordered_observer is None:
+            p.warnings.append(f"Video '{video.id}' was sampled but not observed in this run.")
+            return
+        summary["observed"] = True
+        for index, (window, frames) in enumerate(bursts):
+            attempt = self.ordered_observer.observe_window(window, frames=frames)
+            p.observer_requests.append(
                 {
-                    "evidence_id": item.id,
-                    "latency_ms": (perf_counter() - start) * 1000,
-                    "requested_model": self.observer.model,
-                    "usage": getattr(self.observer, "last_usage", None),
+                    "evidence_id": video.id,
+                    "burst": index,
+                    "status": attempt.status,
+                    "error_code": attempt.error_code,
+                    "requested_model": attempt.requested_model,
+                    "returned_model": attempt.returned_model,
+                    "latency_ms": attempt.latency_ms,
+                    "usage": attempt.usage,
                 }
             )
-        return evidence, claims, dropped, quarantined, warnings, requests
+            if attempt.status != "valid":
+                summary["errors"] += 1
+                continue
+            context = attempt.output.context
+            summary["contexts"][context] = summary["contexts"].get(context, 0) + 1
+            new, rejected, excluded = burst_claims(
+                video.id, index, window, attempt.output, self.boundary
+            )
+            p.claims.extend(new)
+            p.quarantined.extend(rejected)
+            summary["claims"] += len(new)
+            summary["excluded_statements"] += excluded
 
     def analyze(self, dossier: Dossier, *, offline: bool) -> GenomeProfile:
         start = perf_counter()
-        evidence, claims, dropped, quarantined, warnings, observer_requests = self.prepare(dossier)
+        p = self.prepare(dossier)
         observed_at = perf_counter()
-        plan = self.engine.plan(claims, evidence)
+        plan = self.engine.plan(p.claims, p.evidence)
         outcomes, genre, genre_execution, executor = self.engine.run(plan)
         decided_at = perf_counter()
         tags, genre = self.engine.tag_calls(outcomes, genre)
@@ -381,8 +535,8 @@ class GenomePipeline:
         names = {g.id: g.display_name for g in self.engine.taxonomy.genres_by_id.values()}
 
         def call(genre_id: str) -> GenreCall:
-            p = genre.global_genre_probabilities[genre_id]
-            return GenreCall(genre_id=genre_id, name=names[genre_id], probability=p)
+            probability = genre.global_genre_probabilities[genre_id]
+            return GenreCall(genre_id=genre_id, name=names[genre_id], probability=probability)
 
         returned = executor.pinned_model or next(
             (a.returned_model for a in reversed(executor.attempts) if a.returned_model), None
@@ -398,11 +552,13 @@ class GenomePipeline:
             genre_execution=genre_execution,
             tags=tags,
             counts=counts,
-            sources=evidence,
-            claims=claims,
-            claims_dropped=dropped,
-            quarantined_observations=quarantined,
-            warnings=warnings,
+            sources=p.evidence,
+            claims=p.claims,
+            claims_dropped=p.dropped,
+            quarantined_observations=p.quarantined,
+            media=p.media,
+            references=dossier.references,
+            warnings=p.warnings,
             provenance={
                 "prompt_version": PROMPT_VERSION,
                 "evidence_policy_version": EVIDENCE_POLICY_VERSION,
@@ -412,7 +568,9 @@ class GenomePipeline:
                 "requested_decision_model": self.engine.gateway.model,
                 "returned_decision_model": returned,
                 "observer_model": getattr(self.observer, "model", None),
-                "observer_requests": observer_requests,
+                "ordered_observer_model": getattr(self.ordered_observer, "model", None),
+                "burst_strategy": WINDOW_STRATEGY if dossier.videos else None,
+                "observer_requests": p.observer_requests,
                 "questions_asked": len(asked),
                 "requests": len(executor.attempts),
                 "usage": executor.usage_total(),

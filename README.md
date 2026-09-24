@@ -24,9 +24,10 @@ Open **http://127.0.0.1:8000**. See the [local runbook](docs/LOCAL_WORKSPACE.md)
 
 ## Rich Genome mode
 
-`gametagger-genome` asks Jev about 189 attribute tags plus the v4.1 genre hierarchy, using
-attributed store, publisher and encyclopedia text as well as screenshots. It defaults to a dry run
-that makes no model calls; live runs need `--live`. See [rich Genome mode](docs/GENOME_RICH_MODE.md)
+`gametagger-genome` asks Jev about 189 attribute tags plus the v4.1 genre hierarchy. It reads
+store pages (Steam, App Store) and Wikipedia by exact ID, including store screenshots and
+trailers sampled into short frame bursts. It can use YouTube's API as a trailer backup. It
+defaults to a dry run that makes no model calls; live runs need `--live`. See [rich Genome mode](docs/GENOME_RICH_MODE.md)
 for why the pilot path returned few tags and how to run it.
 
 ```bash

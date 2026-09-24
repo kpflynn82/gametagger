@@ -24,7 +24,7 @@ def prepare_evidence(item: EvidenceItem) -> tuple[EvidenceItem, bytes | None]:
         raise ValueError("Image exceeds the 5 MiB input limit")
     with Image.open(BytesIO(data)) as image:
         media_type = IMAGE_TYPES.get(image.format)
-        if media_type is None or max(image.size) > 8000 or image.n_frames != 1:
+        if media_type is None or max(image.size) > 8000 or getattr(image, "n_frames", 1) != 1:
             raise ValueError(
                 "Use a single PNG, JPEG, WEBP, or GIF image up to 8000 pixels per side"
             )

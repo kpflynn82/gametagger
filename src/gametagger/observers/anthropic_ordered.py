@@ -60,9 +60,20 @@ def validate_frames(window: OrderedWindow, frames: list[bytes]):
 class AnthropicOrderedObserver:
     prompt_version = PROMPT_VERSION
 
-    def __init__(self, taxonomy, *, model, client=None, allow_live=False, workspace_id=None):
+    def __init__(
+        self,
+        taxonomy,
+        *,
+        model,
+        client=None,
+        allow_live=False,
+        workspace_id=None,
+        enforce_boundary=True,
+    ):
         self.taxonomy, self.model, self.client = taxonomy, model, client
         self.allow_live, self.workspace_id = allow_live, workspace_id
+        # False only when the caller quarantines statements itself (rich mode).
+        self.enforce_boundary = enforce_boundary
 
     def observe_window(self, window: OrderedWindow, *, frames: list[bytes]) -> WindowAttempt:
         # Revalidate mutable/injected models before touching a client.
@@ -166,7 +177,7 @@ class AnthropicOrderedObserver:
             fields["response_sha256"] = digest(blocks[0].input)
             phase = "observation_contract"
             output = WindowOutput.model_validate(blocks[0].input).validate_against(
-                window, self.taxonomy
+                window, self.taxonomy, enforce_boundary=self.enforce_boundary
             )
             return WindowAttempt(
                 status="valid",

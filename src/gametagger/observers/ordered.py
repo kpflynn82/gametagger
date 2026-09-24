@@ -31,7 +31,9 @@ class TimedFrame(Contract):
 
 class OrderedWindow(Contract):
     source_asset_sha256: Hash
-    duration_seconds: float = Field(gt=0, le=60)
+    # Source length. Website uploads are capped at 60 s in workspace.media; rich mode samples
+    # store trailers, which are longer. Each window's own frames stay at most 0.5 s apart.
+    duration_seconds: float = Field(gt=0, le=1800)
     selection_strategy: str = Field(min_length=1, max_length=120)
     frames: list[TimedFrame] = Field(min_length=2, max_length=12)
     # Sampling limit, not proof that all intermediate events are visible.
@@ -73,7 +75,11 @@ class WindowOutput(Contract):
     ]
     observations: list[WindowStatement] = Field(max_length=32)
 
-    def validate_against(self, window: OrderedWindow, taxonomy):
+    def validate_against(self, window: OrderedWindow, taxonomy, *, enforce_boundary=True):
+        """Check frame references; with ``enforce_boundary`` also reject taxonomy words.
+
+        Rich mode passes False and quarantines individual statements itself instead.
+        """
         positions = {f.evidence_id: i for i, f in enumerate(window.frames)}
         boundary = ObservationBoundary(taxonomy)
         for n, s in enumerate(self.observations):
@@ -87,6 +93,8 @@ class WindowOutput(Contract):
                     raise ValueError("Sequence facts need consecutive supplied frames")
             elif len(indices) != 1:
                 raise ValueError("Still facts/text must refer to exactly one frame")
+            if not enforce_boundary:
+                continue
             evidence = EvidenceItem(
                 id=s.frame_ids[0], type=EvidenceType.GAMEPLAY_IMAGE, source="ordered-frame"
             )

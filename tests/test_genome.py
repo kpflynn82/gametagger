@@ -222,8 +222,8 @@ def test_state_filters_by_evidence_type_and_never_adds_the_title(dossier):
 
 def test_plan_sends_store_text_to_feature_tags(taxonomy, vocabulary, dossier):
     pipeline = GenomePipeline(engine_for(taxonomy, vocabulary, ScriptedGateway()))
-    evidence, claims, *_ = pipeline.prepare(dossier)
-    plan = pipeline.engine.plan(claims, evidence)
+    prepared = pipeline.prepare(dossier)
+    plan = pipeline.engine.plan(prepared.claims, prepared.evidence)
     # The pilot path showed store text to no tag; rich mode shows it where the policy allows.
     co_op_state = plan.states["engagement_co_op"]
     assert "online co-op" in co_op_state and "store_metadata" in co_op_state
@@ -243,8 +243,8 @@ def test_plan_sends_store_text_to_feature_tags(taxonomy, vocabulary, dossier):
 
 def test_batches_share_state_and_respect_size_limit(taxonomy, vocabulary, dossier):
     engine = engine_for(taxonomy, vocabulary, ScriptedGateway(), max_questions_per_request=25)
-    evidence, claims, *_ = GenomePipeline(engine).prepare(dossier)
-    plan = engine.plan(claims, evidence)
+    prepared = GenomePipeline(engine).prepare(dossier)
+    plan = engine.plan(prepared.claims, prepared.evidence)
     assert all(len(batch) <= 25 for batch in plan.batches)
     assert all(len({plan.states[k] for k in batch}) == 1 for batch in plan.batches)
     assert sorted(k for batch in plan.batches for k in batch) == sorted(plan.specs)
@@ -429,7 +429,7 @@ def test_steam_source_parses_listing():
         urls.append(url)
         return STEAM
 
-    source = steam_source("12345", fetch=fetch)
+    source = steam_source("12345", fetch=fetch).text
     assert urls[0].startswith("https://store.steampowered.com/api/appdetails?appids=12345")
     assert source.reported_title == "Synthetic Game"
     assert "Farm with friends." in source.text and "<p>" not in source.text
@@ -462,7 +462,7 @@ def test_wikipedia_source_parses_intro_and_infobox():
             ]
         }
     }
-    source = wikipedia_source("Synthetic Game", fetch=lambda url: payload)
+    source = wikipedia_source("Synthetic Game", fetch=lambda url: payload).text
     assert source.type == EvidenceType.WIKIPEDIA
     assert source.fields["genres"] == ["Farming sim", "Role-playing game"]
     assert source.fields["modes"] == ["Single-player", "multiplayer"]
