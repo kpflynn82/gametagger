@@ -41,3 +41,38 @@ chooses a data service. The shared image loader no longer crashes on JPEG input,
 windows accept source videos up to 30 minutes (website uploads keep their 60-second limit).
 Offline tests only; no live provider, store or YouTube request was made. See
 [GENOME_RICH_MODE](GENOME_RICH_MODE.md).
+
+### Next: Jev versus previous-method benchmark (handoff, September 24, 2026)
+
+The owner wants 100 games compared: the top 50 Steam games by concurrent players and the top 50
+mobile games by grossing. The comparison is rich mode (Observer + Jev) against the original site's
+single Claude call, on identical inputs. It should measure timing per stage, tokens, cost, tags per
+game and accuracy, and end with charts and a short social-media write-up. Every figure must state
+its sample, date and answer-key method.
+
+Owner actions taken: API keys were added to the environment as `TYPESAFE_API_KEY`,
+`ANTHROPIC_API_KEY`, `ANTHROPIC_WORKSPACE_ID` (if needed) and `YOUTUBE_API_KEY`, and network
+access was requested for `api.typesafe.ai`, `api.anthropic.com`, `store.steampowered.com`,
+`api.steampowered.com`, `steamstatic.com`, `en.wikipedia.org`, `itunes.apple.com`, `mzstatic.com`,
+`www.googleapis.com` and `i.ytimg.com`. In a new session, first verify that each variable name
+exists (never print values) and that each host is reachable.
+
+Still needed from the owner before any paid run:
+- A numeric spending limit. Estimates for one 100-game pass: vision Observer on Claude Sonnet 5
+  about $8-10; previous method about $2 on Haiku 4.5 (standard) or about $9 on Opus 4.8 (deep);
+  Jev about 3.3M input tokens at the owner's TypeSafe rate. Suggested: a $40 Claude cap plus a
+  Jev cap, and a 10-game pilot first.
+- The top-50 mobile grossing list (rank, name, App Store ID and/or Google Play package; chart
+  region, platform and month). No reliable free official grossing source is known.
+- The answer-key method. Recommended: a blind human primary genre for all 100 games plus about
+  20 tags on about 30 games. Steam community tags are a cheaper, weaker PC-only option.
+- Previous-method mode: Haiku standard, Opus deep, or both (recommended: both).
+- Confirmation that non-game Steam chart entries (for example Wallpaper Engine) are skipped.
+
+To build, none of which needs keys:
+- A faithful adapter of the original `gametagger-web` tagger prompt (the decisions/legacy.py
+  placeholder), run on the same dossier.
+- A Steam most-played chart reader.
+- A batch runner recording per-stage wall clock, tokens and cost.
+- An old-59-to-new-100 genre crosswalk for the owner to approve.
+- Scoring, charts and a write-up template.
