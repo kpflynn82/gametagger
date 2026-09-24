@@ -11,7 +11,10 @@ from gametagger.decisions.genres import aggregate_genres, select_families
 from gametagger.domain import (
     DecisionBatch,
     EvidenceItem,
+    ExecutionError,
+    GenreDecision,
     Observation,
+    QuestionExecution,
     TagDecision,
     TagState,
 )
@@ -278,6 +281,61 @@ class JevDecisionEngine:
         self.compiler = JevQuestionCompiler(taxonomy)
         self.gateway = gateway
 
+    def resolve_genre(
+        self, executor, outcomes, *, state: str | None, context_ids: list[str]
+    ) -> tuple[GenreDecision | None, QuestionExecution]:
+        """Ask conditional genre branches for a valid family answer; never prune failed mass.
+
+        Conditional outcomes are added to ``outcomes`` so every question stays auditable.
+        """
+        family = outcomes["genre_family"]
+        if family.status != "valid":
+            return None, QuestionExecution(
+                status="not_evaluated",
+                error=ExecutionError(
+                    code="family_dependency", message="Genre requires a valid family answer"
+                ),
+            )
+        family_answer = ChoiceAnswer.model_validate(family.answer)
+        selected = select_families(self.taxonomy, family_answer.probabilities)
+        children = self.compiler.build_genre_specs(selected)
+        conditional = executor.execute(
+            children,
+            {k: state for k in children},
+            stage="conditional_genres",
+            evidence_ids={k: context_ids for k in children},
+        )
+        outcomes.update(conditional)
+        if not all(r.status == "valid" for r in conditional.values()):
+            return None, QuestionExecution(
+                status="error",
+                error=ExecutionError(
+                    code="conditional_dependency",
+                    message="Incomplete genre: failed conditional branch; no mass pruned",
+                ),
+                context_evidence_ids=context_ids,
+            )
+        response = SystemOneResponse.model_validate(
+            {
+                "model": next(iter(conditional.values())).model,
+                "usage": {},
+                "answers": {k: r.answer for k, r in conditional.items()},
+            }
+        )
+        genre = aggregate_genres(
+            self.taxonomy,
+            family_answer,
+            response,
+            family_model=family.model,
+            evidence_ids=context_ids,
+        )
+        genre.conditional_models = {
+            k.removeprefix("genre:"): r.model for k, r in conditional.items()
+        }
+        return genre, QuestionExecution(
+            status="valid", model=genre.decision_model, context_evidence_ids=context_ids
+        )
+
     def decide(
         self,
         *,
@@ -294,7 +352,6 @@ class JevDecisionEngine:
         claims=(),
     ) -> DecisionBatch:
         from gametagger.decisions.execution import QuestionExecutor
-        from gametagger.domain import ExecutionError, QuestionExecution
         from gametagger.evidence_policy import evidence_eligibility, support_links
         from gametagger.identity import validate_identity
 
@@ -401,57 +458,12 @@ class JevDecisionEngine:
                         else [],
                     )
                 )
-        family = outcomes["genre_family"]
-        genre = None
-        genre_execution = QuestionExecution(
-            status="not_evaluated",
-            error=ExecutionError(
-                code="family_dependency", message="Genre requires a valid family answer"
-            ),
+        genre, genre_execution = self.resolve_genre(
+            executor,
+            outcomes,
+            state=states.get("genre_family"),
+            context_ids=contexts["genre_family"],
         )
-        if family.status == "valid":
-            family_answer = ChoiceAnswer.model_validate(family.answer)
-            selected = select_families(self.taxonomy, family_answer.probabilities)
-            children = self.compiler.build_genre_specs(selected)
-            conditional = executor.execute(
-                children,
-                {k: states["genre_family"] for k in children},
-                stage="conditional_genres",
-                evidence_ids={k: contexts["genre_family"] for k in children},
-            )
-            outcomes.update(conditional)
-            if all(r.status == "valid" for r in conditional.values()):
-                response = SystemOneResponse.model_validate(
-                    {
-                        "model": next(iter(conditional.values())).model,
-                        "usage": {},
-                        "answers": {k: r.answer for k, r in conditional.items()},
-                    }
-                )
-                genre = aggregate_genres(
-                    self.taxonomy,
-                    family_answer,
-                    response,
-                    family_model=family.model,
-                    evidence_ids=contexts["genre_family"],
-                )
-                genre.conditional_models = {
-                    k.removeprefix("genre:"): r.model for k, r in conditional.items()
-                }
-                genre_execution = QuestionExecution(
-                    status="valid",
-                    model=genre.decision_model,
-                    context_evidence_ids=contexts["genre_family"],
-                )
-            else:
-                genre_execution = QuestionExecution(
-                    status="error",
-                    error=ExecutionError(
-                        code="conditional_dependency",
-                        message="Incomplete genre: failed conditional branch; no mass pruned",
-                    ),
-                    context_evidence_ids=contexts["genre_family"],
-                )
         if genre and eligibility:
             genre.support_links = support_links(
                 "genre", genre.primary_genre, eligibility, observations, claims

@@ -52,8 +52,11 @@ class AnthropicObserver(Observer):
         model: str,
         client: Any | None = None,
         workspace_id: str | None = None,
+        enforce_boundary: bool = True,
     ):
         self.model = model
+        # False only when the caller partitions results itself (rich mode quarantines).
+        self.enforce_boundary = enforce_boundary
         self.workspace_id = workspace_id
         self._client = client
         self.last_usage = None
@@ -118,5 +121,6 @@ class AnthropicObserver(Observer):
             )
             for i, statement in enumerate(parsed.observations)
         ]
-        self.boundary.validate(observations, evidence)
+        if self.enforce_boundary:
+            self.boundary.validate(observations, evidence)
         return observations

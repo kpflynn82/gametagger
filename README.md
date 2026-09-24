@@ -22,6 +22,18 @@ GAMETAGGER_LOCAL_ROLE=reviewer ./scripts/start_workspace.sh
 
 Open **http://127.0.0.1:8000**. See the [local runbook](docs/LOCAL_WORKSPACE.md), [measurement contract](docs/METRICS.md), and [execution status](docs/EXECUTION_STATUS.md). This is a working local application, not a public deployment or a newly validated model experiment.
 
+## Rich Genome mode
+
+`gametagger-genome` asks Jev about 189 attribute tags plus the v4.1 genre hierarchy, using
+attributed store, publisher and encyclopedia text as well as screenshots. It defaults to a dry run
+that makes no model calls; live runs need `--live`. See [rich Genome mode](docs/GENOME_RICH_MODE.md)
+for why the pilot path returned few tags and how to run it.
+
+```bash
+gametagger-genome fixtures/genome/hollow_orchard.dossier.json            # dry run
+gametagger-genome fixtures/genome/hollow_orchard.dossier.json --offline  # pipeline check with mocks
+```
+
 ## Setup
 
 Python 3.11 or newer is required. The checked-in `uv.lock` records the tested dependencies.
