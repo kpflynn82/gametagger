@@ -200,6 +200,10 @@ def score(
             "label": ARM_LABELS.get(arm, arm),
             "games": len(records),
             "completed": len(ok),
+            "retried_after_provider_errors": sum(1 for r in records if r.get("attempt", 1) > 1),
+            "provider_errors_in_final_results": sum(
+                1 for r in records for c in r.get("requests") or [] if c.get("status") == "error"
+            ),
             "failure_rate": 1 - len(ok) / len(records) if records else None,
             "latency_ms": {
                 "method": _dist([r.get("wall_ms") for r in ok]),

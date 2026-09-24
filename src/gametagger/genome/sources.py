@@ -362,7 +362,75 @@ def _infobox_values(wikitext: str, name: str) -> list[str]:
     return [p.strip(" '") for p in parts if p.strip(" '")]
 
 
-def wikipedia_source(title: str, *, fetch: Fetch = fetch_json) -> Fetched:
+WIKIPEDIA_PAGE = "https://en.wikipedia.org/wiki/"
+PAGE_INFOBOX_LABELS = {"genre": "genres", "mode": "modes", "platform": "platforms"}
+
+
+def _html_text(fragment: str) -> str:
+    """Visible text of an HTML fragment, without footnote markers or inline styles."""
+    fragment = re.sub(r"<(sup|style)[^>]*>.*?</\1>", "", fragment, flags=re.S)
+    # Inline tags join words without a space ("Scopely</a>." must stay "Scopely.").
+    fragment = re.sub(r"</?(?:a|i|b|em|strong|span|abbr|small|bdi)\b[^>]*>", "", fragment)
+    return clean_text(fragment)
+
+
+def wikipedia_page_source(title: str, *, fetch_page: Callable[[str], str] | None = None):
+    """The same lead text and infobox fields, read from the ordinary article page.
+
+    Used when Wikipedia's API rate-limits a shared address; the article page is served from
+    Wikipedia's cache to every reader. The article is still named exactly, never searched.
+    """
+    title = title.strip()
+    if not title or len(title) > 250:
+        raise SourceError("Supply the exact Wikipedia article title")
+    page = (fetch_page or fetch_text)(WIKIPEDIA_PAGE + quote(title.replace(" ", "_")))
+    heading = re.search(r'<h1[^>]*id="firstHeading"[^>]*>(.*?)</h1>', page, re.S)
+    content = re.search(r'class="[^"]*\bmw-parser-output\b[^"]*"', page)
+    if not heading or not content:
+        raise SourceError(f"Wikipedia has no article titled '{title}'")
+    body = page[content.start() :]
+    cut = re.search(r'<div class="mw-heading mw-heading2"|<h2[\s>]', body)
+    lead = re.sub(r"<table.*?</table>", "", body[: cut.start()] if cut else body, flags=re.S)
+    paragraphs = [
+        re.sub(r"\s+", " ", _html_text(p)).strip()
+        for p in re.findall(r"<p[^>]*>(.*?)</p>", lead, re.S)
+    ]
+    text = "\n".join(p for p in paragraphs if p)
+    if not text:
+        raise SourceError(f"Wikipedia has no article titled '{title}'")
+    fields: dict[str, list[str]] = {}
+    infobox = re.search(r'<table class="infobox[^"]*"[^>]*>(.*?)</table>', page, re.S)
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", infobox.group(1) if infobox else "", re.S):
+        label = re.search(r'<th[^>]*class="infobox-label"[^>]*>(.*?)</th>', row, re.S)
+        data = re.search(r'<td[^>]*class="infobox-data"[^>]*>(.*?)</td>', row, re.S)
+        if not (label and data):
+            continue
+        name = _html_text(label.group(1)).lower()
+        key = next((v for k, v in PAGE_INFOBOX_LABELS.items() if name.startswith(k)), None)
+        if key and key not in fields:
+            parts = re.split(r"[\n,•]", _html_text(data.group(1)))
+            fields[key] = [p.strip(" '") for p in parts if p.strip(" '")]
+    reported = re.sub(r"\s+", " ", _html_text(heading.group(1))).strip()
+    return Fetched(
+        text=TextSource(
+            id="wikipedia",
+            type=EvidenceType.WIKIPEDIA,
+            provider="English Wikipedia article introduction and infobox",
+            uri=WIKIPEDIA_PAGE + quote(reported.replace(" ", "_")),
+            reported_title=reported,
+            retrieved_at=_now(),
+            text=text[:MAX_SOURCE_TEXT],
+            fields=fields,
+        )
+    )
+
+
+def wikipedia_source(
+    title: str,
+    *,
+    fetch: Fetch = fetch_json,
+    fetch_page: Callable[[str], str] | None = None,
+) -> Fetched:
     title = title.strip()
     if not title or len(title) > 250:
         raise SourceError("Supply the exact Wikipedia article title")
@@ -378,7 +446,12 @@ def wikipedia_source(title: str, *, fetch: Fetch = fetch_json) -> Fetched:
         "rvslots": "main",
         "titles": title,
     }
-    payload = fetch("https://en.wikipedia.org/w/api.php?" + urlencode(params)) or {}
+    try:
+        payload = fetch("https://en.wikipedia.org/w/api.php?" + urlencode(params)) or {}
+    except SourceError as exc:
+        if "HTTP 429" not in str(exc):
+            raise
+        return wikipedia_page_source(title, fetch_page=fetch_page)
     pages = (payload.get("query") or {}).get("pages") or []
     page = pages[0] if pages else {}
     if not page or page.get("missing") or page.get("invalid") or not page.get("extract"):

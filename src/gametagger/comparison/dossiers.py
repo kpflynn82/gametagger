@@ -21,7 +21,7 @@ from gametagger.comparison.identity import polite
 from gametagger.genome.cli import save_dossier
 from gametagger.genome.dossier import Dossier
 from gametagger.genome.media import download_media
-from gametagger.genome.net import fetch_json
+from gametagger.genome.net import fetch_text
 from gametagger.genome.sources import (
     SourceError,
     app_store_source,
@@ -56,10 +56,11 @@ def build_dossier(
     else:
         plan.append(("google_play", ids.get("google_play"), google_play_source))
         plan.append(("app_store", ids.get("app_store"), app_store_source))
-    # Wikimedia rate-limits shared addresses; wait and retry instead of losing the article.
-    polite_json = polite(fetch_json)
+    # Wikimedia rate-limits shared addresses. When its API refuses, the source reads the
+    # ordinary (cached) article page instead; that page gets a short wait-and-retry too.
+    polite_page = polite(fetch_text, tries=3, wait=5)
     plan.append(
-        ("wikipedia", ids.get("wikipedia"), lambda t: wikipedia_source(t, fetch=polite_json))
+        ("wikipedia", ids.get("wikipedia"), lambda t: wikipedia_source(t, fetch_page=polite_page))
     )
     start = perf_counter()
     for name, identifier, fetch in plan:

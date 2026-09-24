@@ -33,6 +33,33 @@ from gametagger.comparison.dossiers import dossier_path, safe_id
 from gametagger.genome.dossier import Dossier
 
 ARMS = ("rich", "legacy-standard", "legacy-deep")
+# Provider or network failures (not answers) that justify re-running a (game, arm) once asked.
+TRANSIENT = (
+    "RateLimitError",
+    "APIConnectionError",
+    "APITimeoutError",
+    "InternalServerError",
+    "OverloadedError",
+    "ServiceUnavailableError",
+    "TypeSafeAPIConnectionError",
+    "TypeSafeTimeoutError",
+    "TypeSafeAPIError",
+)
+
+
+def transient_failure(record: dict) -> bool:
+    """True when a stored result was degraded by the provider or network, not by the method."""
+    errors = (
+        [record.get("error") or ""] if record.get("status") in ("failed", "provider_error") else []
+    )
+    errors += [
+        str(c.get("error") or "")
+        for c in record.get("requests") or []
+        if c.get("status") == "error"
+    ]
+    return any(name in e for e in errors for name in TRANSIENT)
+
+
 DEFAULT_OBSERVER_MODEL = "claude-sonnet-5"
 
 
@@ -210,10 +237,18 @@ class Runner:
 
     # ------------------------------------------------------------------ one game
 
-    def run_one(self, game: dict, arm: str, *, force: bool = False) -> dict | None:
+    def run_one(
+        self, game: dict, arm: str, *, force: bool = False, retry_failed: bool = False
+    ) -> dict | None:
         out = self.result_path(game["game_id"], arm)
+        attempt = 1
         if out.exists() and not force:
-            return None
+            previous = json.loads(out.read_text())
+            if not (retry_failed and transient_failure(previous)):
+                return None
+            # Keep the degraded attempt on file; the new record says which attempt it is.
+            attempt = int(previous.get("attempt", 1)) + 1
+            out.rename(out.with_name(f"{arm}.attempt{attempt - 1}.json"))
         path = dossier_path(self.workdir, game["game_id"])
         if not path.exists():
             raise FileNotFoundError(f"No dossier for {game['game_id']}; run 'dossiers' first")
@@ -242,6 +277,7 @@ class Runner:
             game_id=game["game_id"],
             list=game["list"],
             arm=arm,
+            attempt=attempt,
             wall_ms=(perf_counter() - start) * 1000,
             evidence_gather_ms=gather.get("gather_timings", {}).get("total_ms"),
             usage={
@@ -254,7 +290,10 @@ class Runner:
                 "total": _cost(meter.calls),
             },
             requests=[
-                {k: c.get(k) for k in ("provider", "status", "latency_ms", "usage", "cost_usd")}
+                {
+                    k: c.get(k)
+                    for k in ("provider", "status", "error", "latency_ms", "usage", "cost_usd")
+                }
                 for c in meter.calls
             ],
             evidence={k: gather.get(k) for k in ("sources", "images", "videos", "text_chars")},
@@ -271,6 +310,7 @@ class Runner:
         *,
         workers: int = 3,
         force: bool = False,
+        retry_failed: bool = False,
         log=lambda m: print(m, file=sys.stderr),
     ) -> dict[str, Any]:
         jobs = [(g, a) for g in games for a in arms]
@@ -278,7 +318,7 @@ class Runner:
 
         def one(job):
             game, arm = job
-            return game, arm, self.run_one(game, arm, force=force)
+            return game, arm, self.run_one(game, arm, force=force, retry_failed=retry_failed)
 
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = [pool.submit(one, job) for job in jobs]

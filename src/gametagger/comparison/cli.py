@@ -103,7 +103,9 @@ def cmd_run(args) -> None:
         f"${runner.ledger.spent:.2f} of ${runner.ledger.cap:.2f}",
         file=sys.stderr,
     )
-    summary = runner.run(games, arms, workers=args.workers, force=args.force)
+    summary = runner.run(
+        games, arms, workers=args.workers, force=args.force, retry_failed=args.retry_failed
+    )
     print(json.dumps(summary, indent=2))
     if summary["stopped_by_budget"]:
         raise SystemExit(1)
@@ -234,6 +236,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--budget-usd", type=float, help="Hard spending cap across all runs")
     p.add_argument("--arms", help="Comma-separated: rich,legacy-standard,legacy-deep")
     p.add_argument("--workers", type=int, default=3, help="Games processed in parallel")
+    p.add_argument(
+        "--retry-failed",
+        action="store_true",
+        help="Re-run results degraded by provider or network errors (rate limits, timeouts)",
+    )
     p.add_argument("--observer-model", default="claude-sonnet-5")
     p.add_argument("--jev-model", default="jev-latest")
     p.set_defaults(func=cmd_run)

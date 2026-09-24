@@ -748,3 +748,58 @@ def test_identity_reads_language_neutral_labels_and_ignores_edition_words():
     overwatch["ids"] = {"steam_app": "2357570"}
     found = identity.resolve_wikidata(overwatch, fetch=fetch)
     assert found["wikipedia"] == "Overwatch (2023 video game)"
+
+
+def test_retry_failed_reruns_only_provider_degraded_results(fake_run):
+    from gametagger.comparison.runner import transient_failure
+
+    workdir, cohort, runner, _ = fake_run
+    assert not transient_failure({"status": "failed", "error": "ValueError: bad answer"})
+    assert transient_failure({"status": "failed", "error": "RateLimitError: slow down"})
+    assert transient_failure(
+        {"status": "complete", "requests": [{"status": "error", "error": "APITimeoutError"}]}
+    )
+    path = runner.result_path("steam-1", "legacy-standard")
+    degraded = json.loads(path.read_text())
+    degraded.update(status="provider_error", error="RateLimitError: 429")
+    path.write_text(json.dumps(degraded))
+    summary = runner.run(
+        cohort["games"], ["legacy-standard"], retry_failed=True, log=lambda m: None
+    )
+    assert summary["completed"] == 1  # only the degraded one
+    fresh = json.loads(path.read_text())
+    assert fresh["status"] == "valid" and fresh["attempt"] == 2
+    assert path.with_name("legacy-standard.attempt1.json").exists()
+
+
+WIKI_PAGE = """<html><h1 id="firstHeading" class="firstHeading"><i>Hollow Orchard</i></h1>
+<div class="mw-content-ltr mw-parser-output"><table class="infobox ib-video-game">
+<tr><th class="infobox-label"><a href="x">Genre(s)</a></th><td class="infobox-data">
+<a href="y">Farming sim</a>, <a href="z">RPG</a></td></tr>
+<tr><th class="infobox-label">Mode(s)</th><td class="infobox-data">
+Single-player<br>multiplayer</td></tr></table>
+<p><b>Hollow Orchard</b> is a game by <a href="s">Studio</a>.<sup class="reference">[1]</sup></p>
+<p>It has ghosts.</p><div class="mw-heading mw-heading2"><h2>Gameplay</h2></div><p>Later text.</p>
+</div></html>"""
+
+
+def _missing(url):
+    raise SourceError("HTTP 404")
+
+
+def test_wikipedia_falls_back_to_the_article_page_when_the_api_rate_limits():
+    from gametagger.genome.sources import wikipedia_source
+
+    def limited(url):
+        raise SourceError("en.wikipedia.org returned HTTP 429")
+
+    fetched = wikipedia_source("Hollow Orchard", fetch=limited, fetch_page=lambda url: WIKI_PAGE)
+    text = fetched.text
+    assert text.reported_title == "Hollow Orchard"
+    assert text.text == "Hollow Orchard is a game by Studio.\nIt has ghosts."  # lead only
+    assert text.fields == {
+        "genres": ["Farming sim", "RPG"],
+        "modes": ["Single-player", "multiplayer"],
+    }
+    with pytest.raises(SourceError, match="404"):
+        wikipedia_source("X", fetch=_missing)
