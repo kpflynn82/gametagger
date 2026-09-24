@@ -111,3 +111,18 @@ Environment findings:
 
 The only paid call so far is one live Jev check on Stardew Valley's text: 185 questions in 6 requests, 4.0 seconds, $0.0019. No Claude call has been made. Next step, in a session that can see the key: run `dossiers`, then a
 10-game pilot, then the full run and `report`, all under the same $40 ledger.
+
+### Benchmark run attempt (September 24, 2026): blocked on Anthropic credit
+
+* The new Anthropic key (108 characters) is accepted by the free model-listing call once the
+  `anthropic-workspace-id` header is sent; `ANTHROPIC_WORKSPACE_ID` is set and the tools send it.
+  Haiku 4.5, Opus 4.8 and Sonnet 5 are all listed.
+* Steam changed its store API: `appdetails` sometimes files its reply under another ID (a DLC or
+  package), so most Steam games read as unlisted. Fixed: a reply is accepted only when its own
+  `steam_appid` matches the requested game. Dossiers were rebuilt from scratch after the fix.
+* The 10-game pilot was refused on every Claude request with "Your credit balance is too low to
+  access the Anthropic API". Nothing was billed (30 zero-cost error rows in the ledger; the failed
+  results were deleted so they are re-run). The runner now stops the whole run on this message
+  instead of booking every remaining game as a failure.
+* **Owner action:** add prepaid credit to the Anthropic organization that owns this key
+  (Console → Plans & Billing), then re-run the pilot with `--budget-usd 39.99`.

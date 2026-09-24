@@ -625,6 +625,28 @@ def test_budget_stop_is_clean_and_reported(tmp_path):
     assert not runner.result_path("steam-1", "legacy-deep").exists()
 
 
+def test_no_credit_stops_the_run_instead_of_failing_every_game(tmp_path):
+    class Broke:
+        class messages:
+            @staticmethod
+            def create(**kwargs):
+                raise RuntimeError("Your credit balance is too low to access the Anthropic API.")
+
+        def with_options(self, **options):
+            return self
+
+    path = dossier_path(tmp_path, "steam-1")
+    path.parent.mkdir(parents=True)
+    save_dossier(sample_dossier(tmp_path / "d"), path)
+    path.with_name("gather.json").write_text(json.dumps({"gather_timings": {"total_ms": 1}}))
+    runner = Runner(tmp_path, Ledger(tmp_path / "ledger.jsonl", 40.0), anthropic_client=Broke())
+    game = {"game_id": "steam-1", "list": "steam", "title": "Hollow Orchard", "ids": {}}
+    summary = runner.run([game], ["legacy-standard", "rich"], workers=1, log=lambda m: None)
+    assert summary["stopped_by_budget"] and "credit" in summary["stopped_by_budget"]
+    assert summary["failed"] == 0
+    assert not runner.result_path("steam-1", "legacy-standard").exists()
+
+
 def test_scoring_review_and_report_from_a_fake_run(fake_run):
     workdir, cohort, runner, _ = fake_run
     results = load_results(workdir, cohort, ["rich", "legacy-standard", "legacy-deep"])

@@ -42,6 +42,17 @@ class BudgetExceeded(BaseException):
     """
 
 
+class AccountStopped(BudgetExceeded):
+    """The provider refused for an account reason (no credit left), so every request would.
+
+    Stops the run like the cap does, instead of booking each remaining game as a failure.
+    """
+
+
+# Provider messages that mean the account, not this request, is the problem.
+ACCOUNT_STOP_MESSAGES = ("credit balance is too low",)
+
+
 def price_key(model: str | None) -> str | None:
     model = (model or "").lower()
     if model.startswith("jev"):
@@ -170,6 +181,8 @@ class _MeteredMessages:
             entry["latency_ms"] = (perf_counter() - start) * 1000
             self._meter.ledger.settle(reserved, entry)
             self._meter.calls.append(entry)
+            if any(m in str(exc) for m in ACCOUNT_STOP_MESSAGES):
+                raise AccountStopped(f"Stopped: Anthropic refused the account: {exc}") from exc
             raise
         usage = getattr(response, "usage", None)
         counts = (
