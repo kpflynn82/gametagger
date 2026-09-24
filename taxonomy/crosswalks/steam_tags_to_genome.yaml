@@ -1,0 +1,260 @@
+# Steam user tags (exact Steam spellings) -> rich-mode Genome tags and v4.1 genres.
+#
+# STATUS: draft, pending owner approval.
+#
+# Used only for the answer key: a Steam user tag among a game's most-voted tags is evidence that
+# the mapped Genome tags are present. Only tags that clearly imply an attribute are mapped; vague
+# or taste-based tags are listed under `unmapped` so the choice is visible. A Steam tag's absence
+# never marks anything absent. `genres` lists v4 genres the tag is consistent with; it is a weak
+# signal about the primary genre, reported separately and never as accuracy.
+version: steam-tags-to-genome-draft-1
+status: draft-pending-owner-approval
+tags:
+  # ---- play and genre
+  Action: {genome: [gameplay_action]}
+  Adventure: {genome: [gameplay_adventure]}
+  Action-Adventure: {genome: [gameplay_action, gameplay_adventure], genres: [action_adventure]}
+  RPG: {genome: [gameplay_rpg]}
+  Action RPG: {genome: [gameplay_action, gameplay_rpg], genres: [action_rpg]}
+  JRPG: {genome: [gameplay_rpg], genres: [jrpg]}
+  CRPG: {genome: [gameplay_rpg], genres: [crpg]}
+  Party-Based RPG: {genome: [gameplay_rpg]}
+  Strategy RPG: {genome: [gameplay_strategy, gameplay_rpg], genres: [tactical_rpg]}
+  MMORPG: {genome: [gameplay_rpg, feature_massively_multiplayer], genres: [mmorpg]}
+  Dungeon Crawler: {genome: [], genres: [dungeon_crawler]}
+  Creature Collector: {genome: [mechanic_collection], genres: [creature_collector]}
+  Souls-like: {genome: [audience_challenging], genres: [souls_like]}
+  Roguelike: {genome: [gameplay_roguelike], genres: [roguelike, roguelite]}
+  Roguelite: {genome: [gameplay_roguelike], genres: [roguelite, roguelike]}
+  Action Roguelike: {genome: [gameplay_action, gameplay_roguelike], genres: [roguelite, roguelike]}
+  Roguelike Deckbuilder:
+    genome: [gameplay_roguelike, gameplay_card_based, mechanic_deck_building]
+    genres: [deck_builder]
+  Shooter: {genome: [gameplay_shooter]}
+  FPS: {genome: [gameplay_shooter, visual_first_person], genres: [first_person_shooter]}
+  Third-Person Shooter:
+    genome: [gameplay_shooter, visual_third_person]
+    genres: [third_person_shooter]
+  Hero Shooter: {genome: [gameplay_shooter], genres: [hero_shooter]}
+  Looter Shooter: {genome: [gameplay_shooter, mechanic_loot], genres: [looter_shooter]}
+  Extraction Shooter: {genome: [gameplay_shooter], genres: [extraction_shooter]}
+  Top-Down Shooter: {genome: [gameplay_shooter, visual_top_down]}
+  Shoot 'Em Up: {genome: [gameplay_shooter], genres: [shoot_em_up]}
+  Bullet Hell: {genome: [gameplay_shooter], genres: [bullet_hell]}
+  Battle Royale: {genome: [engagement_pvp], genres: [battle_royale]}
+  Platformer: {genome: [gameplay_platformer]}
+  Precision Platformer: {genome: [gameplay_platformer], genres: [precision_platformer]}
+  Puzzle Platformer: {genome: [gameplay_platformer, gameplay_puzzle], genres: [puzzle_platformer]}
+  Metroidvania: {genome: [gameplay_platformer, world_ability_gated], genres: [metroidvania]}
+  Beat 'em up: {genome: [mechanic_melee_combat], genres: [beat_em_up]}
+  Hack and Slash: {genome: [mechanic_melee_combat]}
+  Swordplay: {genome: [mechanic_melee_combat]}
+  Fighting: {genome: [gameplay_fighting]}
+  Stealth: {genome: [gameplay_stealth]}
+  Survival: {genome: [gameplay_survival], genres: [survival]}
+  Open World Survival Craft:
+    genome: [gameplay_survival, mechanic_crafting, world_open_world]
+    genres: [open_world_survival_craft]
+  Survival Horror: {genome: [gameplay_survival, tone_horror], genres: [survival_horror]}
+  Horror: {genome: [tone_horror]}
+  Psychological Horror: {genome: [tone_horror, tone_psychological], genres: [psychological_horror]}
+  Exploration: {genome: [gameplay_exploration]}
+  Walking Simulator: {genome: [gameplay_exploration], genres: [exploration_adventure]}
+  Sandbox: {genome: [gameplay_sandbox], genres: [sandbox]}
+  Simulation: {genome: [gameplay_simulation]}
+  Life Sim: {genome: [gameplay_simulation], genres: [life_simulation]}
+  Farming Sim: {genome: [mechanic_farming], genres: [farm_simulation]}
+  Agriculture: {genome: [mechanic_farming]}
+  Automobile Sim: {genome: [mechanic_vehicles], genres: [driving_vehicle_simulation]}
+  Space Sim: {genome: [setting_space]}
+  Management: {genome: [gameplay_management]}
+  City Builder: {genome: [mechanic_building], genres: [city_builder]}
+  Colony Sim: {genome: [gameplay_management], genres: [colony_sim]}
+  Automation: {genome: [], genres: [factory_automation_sim]}
+  Strategy: {genome: [gameplay_strategy]}
+  RTS: {genome: [gameplay_strategy], genres: [real_time_strategy]}
+  Turn-Based Strategy: {genome: [gameplay_strategy], genres: [turn_based_strategy]}
+  Turn-Based Tactics:
+    genome: [gameplay_strategy, mechanic_turn_based_combat]
+    genres: [turn_based_tactics]
+  Grand Strategy: {genome: [gameplay_strategy], genres: [grand_strategy]}
+  4X: {genome: [gameplay_strategy], genres: [four_x_strategy]}
+  Wargame: {genome: [gameplay_strategy], genres: [wargame]}
+  Tower Defense: {genome: [gameplay_tower_defense], genres: [tower_defense]}
+  MOBA: {genome: [engagement_pvp], genres: [moba]}
+  Auto Battler: {genome: [], genres: [auto_battler]}
+  Card Game: {genome: [gameplay_card_based], genres: [card_game]}
+  Card Battler: {genome: [gameplay_card_based]}
+  Deckbuilding: {genome: [gameplay_card_based, mechanic_deck_building], genres: [deck_builder]}
+  Trading Card Game: {genome: [gameplay_card_based], genres: [digital_tcg_ccg]}
+  Board Game: {genome: [], genres: [board_game]}
+  Gambling: {genome: [], genres: [casino]}
+  Puzzle: {genome: [gameplay_puzzle]}
+  Match 3: {genome: [gameplay_puzzle], genres: [match_3]}
+  Hidden Object: {genome: [gameplay_puzzle], genres: [hidden_object]}
+  Word Game: {genome: [gameplay_puzzle], genres: [word_game]}
+  Trivia: {genome: [], genres: [trivia_quiz]}
+  Point & Click: {genome: [gameplay_adventure], genres: [point_click_adventure]}
+  Visual Novel: {genome: [], genres: [visual_novel]}
+  Interactive Fiction: {genome: [], genres: [interactive_fiction]}
+  Dating Sim: {genome: [narrative_romance], genres: [dating_sim]}
+  Immersive Sim: {genome: [], genres: [immersive_sim]}
+  Racing: {genome: [gameplay_racing]}
+  Vehicular Combat: {genome: [mechanic_vehicles], genres: [vehicular_combat]}
+  Driving: {genome: [mechanic_vehicles]}
+  Tanks: {genome: [mechanic_vehicles]}
+  Sports: {genome: [gameplay_sports]}
+  Football (Soccer): {genome: [gameplay_sports], genres: [team_sports]}
+  Football (American): {genome: [gameplay_sports], genres: [team_sports]}
+  Rhythm: {genome: [gameplay_rhythm], genres: [rhythm_game]}
+  Party Game: {genome: [], genres: [party_game]}
+  Social Deduction: {genome: [], genres: [social_deduction]}
+  Idler: {genome: [], genres: [idle_incremental]}
+  Incremental: {genome: [], genres: [idle_incremental]}
+  Time Management: {genome: [mechanic_time_management], genres: [time_management]}
+  # ---- mechanics and systems
+  Crafting: {genome: [mechanic_crafting]}
+  Building: {genome: [mechanic_building]}
+  Base Building: {genome: [mechanic_base_building]}
+  Resource Management: {genome: [mechanic_resource_management]}
+  Economy: {genome: [mechanic_economy]}
+  Loot: {genome: [mechanic_loot]}
+  Character Customization: {genome: [mechanic_character_customization]}
+  Turn-Based Combat: {genome: [mechanic_turn_based_combat]}
+  Physics: {genome: [mechanic_physics]}
+  Parkour: {genome: [mechanic_parkour_climbing]}
+  Perma Death: {genome: [mechanic_permadeath]}
+  Collectathon: {genome: [mechanic_collection]}
+  Fishing: {genome: [mechanic_fishing]}
+  Inventory Management: {genome: [mechanic_inventory]}
+  Destruction: {genome: [world_sandbox_destructible]}
+  # ---- story and world
+  Story Rich: {genome: [narrative_story_driven]}
+  Choices Matter: {genome: [narrative_branching]}
+  Multiple Endings: {genome: [narrative_multiple_endings]}
+  Romance: {genome: [narrative_romance]}
+  Open World: {genome: [world_open_world]}
+  Procedural Generation: {genome: [world_procedural]}
+  # ---- modes and features
+  Multiplayer: {genome: [feature_multiplayer]}
+  Singleplayer: {genome: [feature_single_player]}
+  Massively Multiplayer: {genome: [feature_massively_multiplayer]}
+  Co-op: {genome: [engagement_co_op]}
+  Online Co-Op: {genome: [engagement_co_op, feature_online_multiplayer]}
+  Local Co-Op: {genome: [engagement_co_op, feature_local_multiplayer]}
+  Co-op Campaign: {genome: [engagement_co_op]}
+  Local Multiplayer: {genome: [feature_local_multiplayer]}
+  4 Player Local: {genome: [feature_local_multiplayer]}
+  Split Screen: {genome: [feature_local_multiplayer, feature_split_screen]}
+  PvP: {genome: [engagement_pvp]}
+  PvE: {genome: [engagement_pve]}
+  Controller: {genome: [feature_controller_support]}
+  Moddable: {genome: [feature_user_content]}
+  Level Editor: {genome: [feature_user_content]}
+  Free to Play: {genome: [monetization_free_to_play]}
+  # ---- setting
+  Fantasy: {genome: [setting_fantasy]}
+  Dark Fantasy: {genome: [setting_fantasy, setting_dark_fantasy]}
+  Sci-fi: {genome: [setting_sci_fi]}
+  Cyberpunk: {genome: [setting_sci_fi, setting_cyberpunk]}
+  Steampunk: {genome: [setting_steampunk]}
+  Space: {genome: [setting_space]}
+  Post-apocalyptic: {genome: [setting_post_apocalyptic]}
+  Zombies: {genome: [setting_zombies]}
+  Military: {genome: [setting_military]}
+  War: {genome: [theme_war]}
+  World War II: {genome: [setting_historical, setting_military, theme_war]}
+  Historical: {genome: [setting_historical]}
+  Medieval: {genome: [setting_medieval]}
+  Modern: {genome: [setting_modern_day]}
+  Western: {genome: [setting_western]}
+  Mythology: {genome: [setting_mythology]}
+  Superhero: {genome: [setting_superhero]}
+  Pirates: {genome: [setting_pirate]}
+  Underwater: {genome: [setting_underwater]}
+  Crime: {genome: [theme_crime]}
+  # ---- tone and audience
+  Funny: {genome: [tone_comedy]}
+  Comedy: {genome: [tone_comedy]}
+  Dark Humor: {genome: [tone_comedy, tone_dark]}
+  Dark Comedy: {genome: [tone_comedy, tone_dark]}
+  Dark: {genome: [tone_dark]}
+  Relaxing: {genome: [tone_cozy]}
+  Cozy: {genome: [tone_cozy]}
+  Mystery: {genome: [tone_mystery]}
+  Epic: {genome: [tone_epic]}
+  Difficult: {genome: [audience_challenging]}
+  Casual: {genome: [audience_casual]}
+  Family Friendly: {genome: [audience_family_friendly]}
+  Gore: {genome: [audience_graphic_violence]}
+  Sexual Content: {genome: [audience_mature]}
+  Nudity: {genome: [audience_mature]}
+  Female Protagonist: {genome: [protagonist_female]}
+  # ---- look and camera
+  First-Person: {genome: [visual_first_person]}
+  Third Person: {genome: [visual_third_person]}
+  Isometric: {genome: [visual_isometric]}
+  Top-Down: {genome: [visual_top_down]}
+  Side Scroller: {genome: [visual_side_scrolling]}
+  2D: {genome: [visual_2d]}
+  3D: {genome: [visual_3d]}
+  Pixel Graphics: {genome: [visual_pixel_art]}
+  Realistic: {genome: [visual_realistic]}
+  Stylized: {genome: [visual_stylized]}
+  Anime: {genome: [visual_anime]}
+  Cartoony: {genome: [visual_cartoon]}
+  Cartoon: {genome: [visual_cartoon]}
+  Hand-drawn: {genome: [visual_hand_drawn]}
+  Minimalist: {genome: [visual_minimalist]}
+  Retro: {genome: [visual_retro]}
+  Voxel: {genome: [visual_voxel]}
+  Colorful: {genome: [visual_vibrant]}
+# Seen in the top-50 Steam games but too vague or taste-based to imply a Genome attribute.
+unmapped:
+  - Indie
+  - Atmospheric
+  - Great Soundtrack
+  - Team-Based
+  - Tactical
+  - Competitive
+  - Early Access
+  - Violent
+  - eSports
+  - Replay Value
+  - Combat
+  - LGBTQ+
+  - Lore-Rich
+  - Cute
+  - VR
+  - Trading
+  - Class-Based
+  - Fast-Paced
+  - Cinematic
+  - Capitalism
+  - Artificial Intelligence
+  - Robots
+  - Memes
+  - Dragons
+  - Sniper
+  - Mouse Only
+  - Hentai
+  - Remake
+  - Flight
+  - Naval Combat
+  - Cold War
+  - Ninja
+  - Music
+  - Arcade
+  - Gun Customization
+  - Transportation
+  - Hunting
+  - Alternate History
+  - Real-Time with Pause
+  - Diplomacy
+  - Horses
+  - Beautiful
+  - Martial Arts
+  - Futuristic
+  - Desktop Companion
+  - Investigation
+  - 2.5D

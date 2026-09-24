@@ -1,0 +1,105 @@
+# Old GenomeTagger boolean tag keys (gametagger-web tagger.py VGMS_CATEGORIES, as the prompt
+# names them) -> rich-mode Genome tags (taxonomy/vgms_v4.yaml pilot tags + genome_tags_v1.yaml).
+#
+# STATUS: draft, pending owner approval.
+#
+# relation:
+#   exact  same attribute
+#   close  overlapping attribute; reported separately from exact matches
+#   none   no Genome tag means the same
+# A key the old method did not return is unknown, never false. Keys the model invents outside
+# this list (for example gameplay_fps) are kept in the raw result and counted as unmapped.
+version: legacy-tags-to-genome-draft-1
+status: draft-pending-owner-approval
+tags:
+  gameplay_action: {genome: gameplay_action, relation: exact}
+  gameplay_adventure: {genome: gameplay_adventure, relation: exact}
+  gameplay_rpg: {genome: gameplay_rpg, relation: exact}
+  gameplay_strategy: {genome: gameplay_strategy, relation: exact}
+  gameplay_simulation: {genome: gameplay_simulation, relation: exact}
+  gameplay_sports: {genome: gameplay_sports, relation: exact}
+  gameplay_platformer: {genome: gameplay_platformer, relation: exact}
+  gameplay_puzzle: {genome: gameplay_puzzle, relation: exact}
+  gameplay_shooter: {genome: gameplay_shooter, relation: exact}
+  gameplay_stealth: {genome: gameplay_stealth, relation: exact}
+  gameplay_survival: {genome: gameplay_survival, relation: exact}
+  gameplay_rhythm: {genome: gameplay_rhythm, relation: exact}
+  gameplay_party: {relation: none}
+  gameplay_roguelike: {genome: gameplay_roguelike, relation: exact}
+  gameplay_fighting: {genome: gameplay_fighting, relation: exact}
+  gameplay_racing: {genome: gameplay_racing, relation: exact}
+  narrative_horror: {genome: tone_horror, relation: exact}
+  narrative_comedy: {genome: tone_comedy, relation: exact}
+  narrative_mystery: {genome: tone_mystery, relation: exact}
+  narrative_scifi: {genome: setting_sci_fi, relation: exact}
+  narrative_fantasy: {genome: setting_fantasy, relation: exact}
+  narrative_historical: {genome: setting_historical, relation: exact}
+  narrative_western: {genome: setting_western, relation: exact}
+  theme_war: {genome: theme_war, relation: exact}
+  theme_exploration: {genome: gameplay_exploration, relation: close}
+  theme_survival: {genome: theme_survival_against_odds, relation: close}
+  theme_crime: {genome: theme_crime, relation: exact}
+  theme_family: {genome: theme_family, relation: exact}
+  theme_revenge: {genome: theme_revenge, relation: exact}
+  theme_coming_of_age: {genome: theme_coming_of_age, relation: exact}
+  theme_politics: {genome: theme_politics_power, relation: exact}
+  theme_environmental: {genome: theme_environment, relation: exact}
+  setting_fantasy: {genome: setting_fantasy, relation: exact}
+  setting_scifi: {genome: setting_sci_fi, relation: exact}
+  setting_contemporary: {genome: setting_modern_day, relation: exact}
+  setting_historical: {genome: setting_historical, relation: exact}
+  setting_post_apocalyptic: {genome: setting_post_apocalyptic, relation: exact}
+  setting_urban: {genome: setting_urban, relation: exact}
+  setting_rural: {genome: setting_rural, relation: exact}
+  setting_underwater: {genome: setting_underwater, relation: exact}
+  setting_space: {genome: setting_space, relation: exact}
+  mechanic_leveling: {genome: mechanic_leveling, relation: exact}
+  mechanic_crafting: {genome: mechanic_crafting, relation: exact}
+  mechanic_farming: {genome: mechanic_farming, relation: exact}
+  mechanic_building: {genome: mechanic_building, relation: exact}
+  mechanic_collection: {genome: mechanic_collection, relation: exact}
+  mechanic_inventory: {genome: mechanic_inventory, relation: exact}
+  mechanic_permadeath: {genome: mechanic_permadeath, relation: exact}
+  mechanic_time_management: {genome: mechanic_time_management, relation: exact}
+  mechanic_resource_management: {genome: mechanic_resource_management, relation: exact}
+  mechanic_stealth: {genome: gameplay_stealth, relation: close}
+  mechanic_parkour: {genome: mechanic_parkour_climbing, relation: exact}
+  mechanic_dialogue_choices: {genome: mechanic_dialogue_choices, relation: exact}
+  mechanic_moral_choices: {genome: narrative_moral_choices, relation: exact}
+  mechanic_romance: {genome: narrative_romance, relation: exact}
+  visual_realistic: {genome: visual_realistic, relation: exact}
+  visual_stylized: {genome: visual_stylized, relation: exact}
+  visual_pixel_art: {genome: visual_pixel_art, relation: exact}
+  visual_minimalist: {genome: visual_minimalist, relation: exact}
+  visual_hand_drawn: {genome: visual_hand_drawn, relation: exact}
+  multiplayer: {genome: feature_multiplayer, relation: exact}
+  open_world: {genome: world_open_world, relation: exact}
+  procedural: {genome: world_procedural, relation: exact}
+  story_driven: {genome: narrative_story_driven, relation: exact}
+  engagement_gacha: {genome: engagement_gacha, relation: exact}
+  engagement_daily_rewards: {genome: engagement_daily_rewards, relation: exact}
+  engagement_energy_system: {genome: engagement_energy_system, relation: exact}
+  engagement_pvp: {genome: engagement_pvp, relation: exact}
+  engagement_guild: {genome: engagement_guilds, relation: exact}
+  engagement_events: {genome: engagement_live_events, relation: exact}
+  engagement_battle_pass: {genome: engagement_battle_pass, relation: exact}
+  engagement_auto_play: {genome: engagement_auto_play, relation: exact}
+  monetization_free_to_play: {genome: monetization_free_to_play, relation: exact}
+  monetization_premium: {genome: monetization_premium, relation: exact}
+  monetization_subscription: {genome: monetization_subscription, relation: exact}
+  monetization_iap: {genome: monetization_in_app_purchases, relation: exact}
+  protagonist_customizable: {genome: protagonist_customizable, relation: exact}
+  protagonist_predefined: {genome: protagonist_predefined, relation: exact}
+  protagonist_ensemble: {genome: protagonist_ensemble, relation: exact}
+  protagonist_non_human: {genome: protagonist_non_human, relation: exact}
+  accessibility_colorblind_modes: {genome: accessibility_colorblind, relation: exact}
+  accessibility_subtitle_options: {genome: accessibility_subtitles, relation: exact}
+  accessibility_difficulty_options: {genome: accessibility_difficulty_options, relation: exact}
+  accessibility_motor_accessibility: {genome: accessibility_remapping, relation: close}
+  accessibility_cognitive_assist: {genome: accessibility_assist_modes, relation: close}
+  demographic_family_friendly: {genome: audience_family_friendly, relation: exact}
+  demographic_teen_focused: {relation: none}
+  demographic_mature_audience: {genome: audience_mature, relation: exact}
+  demographic_female_protagonist: {genome: protagonist_female, relation: exact}
+  demographic_diverse_cast: {relation: none}
+  demographic_nostalgia_retro: {genome: visual_retro, relation: close}

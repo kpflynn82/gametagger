@@ -1,0 +1,1477 @@
+{
+  "schema_version": "jev-vs-legacy-cohort-v1",
+  "created_at": "2026-09-24T06:49:23+00:00",
+  "charts": {
+    "steam": {
+      "source": "Steam most-played chart (ISteamChartsService/GetMostPlayedGames)",
+      "url": "https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/",
+      "chart_date": "2026-09-23",
+      "ranked_by": "Steam's own rank order (daily peak concurrent players)",
+      "region": "global",
+      "platform": "PC (Steam)"
+    },
+    "mobile": {
+      "source": "AppBrain Google Play ranking: top grossing games, United States",
+      "url": "https://www.appbrain.com/stats/google-play-rankings/top_grossing/game/us",
+      "chart_date": "2026-09-24",
+      "ranked_by": "grossing (AppBrain's Google Play top-grossing list)",
+      "region": "US",
+      "platform": "Android (Google Play)"
+    }
+  },
+  "rules": [
+    "Steam entries whose store type is not 'game', or that Steam files under software genres, are skipped.",
+    "A game on both charts is kept once, on the Steam list.",
+    "Two editions of one game (e.g. Legacy and Enhanced) are kept once, at the higher rank.",
+    "Store IDs are exact; titles are for display only."
+  ],
+  "games": [
+    {
+      "game_id": "steam-730",
+      "list": "steam",
+      "rank": 1,
+      "title": "Counter-Strike 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "730"
+      },
+      "chart": {
+        "peak_in_game": 1452036,
+        "last_week_rank": 1
+      }
+    },
+    {
+      "game_id": "steam-570",
+      "list": "steam",
+      "rank": 2,
+      "title": "Dota 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "570"
+      },
+      "chart": {
+        "peak_in_game": 805725,
+        "last_week_rank": 2
+      }
+    },
+    {
+      "game_id": "steam-578080",
+      "list": "steam",
+      "rank": 3,
+      "title": "PUBG: BATTLEGROUNDS",
+      "developers": [
+        "PUBG Corporation"
+      ],
+      "ids": {
+        "steam_app": "578080"
+      },
+      "chart": {
+        "peak_in_game": 731479,
+        "last_week_rank": 3
+      }
+    },
+    {
+      "game_id": "steam-1867240",
+      "list": "steam",
+      "rank": 5,
+      "title": "WARDOGS",
+      "developers": [
+        "BULKHEAD"
+      ],
+      "ids": {
+        "steam_app": "1867240"
+      },
+      "chart": {
+        "peak_in_game": 284112,
+        "last_week_rank": 5
+      }
+    },
+    {
+      "game_id": "steam-1172470",
+      "list": "steam",
+      "rank": 6,
+      "title": "Apex Legends™",
+      "developers": [
+        "Respawn"
+      ],
+      "ids": {
+        "steam_app": "1172470"
+      },
+      "chart": {
+        "peak_in_game": 254139,
+        "last_week_rank": 6
+      }
+    },
+    {
+      "game_id": "steam-892970",
+      "list": "steam",
+      "rank": 7,
+      "title": "Valheim",
+      "developers": [
+        "Iron Gate AB"
+      ],
+      "ids": {
+        "steam_app": "892970"
+      },
+      "chart": {
+        "peak_in_game": 199097,
+        "last_week_rank": 7
+      }
+    },
+    {
+      "game_id": "steam-271590",
+      "list": "steam",
+      "rank": 8,
+      "title": "Grand Theft Auto V Legacy",
+      "developers": [
+        "Rockstar North"
+      ],
+      "ids": {
+        "steam_app": "271590"
+      },
+      "chart": {
+        "peak_in_game": 63620,
+        "last_week_rank": 10
+      }
+    },
+    {
+      "game_id": "steam-4126040",
+      "list": "steam",
+      "rank": 9,
+      "title": "Aniimo",
+      "developers": [
+        "Pawprint Studio"
+      ],
+      "ids": {
+        "steam_app": "4126040"
+      },
+      "chart": {
+        "peak_in_game": 145080,
+        "last_week_rank": 8
+      }
+    },
+    {
+      "game_id": "steam-553850",
+      "list": "steam",
+      "rank": 11,
+      "title": "HELLDIVERS™ 2",
+      "developers": [
+        "Arrowhead Game Studios"
+      ],
+      "ids": {
+        "steam_app": "553850"
+      },
+      "chart": {
+        "peak_in_game": 70123,
+        "last_week_rank": 18
+      }
+    },
+    {
+      "game_id": "steam-2868840",
+      "list": "steam",
+      "rank": 12,
+      "title": "Slay the Spire 2",
+      "developers": [
+        "Mega Crit"
+      ],
+      "ids": {
+        "steam_app": "2868840"
+      },
+      "chart": {
+        "peak_in_game": 89279,
+        "last_week_rank": 13
+      }
+    },
+    {
+      "game_id": "steam-2767030",
+      "list": "steam",
+      "rank": 13,
+      "title": "Marvel Rivals",
+      "developers": [
+        "NetEase Games"
+      ],
+      "ids": {
+        "steam_app": "2767030"
+      },
+      "chart": {
+        "peak_in_game": 91844,
+        "last_week_rank": 9
+      }
+    },
+    {
+      "game_id": "steam-359550",
+      "list": "steam",
+      "rank": 14,
+      "title": "Tom Clancy's Rainbow Six Siege",
+      "developers": [
+        "Ubisoft Montreal"
+      ],
+      "ids": {
+        "steam_app": "359550"
+      },
+      "chart": {
+        "peak_in_game": 80197,
+        "last_week_rank": 14
+      }
+    },
+    {
+      "game_id": "steam-2357570",
+      "list": "steam",
+      "rank": 15,
+      "title": "Overwatch®",
+      "developers": [
+        "Blizzard Entertainment, Inc."
+      ],
+      "ids": {
+        "steam_app": "2357570"
+      },
+      "chart": {
+        "peak_in_game": 67532,
+        "last_week_rank": 11
+      }
+    },
+    {
+      "game_id": "steam-250900",
+      "list": "steam",
+      "rank": 16,
+      "title": "The Binding of Isaac: Rebirth",
+      "developers": [
+        "Nicalis, Inc.",
+        "Edmund McMillen"
+      ],
+      "ids": {
+        "steam_app": "250900"
+      },
+      "chart": {
+        "peak_in_game": 73415,
+        "last_week_rank": 15
+      }
+    },
+    {
+      "game_id": "steam-236390",
+      "list": "steam",
+      "rank": 17,
+      "title": "War Thunder",
+      "developers": [
+        "Gaijin Entertainment"
+      ],
+      "ids": {
+        "steam_app": "236390"
+      },
+      "chart": {
+        "peak_in_game": 74235,
+        "last_week_rank": 16
+      }
+    },
+    {
+      "game_id": "steam-230410",
+      "list": "steam",
+      "rank": 18,
+      "title": "Warframe",
+      "developers": [
+        "Digital Extremes"
+      ],
+      "ids": {
+        "steam_app": "230410"
+      },
+      "chart": {
+        "peak_in_game": 108836,
+        "last_week_rank": 30
+      }
+    },
+    {
+      "game_id": "steam-381210",
+      "list": "steam",
+      "rank": 19,
+      "title": "Dead by Daylight",
+      "developers": [
+        "Behaviour Interactive Inc."
+      ],
+      "ids": {
+        "steam_app": "381210"
+      },
+      "chart": {
+        "peak_in_game": 55910,
+        "last_week_rank": 17
+      }
+    },
+    {
+      "game_id": "steam-322170",
+      "list": "steam",
+      "rank": 20,
+      "title": "Geometry Dash",
+      "developers": [
+        "RobTop Games"
+      ],
+      "ids": {
+        "steam_app": "322170"
+      },
+      "chart": {
+        "peak_in_game": 47543,
+        "last_week_rank": 19
+      }
+    },
+    {
+      "game_id": "steam-1422450",
+      "list": "steam",
+      "rank": 21,
+      "title": "Deadlock",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "1422450"
+      },
+      "chart": {
+        "peak_in_game": 69585,
+        "last_week_rank": 21
+      }
+    },
+    {
+      "game_id": "steam-1973530",
+      "list": "steam",
+      "rank": 22,
+      "title": "Limbus Company",
+      "developers": [
+        "ProjectMoon"
+      ],
+      "ids": {
+        "steam_app": "1973530"
+      },
+      "chart": {
+        "peak_in_game": 43489,
+        "last_week_rank": 23
+      }
+    },
+    {
+      "game_id": "steam-2507950",
+      "list": "steam",
+      "rank": 24,
+      "title": "Delta Force",
+      "developers": [
+        "Team Jade"
+      ],
+      "ids": {
+        "steam_app": "2507950"
+      },
+      "chart": {
+        "peak_in_game": 114606,
+        "last_week_rank": 26
+      }
+    },
+    {
+      "game_id": "steam-105600",
+      "list": "steam",
+      "rank": 25,
+      "title": "Terraria",
+      "developers": [
+        "Re-Logic"
+      ],
+      "ids": {
+        "steam_app": "105600"
+      },
+      "chart": {
+        "peak_in_game": 42706,
+        "last_week_rank": 22
+      }
+    },
+    {
+      "game_id": "steam-413150",
+      "list": "steam",
+      "rank": 26,
+      "title": "Stardew Valley",
+      "developers": [
+        "ConcernedApe"
+      ],
+      "ids": {
+        "steam_app": "413150"
+      },
+      "chart": {
+        "peak_in_game": 68614,
+        "last_week_rank": 27
+      }
+    },
+    {
+      "game_id": "steam-252490",
+      "list": "steam",
+      "rank": 27,
+      "title": "Rust",
+      "developers": [
+        "Facepunch Studios"
+      ],
+      "ids": {
+        "steam_app": "252490"
+      },
+      "chart": {
+        "peak_in_game": 98597,
+        "last_week_rank": 29
+      }
+    },
+    {
+      "game_id": "steam-3405690",
+      "list": "steam",
+      "rank": 28,
+      "title": "EA SPORTS FC™ 26",
+      "developers": [
+        "EA Canada",
+        "EA Romania"
+      ],
+      "ids": {
+        "steam_app": "3405690"
+      },
+      "chart": {
+        "peak_in_game": 44702,
+        "last_week_rank": 20
+      }
+    },
+    {
+      "game_id": "steam-2807960",
+      "list": "steam",
+      "rank": 29,
+      "title": "Battlefield™ 6",
+      "developers": [
+        "Battlefield Studios"
+      ],
+      "ids": {
+        "steam_app": "2807960"
+      },
+      "chart": {
+        "peak_in_game": 35683,
+        "last_week_rank": 28
+      }
+    },
+    {
+      "game_id": "steam-1623730",
+      "list": "steam",
+      "rank": 30,
+      "title": "Palworld",
+      "developers": [
+        "Pocketpair"
+      ],
+      "ids": {
+        "steam_app": "1623730"
+      },
+      "chart": {
+        "peak_in_game": 69035,
+        "last_week_rank": 25
+      }
+    },
+    {
+      "game_id": "steam-440",
+      "list": "steam",
+      "rank": 31,
+      "title": "Team Fortress 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "440"
+      },
+      "chart": {
+        "peak_in_game": 66889,
+        "last_week_rank": 32
+      }
+    },
+    {
+      "game_id": "steam-108600",
+      "list": "steam",
+      "rank": 32,
+      "title": "Project Zomboid",
+      "developers": [
+        "The Indie Stone"
+      ],
+      "ids": {
+        "steam_app": "108600"
+      },
+      "chart": {
+        "peak_in_game": 53015,
+        "last_week_rank": 31
+      }
+    },
+    {
+      "game_id": "steam-438100",
+      "list": "steam",
+      "rank": 33,
+      "title": "VRChat",
+      "developers": [
+        "VRChat Inc."
+      ],
+      "ids": {
+        "steam_app": "438100"
+      },
+      "chart": {
+        "peak_in_game": 52477,
+        "last_week_rank": 34
+      }
+    },
+    {
+      "game_id": "steam-1086940",
+      "list": "steam",
+      "rank": 34,
+      "title": "Baldur's Gate 3",
+      "developers": [
+        "Larian Studios"
+      ],
+      "ids": {
+        "steam_app": "1086940"
+      },
+      "chart": {
+        "peak_in_game": 53638,
+        "last_week_rank": 35
+      }
+    },
+    {
+      "game_id": "steam-550",
+      "list": "steam",
+      "rank": 35,
+      "title": "Left 4 Dead 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "550"
+      },
+      "chart": {
+        "peak_in_game": 29297,
+        "last_week_rank": 36
+      }
+    },
+    {
+      "game_id": "steam-227300",
+      "list": "steam",
+      "rank": 36,
+      "title": "Euro Truck Simulator 2",
+      "developers": [
+        "SCS Software"
+      ],
+      "ids": {
+        "steam_app": "227300"
+      },
+      "chart": {
+        "peak_in_game": 40199,
+        "last_week_rank": 38
+      }
+    },
+    {
+      "game_id": "steam-2246340",
+      "list": "steam",
+      "rank": 37,
+      "title": "Monster Hunter Wilds",
+      "developers": [
+        "CAPCOM Co., Ltd."
+      ],
+      "ids": {
+        "steam_app": "2246340"
+      },
+      "chart": {
+        "peak_in_game": 52507,
+        "last_week_rank": 46
+      }
+    },
+    {
+      "game_id": "steam-394360",
+      "list": "steam",
+      "rank": 38,
+      "title": "Hearts of Iron IV",
+      "developers": [
+        "Paradox Development Studio"
+      ],
+      "ids": {
+        "steam_app": "394360"
+      },
+      "chart": {
+        "peak_in_game": 47390,
+        "last_week_rank": 44
+      }
+    },
+    {
+      "game_id": "steam-252950",
+      "list": "steam",
+      "rank": 39,
+      "title": "Rocket League®",
+      "developers": [
+        "Psyonix LLC"
+      ],
+      "ids": {
+        "steam_app": "252950"
+      },
+      "chart": {
+        "peak_in_game": 33981,
+        "last_week_rank": 52
+      }
+    },
+    {
+      "game_id": "steam-1174180",
+      "list": "steam",
+      "rank": 40,
+      "title": "Red Dead Redemption 2",
+      "developers": [
+        "Rockstar Games"
+      ],
+      "ids": {
+        "steam_app": "1174180"
+      },
+      "chart": {
+        "peak_in_game": 34874,
+        "last_week_rank": 39
+      }
+    },
+    {
+      "game_id": "steam-1203220",
+      "list": "steam",
+      "rank": 41,
+      "title": "NARAKA: BLADEPOINT",
+      "developers": [
+        "24 Entertainment"
+      ],
+      "ids": {
+        "steam_app": "1203220"
+      },
+      "chart": {
+        "peak_in_game": 58423,
+        "last_week_rank": 48
+      }
+    },
+    {
+      "game_id": "steam-1091500",
+      "list": "steam",
+      "rank": 42,
+      "title": "Cyberpunk 2077",
+      "developers": [
+        "CD PROJEKT RED"
+      ],
+      "ids": {
+        "steam_app": "1091500"
+      },
+      "chart": {
+        "peak_in_game": 33794,
+        "last_week_rank": 40
+      }
+    },
+    {
+      "game_id": "steam-1938090",
+      "list": "steam",
+      "rank": 43,
+      "title": "Call of Duty®",
+      "developers": [
+        "Treyarch",
+        "Raven Software",
+        "Beenox",
+        "High Moon Studios",
+        "Sledgehammer Games",
+        "Infinity Ward",
+        "Activision Shanghai",
+        "Demonware"
+      ],
+      "ids": {
+        "steam_app": "1938090"
+      },
+      "chart": {
+        "peak_in_game": 32124,
+        "last_week_rank": 51
+      }
+    },
+    {
+      "game_id": "steam-3678970",
+      "list": "steam",
+      "rank": 44,
+      "title": "TBH: Task Bar Hero",
+      "developers": [
+        "Nugem Studio",
+        "Tesseract Studio"
+      ],
+      "ids": {
+        "steam_app": "3678970"
+      },
+      "chart": {
+        "peak_in_game": 88743,
+        "last_week_rank": 37
+      }
+    },
+    {
+      "game_id": "steam-1245620",
+      "list": "steam",
+      "rank": 45,
+      "title": "ELDEN RING",
+      "developers": [
+        "FromSoftware, Inc."
+      ],
+      "ids": {
+        "steam_app": "1245620"
+      },
+      "chart": {
+        "peak_in_game": 35867,
+        "last_week_rank": 43
+      }
+    },
+    {
+      "game_id": "steam-1449850",
+      "list": "steam",
+      "rank": 46,
+      "title": "Yu-Gi-Oh! Master Duel",
+      "developers": [
+        "KONAMI"
+      ],
+      "ids": {
+        "steam_app": "1449850"
+      },
+      "chart": {
+        "peak_in_game": 18128,
+        "last_week_rank": 47
+      }
+    },
+    {
+      "game_id": "steam-322330",
+      "list": "steam",
+      "rank": 47,
+      "title": "Don't Starve Together",
+      "developers": [
+        "Klei Entertainment"
+      ],
+      "ids": {
+        "steam_app": "322330"
+      },
+      "chart": {
+        "peak_in_game": 40711,
+        "last_week_rank": 45
+      }
+    },
+    {
+      "game_id": "steam-3527290",
+      "list": "steam",
+      "rank": 48,
+      "title": "PEAK",
+      "developers": [
+        "Team PEAK"
+      ],
+      "ids": {
+        "steam_app": "3527290"
+      },
+      "chart": {
+        "peak_in_game": 24924,
+        "last_week_rank": 49
+      }
+    },
+    {
+      "game_id": "steam-3241660",
+      "list": "steam",
+      "rank": 49,
+      "title": "R.E.P.O.",
+      "developers": [
+        "semiwork"
+      ],
+      "ids": {
+        "steam_app": "3241660"
+      },
+      "chart": {
+        "peak_in_game": 22687,
+        "last_week_rank": 50
+      }
+    },
+    {
+      "game_id": "steam-275850",
+      "list": "steam",
+      "rank": 50,
+      "title": "No Man's Sky",
+      "developers": [
+        "Hello Games"
+      ],
+      "ids": {
+        "steam_app": "275850"
+      },
+      "chart": {
+        "peak_in_game": 34275,
+        "last_week_rank": 41
+      }
+    },
+    {
+      "game_id": "steam-1665460",
+      "list": "steam",
+      "rank": 51,
+      "title": "eFootball™",
+      "developers": [
+        "KONAMI"
+      ],
+      "ids": {
+        "steam_app": "1665460"
+      },
+      "chart": {
+        "peak_in_game": 19790,
+        "last_week_rank": 56
+      }
+    },
+    {
+      "game_id": "steam-4358690",
+      "list": "steam",
+      "rank": 52,
+      "title": "Graveyard Keeper 2",
+      "developers": [
+        "Lazy Bear Games"
+      ],
+      "ids": {
+        "steam_app": "4358690"
+      },
+      "chart": {
+        "peak_in_game": 54969,
+        "last_week_rank": -1
+      }
+    },
+    {
+      "game_id": "steam-284160",
+      "list": "steam",
+      "rank": 53,
+      "title": "BeamNG.drive",
+      "developers": [
+        "BeamNG"
+      ],
+      "ids": {
+        "steam_app": "284160"
+      },
+      "chart": {
+        "peak_in_game": 23124,
+        "last_week_rank": 54
+      }
+    },
+    {
+      "game_id": "gp-com.scopely.monopolygo",
+      "list": "mobile",
+      "rank": 1,
+      "title": "MONOPOLY GO!",
+      "developers": [
+        "Scopely"
+      ],
+      "ids": {
+        "google_play": "com.scopely.monopolygo"
+      }
+    },
+    {
+      "game_id": "gp-com.roblox.client",
+      "list": "mobile",
+      "rank": 2,
+      "title": "Roblox",
+      "developers": [
+        "Roblox Corporation"
+      ],
+      "ids": {
+        "google_play": "com.roblox.client"
+      }
+    },
+    {
+      "game_id": "gp-com.king.candycrushsaga",
+      "list": "mobile",
+      "rank": 3,
+      "title": "Candy Crush Saga",
+      "developers": [
+        "King"
+      ],
+      "ids": {
+        "google_play": "com.king.candycrushsaga"
+      }
+    },
+    {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "list": "mobile",
+      "rank": 4,
+      "title": "Gossip Harbor: Merge & Story",
+      "developers": [
+        "Microfun Limited"
+      ],
+      "ids": {
+        "google_play": "com.mergegames.gossipharbor"
+      }
+    },
+    {
+      "game_id": "gp-com.dreamgames.royalmatch",
+      "list": "mobile",
+      "rank": 5,
+      "title": "Royal Match",
+      "developers": [
+        "Dream Games, Ltd."
+      ],
+      "ids": {
+        "google_play": "com.dreamgames.royalmatch"
+      }
+    },
+    {
+      "game_id": "gp-com.run.tower.defense",
+      "list": "mobile",
+      "rank": 6,
+      "title": "Kingshot",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.run.tower.defense"
+      }
+    },
+    {
+      "game_id": "gp-com.gof.global",
+      "list": "mobile",
+      "rank": 7,
+      "title": "Whiteout Survival",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.gof.global"
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.township",
+      "list": "mobile",
+      "rank": 8,
+      "title": "Township",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.township"
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.coinmaster",
+      "list": "mobile",
+      "rank": 9,
+      "title": "Coin Master",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.coinmaster"
+      }
+    },
+    {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "list": "mobile",
+      "rank": 10,
+      "title": "Royal Kingdom",
+      "developers": [
+        "Dream Games, Ltd."
+      ],
+      "ids": {
+        "google_play": "com.dreamgames.royalkingdom"
+      }
+    },
+    {
+      "game_id": "gp-com.nianticlabs.pokemongo",
+      "list": "mobile",
+      "rank": 11,
+      "title": "Pokémon GO",
+      "developers": [
+        "Scopely Explore, Inc."
+      ],
+      "ids": {
+        "google_play": "com.nianticlabs.pokemongo"
+      }
+    },
+    {
+      "game_id": "gp-com.fun.lastwar.gp",
+      "list": "mobile",
+      "rank": 12,
+      "title": "Last War:Survival Game",
+      "developers": [
+        "FUNFLY PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.fun.lastwar.gp"
+      }
+    },
+    {
+      "game_id": "gp-net.peakgames.toonblast",
+      "list": "mobile",
+      "rank": 13,
+      "title": "Toon Blast",
+      "developers": [
+        "Peak"
+      ],
+      "ids": {
+        "google_play": "net.peakgames.toonblast"
+      }
+    },
+    {
+      "game_id": "gp-com.readygo.barrel.gp",
+      "list": "mobile",
+      "rank": 14,
+      "title": "Last Z: Survival Shooter",
+      "developers": [
+        "Omnilojo Pte Ltd"
+      ],
+      "ids": {
+        "google_play": "com.readygo.barrel.gp"
+      }
+    },
+    {
+      "game_id": "gp-com.topgamesinc.evony",
+      "list": "mobile",
+      "rank": 15,
+      "title": "Evony: The King's Return",
+      "developers": [
+        "TG Inc."
+      ],
+      "ids": {
+        "google_play": "com.topgamesinc.evony"
+      }
+    },
+    {
+      "game_id": "gp-com.phs.global",
+      "list": "mobile",
+      "rank": 16,
+      "title": "Last Asylum: Plague",
+      "developers": [
+        "37GAMES GLOBAL"
+      ],
+      "ids": {
+        "google_play": "com.phs.global"
+      }
+    },
+    {
+      "game_id": "gp-com.dts.freefireth",
+      "list": "mobile",
+      "rank": 17,
+      "title": "Free Fire x NARUTO SHIPPUDEN",
+      "developers": [
+        "GARENA INTERNATIONAL I"
+      ],
+      "ids": {
+        "google_play": "com.dts.freefireth"
+      }
+    },
+    {
+      "game_id": "gp-com.totalbattle",
+      "list": "mobile",
+      "rank": 18,
+      "title": "Total Battle: War Strategy",
+      "developers": [
+        "Scorewarrior"
+      ],
+      "ids": {
+        "google_play": "com.totalbattle"
+      }
+    },
+    {
+      "game_id": "gp-com.williamsinteractive.jackpotparty",
+      "list": "mobile",
+      "rank": 19,
+      "title": "Jackpot Party Casino Slots",
+      "developers": [
+        "SciPlay"
+      ],
+      "ids": {
+        "google_play": "com.williamsinteractive.jackpotparty"
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.gardenscapes",
+      "list": "mobile",
+      "rank": 20,
+      "title": "Gardenscapes",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.gardenscapes"
+      }
+    },
+    {
+      "game_id": "gp-com.productmadness.cashmancasino",
+      "list": "mobile",
+      "rank": 22,
+      "title": "Cashman Casino Slots Games",
+      "developers": [
+        "Product Madness"
+      ],
+      "ids": {
+        "google_play": "com.productmadness.cashmancasino"
+      }
+    },
+    {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "list": "mobile",
+      "rank": 23,
+      "title": "Lightning Link Casino Slots",
+      "developers": [
+        "Product Madness"
+      ],
+      "ids": {
+        "google_play": "com.productmadness.lightninglink"
+      }
+    },
+    {
+      "game_id": "gp-air.com.buffalo_studios.newflashbingo",
+      "list": "mobile",
+      "rank": 24,
+      "title": "Bingo Blitz™️ - Bingo Games",
+      "developers": [
+        "Playtika Santa Monica"
+      ],
+      "ids": {
+        "google_play": "air.com.buffalo_studios.newflashbingo"
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "list": "mobile",
+      "rank": 25,
+      "title": "Fishdom",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.fishdomdd.gplay"
+      }
+    },
+    {
+      "game_id": "gp-net.peakgames.match",
+      "list": "mobile",
+      "rank": 26,
+      "title": "Match Factory!",
+      "developers": [
+        "Peak"
+      ],
+      "ids": {
+        "google_play": "net.peakgames.match"
+      }
+    },
+    {
+      "game_id": "gp-com.king.candycrushsodasaga",
+      "list": "mobile",
+      "rank": 27,
+      "title": "Candy Crush Soda Saga",
+      "developers": [
+        "King"
+      ],
+      "ids": {
+        "google_play": "com.king.candycrushsodasaga"
+      }
+    },
+    {
+      "game_id": "gp-com.fatmerge.global",
+      "list": "mobile",
+      "rank": 28,
+      "title": "Tasty Travels: Merge Game",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.fatmerge.global"
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.homescapes",
+      "list": "mobile",
+      "rank": 29,
+      "title": "Homescapes",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.homescapes"
+      }
+    },
+    {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "list": "mobile",
+      "rank": 30,
+      "title": "Dice Dreams™️",
+      "developers": [
+        "SuperPlay."
+      ],
+      "ids": {
+        "google_play": "com.superplaystudios.dicedreams"
+      }
+    },
+    {
+      "game_id": "gp-com.zjcs.android.us",
+      "list": "mobile",
+      "rank": 31,
+      "title": "Sword x Staff",
+      "developers": [
+        "BOLTRAY GAMES"
+      ],
+      "ids": {
+        "google_play": "com.zjcs.android.us"
+      }
+    },
+    {
+      "game_id": "gp-com.diamondlife.slots.vegas.free",
+      "list": "mobile",
+      "rank": 32,
+      "title": "Lotsa Slots - Casino Games",
+      "developers": [
+        "SpinX Games Limited"
+      ],
+      "ids": {
+        "google_play": "com.diamondlife.slots.vegas.free"
+      }
+    },
+    {
+      "game_id": "gp-com.proximabeta.nikke",
+      "list": "mobile",
+      "rank": 33,
+      "title": "GODDESS OF VICTORY: NIKKE",
+      "developers": [
+        "Level Infinite"
+      ],
+      "ids": {
+        "google_play": "com.proximabeta.nikke"
+      }
+    },
+    {
+      "game_id": "gp-com.loomgames.pixelflow",
+      "list": "mobile",
+      "rank": 34,
+      "title": "Pixel Flow!",
+      "developers": [
+        "Loom Games A.Ş."
+      ],
+      "ids": {
+        "google_play": "com.loomgames.pixelflow"
+      }
+    },
+    {
+      "game_id": "gp-com.superplaystudios.disneysolitairedreams",
+      "list": "mobile",
+      "rank": 35,
+      "title": "Disney Solitaire",
+      "developers": [
+        "SuperPlay."
+      ],
+      "ids": {
+        "google_play": "com.superplaystudios.disneysolitairedreams"
+      }
+    },
+    {
+      "game_id": "gp-com.combo.yarnflow",
+      "list": "mobile",
+      "rank": 36,
+      "title": "Yarn Loop",
+      "developers": [
+        "Combo Game"
+      ],
+      "ids": {
+        "google_play": "com.combo.yarnflow"
+      }
+    },
+    {
+      "game_id": "gp-com.readygo.dark.gp",
+      "list": "mobile",
+      "rank": 37,
+      "title": "Dark War Survival",
+      "developers": [
+        "Omnilojo Pte Ltd"
+      ],
+      "ids": {
+        "google_play": "com.readygo.dark.gp"
+      }
+    },
+    {
+      "game_id": "gp-net.supertreat.solitaire",
+      "list": "mobile",
+      "rank": 38,
+      "title": "Solitaire Grand Harvest",
+      "developers": [
+        "Supertreat - A Playtika Studio"
+      ],
+      "ids": {
+        "google_play": "net.supertreat.solitaire"
+      }
+    },
+    {
+      "game_id": "gp-com.ea.game.starwarscapital_row",
+      "list": "mobile",
+      "rank": 39,
+      "title": "Star Wars™: Galaxy of Heroes",
+      "developers": [
+        "ELECTRONIC ARTS"
+      ],
+      "ids": {
+        "google_play": "com.ea.game.starwarscapital_row"
+      }
+    },
+    {
+      "game_id": "gp-com.global.ztmslg",
+      "list": "mobile",
+      "rank": 40,
+      "title": "Puzzles & Survival",
+      "developers": [
+        "37GAMES"
+      ],
+      "ids": {
+        "google_play": "com.global.ztmslg"
+      }
+    },
+    {
+      "game_id": "gp-slots.pcg.casino.games.free.android",
+      "list": "mobile",
+      "rank": 41,
+      "title": "Cash Frenzy™ - Casino Slots",
+      "developers": [
+        "SpinX Games Limited"
+      ],
+      "ids": {
+        "google_play": "slots.pcg.casino.games.free.android"
+      }
+    },
+    {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "list": "mobile",
+      "rank": 42,
+      "title": "All in Hole: Black Hole Games",
+      "developers": [
+        "Homa"
+      ],
+      "ids": {
+        "google_play": "com.homagames.studio.allinhole"
+      }
+    },
+    {
+      "game_id": "gp-com.cola.game",
+      "list": "mobile",
+      "rank": 43,
+      "title": "Flambé®: Merge & Cook",
+      "developers": [
+        "Microfun Limited"
+      ],
+      "ids": {
+        "google_play": "com.cola.game"
+      }
+    },
+    {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "list": "mobile",
+      "rank": 45,
+      "title": "Mystery Town: Merge Games",
+      "developers": [
+        "Cedar Games Studio"
+      ],
+      "ids": {
+        "google_play": "com.cedargames.mysterytown"
+      }
+    },
+    {
+      "game_id": "gp-com.grandgames.magicsort",
+      "list": "mobile",
+      "rank": 46,
+      "title": "Magic Sort!",
+      "developers": [
+        "Grand Games A.Ş."
+      ],
+      "ids": {
+        "google_play": "com.grandgames.magicsort"
+      }
+    },
+    {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "list": "mobile",
+      "rank": 47,
+      "title": "Quick Hit Casino Slots Games",
+      "developers": [
+        "SciPlay"
+      ],
+      "ids": {
+        "google_play": "com.ballytechnologies.quickhitslots"
+      }
+    },
+    {
+      "game_id": "gp-com.joycastle.mergematch",
+      "list": "mobile",
+      "rank": 48,
+      "title": "Matching Story - Puzzle Games",
+      "developers": [
+        "VERTEX GAMES PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.joycastle.mergematch"
+      }
+    },
+    {
+      "game_id": "gp-com.merge.cooking.theme.restaurant.food",
+      "list": "mobile",
+      "rank": 49,
+      "title": "Merge Cooking®",
+      "developers": [
+        "Happibits Game"
+      ],
+      "ids": {
+        "google_play": "com.merge.cooking.theme.restaurant.food"
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.cmboard",
+      "list": "mobile",
+      "rank": 50,
+      "title": "Coin Master - Board Adventure",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.cmboard"
+      }
+    },
+    {
+      "game_id": "gp-com.global.pnck",
+      "list": "mobile",
+      "rank": 51,
+      "title": "Puzzles & Chaos: Frozen Castle",
+      "developers": [
+        "37GAMES"
+      ],
+      "ids": {
+        "google_play": "com.global.pnck"
+      }
+    },
+    {
+      "game_id": "gp-com.bandainamcogames.dbzdokkanww",
+      "list": "mobile",
+      "rank": 52,
+      "title": "DRAGON BALL Z DOKKAN BATTLE",
+      "developers": [
+        "Bandai Namco Entertainment Inc."
+      ],
+      "ids": {
+        "google_play": "com.bandainamcogames.dbzdokkanww"
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "list": "steam",
+      "rank": 4,
+      "appid": 431960,
+      "peak_in_game": 100766,
+      "last_week_rank": 4,
+      "title": "Wallpaper Engine",
+      "reason": "Steam lists it under software genres: Animation & Modeling, Design & Illustration, Photo Editing, Utilities"
+    },
+    {
+      "list": "steam",
+      "rank": 10,
+      "appid": 2676230,
+      "peak_in_game": 182293,
+      "last_week_rank": 12,
+      "title": "FiveM",
+      "reason": "store type is 'advertising', not a game"
+    },
+    {
+      "list": "steam",
+      "rank": 23,
+      "appid": 3240220,
+      "peak_in_game": 68612,
+      "last_week_rank": 24,
+      "title": "Grand Theft Auto V Enhanced",
+      "reason": "another edition of steam-271590 (kept at its higher rank)"
+    },
+    {
+      "list": "mobile",
+      "rank": 44,
+      "package": "jp.konami.pesam",
+      "title": "eFootball™",
+      "developer": "KONAMI",
+      "reason": "same game as steam-1665460 on the Steam list"
+    }
+  ]
+}

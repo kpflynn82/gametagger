@@ -16,9 +16,13 @@ from urllib.parse import urlsplit
 API_HOSTS = frozenset(
     {
         "store.steampowered.com",
+        "api.steampowered.com",  # Steam most-played chart (benchmark cohort only)
         "en.wikipedia.org",
         "itunes.apple.com",
         "www.googleapis.com",
+        "play.google.com",  # Google Play listing pages, read by exact package name
+        "www.appbrain.com",  # Google Play top-grossing chart (benchmark cohort only)
+        "www.wikidata.org",  # exact store-ID -> article links (benchmark identity only)
     }
 )
 # Suffixes match whole DNS labels: "steamstatic.com" allows "cdn.akamai.steamstatic.com".
@@ -28,9 +32,12 @@ MEDIA_HOST_SUFFIXES = frozenset(
         "steamcdn-a.akamaihd.net",  # older Steam asset host (exact host only)
         "mzstatic.com",  # Apple App Store screenshots
         "ytimg.com",  # YouTube published still images
+        "play-lh.googleusercontent.com",  # Google Play screenshots (exact host only)
+        "play-games.googleusercontent.com",  # Google Play trailer video (exact host only)
     }
 )
 MAX_JSON_BYTES = 3 * 1024 * 1024
+MAX_PAGE_BYTES = 6 * 1024 * 1024
 USER_AGENT = "GameTagger/0.1 (evidence-backed game classification research prototype)"
 
 
@@ -63,9 +70,16 @@ class _AllowlistRedirect(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def fetch_bytes(url: str, *, max_bytes: int, media: bool = False, timeout: float = 30) -> bytes:
+def fetch_bytes(
+    url: str,
+    *,
+    max_bytes: int,
+    media: bool = False,
+    timeout: float = 30,
+    headers: dict[str, str] | None = None,
+) -> bytes:
     host = urlsplit(check_url(url, media=media)).hostname
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, **(headers or {})})
     opener = urllib.request.build_opener(_AllowlistRedirect(media))
     try:
         with opener.open(request, timeout=timeout) as response:
@@ -84,3 +98,8 @@ def fetch_json(url: str) -> Any:
         return json.loads(fetch_bytes(url, max_bytes=MAX_JSON_BYTES))
     except ValueError:
         raise SourceError(f"{urlsplit(url).hostname} returned invalid JSON") from None
+
+
+def fetch_text(url: str, *, headers: dict[str, str] | None = None) -> str:
+    """An HTML page from an allowlisted host, decoded as UTF-8."""
+    return fetch_bytes(url, max_bytes=MAX_PAGE_BYTES, headers=headers).decode("utf-8", "replace")

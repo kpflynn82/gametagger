@@ -65,6 +65,11 @@ def png(width=64, height=48, color="green") -> bytes:
         ("is1-ssl.mzstatic.com", True, True),
         ("i.ytimg.com", True, True),
         ("x.akamaihd.net", True, False),  # only the exact Steam asset host is allowed
+        ("play.google.com", False, True),
+        ("play-lh.googleusercontent.com", True, True),
+        ("play-games.googleusercontent.com", True, True),
+        ("lh3.googleusercontent.com", True, False),  # not every Google user-content host
+        ("play-lh.googleusercontent.com", False, False),
         ("169.254.169.254", True, False),
         (None, True, False),
     ],

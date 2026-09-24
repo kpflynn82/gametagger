@@ -10,6 +10,8 @@ Tests inject ``fetch``.
 
 from __future__ import annotations
 
+import html as html_lib
+import json
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -19,7 +21,7 @@ from urllib.parse import quote, urlencode, urlsplit, urlunsplit
 
 from gametagger.domain import EvidenceType
 from gametagger.genome.dossier import Reference, TextSource, clean_text
-from gametagger.genome.net import SourceError, fetch_json, host_allowed
+from gametagger.genome.net import SourceError, fetch_json, fetch_text, host_allowed
 
 __all__ = ["SourceError", "fetch_json"]  # re-exported for callers of this module
 
@@ -202,10 +204,128 @@ def app_store_source(app_id: str | int, *, country: str = "us", fetch: Fetch = f
 
 # --------------------------------------------------------------------------- Google Play
 
+PACKAGE = r"[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z0-9_]+)+"
+GOOGLE_PLAY_PAGE = "https://play.google.com/store/apps/details?"
+
+
+def _play_category(value: Any) -> str | None:
+    """GAME_ROLE_PLAYING -> Role playing (Google Play's own category name)."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    words = value.strip().removeprefix("GAME_").replace("_", " ").lower()
+    return words[:1].upper() + words[1:]
+
+
+def _ld_json(page: str) -> dict:
+    for block in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', page, re.S):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        if isinstance(data, dict) and data.get("@type") == "SoftwareApplication":
+            return data
+    return {}
+
+
+def _play_screenshots(page: str) -> list[str]:
+    """Screenshot URLs in page order, preferring the 2x size, without duplicates."""
+    urls, seen = [], set()
+    for tag in re.findall(r"<img\b[^>]*>", page):
+        if 'alt="Screenshot image"' not in tag:
+            continue
+        srcset = re.search(r'srcset="([^"]+)"', tag)
+        src = re.search(r'src="([^"]+)"', tag)
+        url = srcset.group(1).split()[0] if srcset else src.group(1) if src else None
+        url = _https(html_lib.unescape(url)) if url else None
+        base = url.split("=", 1)[0] if url else None
+        if url and base not in seen:
+            seen.add(base)
+            urls.append(url)
+    return urls
+
+
+def google_play_source(package: str, *, fetch_page: Callable[[str], str] | None = None) -> Fetched:
+    """Read a Google Play listing by exact package name: text, screenshots and trailer.
+
+    Google has no public store API, so this reads the public listing page. The embedded
+    structured data supplies the title, category, rating and developer; the page supplies the
+    description, Google's category chips, the in-app purchase and ads notices, screenshots and
+    the store's own trailer video (a direct MP4 when Google serves one). A YouTube trailer linked
+    from the listing is recorded as a reference.
+    """
+    package = package.strip()
+    if not re.fullmatch(PACKAGE, package):
+        raise SourceError("A Google Play ID looks like com.studio.game")
+    url = GOOGLE_PLAY_PAGE + urlencode({"id": package, "hl": "en_US", "gl": "US"})
+    page = (fetch_page or fetch_text)(url)
+    data = _ld_json(page)
+    if not data.get("name"):
+        raise SourceError(f"Google Play has no public listing for {package}")
+    match = re.search(r'data-g-id="description"[^>]*>(.*?)</div>', page, re.S)
+    text = clean_text(match.group(1)) if match else clean_text(str(data.get("description") or ""))
+    offers = data.get("offers") if isinstance(data.get("offers"), list) else []
+    price = next((o.get("price") for o in offers if isinstance(o, dict)), None)
+    author = data.get("author") if isinstance(data.get("author"), dict) else {}
+    chips = re.findall(r'itemprop="genre"><div[^>]*></div><span[^>]*>([^<]+)</span>', page)
+    features = [n for n in ("In-app purchases", "Contains ads") if f">{n}<" in page]
+    fields = {
+        "store_genres": [c] if (c := _play_category(data.get("applicationCategory"))) else [],
+        "store_tags": list(dict.fromkeys(html_lib.unescape(c).strip() for c in chips)),
+        "store_features": features,
+        "pricing": ["Free"] if str(price) in {"0", "0.0"} else [f"{price} USD"] if price else [],
+        "content_rating": [str(data["contentRating"])] if data.get("contentRating") else [],
+        "developers": [str(author["name"])] if author.get("name") else [],
+    }
+    media = [
+        MediaRef("image", u, "Google Play screenshot", "store_screenshot", "googleplay")
+        for u in _play_screenshots(page)
+    ]
+    video = re.search(r'<source src="(https://play-games\.googleusercontent\.com/[^"]+)"', page)
+    if video and (trailer := _https(html_lib.unescape(video.group(1)))):
+        media.append(
+            MediaRef("video", trailer, "Google Play store trailer", "store_trailer", "googleplay")
+        )
+    references = [
+        Reference(
+            id="googleplay-listing",
+            kind="store_page",
+            provider="Google Play",
+            uri=GOOGLE_PLAY_PAGE + urlencode({"id": package}),
+        )
+    ]
+    youtube = re.search(
+        r'data-trailer-url="https://www\.youtube\.com/embed/([A-Za-z0-9_-]{11})', page
+    )
+    if youtube:
+        references.append(
+            Reference(
+                id="googleplay-youtube",
+                kind="video",
+                provider="YouTube (linked from the Google Play listing)",
+                uri=f"https://www.youtube.com/watch?v={youtube.group(1)}",
+                official=True,
+                note="Trailer the publisher attached to its Google Play listing.",
+            )
+        )
+    return Fetched(
+        text=TextSource(
+            id="googleplay",
+            type=EvidenceType.STORE_METADATA,
+            provider="Google Play listing",
+            uri=GOOGLE_PLAY_PAGE + urlencode({"id": package}),
+            reported_title=html_lib.unescape(str(data["name"])),
+            retrieved_at=_now(),
+            text=text[:MAX_SOURCE_TEXT],
+            fields={k: v for k, v in fields.items() if v},
+        ),
+        media=media,
+        references=references,
+    )
+
 
 def google_play_reference(package: str) -> Fetched:
-    """Placeholder until a Google Play data service is chosen; Google has no public store API."""
-    if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z0-9_]+)+", package):
+    """Link-only fallback for when the Google Play listing page cannot be read."""
+    if not re.fullmatch(PACKAGE, package):
         raise SourceError("A Google Play ID looks like com.studio.game")
     return Fetched(
         references=[

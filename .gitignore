@@ -23,3 +23,6 @@ frontend/playwright-report/
 
 # Rich-mode downloads (store screenshots and trailers)
 gametagger-media/
+
+# Benchmark work area: dossiers, downloaded media and raw responses (third-party content)
+benchmark-runs/

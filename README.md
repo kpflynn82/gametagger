@@ -35,6 +35,12 @@ gametagger-genome fixtures/genome/hollow_orchard.dossier.json            # dry r
 gametagger-genome fixtures/genome/hollow_orchard.dossier.json --offline  # pipeline check with mocks
 ```
 
+`gametagger-compare` benchmarks rich mode against the original site's single Claude call. It
+runs on the top 50 Steam games and the top 50 Google Play grossing games, and both methods see
+identical evidence. It records per-stage timing, tokens and list-price cost under a hard spending
+cap, then scores against Steam user tags and a blinded owner review. Only `run --live` costs
+money. See [the benchmark runbook](docs/JEV_VS_LEGACY_BENCHMARK.md).
+
 ## Setup
 
 Python 3.11 or newer is required. The checked-in `uv.lock` records the tested dependencies.

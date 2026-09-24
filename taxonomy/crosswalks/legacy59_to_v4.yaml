@@ -1,0 +1,82 @@
+# Old GenomeTagger primary genres (59, gametagger-web tagger.py PRIMARY_GENRES_LIST) -> the
+# v4.1 genre hierarchy (100 genres in 14 families, taxonomy/vgms_v4.yaml).
+#
+# STATUS: draft, pending owner approval. Scores that use this file must say so.
+#
+# relation:
+#   exact   one v4 genre with the same meaning; exact-label accuracy can be scored
+#   one_of  the old label covers several v4 genres; a reference inside the list is "compatible",
+#           never an exact match
+#   family  the old label is a whole v4 family (e.g. Sports); only family agreement is scored,
+#           and no specific modern genre is ever fabricated from it
+#   none    no v4 genre means the same (Cozy Game is a tone; Educational is an audience)
+version: legacy59-to-v4-draft-1
+status: draft-pending-owner-approval
+genres:
+  Action RPG: {relation: exact, v4: [action_rpg]}
+  Action Adventure: {relation: exact, v4: [action_adventure]}
+  First-Person Shooter: {relation: exact, v4: [first_person_shooter]}
+  Third-Person Shooter: {relation: exact, v4: [third_person_shooter]}
+  Bullet Hell: {relation: exact, v4: [bullet_hell]}
+  Beat 'em Up: {relation: exact, v4: [beat_em_up]}
+  Looter Shooter: {relation: exact, v4: [looter_shooter]}
+  Extraction Shooter: {relation: exact, v4: [extraction_shooter]}
+  JRPG: {relation: exact, v4: [jrpg]}
+  Turn-Based RPG: {relation: exact, v4: [turn_based_rpg]}
+  Tactical RPG: {relation: exact, v4: [tactical_rpg]}
+  MMORPG: {relation: exact, v4: [mmorpg]}
+  Roguelike: {relation: one_of, v4: [roguelike, roguelite]}
+  2D Platformer: {relation: one_of, v4: [platformer_2d, precision_platformer]}
+  3D Platformer: {relation: exact, v4: [platformer_3d]}
+  Metroidvania: {relation: exact, v4: [metroidvania]}
+  Real-Time Strategy: {relation: exact, v4: [real_time_strategy]}
+  Turn-Based Strategy: {relation: one_of, v4: [turn_based_strategy, turn_based_tactics]}
+  Tower Defense: {relation: exact, v4: [tower_defense]}
+  4X Strategy: {relation: exact, v4: [four_x_strategy]}
+  Grand Strategy: {relation: exact, v4: [grand_strategy]}
+  Auto Battler: {relation: exact, v4: [auto_battler]}
+  MOBA: {relation: exact, v4: [moba]}
+  Life Simulation: {relation: exact, v4: [life_simulation]}
+  Farm Simulation: {relation: exact, v4: [farm_simulation]}
+  Management Simulation:
+    relation: one_of
+    v4: [management_tycoon, colony_sim, factory_automation_sim, job_profession_simulation]
+  Racing Simulation: {relation: exact, v4: [racing_simulation]}
+  Flight Simulation: {relation: exact, v4: [flight_simulation]}
+  City Builder: {relation: exact, v4: [city_builder]}
+  # The old list has no merge, word, hidden-object, escape-room or trivia genre, so its generic
+  # "Puzzle" is compatible with those v4 puzzle genres.
+  Puzzle:
+    relation: one_of
+    v4: [puzzle, merge, hidden_object, escape_room, word_game, trivia_quiz]
+  Puzzle Platformer: {relation: exact, v4: [puzzle_platformer]}
+  Match-3: {relation: exact, v4: [match_3]}
+  Physics Puzzle: {relation: exact, v4: [physics_puzzle]}
+  Adventure: {relation: one_of, v4: [adventure, point_click_adventure, exploration_adventure]}
+  Narrative Adventure:
+    relation: one_of
+    v4: [narrative_adventure, interactive_fiction, interactive_movie]
+  Visual Novel: {relation: exact, v4: [visual_novel]}
+  2D Fighting: {relation: exact, v4: [fighting_2d]}
+  3D Fighting: {relation: exact, v4: [fighting_3d]}
+  Arcade Racing: {relation: exact, v4: [arcade_racing]}
+  Kart Racing: {relation: exact, v4: [kart_racing]}
+  Rally Racing: {relation: exact, v4: [rally_racing]}
+  Sports: {relation: family, family: sports}
+  Horror: {relation: family, family: horror}
+  Card Game: {relation: one_of, v4: [card_game, casino]}
+  Deck Builder: {relation: exact, v4: [deck_builder]}
+  Board Game: {relation: exact, v4: [board_game]}
+  Digital TCG: {relation: exact, v4: [digital_tcg_ccg]}
+  Battle Royale: {relation: exact, v4: [battle_royale]}
+  Party Game: {relation: one_of, v4: [party_game, social_deduction, social_party_sandbox]}
+  Sandbox: {relation: exact, v4: [sandbox]}
+  Survival: {relation: exact, v4: [survival]}
+  Open World Survival Craft: {relation: exact, v4: [open_world_survival_craft]}
+  Arcade: {relation: one_of, v4: [arcade_action, arcade_score_attack, endless_runner]}
+  Rhythm Game: {relation: exact, v4: [rhythm_game]}
+  Cozy Game: {relation: none}
+  Idle Game: {relation: exact, v4: [idle_incremental]}
+  Souls-like: {relation: exact, v4: [souls_like]}
+  Immersive Sim: {relation: exact, v4: [immersive_sim]}
+  Educational: {relation: none}

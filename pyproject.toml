@@ -24,6 +24,7 @@ dev = [
 gametagger = "gametagger.cli:main"
 gametagger-eval = "gametagger.evaluation.runner:main"
 gametagger-genome = "gametagger.genome.cli:main"
+gametagger-compare = "gametagger.comparison.cli:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -35,6 +36,7 @@ packages = ["src/gametagger"]
 [tool.hatch.build.targets.wheel.force-include]
 "taxonomy/vgms_v4.yaml" = "gametagger/data/vgms_v4.yaml"
 "taxonomy/genome_tags_v1.yaml" = "gametagger/data/genome_tags_v1.yaml"
+"taxonomy/crosswalks" = "gametagger/data/crosswalks"
 
 [tool.pytest.ini_options]
 markers = ["live: calls the authenticated Jev service when TYPESAFE_API_KEY exists"]

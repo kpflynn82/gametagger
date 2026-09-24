@@ -76,3 +76,38 @@ To build, none of which needs keys:
 - A batch runner recording per-stage wall clock, tokens and cost.
 - An old-59-to-new-100 genre crosswalk for the owner to approve.
 - Scoring, charts and a write-up template.
+
+### Benchmark tools built (September 24, 2026)
+
+The owner decided the open questions. The spending limit is **$40 in total**. Mobile games come
+from AppBrain's Google Play top-grossing games chart (US). Accuracy is judged by Steam user tags
+plus the owner's own blinded review. The previous method runs on both Haiku 4.5 (standard) and
+Opus 4.8 (deep). Steam non-games are skipped and listed.
+
+`gametagger-compare` is built. See [JEV_VS_LEGACY_BENCHMARK](JEV_VS_LEGACY_BENCHMARK.md) for
+steps, outputs and caveats. Its parts:
+
+* chart readers and a frozen 100-game cohort (`experiments/jev-vs-legacy/cohort.json`, charts of
+  2026-09-23 and 2026-09-24)
+* exact-ID identity through Wikidata
+* a Steam user-tag answer key
+* shared dossiers, with a new Google Play listing reader that includes the store's MP4 trailer
+* a faithful adapter of the original tagger (`decisions/legacy.py`, verbatim prompt and rules
+  from `gametagger-web@4b710fd`)
+* a budget-capped runner with per-stage timing, tokens and list-price cost
+* draft crosswalks in `taxonomy/crosswalks/`
+* scoring, a blinded review sheet, and an HTML report with a social card
+
+Environment findings:
+
+* The TypeSafe key was accepted by the free model-listing call; `jev-latest` is `jev-1.13.0` at
+  $0.042 per million input tokens.
+* The YouTube key works.
+* `ANTHROPIC_API_KEY` is not visible to the agent here. The tools also read
+  `GAMETAGGER_ANTHROPIC_API_KEY`, which the owner has added; a new session picks it up.
+* After the owner widened network access, every needed host was reachable. Wikimedia
+  rate-limits this shared address heavily, so identity and Wikipedia fetches wait and retry.
+* `ffmpeg` must be installed in each session.
+
+The only paid call so far is one live Jev check on Stardew Valley's text: 185 questions in 6 requests, 4.0 seconds, $0.0019. No Claude call has been made. Next step, in a session that can see the key: run `dossiers`, then a
+10-game pilot, then the full run and `report`, all under the same $40 ledger.

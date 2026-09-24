@@ -14,6 +14,7 @@ import re
 import sys
 from pathlib import Path
 
+from gametagger.config import anthropic_api_key
 from gametagger.decisions.jev import TypeSafeGateway
 from gametagger.decisions.mock import MockJevGateway
 from gametagger.genome.dossier import Dossier, ImageSource, VideoSource
@@ -24,6 +25,7 @@ from gametagger.genome.sources import (
     SourceError,
     app_store_source,
     google_play_reference,
+    google_play_source,
     steam_source,
     wikipedia_source,
     youtube_search,
@@ -139,7 +141,7 @@ def _assemble(args, parser) -> Dossier:
             args.app_store,
             lambda x: app_store_source(x, country=args.app_store_country),
         ),
-        ("Google Play", args.google_play, google_play_reference),
+        ("Google Play", args.google_play, google_play_source),
         ("Wikipedia", args.wikipedia, wikipedia_source),
     ]
     fetched = []
@@ -149,11 +151,11 @@ def _assemble(args, parser) -> Dossier:
                 fetched.append(fetch(identifier))
             except SourceError as exc:
                 _note(notes, f"{name}: {exc}")
+                if fetch is google_play_source:
+                    fetched.append(google_play_reference(identifier))
     sources += [f.text for f in fetched if f.text]
     references += [r for f in fetched for r in f.references]
     refs = [m for f in fetched for m in f.media]
-    if args.google_play:
-        _note(notes, "Google Play is recorded as a link only until a data service is connected.")
 
     has_trailer = bool(videos or args.video or any(m.kind != "image" for m in refs))
     wants_youtube = args.youtube == "always" or (
@@ -250,9 +252,10 @@ def main(argv: list[str] | None = None) -> None:
     if args.live:
         if not os.environ.get("TYPESAFE_API_KEY"):
             parser.error("Set TYPESAFE_API_KEY in the environment for a live run")
-        if has_media and not (os.environ.get("ANTHROPIC_API_KEY") and args.observer_model):
+        if has_media and not (anthropic_api_key() and args.observer_model):
             parser.error(
-                "Screenshots and trailers need ANTHROPIC_API_KEY and --observer-model "
+                "Screenshots and trailers need ANTHROPIC_API_KEY (or "
+                "GAMETAGGER_ANTHROPIC_API_KEY) and --observer-model "
                 "(a vision-capable Claude model), or use --no-media for a text-only run"
             )
         gateway = TypeSafeGateway(model=args.jev_model)
@@ -271,16 +274,24 @@ def main(argv: list[str] | None = None) -> None:
 
     observer = ordered = None
     if args.live and has_media:
+        from anthropic import Anthropic
+
         from gametagger.observers.anthropic import AnthropicObserver
         from gametagger.observers.anthropic_ordered import AnthropicOrderedObserver
 
         workspace = os.environ.get("ANTHROPIC_WORKSPACE_ID")
+        client = Anthropic(api_key=anthropic_api_key(), timeout=60, max_retries=0)
         observer = AnthropicObserver(
-            taxonomy, model=args.observer_model, workspace_id=workspace, enforce_boundary=False
+            taxonomy,
+            model=args.observer_model,
+            client=client,
+            workspace_id=workspace,
+            enforce_boundary=False,
         )
         ordered = AnthropicOrderedObserver(
             taxonomy,
             model=args.observer_model,
+            client=client,
             workspace_id=workspace,
             allow_live=True,
             enforce_boundary=False,
