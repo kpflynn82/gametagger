@@ -727,3 +727,24 @@ def test_budget_stop_passes_through_jevs_question_executor(tmp_path, monkeypatch
     summary = runner.run([game], ["rich"], log=lambda m: None)
     assert summary["stopped_by_budget"]
     assert not runner.result_path("steam-1", "rich").exists()  # no half-run booked as a result
+
+
+def test_identity_reads_language_neutral_labels_and_ignores_edition_words():
+    fetch = wikidata_fetch(
+        {"P1733%3D271590": ["Q1", "Q2"], "P1733%3D2357570": ["Q3", "Q4"]},
+        {
+            "Q1": {**entity("", "Grand Theft Auto V"), "labels": {"mul": {"value": "GTA V"}}},
+            "Q2": entity("Grand Theft Auto Online", "Grand Theft Auto Online"),
+            "Q3": entity("", "Overwatch (2023 video game)"),
+            "Q4": entity("Overwatch 2: Rose Gold Mercy Bundle"),
+        },
+    )
+    gta = {"game_id": "steam-271590", "list": "steam", "title": "Grand Theft Auto V Legacy"}
+    gta["ids"] = {"steam_app": "271590"}
+    found = identity.resolve_wikidata(gta, fetch=fetch)
+    assert found["status"] == "matched" and found["wikipedia"] == "Grand Theft Auto V"
+    assert identity._label(fetch("x/Q1.json")["entities"]["Q1"]) == "GTA V"
+    overwatch = {"game_id": "steam-2357570", "list": "steam", "title": "Overwatch®"}
+    overwatch["ids"] = {"steam_app": "2357570"}
+    found = identity.resolve_wikidata(overwatch, fetch=fetch)
+    assert found["wikipedia"] == "Overwatch (2023 video game)"

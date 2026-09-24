@@ -11,11 +11,13 @@ Anything ambiguous is left unlinked and recorded, never guessed.
 
 from __future__ import annotations
 
+import re
 import time
 from collections.abc import Callable
 from typing import Any
 from urllib.parse import quote, urlencode
 
+from gametagger.comparison.charts import base_title
 from gametagger.genome.net import SourceError, fetch_json
 from gametagger.genome.sources import normal_title
 
@@ -79,11 +81,18 @@ def claim_values(entity: dict, prop: str) -> list[str]:
 
 
 def _label(entity: dict) -> str:
-    return str(((entity.get("labels") or {}).get("en") or {}).get("value") or "")
+    """English label, else Wikidata's language-neutral ("mul") label."""
+    labels = entity.get("labels") or {}
+    return str((labels.get("en") or labels.get("mul") or {}).get("value") or "")
 
 
 def _enwiki(entity: dict) -> str | None:
     return ((entity.get("sitelinks") or {}).get("enwiki") or {}).get("title")
+
+
+def _names(entity: dict) -> set[str]:
+    article = re.sub(r"\s*\([^)]*\)\s*$", "", _enwiki(entity) or "")
+    return {n for n in (normal_title(_label(entity)), normal_title(article)) if n}
 
 
 def resolve_wikidata(game: dict, *, fetch: Fetch = fetch_json) -> dict[str, Any]:
@@ -99,8 +108,10 @@ def resolve_wikidata(game: dict, *, fetch: Fetch = fetch_json) -> dict[str, Any]
     if len(entities) == 1:
         qid = next(iter(entities))
     else:
-        wanted = normal_title(game["title"])
-        named = [q for q, e in entities.items() if normal_title(_label(e)) == wanted]
+        # One store ID can be shared by a game, its successor or a bundle. Keep the candidate
+        # whose name (label or article title) is the chart title, ignoring edition words.
+        wanted = {normal_title(game["title"]), base_title(game["title"])}
+        named = [q for q, e in entities.items() if _names(e) & wanted]
         if len(named) != 1:
             return {**record, "status": "ambiguous"}
         qid = named[0]
@@ -136,7 +147,7 @@ def resolve_app_store_by_search(game: dict, *, fetch: Fetch = fetch_json) -> dic
     return {**record, "status": "matched", "app_store": str(matches[0]["trackId"])}
 
 
-SETTLED = {"matched", "no_match", "ambiguous"}
+SETTLED = {"matched", "no_match"}  # errors and ambiguous lookups are retried on a rerun
 
 
 def resolve_cohort(
