@@ -463,13 +463,21 @@ def make_runner(workdir: Path, cap_usd: float, **kwargs) -> Runner:
     # The old site used the SDK defaults (two automatic retries); keep them for every arm.
     from gametagger.comparison.describe_cache import DescriptionStore
 
-    client = Anthropic(api_key=key, timeout=180, max_retries=2)
+    workspace = os.environ.get("ANTHROPIC_WORKSPACE_ID")
+    # Set on the client as well, so SDK calls that make their own internal requests (batch
+    # results first re-read the batch) also carry the header a non-workspace key needs.
+    client = Anthropic(
+        api_key=key,
+        timeout=180,
+        max_retries=2,
+        default_headers={"anthropic-workspace-id": workspace} if workspace else None,
+    )
     ledger = Ledger(workdir / "ledger.jsonl", cap_usd)
     return Runner(
         workdir,
         ledger,
         anthropic_client=client,
-        workspace_id=os.environ.get("ANTHROPIC_WORKSPACE_ID"),
+        workspace_id=workspace,
         store=DescriptionStore(workdir / "descriptions"),
         **kwargs,
     )

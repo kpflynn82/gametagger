@@ -1,0 +1,60 @@
+{
+  "games": 20,
+  "steam_games": 10,
+  "arms": {
+    "rich": {
+      "label": "Sonnet 5, full descriptions (benchmark)",
+      "recall_vs_steam": 0.7847222222222222,
+      "said_absent_vs_steam": 0.0,
+      "attributes_present_mean": 36.1,
+      "keeps_baseline_present": null,
+      "keeps_baseline_absent": null,
+      "present_absent_flips_per_game": null,
+      "same_primary_genre": null,
+      "quarantined_statements_per_game": 1.2,
+      "image_cost_per_game": 0.1665799,
+      "image_cost_per_game_at_list_price": 0.1665799,
+      "jev_cost_per_game": 0.0031618713000000002,
+      "total_cost_per_game": 0.1697417713,
+      "described_in_batch": false,
+      "descriptions_reused_per_game": 0,
+      "observe_seconds_per_game": 107.47455197
+    },
+    "rich-haiku": {
+      "label": "Haiku 4.5 describes",
+      "recall_vs_steam": 0.7638888888888888,
+      "said_absent_vs_steam": 0.0,
+      "attributes_present_mean": 35.6,
+      "keeps_baseline_present": 0.9263127558056656,
+      "keeps_baseline_absent": 0.8546183473389356,
+      "present_absent_flips_per_game": 0.35,
+      "same_primary_genre": 0.95,
+      "quarantined_statements_per_game": 13.75,
+      "image_cost_per_game": 0.03249665,
+      "image_cost_per_game_at_list_price": 0.0649933,
+      "jev_cost_per_game": 0.0028002072000000004,
+      "total_cost_per_game": 0.035296857200000004,
+      "described_in_batch": true,
+      "descriptions_reused_per_game": 11.2,
+      "observe_seconds_per_game": 1.8121378121504677
+    },
+    "rich-lean": {
+      "label": "Sonnet 5, brief descriptions, duplicates skipped",
+      "recall_vs_steam": 0.7777777777777778,
+      "said_absent_vs_steam": 0.0,
+      "attributes_present_mean": 34.6,
+      "keeps_baseline_present": 0.921394165460246,
+      "keeps_baseline_absent": 0.8376097105508871,
+      "present_absent_flips_per_game": 0.2,
+      "same_primary_genre": 0.85,
+      "quarantined_statements_per_game": 4.65,
+      "image_cost_per_game": 0.06679775,
+      "image_cost_per_game_at_list_price": 0.1335955,
+      "jev_cost_per_game": 0.0026733147000000002,
+      "total_cost_per_game": 0.0694710647,
+      "described_in_batch": true,
+      "descriptions_reused_per_game": 10.85,
+      "observe_seconds_per_game": 1.8414418041997123
+    }
+  }
+}

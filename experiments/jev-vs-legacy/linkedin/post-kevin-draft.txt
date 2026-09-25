@@ -11,7 +11,7 @@ To see if it was worth it, I ran both approaches on this week's top 100 games (5
 - Jev said "no" to something players had tagged less than 1% of the time, vs about 6% for the old approach
 - 35 tags per game instead of 17, and every one points back to the evidence behind it
 
-The part I was most surprised by was cost. Jev's judging step costs under a third of a cent per game - roughly 1/14th of a single Opus call. Almost all of the cost (and time) is Claude describing the images, so that's what I'm working on now. Moving that step to batch processing already cuts it in half, and I'm testing whether a smaller model can do the describing without losing accuracy.
+The part I was most surprised by was cost. Jev's judging step costs under a third of a cent per game - roughly 1/14th of a single Opus call. Almost all of the cost (and time) is Claude describing the images, so that's what I'm working on now. In an early test on 20 of the games, having a smaller model (Claude Haiku) do the describing in half-price batches brought the whole thing down from about 17 cents to under 4 cents a game, with nearly the same results. Still a small sample, but a promising one!
 
 Why does any of this matter? Having spent a lot of my career around game stores and platforms, better tags are what make discovery work - they power recommendations, "more like this", finding true comps for a pitch or market sizing, and understanding what's actually trending beyond the top-level genre. And it matters just as much to know what you don't know - a tag that says "not enough evidence" is a lot more useful than a confident guess.
 

@@ -164,3 +164,16 @@ Published (private until the owner shares them):
 Owner to do: fill `experiments/jev-vs-legacy/review/owner-review.csv` (494 rows, yes/no/unsure),
 review the three draft crosswalks, confirm the 10 App Store title-and-developer matches in
 `cohort.json`. Follow-up agreed: a public GitHub Pages site with a public request form.
+
+### Cheaper image descriptions (September 25, 2026)
+
+Built saved descriptions (identical requests are never paid twice), half-price batch describing
+(`run --batch`, resumable with `--resume-batch`), and two cost-test arms. On the first 20 benchmark
+games, Haiku 4.5 through the batch cost **$0.035 per game all in versus $0.170** for the benchmark's
+Sonnet run, found 76.4% of Steam players' tags versus 78.5% (10 Steam games; not a measurable
+difference at this size), kept 93% of the benchmark's present attributes and 95% of its genre
+calls, but had more Observer statements quarantined (13.8 versus 1.2 per game). Brief Sonnet
+descriptions with duplicate skipping cost $0.070 per game. Details:
+`experiments/jev-vs-legacy/cost-test/README.md`. The test cost $1.99 for descriptions plus Jev;
+ledger total $22.86 of the $39.99 cap. Also tagged Epic Plane Evolution for cloning work
+(`experiments/single-games/epic-plane-evolution/`, $0.097).
