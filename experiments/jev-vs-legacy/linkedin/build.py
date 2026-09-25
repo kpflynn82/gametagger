@@ -65,6 +65,21 @@ font-variant-numeric:tabular-nums}
 .foot{margin-top:auto;padding-top:22px;border-top:2px solid #e3e3df;font-size:18px;
 line-height:1.45;color:#6c7178}
 .steps{display:flex;flex-direction:column;gap:26px;margin-top:56px}
+.lane{border:2px solid #e3e3df;border-radius:14px;padding:22px 24px;display:flex;
+flex-direction:column;gap:14px;background:#fff}
+.lane .lt{display:flex;align-items:baseline;gap:14px;font-weight:800;font-size:28px}
+.lane .lt small{font:500 18px/1 "Chivo Mono",monospace;color:#5a5f66;letter-spacing:.04em}
+.flow{display:flex;align-items:stretch;gap:10px}
+.box{flex:1;border-radius:10px;padding:12px 14px;font-size:19px;line-height:1.3;color:#2a2f35;
+background:#f2f4f7}
+.box b{display:block;font-size:14px;letter-spacing:.07em;text-transform:uppercase;
+font-family:"Chivo Mono",monospace;margin-bottom:5px}
+.arrow{align-self:center;font-size:26px;color:#9aa0a8}
+.diff{display:grid;grid-template-columns:230px 1fr 1fr;font-size:19px;line-height:1.3;
+border-top:2px solid #e3e3df}
+.diff div{padding:9px 12px 9px 0;border-bottom:1px solid #e3e3df}
+.diff .h{font:500 15px/1.3 "Chivo Mono",monospace;text-transform:uppercase;letter-spacing:.06em;
+color:#5a5f66}
 .step{display:grid;grid-template-columns:64px 1fr;gap:22px;align-items:start}
 .step .k{font:700 30px/1.2 "Chivo Mono",monospace;color:#2a78d6}
 .step p{font-size:27px;line-height:1.4;color:#2a2f35}
@@ -165,7 +180,7 @@ def footer(f: dict, *, accuracy: bool = False) -> str:
 
 def build(f: dict, fonts: str) -> list[tuple[str, str]]:
     R, OP, H = f["rich"], f["legacy-deep"], f["legacy-standard"]
-    total = 6
+    total = 7
     slides = []
 
     # 1 accuracy
@@ -213,7 +228,81 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         )
     )
 
-    # 2 cost: where the money goes
+    # 2 how each method works
+    old_c, jev_c = COLOR["legacy-deep"], COLOR["rich"]
+    diff_rows = [
+        ("Knows the game's name", "Yes, can lean on memory", "No: title withheld from Jev"),
+        ("Images", "2 per store, 600 px wide", "Every screenshot + 6 trailer clips"),
+        ("Model calls", "1", "One per image, then Jev in batches"),
+        ("Answers", "Yes / no per tag", "Present, absent, unknown, conflicting"),
+        ("Genre", "Must pick 1 of 59", "v4.1 hierarchy; may decline"),
+        ("Evidence trail", "None", "Every tag cites its sources"),
+    ]
+    diff = (
+        '<div class="diff"><div class="h"></div><div class="h" style="color:'
+        + old_c
+        + '">One prompt</div><div class="h" style="color:'
+        + jev_c
+        + '">Jev pipeline</div>'
+        + "".join(
+            f"<div><b>{esc(a)}</b></div><div>{esc(b)}</div><div>{esc(c)}</div>"
+            for a, b, c in diff_rows
+        )
+        + "</div>"
+    )
+
+    def lane(color, title, tag, steps):
+        boxes = '<div class="arrow">→</div>'.join(
+            f'<div class="box"><b style="color:{color}">{esc(h)}</b>{esc(t)}</div>'
+            for h, t in steps
+        )
+        return (
+            f'<div class="lane" style="border-color:{color}"><div class="lt">{esc(title)}'
+            f'<small>{esc(tag)}</small></div><div class="flow">{boxes}</div></div>'
+        )
+
+    body = (
+        '<div class="chart" style="margin-top:56px;gap:18px">'
+        + lane(
+            old_c,
+            "One prompt",
+            "Haiku 4.5 or Opus 4.8",
+            [
+                ("Reads", "Game name, text cut to 1,000 characters, 2 screenshots per store"),
+                ("Asks", "One Claude call for the whole game"),
+                ("Returns", "About 91 yes/no tags and 1 of 59 genres"),
+            ],
+        )
+        + lane(
+            jev_c,
+            "Jev pipeline",
+            "Claude Sonnet 5 + Jev",
+            [
+                ("Looks", "Claude describes each image and trailer clip, never naming genres"),
+                ("Splits", "All text and descriptions become numbered claims"),
+                ("Judges", "Jev answers 189 attributes and the genre, one question each"),
+            ],
+        )
+        + diff
+        + "</div>"
+    )
+    slides.append(
+        (
+            "2-how",
+            slide(
+                2,
+                total,
+                "Same evidence, two very different ways to use it.",
+                "The old site asks one model one big question. The new pipeline separates "
+                "looking from judging, so every answer can be traced to what was seen.",
+                body,
+                footer(f),
+                fonts,
+            ),
+        )
+    )
+
+    # 3 cost: where the money goes
     scale = max(f[a]["cost"] for a in ARMS)
     rows = [
         (
@@ -254,9 +343,9 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
     )
     slides.append(
         (
-            "2-cost",
+            "3-cost",
             slide(
-                2,
+                3,
                 total,
                 f"Jev's judging costs {usd(R['cost_jev'], 4)} a game. The pictures cost the rest.",
                 f"The full pipeline costs more than one prompt, but {100 * (1 - jev_share):.0f}% "
@@ -268,7 +357,7 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         )
     )
 
-    # 3 time per stage
+    # 4 time per stage
     obs, dec = R["stages"].get("observe", 0), R["stages"].get("decide", 0)
     scale = max(obs + dec, OP["time"], H["time"])
     rows = [
@@ -304,9 +393,9 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
     )
     slides.append(
         (
-            "3-time",
+            "4-time",
             slide(
-                3,
+                4,
                 total,
                 f"Jev decides in {secs(dec)}. Looking at the pictures takes {secs(obs)}.",
                 "The old method answers in one call. The new pipeline first has Claude describe "
@@ -320,7 +409,7 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         )
     )
 
-    # 4 tokens
+    # 5 tokens
     def tk(arm, provider, key):
         return f[arm]["tokens"].get(provider, {}).get(key, 0)
 
@@ -369,9 +458,9 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
     )
     slides.append(
         (
-            "4-tokens",
+            "5-tokens",
             slide(
-                4,
+                5,
                 total,
                 f"Jev reads {k(jin)} tokens a game, at $0.042 per million.",
                 "That is more text than the old prompt "
@@ -385,7 +474,7 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         )
     )
 
-    # 5 depth
+    # 6 depth
     rows = [(a, NAME[a], None, [(f[a]["tags"], COLOR[a])], f"{f[a]['tags']:.0f}") for a in ARMS]
     scale = max(f[a]["tags"] for a in ARMS)
     body = (
@@ -402,9 +491,9 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
     )
     slides.append(
         (
-            "5-depth",
+            "6-depth",
             slide(
-                5,
+                6,
                 total,
                 f"{R['tags']:.0f} attributes per game, each with its evidence.",
                 "Jev answers present, absent, unknown or conflicting for every attribute, and "
@@ -416,7 +505,7 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         )
     )
 
-    # 6 method and caveats
+    # 7 method and caveats
     s = f["sample"]
     steps = [
         (
@@ -455,9 +544,9 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
     )
     slides.append(
         (
-            "6-method",
+            "7-method",
             slide(
-                6,
+                7,
                 total,
                 "How we measured it",
                 "Built to be checked. The code, crosswalks and per-game results are in the repo.",
