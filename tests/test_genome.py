@@ -417,16 +417,45 @@ def test_anthropic_observer_treats_an_omitted_metadata_key_as_null(taxonomy, evi
     assert observation.text == "PLAY" and observation.metadata_key is None
 
 
-def test_malformed_observer_answer_loses_the_screenshot_not_the_game(
+def test_malformed_statement_is_quarantined_alone_in_rich_mode(
+    taxonomy, vocabulary, image_dossier, evidence
+):
+    from gametagger.evidence import prepare_evidence
+
+    region = {"x": 0.1, "y": 0.1, "width": 0.2, "height": 0.1}
+    client = _observer_reply(
+        [
+            {"kind": "visual_fact", "text": ""},
+            {"kind": "visual_fact", "text": "A red car on a road.", "image_region": region},
+            {"kind": "visual_text", "text": "START", "image_region": region},
+        ]
+    )
+    observer = AnthropicObserver(taxonomy, model="m", client=client, enforce_boundary=False)
+    profile = GenomePipeline(engine_for(taxonomy, vocabulary, ScriptedGateway()), observer).analyze(
+        image_dossier, offline=False
+    )
+    kept = [c.text for c in profile.claims if c.evidence_id == "shot1"]
+    assert len(kept) == 2
+    assert any("red car" in k for k in kept) and any("START" in k for k in kept)
+    assert [q["reason"] for q in profile.quarantined_observations] == [
+        "Malformed statement (ValidationError)"
+    ]
+    # The website's strict mode still rejects the whole answer.
+    item, data = prepare_evidence(evidence)
+    with pytest.raises(ValueError):
+        AnthropicObserver(taxonomy, model="m", client=client).observe(item, image=data)
+
+
+def test_truncated_observer_answer_loses_the_screenshot_not_the_game(
     taxonomy, vocabulary, image_dossier
 ):
-    client = _observer_reply([{"kind": "visual_fact", "text": ""}])
+    client = _observer_reply([])
+    client.messages.create.return_value.stop_reason = "max_tokens"
     observer = AnthropicObserver(taxonomy, model="m", client=client, enforce_boundary=False)
     profile = GenomePipeline(engine_for(taxonomy, vocabulary, ScriptedGateway()), observer).analyze(
         image_dossier, offline=False
     )
     assert any("shot1" in w and "broke the contract" in w for w in profile.warnings)
-    assert not [c for c in profile.claims if c.evidence_id == "shot1"]
     assert profile.tags  # the game was still judged
 
 

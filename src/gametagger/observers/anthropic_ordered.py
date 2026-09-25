@@ -106,7 +106,7 @@ class AnthropicOrderedObserver:
             )
         kwargs = dict(
             model=self.model,
-            max_tokens=2048,
+            max_tokens=4096,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": content}],
             tools=[

@@ -438,6 +438,8 @@ class GenomePipeline:
                 }
             )
             return
+        malformed = getattr(self.observer, "last_quarantined", None) or []
+        p.quarantined.extend({"evidence_id": item.id, **r} for r in malformed)
         kept, rejected = self.boundary.partition(observed, item)
         p.quarantined.extend({"evidence_id": item.id, **r} for r in rejected)
         new = claims_from_observations(kept, item)
