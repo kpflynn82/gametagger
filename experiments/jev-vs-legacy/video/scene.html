@@ -78,6 +78,12 @@ repeating-linear-gradient(135deg,#d6d0c3 0 14px,#cfc8ba 14px 28px);border:3px so
 <div class="grid-bg"></div>
 <div class="head"><span class="badge" id="badge">GAMETAGGER × JEV</span><span class="no">Nº 01</span></div>
 
+<!-- S0: intro question -->
+<div class="scene" id="s0">
+  <h1 id="s0h" style="top:250px;font-size:104px;line-height:.97;letter-spacing:-.045em"></h1>
+  <div class="chips" id="s0chips" style="top:auto;bottom:130px;flex-direction:row;flex-wrap:wrap;gap:14px;right:56px"></div>
+</div>
+
 <!-- S1: old way -->
 <div class="scene" id="s1">
   <div class="circle anim" id="s1c" style="width:440px;height:440px;right:-120px;bottom:-230px"></div>
@@ -160,10 +166,10 @@ $("endp").innerHTML = D.end;
 function fmt(s, v){ return s.kind==="pct" ? (v>=.1?(100*v).toFixed(0):(100*v).toFixed(1))+"%" : s.kind==="cents" ? (100*v).toFixed(1)+"¢" : v.toFixed(0); }
 function show(el, p, dy=18){ el.style.opacity = p; el.style.transform = `translateY(${(1-p)*dy}px)`; }
 
-function render(t){
+function renderMain(t){
   let di = 0;
   for (const [id,a,b] of SC){
-    const el = $(id), fin = id==="s1" ? 1 : ease((t-a)/.35), fo = id==="s7" ? 1 : 1-ease((t-(b-.3))/.3);
+    const el = $(id), fin = ease((t-a)/.35), fo = id==="s7" ? 1 : 1-ease((t-(b-.3))/.3);
     el.style.opacity = (t>=a-0.001 && t<b) ? Math.min(fin,fo) : 0;
     if (t>=a && t<b) $("dot").style.background = DOTS[SC.findIndex(s=>s[0]===id)];
   }
@@ -214,6 +220,17 @@ function render(t){
     $("sj"+i).innerHTML = fmt(s, s.jev_from + (s.jev - s.jev_from)*ease(c)) + (s.star?"<sup style='font-size:24px'>*</sup>":"");
   });
   show($("foot"), prog(t,38.4,.5), 8);
+}
+const INTRO = 3.6, Q = "Can we fix game discovery with better game tagging?".split(" ");
+$("s0h").innerHTML = Q.map(w => `<span class="anim" style="display:inline-block;margin-right:.22em">${w}</span>`).join("");
+$("s0chips").innerHTML = D.ex.rows.map(r => `<span class="chip c-${r.color} anim" style="font-size:25px;padding:6px 11px">${r.tag}</span>`).join("");
+function render(t){
+  const s0 = $("s0");
+  s0.style.opacity = t < INTRO ? 1 - ease((t-(INTRO-.3))/.3) : 0;
+  document.querySelectorAll("#s0h span").forEach((w,i) => show(w, prog(t,.15+i*.12,.4), 24));
+  document.querySelectorAll("#s0chips span").forEach((c,i) => show(c, prog(t,1.6+i*.1,.3), 12));
+  renderMain(t - INTRO);
+  if (t < INTRO) $("dot").style.background = "var(--red)";
 }
 window.render = render;
 render(0);

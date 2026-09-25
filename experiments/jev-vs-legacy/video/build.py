@@ -1,4 +1,4 @@
-"""Render the ~49-second square explainer video (silent, 1080 x 1080, 30 fps).
+"""Render the ~53-second square explainer video (silent, 1080 x 1080, 30 fps).
 
     uv run python experiments/jev-vs-legacy/video/build.py [--fonts embedded.css] [--still SECONDS]
 
@@ -21,7 +21,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 EXP = HERE.parent
 CHROME = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell"
-FPS, SECONDS = 30, 49.0
+FPS, SECONDS = 30, 52.6
 
 RENDER_JS = """
 const { chromium } = require('playwright');
