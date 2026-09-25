@@ -419,7 +419,25 @@ class GenomePipeline:
             p.warnings.append(f"Screenshot '{image.id}' was not observed in this run.")
             return
         start = perf_counter()
-        observed = self.observer.observe(item, image=data)
+        try:
+            observed = self.observer.observe(item, image=data)
+        except ValueError as exc:
+            # A malformed answer for one screenshot loses that screenshot, not the game; the
+            # request is still metered. Provider errors are not ValueErrors and still propagate.
+            p.warnings.append(
+                f"Screenshot '{image.id}': the Observer's answer broke the contract and was "
+                f"not used ({type(exc).__name__})."
+            )
+            p.observer_requests.append(
+                {
+                    "evidence_id": item.id,
+                    "latency_ms": (perf_counter() - start) * 1000,
+                    "requested_model": self.observer.model,
+                    "usage": getattr(self.observer, "last_usage", None),
+                    "error": type(exc).__name__,
+                }
+            )
+            return
         kept, rejected = self.boundary.partition(observed, item)
         p.quarantined.extend({"evidence_id": item.id, **r} for r in rejected)
         new = claims_from_observations(kept, item)

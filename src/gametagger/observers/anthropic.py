@@ -33,7 +33,8 @@ class FactualStatement(BaseModel):
     model_config = ConfigDict(extra="forbid")
     kind: Literal["visual_fact", "visual_text", "metadata_quote"]
     text: str = Field(min_length=1)
-    metadata_key: str | None
+    # Omitted means null: models sometimes leave the key out for visual kinds.
+    metadata_key: str | None = None
     image_region: ImageRegion | None = None
 
 
@@ -100,6 +101,7 @@ class AnthropicObserver(Observer):
                 response = client.messages.create(**kwargs)
         else:
             response = self._client.messages.create(**kwargs)
+        self.last_usage = None
         if response.stop_reason != "tool_use":
             raise ValueError("Observer did not complete its structured response")
         usage = getattr(response, "usage", None)

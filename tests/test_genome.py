@@ -391,6 +391,45 @@ def test_anthropic_observer_can_defer_boundary_to_caller(taxonomy, evidence):
     assert [o.text for o in lenient.observe(evidence, image=data)] == ["Pixel art trees."]
 
 
+def _observer_reply(observations):
+    client = Mock()
+    client.messages.create.return_value = SimpleNamespace(
+        model="vision",
+        stop_reason="tool_use",
+        usage=SimpleNamespace(input_tokens=10, output_tokens=5),
+        content=[
+            SimpleNamespace(
+                type="tool_use", name="record_observations", input={"observations": observations}
+            )
+        ],
+    )
+    return client
+
+
+def test_anthropic_observer_treats_an_omitted_metadata_key_as_null(taxonomy, evidence):
+    from gametagger.evidence import prepare_evidence
+
+    evidence, data = prepare_evidence(evidence)
+    region = {"x": 0.1, "y": 0.1, "width": 0.2, "height": 0.1}
+    client = _observer_reply([{"kind": "visual_text", "text": "PLAY", "image_region": region}])
+    observer = AnthropicObserver(taxonomy, model="m", client=client, enforce_boundary=False)
+    [observation] = observer.observe(evidence, image=data)
+    assert observation.text == "PLAY" and observation.metadata_key is None
+
+
+def test_malformed_observer_answer_loses_the_screenshot_not_the_game(
+    taxonomy, vocabulary, image_dossier
+):
+    client = _observer_reply([{"kind": "visual_fact", "text": ""}])
+    observer = AnthropicObserver(taxonomy, model="m", client=client, enforce_boundary=False)
+    profile = GenomePipeline(engine_for(taxonomy, vocabulary, ScriptedGateway()), observer).analyze(
+        image_dossier, offline=False
+    )
+    assert any("shot1" in w and "broke the contract" in w for w in profile.warnings)
+    assert not [c for c in profile.claims if c.evidence_id == "shot1"]
+    assert profile.tags  # the game was still judged
+
+
 def test_title_mismatch_warning(taxonomy, vocabulary, dossier):
     wrong = dossier.sources[0].model_copy(update={"reported_title": "Hollow Knight"})
     changed = dossier.model_copy(update={"sources": [wrong, *dossier.sources[1:]]})
