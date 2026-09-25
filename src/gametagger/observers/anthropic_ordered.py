@@ -32,15 +32,20 @@ Frame order and timestamps do not prove continuity or sufficient sampling for a 
 Omit uncertain facts; an empty observations list is valid. Call record_window_observations.
 """
 PROMPT_SHA256 = digest({"system": SYSTEM_PROMPT, "schema": WindowOutput.model_json_schema()})
+# Cost variant: fewer, shorter statements (output tokens are most of the Observer's bill).
+BRIEF_NOTE = """
+Be brief: record at most 10 statements, each one short sentence under 20 words. Prefer changes
+between frames and facts specific to this window; do not restate the same fact in other words.
+"""
 
 
-def request_digest(window, model):
+def request_digest(window, model, *, prompt_version=PROMPT_VERSION, prompt_sha256=PROMPT_SHA256):
     return digest(
         {
             "window": window.model_dump(mode="json"),
             "model": model,
-            "prompt_version": PROMPT_VERSION,
-            "prompt_sha256": PROMPT_SHA256,
+            "prompt_version": prompt_version,
+            "prompt_sha256": prompt_sha256,
         }
     )
 
@@ -75,8 +80,16 @@ class AnthropicOrderedObserver:
         allow_live=False,
         workspace_id=None,
         enforce_boundary=True,
+        brief=False,
     ):
         self.taxonomy, self.model, self.client = taxonomy, model, client
+        self.system_prompt = SYSTEM_PROMPT + (BRIEF_NOTE if brief else "")
+        self.prompt_version = PROMPT_VERSION + ("+brief" if brief else "")
+        self.prompt_sha256 = (
+            digest({"system": self.system_prompt, "schema": WindowOutput.model_json_schema()})
+            if brief
+            else PROMPT_SHA256
+        )
         self.allow_live, self.workspace_id = allow_live, workspace_id
         # False only when the caller quarantines statements itself (rich mode).
         self.enforce_boundary = enforce_boundary
@@ -145,7 +158,7 @@ class AnthropicOrderedObserver:
         kwargs = dict(
             model=self.model,
             max_tokens=4096,
-            system=SYSTEM_PROMPT,
+            system=self.system_prompt,
             messages=[{"role": "user", "content": content}],
             tools=[
                 {
@@ -160,9 +173,14 @@ class AnthropicOrderedObserver:
             kwargs["extra_headers"] = {"anthropic-workspace-id": self.workspace_id}
         fields = dict(
             window_sha256=window.sha256,
-            request_sha256=request_digest(window, self.model),
-            prompt_version=PROMPT_VERSION,
-            prompt_sha256=PROMPT_SHA256,
+            request_sha256=request_digest(
+                window,
+                self.model,
+                prompt_version=self.prompt_version,
+                prompt_sha256=self.prompt_sha256,
+            ),
+            prompt_version=self.prompt_version,
+            prompt_sha256=self.prompt_sha256,
             requested_model=self.model,
             sdk_version=version("anthropic"),
         )

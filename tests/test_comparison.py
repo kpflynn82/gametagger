@@ -827,3 +827,113 @@ def test_wikipedia_falls_back_to_the_article_page_when_the_api_rate_limits():
     }
     with pytest.raises(SourceError, match="404"):
         wikipedia_source("X", fetch=_missing)
+
+
+# --------------------------------------------------------------------------- cheaper describing
+
+
+def _sdk_message(model: str, tool: str, usage=(1000, 400)):
+    from anthropic.types import Message
+
+    body = (
+        {"context": "gameplay", "observations": []}
+        if tool == "record_window_observations"
+        else {
+            "observations": [{"kind": "visual_fact", "text": "Rows of trees under a purple sky."}]
+        }
+    )
+    return Message.model_validate(
+        {
+            "id": "msg_1",
+            "type": "message",
+            "role": "assistant",
+            "model": model,
+            "stop_reason": "tool_use",
+            "stop_sequence": None,
+            "usage": {"input_tokens": usage[0], "output_tokens": usage[1]},
+            "content": [{"type": "tool_use", "id": "tu_1", "name": tool, "input": body}],
+        }
+    )
+
+
+class FakeBatchClaude:
+    """A batch endpoint that answers every request; live Observer calls fail the test."""
+
+    def __init__(self):
+        self.submitted = []
+        self.messages = self
+        self.batches = self
+
+    def with_options(self, **options):
+        return self
+
+    def create(self, requests=None, **kwargs):
+        if requests is None:
+            raise AssertionError("A description was requested live instead of from the batch")
+        self.submitted.append(requests)
+        return SimpleNamespace(id="batch_1", processing_status="in_progress")
+
+    def retrieve(self, batch_id, **kwargs):
+        return SimpleNamespace(
+            id=batch_id,
+            processing_status="ended",
+            request_counts=SimpleNamespace(succeeded=1, processing=0),
+        )
+
+    def results(self, batch_id, **kwargs):
+        for request in self.submitted[-1]:
+            tool = request["params"]["tool_choice"]["name"]
+            message = _sdk_message(request["params"]["model"], tool)
+            yield SimpleNamespace(
+                custom_id=request["custom_id"],
+                result=SimpleNamespace(type="succeeded", message=message),
+            )
+
+
+def test_request_key_ignores_transport_options():
+    from gametagger.comparison.describe_cache import request_key
+
+    base = {"model": "m", "messages": [{"role": "user", "content": "x"}]}
+    assert request_key(base) == request_key({**base, "extra_headers": {"a": "b"}, "timeout": 5})
+    assert request_key(base) != request_key({**base, "model": "other"})
+
+
+def test_batch_describing_saves_answers_and_the_run_reuses_them(tmp_path, monkeypatch):
+    import gametagger.comparison.runner as runner_module
+    from gametagger.comparison.describe_cache import DescriptionStore
+
+    original = runner_module.metered_jev_gateway
+
+    def with_fake_client(meter, model):
+        gateway = original(meter, model)
+        gateway._client = FakeTypeSafe()
+        return gateway
+
+    monkeypatch.setattr(runner_module, "metered_jev_gateway", with_fake_client)
+    path = dossier_path(tmp_path, "steam-1")
+    path.parent.mkdir(parents=True)
+    save_dossier(sample_dossier(path.parent), path)  # three identical screenshots
+    path.with_name("gather.json").write_text(json.dumps({"gather_timings": {"total_ms": 1}}))
+    game = {"game_id": "steam-1", "list": "steam", "title": "Hollow Orchard", "ids": {}}
+    client = FakeBatchClaude()
+    ledger = Ledger(tmp_path / "ledger.jsonl", 40.0)
+    runner = Runner(
+        tmp_path, ledger, anthropic_client=client, store=DescriptionStore(tmp_path / "d")
+    )
+
+    described = runner.describe([game], ["rich-lean"], poll_seconds=0, log=lambda m: None)
+    # The lean variant skips the two repeated screenshots, so one description is bought.
+    assert described["submitted"] == 1 and described["succeeded"] == 1
+    params = client.submitted[0][0]["params"]
+    assert "Be brief" in params["system"] and params["model"] == "claude-sonnet-5"
+    half = (1000 * 2 + 400 * 10) / 1e6 / 2  # Sonnet 5 list price, halved by the batch
+    assert described["cost_usd"] == pytest.approx(half) and ledger.spent == pytest.approx(half)
+
+    summary = runner.run([game], ["rich-lean"], workers=1, log=lambda m: None)
+    assert summary["completed"] == 1 and summary["failed"] == 0
+    record = json.loads(runner.result_path("steam-1", "rich-lean").read_text())
+    assert record["deduped_images"] == 2 and record["descriptions_reused"] == 1
+    assert record["cost_usd"]["anthropic"] == pytest.approx(half)  # shown at the price paid
+    assert ledger.spent == pytest.approx(half + record["cost_usd"]["typesafe"])  # booked once
+    again = runner.describe([game], ["rich-lean"], poll_seconds=0, log=lambda m: None)
+    assert again["submitted"] == 0  # finished games and saved descriptions are not bought again

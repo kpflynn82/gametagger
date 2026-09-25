@@ -82,14 +82,14 @@ def cmd_answer_key(args) -> None:
 
 
 def cmd_run(args) -> None:
-    from gametagger.comparison.runner import ARMS, make_runner
+    from gametagger.comparison.runner import ALL_ARMS, ARMS, make_runner
 
     if not args.live:
         raise SystemExit("Paid run: add --live (and --budget-usd) to call Claude and Jev.")
     if args.budget_usd is None:
         raise SystemExit("Set --budget-usd; the owner's approved cap is required for a live run.")
     arms = args.arms.split(",") if args.arms else list(ARMS)
-    if unknown := set(arms) - set(ARMS):
+    if unknown := set(arms) - set(ALL_ARMS):
         raise SystemExit(f"Unknown arms: {sorted(unknown)}")
     runner = make_runner(
         args.workdir,
@@ -103,6 +103,14 @@ def cmd_run(args) -> None:
         f"${runner.ledger.spent:.2f} of ${runner.ledger.cap:.2f}",
         file=sys.stderr,
     )
+    if args.batch:
+        from gametagger.comparison.budget import BudgetExceeded
+
+        try:
+            described = runner.describe(games, arms)
+        except BudgetExceeded as exc:
+            raise SystemExit(str(exc)) from exc
+        print(json.dumps({"batch_describe": described}, indent=2), file=sys.stderr)
     summary = runner.run(
         games, arms, workers=args.workers, force=args.force, retry_failed=args.retry_failed
     )
@@ -234,12 +242,20 @@ def build_parser() -> argparse.ArgumentParser:
     selection(p)
     p.add_argument("--live", action="store_true", help="Required: call Claude and Jev")
     p.add_argument("--budget-usd", type=float, help="Hard spending cap across all runs")
-    p.add_argument("--arms", help="Comma-separated: rich,legacy-standard,legacy-deep")
+    p.add_argument(
+        "--arms",
+        help="Comma-separated: rich,legacy-standard,legacy-deep (cost tests: rich-haiku,rich-lean)",
+    )
     p.add_argument("--workers", type=int, default=3, help="Games processed in parallel")
     p.add_argument(
         "--retry-failed",
         action="store_true",
         help="Re-run results degraded by provider or network errors (rate limits, timeouts)",
+    )
+    p.add_argument(
+        "--batch",
+        action="store_true",
+        help="Describe all images first in one half-price batch (results within 24 h)",
     )
     p.add_argument("--observer-model", default="claude-sonnet-5")
     p.add_argument("--jev-model", default="jev-latest")

@@ -118,6 +118,11 @@ class Ledger:
             self._reserved += worst_usd
             return worst_usd
 
+    def release(self, reserved: float) -> None:
+        """Return a reservation that will never be settled (the request was not sent)."""
+        with self._lock:
+            self._reserved -= reserved
+
     def settle(self, reserved: float, entry: dict[str, Any]) -> None:
         with self._lock:
             self._reserved -= reserved

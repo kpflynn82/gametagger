@@ -49,7 +49,7 @@ class Prediction:
 
 def normalize(record: dict, crosswalks: Crosswalks, taxonomy_names: dict[str, str]) -> Prediction:
     status = record.get("status", "failed")
-    if record["arm"] == "rich":
+    if record["arm"].startswith("rich"):  # rich mode and its cost variants
         tags = record.get("tags") or {}
         present = {t for t, v in tags.items() if v["tier"] in ("strong", "likely")}
         absent = {t for t, v in tags.items() if v["tier"] == "absent"}

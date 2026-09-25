@@ -33,6 +33,15 @@ from gametagger.comparison.dossiers import dossier_path, safe_id
 from gametagger.genome.dossier import Dossier
 
 ARMS = ("rich", "legacy-standard", "legacy-deep")
+# Cost variants of rich mode, compared against ``rich`` on a sample. Each changes one thing
+# about how images are described; Jev, the evidence policy and the dossier are unchanged.
+RICH_VARIANTS = {
+    "rich": {},
+    "rich-haiku": {"observer_model": "claude-haiku-4-5-20251001"},
+    "rich-lean": {"brief": True, "dedupe": True},
+}
+ALL_ARMS = (*ARMS, *(a for a in RICH_VARIANTS if a not in ARMS))
+DEDUPE_DISTANCE = 6  # of 64 bits: screenshots this close are the same picture re-encoded
 # Provider or network failures (not answers) that justify re-running a (game, arm) once asked.
 TRANSIENT = (
     "RateLimitError",
@@ -80,6 +89,28 @@ def load_dossier(path: Path) -> Dossier:
     )
 
 
+def _average_hash(path: str) -> int:
+    from PIL import Image
+
+    with Image.open(path) as image:
+        small = image.convert("L").resize((8, 8))
+        pixels = list(small.tobytes())
+    mean = sum(pixels) / len(pixels)
+    return sum(1 << i for i, v in enumerate(pixels) if v > mean)
+
+
+def dedupe_images(dossier: Dossier) -> tuple[Dossier, int]:
+    """Drop screenshots that are near-copies of an earlier one (store listings often repeat)."""
+    kept, hashes = [], []
+    for image in dossier.images:
+        h = _average_hash(image.path)
+        if any(bin(h ^ other).count("1") <= DEDUPE_DISTANCE for other in hashes):
+            continue
+        kept.append(image)
+        hashes.append(h)
+    return dossier.model_copy(update={"images": kept}), len(dossier.images) - len(kept)
+
+
 def interleaved(cohort: dict) -> list[dict]:
     """Steam #1, mobile #1, Steam #2, ... so a small --limit samples both lists evenly."""
     steam = [g for g in cohort["games"] if g["list"] == "steam"]
@@ -120,6 +151,7 @@ class Runner:
         jev_model: str = "jev-latest",
         workspace_id: str | None = None,
         max_questions_per_request: int = 60,
+        store=None,
     ):
         from gametagger.genome.vocabulary import load_vocabulary
         from gametagger.taxonomy import load_taxonomy
@@ -129,6 +161,7 @@ class Runner:
         self.observer_model, self.jev_model = observer_model, jev_model
         self.workspace_id = workspace_id
         self.max_questions = max_questions_per_request
+        self.store = store  # DescriptionStore: saved image descriptions, reused when identical
         self.taxonomy = load_taxonomy()
         self.vocabulary = load_vocabulary(self.taxonomy)
 
@@ -140,34 +173,51 @@ class Runner:
 
     # ------------------------------------------------------------------ arms
 
-    def _rich(self, game: dict, dossier: Dossier, meter: Meter) -> tuple[dict, dict]:
+    def _pipeline(self, arm: str, client, meter: Meter | None):
         from gametagger.genome.engine import GenomeEngine, GenomePipeline
         from gametagger.observers.anthropic import AnthropicObserver
         from gametagger.observers.anthropic_ordered import AnthropicOrderedObserver
 
-        client = MeteredAnthropic(self.client, meter)
+        variant = RICH_VARIANTS[arm]
+        model = variant.get("observer_model", self.observer_model)
+        gateway = metered_jev_gateway(meter, self.jev_model) if meter is not None else None
         engine = GenomeEngine(
             self.taxonomy,
             self.vocabulary,
-            metered_jev_gateway(meter, self.jev_model),
+            gateway,
             max_questions_per_request=self.max_questions,
         )
         observer = AnthropicObserver(
             self.taxonomy,
-            model=self.observer_model,
+            model=model,
             client=client,
             workspace_id=self.workspace_id,
             enforce_boundary=False,
+            brief=variant.get("brief", False),
         )
         ordered = AnthropicOrderedObserver(
             self.taxonomy,
-            model=self.observer_model,
+            model=model,
             client=client,
             workspace_id=self.workspace_id,
             allow_live=True,
             enforce_boundary=False,
+            brief=variant.get("brief", False),
         )
-        profile = GenomePipeline(engine, observer, ordered).analyze(dossier, offline=False)
+        return GenomePipeline(engine, observer, ordered), model
+
+    def _variant_dossier(self, arm: str, dossier: Dossier) -> tuple[Dossier, int]:
+        return dedupe_images(dossier) if RICH_VARIANTS[arm].get("dedupe") else (dossier, 0)
+
+    def _rich(self, game: dict, dossier: Dossier, meter: Meter, arm: str = "rich"):
+        from gametagger.comparison.describe_cache import CachedAnthropic
+
+        client = MeteredAnthropic(self.client, meter)
+        if self.store is not None:
+            client = CachedAnthropic(client, self.store, meter)
+        dossier, deduped = self._variant_dossier(arm, dossier)
+        pipeline, observer_model = self._pipeline(arm, client, meter)
+        profile = pipeline.analyze(dossier, offline=False)
         raw = json.loads(profile.model_dump_json())
         provenance = profile.provenance
         record = {
@@ -201,7 +251,9 @@ class Runner:
             },
             "questions_asked": provenance["questions_asked"],
             "returned_decision_model": provenance["returned_decision_model"],
-            "observer_model": self.observer_model,
+            "observer_model": observer_model,
+            "deduped_images": deduped,
+            "descriptions_reused": sum(1 for c in meter.calls if c.get("cached")),
             "quarantined_observations": len(profile.quarantined_observations),
             "warnings": profile.warnings,
         }
@@ -257,8 +309,8 @@ class Runner:
         meter = Meter(self.ledger, arm, game["game_id"], [])
         start = perf_counter()
         try:
-            if arm == "rich":
-                record, raw = self._rich(game, dossier, meter)
+            if arm in RICH_VARIANTS:
+                record, raw = self._rich(game, dossier, meter, arm)
             elif arm in ("legacy-standard", "legacy-deep"):
                 quality = "standard" if arm == "legacy-standard" else "deep"
                 record, raw = self._legacy(game, dossier, meter, quality)
@@ -302,6 +354,43 @@ class Runner:
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(json.dumps(data, indent=2, default=str) + "\n")
         return record
+
+    def describe(
+        self,
+        games: list[dict],
+        arms: list[str],
+        *,
+        poll_seconds: float = 30.0,
+        log=lambda m: print(m, file=sys.stderr),
+    ) -> dict[str, Any]:
+        """Describe every image of these games in one half-price batch and save the answers.
+
+        Nothing reaches Jev here. A later ``run`` of the same arms finds each description saved
+        and only calls Jev live. Games whose result already exists are skipped.
+        """
+        from gametagger.comparison.describe_cache import CollectingAnthropic, describe_in_batch
+
+        if self.store is None:
+            raise ValueError("Batch describing needs a description store")
+        collector = CollectingAnthropic()
+        for game in games:
+            for arm in arms:
+                if arm not in RICH_VARIANTS or self.result_path(game["game_id"], arm).exists():
+                    continue
+                dossier = load_dossier(dossier_path(self.workdir, game["game_id"]))
+                dossier, _ = self._variant_dossier(arm, dossier)
+                pipeline, _ = self._pipeline(arm, collector, None)
+                pipeline.prepare(dossier)
+        log(f"Collected {len(collector.requests)} image and trailer requests")
+        return describe_in_batch(
+            self.client,
+            collector.requests,
+            self.store,
+            self.ledger,
+            workspace_id=self.workspace_id,
+            poll_seconds=poll_seconds,
+            log=log,
+        )
 
     def run(
         self,
@@ -361,6 +450,8 @@ def make_runner(workdir: Path, cap_usd: float, **kwargs) -> Runner:
     if not os.environ.get("TYPESAFE_API_KEY"):
         raise SystemExit("No TypeSafe key: set TYPESAFE_API_KEY")
     # The old site used the SDK defaults (two automatic retries); keep them for every arm.
+    from gametagger.comparison.describe_cache import DescriptionStore
+
     client = Anthropic(api_key=key, timeout=180, max_retries=2)
     ledger = Ledger(workdir / "ledger.jsonl", cap_usd)
     return Runner(
@@ -368,5 +459,6 @@ def make_runner(workdir: Path, cap_usd: float, **kwargs) -> Runner:
         ledger,
         anthropic_client=client,
         workspace_id=os.environ.get("ANTHROPIC_WORKSPACE_ID"),
+        store=DescriptionStore(workdir / "descriptions"),
         **kwargs,
     )

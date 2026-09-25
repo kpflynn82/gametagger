@@ -29,6 +29,13 @@ Call record_observations.
 """
 
 
+# Cost variant: fewer, shorter statements (output tokens are most of the Observer's bill).
+BRIEF_NOTE = """
+Be brief: record at most 12 statements, each one short sentence under 20 words. Keep the facts
+most specific to this image and do not restate the same fact in other words.
+"""
+
+
 class FactualStatement(BaseModel):
     model_config = ConfigDict(extra="forbid")
     kind: Literal["visual_fact", "visual_text", "metadata_quote"]
@@ -54,8 +61,13 @@ class AnthropicObserver(Observer):
         client: Any | None = None,
         workspace_id: str | None = None,
         enforce_boundary: bool = True,
+        brief: bool = False,
     ):
         self.model = model
+        self.brief = brief
+        self.system_prompt = SYSTEM_PROMPT + (BRIEF_NOTE if brief else "")
+        if brief:
+            self.prompt_version = AnthropicObserver.prompt_version + "+brief"
         # False only when the caller partitions results itself (rich mode quarantines).
         self.enforce_boundary = enforce_boundary
         self.workspace_id = workspace_id
@@ -83,7 +95,7 @@ class AnthropicObserver(Observer):
         kwargs = dict(
             model=self.model,
             max_tokens=4096,
-            system=SYSTEM_PROMPT,
+            system=self.system_prompt,
             messages=[{"role": "user", "content": content}],
             tools=[
                 {
