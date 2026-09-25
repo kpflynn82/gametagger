@@ -28,9 +28,10 @@ font-family:Chivo,"Liberation Sans",system-ui,sans-serif;-webkit-font-smoothing:
 .eb{font:500 21px/1 "Chivo Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
 color:#8d98a6}
 .eb b{color:#6da7ec;font-weight:700}
-h1{font-weight:800;font-size:96px;line-height:.98;letter-spacing:-.03em;margin-top:44px}
-h1 em{font-style:normal;color:#6da7ec}
-.sub{font-size:31px;line-height:1.35;color:#b9c2cd;margin-top:26px;max-width:980px}
+h1{font-weight:800;font-size:84px;line-height:1;letter-spacing:-.03em;margin-top:40px}
+.ans{font-weight:800;font-size:46px;line-height:1.1;letter-spacing:-.02em;margin-top:28px;color:#6da7ec}
+.ans span{color:#f3f5f8}
+.sub{font-size:28px;line-height:1.35;color:#b9c2cd;margin-top:22px;max-width:1000px}
 .rows{margin-top:auto;display:flex;flex-direction:column;gap:38px}
 .row .k{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
 .row .k span{font-weight:600;font-size:27px;color:#e4e8ee}
@@ -110,7 +111,8 @@ def main() -> None:
     page = f"""<!doctype html><html><head><meta charset=utf-8><style>{fonts}{CSS}</style></head>
 <body><div class="c">
 <div class="eb"><b>GameTagger</b> · top 100 games · Sept 2026</div>
-<h1>2× the tags.<br><em>{times_fewer}× fewer</em> wrong “no”s.</h1>
+<h1>Can we tag games more efficiently with Jev?</h1>
+<p class="ans">Yes: <span>2× the tags,</span> {times_fewer}× fewer <span>wrong “no”s.</span></p>
 <p class="sub">We re-tagged the top 100 games two ways on the same evidence: one big AI
 prompt, or Claude describing what it sees and Jev judging 189 tags one at a time.</p>
 <div class="rows">{rows}</div>
