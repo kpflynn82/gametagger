@@ -6,6 +6,9 @@
 Writes ``<out>/results/index.html`` (with its LinkedIn images and social card beside it) and
 ``<out>/requests/index.html``. Publish each folder as its own page; the requests page needs the
 ``db`` and ``user`` capabilities described in docs/JEV_VS_LEGACY_BENCHMARK.md.
+
+The page carries no store URLs: the Artifact publisher's link validation rejected a version that
+embedded 100 store links, so game profiles link only within the page.
 """
 
 import json

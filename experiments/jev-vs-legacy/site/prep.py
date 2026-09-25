@@ -49,6 +49,38 @@ for g in cohort["games"]:
             "cost": r["cost_usd"]["total"],
             "sec": r["wall_ms"] / 1000,
         }
+    # Library detail: every decided attribute, the genre distribution, what the old method said,
+    # and the game's top Steam player tags. Third-party store text is never included.
+    rich = records.get((g["game_id"], "rich")) or {}
+    detail = {
+        "developers": g.get("developers") or [],
+        "jev": {
+            t: [v["tier"], v.get("p_present")]
+            for t, v in (rich.get("tags") or {}).items()
+            if v["tier"] in ("strong", "likely", "absent", "conflicting")
+        },
+        "genres": [[gid, p] for gid, p in rich.get("top_genres") or [] if p and p >= 0.01],
+        "secondary": rich.get("secondary_genres") or [],
+        "steam": [t["name"] for t in (entry or {}).get("tags") or [] if t["rank"] <= 20],
+    }
+    for arm in ("legacy-deep", "legacy-standard"):
+        r = records.get((g["game_id"], arm))
+        if not r:
+            continue
+        mapped = sorted(normalize(r, cw, names).present)
+        unmapped = sorted(
+            k
+            for k, v in (r.get("tags") or {}).items()
+            if v is True and not cw.legacy_tag_target(k)[0]
+        )
+        detail[arm] = {
+            "present": mapped,
+            "unmapped": unmapped,
+            "genre": r.get("primary_genre"),
+            "secondary": r.get("secondary_genres") or [],
+            "unreadable": r["status"] == "valid" and not r.get("tags"),
+        }
+    row["detail"] = detail
     games.append(row)
 
 # Sensitivity: the original parser only unpacks nested groups named "*_tags". How many old
