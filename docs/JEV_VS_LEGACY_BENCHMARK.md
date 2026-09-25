@@ -138,6 +138,10 @@ Outputs:
 * `experiments/jev-vs-legacy/site/`: the published results page and requests board (templates,
   `prep.py` and `assemble.py`; the docstring gives the commands).
 
+* `web/`: a static copy of the results page for Vercel (import the repository, set Root
+  Directory to `web`, framework "Other", no build command). Rebuild it with `assemble.py ...
+  --standalone` and copy `results/` into `web/`.
+
 `report` adds an "Illustrative / UI test data" watermark unless the ledger shows successful
 provider calls. Fixture numbers therefore cannot be mistaken for measurements.
 
