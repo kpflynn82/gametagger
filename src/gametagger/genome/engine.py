@@ -505,6 +505,10 @@ class GenomePipeline:
         summary["observed"] = True
         for index, (window, frames) in enumerate(bursts):
             attempt = self.ordered_observer.observe_window(window, frames=frames)
+            malformed = getattr(self.ordered_observer, "last_quarantined", None) or []
+            p.quarantined.extend(
+                {"evidence_id": f"{video.id}:burst:{index}", **r} for r in malformed
+            )
             p.observer_requests.append(
                 {
                     "evidence_id": video.id,

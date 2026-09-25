@@ -8,7 +8,13 @@ from time import perf_counter
 
 from PIL import Image
 
-from gametagger.observers.ordered import OrderedWindow, WindowAttempt, WindowOutput, digest
+from gametagger.observers.ordered import (
+    OrderedWindow,
+    WindowAttempt,
+    WindowOutput,
+    WindowStatement,
+    digest,
+)
 
 PROMPT_VERSION = "ordered-observer-v1"
 SYSTEM_PROMPT = """You are GameTagger's factual Observer, never its classifier.
@@ -74,8 +80,40 @@ class AnthropicOrderedObserver:
         self.allow_live, self.workspace_id = allow_live, workspace_id
         # False only when the caller quarantines statements itself (rich mode).
         self.enforce_boundary = enforce_boundary
+        self.last_quarantined: list[dict[str, str]] = []
+
+    def _lenient(self, payload, window: OrderedWindow):
+        """Rich mode: keep a window's valid statements and quarantine malformed ones alone.
+
+        A screen region on a non-text statement is dropped and the statement kept.
+        """
+        if not isinstance(payload, dict) or not isinstance(payload.get("observations"), list):
+            return payload
+        kept = []
+        for i, item in enumerate(payload["observations"]):
+            try:
+                statement = WindowStatement.model_validate(item)
+                if statement.kind != "visual_text":
+                    statement = statement.model_copy(update={"image_region": None})
+                elif statement.image_region is None:
+                    raise ValueError("Literal text needs a region")
+                WindowOutput(context="unknown", observations=[statement]).validate_against(
+                    window, self.taxonomy, enforce_boundary=False
+                )
+                kept.append(statement.model_dump(mode="json"))
+            except ValueError as exc:
+                text = item.get("text") if isinstance(item, dict) else None
+                self.last_quarantined.append(
+                    {
+                        "observation_id": f"statement:{i}",
+                        "text": str(text or "")[:300],
+                        "reason": f"Malformed statement ({type(exc).__name__})",
+                    }
+                )
+        return {**payload, "observations": kept[:32]}
 
     def observe_window(self, window: OrderedWindow, *, frames: list[bytes]) -> WindowAttempt:
+        self.last_quarantined = []
         # Revalidate mutable/injected models before touching a client.
         window = OrderedWindow.model_validate(window.model_dump())
         validate_frames(window, frames)
@@ -176,7 +214,10 @@ class AnthropicOrderedObserver:
                 raise ValueError("Unexpected provider envelope")
             fields["response_sha256"] = digest(blocks[0].input)
             phase = "observation_contract"
-            output = WindowOutput.model_validate(blocks[0].input).validate_against(
+            payload = blocks[0].input
+            if not self.enforce_boundary:
+                payload = self._lenient(payload, window)
+            output = WindowOutput.model_validate(payload).validate_against(
                 window, self.taxonomy, enforce_boundary=self.enforce_boundary
             )
             return WindowAttempt(
