@@ -323,6 +323,8 @@ class Runner:
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = [pool.submit(one, job) for job in jobs]
             for future in as_completed(futures):
+                if future.cancelled():  # queued jobs dropped after a stop
+                    continue
                 try:
                     game, arm, record = future.result()
                 except BudgetExceeded as exc:

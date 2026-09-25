@@ -641,7 +641,9 @@ def test_no_credit_stops_the_run_instead_of_failing_every_game(tmp_path):
     path.with_name("gather.json").write_text(json.dumps({"gather_timings": {"total_ms": 1}}))
     runner = Runner(tmp_path, Ledger(tmp_path / "ledger.jsonl", 40.0), anthropic_client=Broke())
     game = {"game_id": "steam-1", "list": "steam", "title": "Hollow Orchard", "ids": {}}
-    summary = runner.run([game], ["legacy-standard", "rich"], workers=1, log=lambda m: None)
+    # More jobs than workers, so queued jobs are cancelled after the stop.
+    games = [game, {**game, "game_id": "steam-2"}, {**game, "game_id": "steam-3"}]
+    summary = runner.run(games, ["legacy-standard", "rich"], workers=1, log=lambda m: None)
     assert summary["stopped_by_budget"] and "credit" in summary["stopped_by_budget"]
     assert summary["failed"] == 0
     assert not runner.result_path("steam-1", "legacy-standard").exists()
