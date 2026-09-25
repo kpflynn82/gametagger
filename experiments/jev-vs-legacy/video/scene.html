@@ -1,0 +1,221 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+/*FONTS*/
+:root{--bg:#e8e3d8;--ink:#141414;--mute:#8a857b;--line:#141414;--red:#d3281f;--blue:#2140c9;--yellow:#e3ad0b;--green:#23845a;--card:#f4f1ea}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);
+font-family:Chivo,"Liberation Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:"Chivo Mono",monospace}
+#stage{position:relative;width:1080px;height:1080px;overflow:hidden}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(20,20,20,.05) 1px,transparent 1px);background-size:90px 100%}
+.head{position:absolute;left:56px;right:56px;top:48px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.badge{background:var(--ink);color:var(--bg);font:600 19px "Chivo Mono",monospace;letter-spacing:.08em;padding:6px 11px}
+.no{font:600 19px "Chivo Mono",monospace;letter-spacing:.06em}
+.dot{position:absolute;right:56px;bottom:48px;width:30px;height:30px;border-radius:50%;z-index:5}
+.scene{position:absolute;inset:0;opacity:0}
+h1{position:absolute;left:56px;top:118px;right:56px;font-weight:800;font-size:66px;line-height:1.02;letter-spacing:-.035em}
+.chip{display:inline-block;font:600 22px "Chivo Mono",monospace;padding:5px 10px;letter-spacing:.01em}
+.c-red{background:var(--red);color:#fff}.c-blue{background:var(--blue);color:#fff}
+.c-yellow{background:var(--yellow);color:var(--ink)}.c-ink{background:var(--ink);color:var(--bg)}
+.c-green{background:var(--green);color:#fff}
+.anim{will-change:transform,opacity}
+/* scene 1 */
+.oldgrid{position:absolute;left:56px;right:56px;top:320px;columns:3;column-gap:28px;font:500 17.5px/1.52 "Chivo Mono",monospace}
+.oldgrid div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oldgrid .f{color:var(--red)}.oldgrid .t{color:var(--ink)}
+.circle{position:absolute;border-radius:50%;background:var(--red)}
+.caption{position:absolute;left:56px;bottom:110px;font-weight:700;font-size:34px;letter-spacing:-.01em;background:var(--bg);padding:8px 14px 8px 0}
+/* scene 2 */
+.chips{position:absolute;left:56px;top:370px;display:flex;flex-direction:column;gap:22px}
+.chips .chip{font-size:30px;padding:8px 14px}
+.q{font:500 26px "Chivo Mono",monospace;color:var(--mute);margin-left:22px}
+/* scene 3 */
+.shot{position:absolute;left:56px;top:370px;width:440px;height:248px;background:
+repeating-linear-gradient(135deg,#d6d0c3 0 14px,#cfc8ba 14px 28px);border:3px solid var(--ink)}
+.shot span{position:absolute;left:12px;bottom:10px;font:600 16px "Chivo Mono",monospace;background:var(--ink);color:var(--bg);padding:4px 8px}
+.shot b{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border:3px solid var(--ink);border-radius:50%}
+.shot b:before,.shot b:after{content:"";position:absolute;background:var(--ink)}
+.shot b:before{left:50%;top:-16px;bottom:-16px;width:3px;margin-left:-1.5px}
+.shot b:after{top:50%;left:-16px;right:-16px;height:3px;margin-top:-1.5px}
+.quote{position:absolute;left:540px;right:56px;top:350px;background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:24px 26px 28px}
+.quote small{display:block;font:600 16px "Chivo Mono",monospace;color:var(--mute);letter-spacing:.05em;margin-bottom:14px}
+.quote p{font-weight:800;font-size:34px;line-height:1.12;letter-spacing:-.02em;min-height:190px}
+.rule{position:absolute;left:56px;top:700px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.rule .x{font:600 22px "Chivo Mono",monospace;padding:6px 12px;border:2.5px solid var(--ink)}
+.rule .x s{text-decoration-thickness:3px;text-decoration-color:var(--red)}
+.rule .ok{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* scene 4-5 table */
+.tbl{position:absolute;left:56px;right:56px;top:350px}
+.tbl .hd,.tbl .r{display:grid;grid-template-columns:240px 1fr 1fr 1fr;align-items:center}
+.tbl .hd{font:600 20px "Chivo Mono",monospace;padding-bottom:10px;border-bottom:3px solid var(--line)}
+.tbl .r{height:74px;border-bottom:1px solid rgba(20,20,20,.15)}
+.cell{display:flex;align-items:baseline;gap:12px;position:relative}
+.val{font:700 34px "Chivo Mono",monospace;letter-spacing:-.02em}
+.st{font:600 17px "Chivo Mono",monospace;padding:3px 7px}
+.bar{position:absolute;left:0;bottom:-12px;height:5px}
+.hl{position:absolute;border:3.5px solid var(--ink);pointer-events:none}
+.note{position:absolute;font:600 21px/1.35 "Chivo Mono",monospace;background:var(--ink);color:var(--bg);padding:10px 14px}
+.dash{font:700 34px "Chivo Mono",monospace;color:var(--mute)}
+/* scene 6 */
+.stats{position:absolute;left:56px;right:56px;top:350px}
+.stats .hd,.stats .r{display:grid;grid-template-columns:1fr 190px 190px;align-items:center}
+.stats .hd{font:600 20px "Chivo Mono",monospace;padding-bottom:10px;border-bottom:3px solid var(--line)}
+.stats .hd span:not(:first-child),.stats .r span:not(:first-child){text-align:right}
+.stats .r{height:108px;border-bottom:1px solid rgba(20,20,20,.15)}
+.stats .lab{font-weight:700;font-size:31px;letter-spacing:-.01em}
+.stats .lab small{display:block;font:500 17px "Chivo Mono",monospace;color:var(--mute);margin-top:4px;letter-spacing:0}
+.stats .o{font:700 44px "Chivo Mono",monospace;color:var(--mute)}
+.stats .j{font:700 52px "Chivo Mono",monospace}
+.stats .jbox{position:absolute;right:0;top:-8px;width:198px;bottom:-6px;background:var(--yellow);z-index:-1}
+.foot{position:absolute;left:56px;right:56px;bottom:100px;font:500 16.5px/1.45 "Chivo Mono",monospace;color:#5d594f}
+/* end */
+.end{position:absolute;inset:0;background:var(--red)}
+.end h2{position:absolute;left:56px;top:330px;font-weight:800;font-size:132px;line-height:.95;letter-spacing:-.045em;color:var(--ink)}
+.end p{position:absolute;left:60px;top:640px;font-weight:700;font-size:30px;line-height:1.35;color:#5e0f0b}
+</style></head>
+<body><div id="stage">
+<div class="grid-bg"></div>
+<div class="head"><span class="badge" id="badge">GAMETAGGER × JEV</span><span class="no">Nº 01</span></div>
+
+<!-- S1: old way -->
+<div class="scene" id="s1">
+  <div class="circle anim" id="s1c" style="width:440px;height:440px;right:-120px;bottom:-230px"></div>
+  <div class="oldgrid" id="oldgrid"></div>
+  <h1 id="s1h">One big prompt.<br>One big guess.</h1>
+  <div class="caption anim" id="s1cap"><span id="s1n">55</span> answers. Every one a <u>yes</u> or a <span style="color:var(--red)">no</span>.</div>
+</div>
+
+<!-- S2: questions -->
+<div class="scene" id="s2">
+  <h1>What if every tag was<br>its own question?</h1>
+  <div class="chips" id="chips"></div>
+</div>
+
+<!-- S3: observer -->
+<div class="scene" id="s3">
+  <h1>Step 1: Claude describes<br>only what it sees.</h1>
+  <div class="shot anim" id="shot"><b></b><span>SCREENSHOT 4 OF 4</span></div>
+  <div class="quote anim" id="quote"><small>CLAUDE · WHAT'S IN THE IMAGE</small><p id="qt"></p></div>
+  <div class="rule anim" id="rule">
+    <span class="x"><s>genres</s></span><span class="x"><s>tags</s></span><span class="x"><s>guesses</s></span>
+    <span class="x ok">just what's visible</span>
+  </div>
+</div>
+
+<!-- S4/S5: Jev table -->
+<div class="scene" id="s4">
+  <h1 id="s4h"></h1>
+  <div class="tbl" id="tbl"></div>
+  <div class="hl anim" id="hl"></div>
+  <div class="note anim" id="note"></div>
+</div>
+
+<!-- S6: results -->
+<div class="scene" id="s6">
+  <h1>Top 100 games.<br>Same evidence, both ways.</h1>
+  <div class="stats" id="stats"></div>
+  <div class="foot anim" id="foot"></div>
+</div>
+
+<!-- S7: end -->
+<div class="scene" id="s7"><div class="end">
+  <h2>Every tag<br>has a reason.</h2>
+  <p id="endp"></p>
+</div></div>
+
+<div class="dot" id="dot"></div>
+</div>
+<script>
+const D = /*DATA*/;
+const $ = id => document.getElementById(id);
+const clamp = (x,a=0,b=1) => Math.max(a,Math.min(b,x));
+const ease = x => { x = clamp(x); return x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2; };
+const out = x => 1-Math.pow(1-clamp(x),3);
+const prog = (t,s,d=.45) => out((t-s)/d);
+const SC = [["s1",0,5.6],["s2",5.6,10.4],["s3",10.4,18.2],["s4",18.2,32.4],["s6",32.4,44.2],["s7",44.2,49]];
+const COL = {red:"var(--red)",blue:"var(--blue)",yellow:"var(--yellow)",ink:"var(--ink)",green:"var(--green)"};
+const STATE = {present:["YES","c-ink"],likely:["LIKELY","c-yellow"],absent:["NO","c-red"],insufficient_evidence:["NOT ENOUGH EVIDENCE","c-blue"]};
+const DOTS = ["var(--red)","var(--blue)","var(--yellow)","var(--blue)","var(--yellow)","var(--ink)"];
+
+// static build
+$("oldgrid").innerHTML = D.old.map(([k,v]) => `<div class="${v?'t':'f'}" data-i>${k.replace(/^(accessibility|demographic|engagement|gameplay|mechanic|monetization|narrative|protagonist|setting|theme|visual)_/,'')}: ${v?'yes':'no'}</div>`).join("");
+$("chips").innerHTML = D.ex.rows.map(r => `<div class="anim" style="display:flex;align-items:center"><span class="chip c-${r.color}">${r.tag}</span><span class="q">?</span></div>`).join("");
+$("tbl").innerHTML = `<div class="hd"><span></span><span>Jev · how sure</span><span id="oldh" class="anim">Old prompt</span><span id="plh" class="anim">Steam players</span></div>` +
+  D.ex.rows.map((r,i) => {
+    const [lab,cls] = STATE[r.state];
+    const barc = {present:"var(--ink)",likely:"var(--yellow)",absent:"var(--red)",insufficient_evidence:"var(--blue)"}[r.state];
+    const old = r.old===null ? `<span class="dash">—</span>` : `<span class="val">${r.old?'yes':'no'}</span>`;
+    const pl = r.players ? `<span class="val">tagged</span>` : `<span class="dash">—</span>`;
+    return `<div class="r"><span><span class="chip c-${r.color}">${r.tag}</span></span>
+      <span class="cell anim" id="j${i}"><span class="val">${r.p.toFixed(2)}</span><span class="st ${cls}">${lab==="NOT ENOUGH EVIDENCE"?"NOT ENOUGH<br>EVIDENCE":lab}</span><span class="bar" style="background:${barc};width:${Math.round(r.p*120)}px"></span></span>
+      <span class="cell anim" id="o${i}">${old}</span><span class="cell anim" id="p${i}">${pl}</span></div>`;
+  }).join("");
+$("stats").innerHTML = `<div class="hd"><span>Per game</span><span>Old prompt</span><span>Jev</span></div>` +
+  D.stats.map((s,i) => `<div class="r" style="position:relative"><span class="lab">${s.label}<small>${s.note}</small></span>
+    <span class="o anim" id="so${i}"></span><span class="j anim" id="sj${i}" style="position:relative"></span></div>`).join("");
+$("foot").textContent = D.foot;
+$("endp").innerHTML = D.end;
+
+function fmt(s, v){ return s.kind==="pct" ? (v>=.1?(100*v).toFixed(0):(100*v).toFixed(1))+"%" : s.kind==="cents" ? (100*v).toFixed(1)+"¢" : v.toFixed(0); }
+function show(el, p, dy=18){ el.style.opacity = p; el.style.transform = `translateY(${(1-p)*dy}px)`; }
+
+function render(t){
+  let di = 0;
+  for (const [id,a,b] of SC){
+    const el = $(id), fin = id==="s1" ? 1 : ease((t-a)/.35), fo = id==="s7" ? 1 : 1-ease((t-(b-.3))/.3);
+    el.style.opacity = (t>=a-0.001 && t<b) ? Math.min(fin,fo) : 0;
+    if (t>=a && t<b) $("dot").style.background = DOTS[SC.findIndex(s=>s[0]===id)];
+  }
+  $("dot").style.opacity = t<44.2 ? 1 : 0;
+  $("badge").parentElement.style.color = t>=44.2 ? "var(--ink)" : "";
+  // S1
+  const rows = document.querySelectorAll("#oldgrid div");
+  rows.forEach((r,i) => { r.style.opacity = t > .35 + i*.045 ? 1 : 0; });
+  $("s1c").style.transform = `scale(${.2+.8*out(t/1.6)})`;
+  const cp = prog(t,3.1,.5); show($("s1cap"),cp);
+  $("s1n").textContent = D.old.length;
+  document.querySelectorAll("#oldgrid .f").forEach(e => e.style.background = t>3.6 ? "rgba(211,40,31,.13)" : "none");
+  // S2
+  document.querySelectorAll("#chips > div").forEach((c,i) => { const p = prog(t,6.3+i*.33,.35); c.style.opacity=p; c.style.transform=`translateX(${(1-p)*-30}px)`; });
+  // S3
+  show($("shot"), prog(t,11,.5));
+  show($("quote"), prog(t,11.5,.5));
+  const q = D.ex.quote, n = Math.floor(clamp((t-12)/3.2)*q.length);
+  $("qt").textContent = "“" + q.slice(0,n) + (n<q.length ? "▍" : "”");
+  show($("rule"), prog(t,15.9,.45));
+  // S4/S5
+  const H = [[18.2,"Step 2: Jev judges each tag.<br>It never sees the name."],[24.4,"“Not enough evidence”<br>is an answer, not a no."],[28.1,"The old prompt had no word<br>for half of these."]];
+  let h = H[0][1]; for (const [s,x] of H) if (t>=s) h = x; if ($("s4h").innerHTML!==h) $("s4h").innerHTML = h;
+  D.ex.rows.forEach((r,i) => {
+    show($("j"+i), prog(t,19.3+i*.7,.4), 10);
+    show($("o"+i), prog(t,28.6+i*.18,.35), 10);
+    show($("p"+i), prog(t,30.3+i*.12,.35), 10);
+  });
+  show($("oldh"), prog(t,28.4,.35), 6); show($("plh"), prog(t,30.1,.35), 6);
+  const hl = $("hl"), note = $("note"), top = 350+46;
+  if (t < 28.1){
+    const p = prog(t,24.6,.4);
+    Object.assign(hl.style,{left:"48px",width:"984px",top:(top+5*74-4)+"px",height:"80px",opacity:p});
+    Object.assign(note.style,{left:"56px",top:(top+6*74+30)+"px",right:"",opacity:prog(t,25.1,.4)});
+    note.innerHTML = "The evidence never settled co-op, so Jev asks<br>for more instead of guessing.";
+  } else {
+    const p = prog(t,29.3,.4);
+    Object.assign(hl.style,{left:"48px",width:"984px",top:(top-4)+"px",height:"80px",opacity:0});
+    Object.assign(note.style,{left:"56px",top:(top+6*74+30)+"px",opacity:prog(t,30.8,.4)});
+    note.innerHTML = "Steam players tag 5 of these 6. Jev said yes to 4<br>and flagged the 5th. The old prompt found 2.";
+    hl.style.opacity = 0;
+  }
+  // S6
+  D.stats.forEach((s,i) => {
+    const st = 33.6 + i*1.05, p = prog(t,st,.35), c = clamp((t-st-.25)/.9);
+    show($("so"+i), p, 10); show($("sj"+i), prog(t,st+.35,.35), 10);
+    $("so"+i).textContent = fmt(s, s.old);
+    $("sj"+i).innerHTML = fmt(s, s.jev_from + (s.jev - s.jev_from)*ease(c)) + (s.star?"<sup style='font-size:24px'>*</sup>":"");
+  });
+  show($("foot"), prog(t,38.4,.5), 8);
+}
+window.render = render;
+render(0);
+</script>
+</body></html>
