@@ -1,0 +1,22 @@
+I've been tinkering with a side project called GameTagger - it looks at a game's store page, screenshots and trailer and tags what the game actually is. Genre, mechanics, setting, monetization, all of it.
+
+The first version was pretty simple: hand Claude everything about a game in one big prompt and ask for the tags. It worked, but I always had a nagging feeling - was it really looking at the game, or just remembering what it already knew about the name?
+
+So I tried a different approach. Claude now only describes what it can actually see in each screenshot and trailer clip (it's not allowed to name genres). Then Jev, a model from TypeSafe, judges each of 189 tags one at a time using only the evidence that's allowed to answer it - and it never gets told the game's name. For every tag it can say yes, no, "not enough evidence" or "conflicting", which turns out to matter a lot.
+
+To see if it was worth it, I ran both approaches on this week's top 100 games (50 most-played on Steam, 50 top-grossing on Google Play) and checked them against the tags Steam players vote on themselves:
+
+- Jev found 77% of what players tagged, vs 45% for the old prompt on Opus
+- On tags both versions can describe, they were basically tied (77% vs 78%) - the gain comes from covering a lot more ground
+- Jev said "no" to something players had tagged less than 1% of the time, vs about 6% for the old approach
+- 35 tags per game instead of 17, and every one points back to the evidence behind it
+
+The part I was most surprised by was cost. Jev's judging step costs under a third of a cent per game - roughly 1/14th of a single Opus call. Almost all of the cost (and time) is Claude describing the images, so that's what I'm working on now. Moving that step to batch processing already cuts it in half, and I'm testing whether a smaller model can do the describing without losing accuracy.
+
+Why does any of this matter? Having spent a lot of my career around game stores and platforms, better tags are what make discovery work - they power recommendations, "more like this", finding true comps for a pitch or market sizing, and understanding what's actually trending beyond the top-level genre. And it matters just as much to know what you don't know - a tag that says "not enough evidence" is a lot more useful than a confident guess.
+
+Next steps: a blind human review to measure how often each approach is wrong (Steam tags can only tell you what's missing, not what's made up), getting the per-game cost down, and opening up a site where anyone can browse the results and request games to be tagged.
+
+If you work on discovery, store metadata or market research, I'd love to hear how you'd use something like this - and which games you'd want tagged first!
+
+Full results, methodology and every tag's definition: [link]
