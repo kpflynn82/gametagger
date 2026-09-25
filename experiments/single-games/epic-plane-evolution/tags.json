@@ -1,0 +1,2712 @@
+{
+ "game": "Epic Plane Evolution",
+ "developer": "Voodoo",
+ "app_store_id": "6504122823",
+ "run_date": "2026-09-25",
+ "evidence": {
+  "sources": [
+   "Apple App Store listing (US)"
+  ],
+  "screenshots": 6,
+  "trailer": null,
+  "not_found": [
+   "Google Play listing (US)",
+   "trailer (App Store feed or YouTube by exact title)"
+  ]
+ },
+ "models": {
+  "observer": "claude-sonnet-5",
+  "jev": "jev-1.13.0"
+ },
+ "cost_usd": {
+  "anthropic": 0.052584,
+  "typesafe": 0.002139648,
+  "total": 0.054723648
+ },
+ "primary_genre": null,
+ "genre_distribution": [
+  [
+   "insufficient_evidence",
+   0.4609
+  ],
+  [
+   "endless_runner",
+   0.2156
+  ],
+  [
+   "arcade_score_attack",
+   0.147
+  ],
+  [
+   "arcade_action",
+   0.0943
+  ],
+  [
+   "casual",
+   0.0637
+  ]
+ ],
+ "family_probabilities": {
+  "racing": 0.09,
+  "action": 0.41,
+  "simulation_management": 0.01,
+  "casual_idle": 0.49
+ },
+ "counts": {
+  "strong": 13,
+  "likely": 15,
+  "absent": 4,
+  "conflicting": 0,
+  "unknown": 157,
+  "not_evaluated": 0,
+  "error": 0
+ },
+ "tags": [
+  {
+   "id": "gameplay_rpg",
+   "label": "Role-playing gameplay",
+   "category": "gameplay",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.44,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.44,
+    "insufficient_evidence": 0.37,
+    "absent": 0.19
+   }
+  },
+  {
+   "id": "gameplay_shooter",
+   "label": "Shooter gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.82,
+    "absent": 0.18
+   }
+  },
+  {
+   "id": "gameplay_platformer",
+   "label": "Platformer gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.8,
+    "absent": 0.2
+   }
+  },
+  {
+   "id": "gameplay_action",
+   "label": "Action gameplay",
+   "category": "gameplay",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.99,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.99,
+    "insufficient_evidence": 0.01,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "gameplay_adventure",
+   "label": "Adventure gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.14,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.14,
+    "insufficient_evidence": 0.67,
+    "absent": 0.19
+   }
+  },
+  {
+   "id": "gameplay_strategy",
+   "label": "Strategy gameplay",
+   "category": "gameplay",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 1.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 1.0,
+    "insufficient_evidence": 0.0,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "gameplay_simulation",
+   "label": "Simulation gameplay",
+   "category": "gameplay",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.7,
+   "probabilities": {
+    "conflicting_evidence": 0.01,
+    "present": 0.7,
+    "insufficient_evidence": 0.27,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "gameplay_management",
+   "label": "Management gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.89,
+    "absent": 0.11
+   }
+  },
+  {
+   "id": "gameplay_puzzle",
+   "label": "Puzzle-solving gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.14,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.14,
+    "insufficient_evidence": 0.8,
+    "absent": 0.06
+   }
+  },
+  {
+   "id": "gameplay_stealth",
+   "label": "Stealth gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.9,
+    "absent": 0.1
+   }
+  },
+  {
+   "id": "gameplay_survival",
+   "label": "Survival gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.87,
+    "absent": 0.13
+   }
+  },
+  {
+   "id": "gameplay_exploration",
+   "label": "Exploration gameplay",
+   "category": "gameplay",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.86,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.86,
+    "insufficient_evidence": 0.13,
+    "absent": 0.01
+   }
+  },
+  {
+   "id": "gameplay_sandbox",
+   "label": "Sandbox play",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.9,
+    "absent": 0.1
+   }
+  },
+  {
+   "id": "gameplay_roguelike",
+   "label": "Run-based roguelike structure",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.02,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.02,
+    "insufficient_evidence": 0.96,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "gameplay_fighting",
+   "label": "Fighting gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.85,
+    "absent": 0.15
+   }
+  },
+  {
+   "id": "gameplay_racing",
+   "label": "Racing gameplay",
+   "category": "gameplay",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.45,
+   "probabilities": {
+    "conflicting_evidence": 0.09,
+    "present": 0.45,
+    "insufficient_evidence": 0.42,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "gameplay_sports",
+   "label": "Sports gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.01,
+    "insufficient_evidence": 0.76,
+    "absent": 0.23
+   }
+  },
+  {
+   "id": "gameplay_rhythm",
+   "label": "Rhythm gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.98,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "gameplay_card_based",
+   "label": "Card-based gameplay",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.93,
+    "absent": 0.07
+   }
+  },
+  {
+   "id": "gameplay_tower_defense",
+   "label": "Tower defense elements",
+   "category": "gameplay",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.96,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_melee_combat",
+   "label": "Melee combat",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.9,
+    "absent": 0.1
+   }
+  },
+  {
+   "id": "mechanic_ranged_combat",
+   "label": "Ranged combat",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.9,
+    "absent": 0.1
+   }
+  },
+  {
+   "id": "mechanic_real_time_combat",
+   "label": "Real-time combat",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.04,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "mechanic_turn_based_combat",
+   "label": "Turn-based combat",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.87,
+    "absent": 0.13
+   }
+  },
+  {
+   "id": "mechanic_parry",
+   "label": "Parry mechanic",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.04,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "mechanic_dodge_roll",
+   "label": "Dodge roll or timed evasive maneuver",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "mechanic_stamina",
+   "label": "Stamina resource",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.98,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "mechanic_crafting",
+   "label": "Crafting",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.88,
+    "absent": 0.12
+   }
+  },
+  {
+   "id": "mechanic_inventory",
+   "label": "Inventory system",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.23,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.23,
+    "insufficient_evidence": 0.75,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "mechanic_dialogue_choices",
+   "label": "Dialogue choices",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.97,
+    "absent": 0.03
+   }
+  },
+  {
+   "id": "mechanic_leveling",
+   "label": "Experience and levels",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.32,
+   "probabilities": {
+    "conflicting_evidence": 0.01,
+    "present": 0.32,
+    "insufficient_evidence": 0.61,
+    "absent": 0.06
+   }
+  },
+  {
+   "id": "mechanic_skill_tree",
+   "label": "Skill tree",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.01,
+    "insufficient_evidence": 0.95,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_equipment",
+   "label": "Equipment and loadouts",
+   "category": "mechanic",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.75,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.75,
+    "insufficient_evidence": 0.22,
+    "absent": 0.03
+   }
+  },
+  {
+   "id": "mechanic_loot",
+   "label": "Loot drops",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.19,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.19,
+    "insufficient_evidence": 0.77,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_upgrades",
+   "label": "Upgrade system",
+   "category": "mechanic",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 1.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 1.0,
+    "insufficient_evidence": 0.0,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "mechanic_building",
+   "label": "Building and construction",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.92,
+    "absent": 0.08
+   }
+  },
+  {
+   "id": "mechanic_base_building",
+   "label": "Base or settlement building",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.94,
+    "absent": 0.06
+   }
+  },
+  {
+   "id": "mechanic_farming",
+   "label": "Farming",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.92,
+    "absent": 0.08
+   }
+  },
+  {
+   "id": "mechanic_resource_gathering",
+   "label": "Resource gathering",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.05,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.05,
+    "insufficient_evidence": 0.87,
+    "absent": 0.08
+   }
+  },
+  {
+   "id": "mechanic_resource_management",
+   "label": "Resource management",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.36,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.36,
+    "insufficient_evidence": 0.6,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_economy",
+   "label": "In-game economy and trading",
+   "category": "mechanic",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.6,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.6,
+    "insufficient_evidence": 0.36,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_collection",
+   "label": "Collecting",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.29,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.29,
+    "insufficient_evidence": 0.62,
+    "absent": 0.09
+   }
+  },
+  {
+   "id": "mechanic_boss_battles",
+   "label": "Boss battles",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.99,
+    "absent": 0.01
+   }
+  },
+  {
+   "id": "mechanic_permadeath",
+   "label": "Permadeath",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.99,
+    "absent": 0.01
+   }
+  },
+  {
+   "id": "mechanic_combo_system",
+   "label": "Combo system",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 1.0,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "mechanic_vehicles",
+   "label": "Drivable vehicles",
+   "category": "mechanic",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 1.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 1.0,
+    "insufficient_evidence": 0.0,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "mechanic_parkour_climbing",
+   "label": "Parkour and climbing",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.95,
+    "absent": 0.05
+   }
+  },
+  {
+   "id": "mechanic_physics",
+   "label": "Physics-based interaction",
+   "category": "mechanic",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 1.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 1.0,
+    "insufficient_evidence": 0.0,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "mechanic_character_customization",
+   "label": "Character customization",
+   "category": "mechanic",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.5,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.5,
+    "insufficient_evidence": 0.44,
+    "absent": 0.06
+   }
+  },
+  {
+   "id": "mechanic_companions",
+   "label": "Companions or party members",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.97,
+    "absent": 0.03
+   }
+  },
+  {
+   "id": "mechanic_time_management",
+   "label": "Time management",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.97,
+    "absent": 0.03
+   }
+  },
+  {
+   "id": "mechanic_survival_needs",
+   "label": "Hunger, thirst or survival needs",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.96,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_deck_building",
+   "label": "Deck building",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.91,
+    "absent": 0.09
+   }
+  },
+  {
+   "id": "mechanic_unit_command",
+   "label": "Unit command",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.81,
+    "absent": 0.19
+   }
+  },
+  {
+   "id": "mechanic_puzzle_environmental",
+   "label": "Environmental puzzles",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.96,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_quests",
+   "label": "Quests and missions",
+   "category": "mechanic",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.87,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.87,
+    "insufficient_evidence": 0.12,
+    "absent": 0.01
+   }
+  },
+  {
+   "id": "mechanic_fishing",
+   "label": "Fishing",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.96,
+    "absent": 0.04
+   }
+  },
+  {
+   "id": "mechanic_cooking",
+   "label": "Cooking",
+   "category": "mechanic",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.93,
+    "absent": 0.07
+   }
+  },
+  {
+   "id": "narrative_story_driven",
+   "label": "Story-driven",
+   "category": "narrative",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.07,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.93,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "narrative_branching",
+   "label": "Branching narrative",
+   "category": "narrative",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.98,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "narrative_moral_choices",
+   "label": "Moral choices",
+   "category": "narrative",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.98,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "narrative_multiple_endings",
+   "label": "Multiple endings",
+   "category": "narrative",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 1.0,
+    "absent": 0.0
+   }
+  },
+  {
+   "id": "narrative_romance",
+   "label": "Romance options",
+   "category": "narrative",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.98,
+    "absent": 0.02
+   }
+  },
+  {
+   "id": "narrative_voice_acting",
+   "label": "Voiced dialogue",
+   "category": "narrative",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "narrative_minimal_story",
+   "label": "Minimal or no story",
+   "category": "narrative",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.56,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.44,
+    "present": 0.56
+   }
+  },
+  {
+   "id": "world_open_world",
+   "label": "Open world",
+   "category": "world",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.05,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.95,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "world_procedural",
+   "label": "Procedural generation",
+   "category": "world",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 1.0
+   }
+  },
+  {
+   "id": "world_linear_levels",
+   "label": "Linear levels or stages",
+   "category": "world",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.72,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.27,
+    "present": 0.72
+   }
+  },
+  {
+   "id": "world_ability_gated",
+   "label": "Ability-gated interconnected map",
+   "category": "world",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.02,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "world_hub",
+   "label": "Hub world",
+   "category": "world",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "world_persistent_online",
+   "label": "Persistent online world",
+   "category": "world",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "world_sandbox_destructible",
+   "label": "Destructible or editable terrain",
+   "category": "world",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.99
+   }
+  },
+  {
+   "id": "feature_multiplayer",
+   "label": "Multiplayer",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_single_player",
+   "label": "Single-player mode",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.14,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.86,
+    "present": 0.14
+   }
+  },
+  {
+   "id": "feature_online_multiplayer",
+   "label": "Online multiplayer",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_local_multiplayer",
+   "label": "Local multiplayer",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_split_screen",
+   "label": "Split-screen",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_massively_multiplayer",
+   "label": "Massively multiplayer",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.03,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.97,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_cross_platform",
+   "label": "Cross-platform play",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_controller_support",
+   "label": "Controller support",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "insufficient_evidence": 1.0,
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_touch_controls",
+   "label": "Touch controls",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.28,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.71,
+    "present": 0.28
+   }
+  },
+  {
+   "id": "feature_user_content",
+   "label": "Mods or player-made content",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_offline_play",
+   "label": "Offline play",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "insufficient_evidence": 1.0,
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "feature_cloud_saves",
+   "label": "Cloud saves",
+   "category": "feature",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.03,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.97,
+    "present": 0.03
+   }
+  },
+  {
+   "id": "engagement_co_op",
+   "label": "Cooperative multiplayer",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_pvp",
+   "label": "Player versus player",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_pve",
+   "label": "Player versus environment",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.43,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.55,
+    "present": 0.43
+   }
+  },
+  {
+   "id": "engagement_ranked",
+   "label": "Ranked or competitive play",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.98,
+    "present": 0.01
+   }
+  },
+  {
+   "id": "engagement_leaderboards",
+   "label": "Leaderboards",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.19,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.81,
+    "present": 0.19
+   }
+  },
+  {
+   "id": "engagement_achievements",
+   "label": "Achievements",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.2,
+   "probabilities": {
+    "insufficient_evidence": 0.79,
+    "conflicting_evidence": 0.0,
+    "absent": 0.01,
+    "present": 0.2
+   }
+  },
+  {
+   "id": "engagement_guilds",
+   "label": "Guilds or clans",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_live_events",
+   "label": "Live events",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.48,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.5,
+    "present": 0.48
+   }
+  },
+  {
+   "id": "engagement_battle_pass",
+   "label": "Battle pass",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_daily_rewards",
+   "label": "Daily rewards or quests",
+   "category": "engagement",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 1.0,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.0,
+    "present": 1.0
+   }
+  },
+  {
+   "id": "engagement_energy_system",
+   "label": "Energy or stamina timers",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_gacha",
+   "label": "Gacha or loot boxes",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "insufficient_evidence": 0.99,
+    "conflicting_evidence": 0.0,
+    "absent": 0.01,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_auto_play",
+   "label": "Auto-play or idle progress",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_trading_between_players",
+   "label": "Player-to-player trading",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "engagement_spectating_streaming",
+   "label": "Spectating or streaming features",
+   "category": "engagement",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "monetization_free_to_play",
+   "label": "Free to play",
+   "category": "monetization",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 1.0,
+   "probabilities": {
+    "insufficient_evidence": 0.0,
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "present": 1.0
+   }
+  },
+  {
+   "id": "monetization_premium",
+   "label": "Premium purchase",
+   "category": "monetization",
+   "tier": "absent",
+   "state": "absent",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.98,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.02,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "monetization_subscription",
+   "label": "Subscription",
+   "category": "monetization",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.4,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.6,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "monetization_in_app_purchases",
+   "label": "In-game purchases",
+   "category": "monetization",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.01
+   }
+  },
+  {
+   "id": "monetization_cosmetic_only",
+   "label": "Cosmetic-only purchases",
+   "category": "monetization",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.04,
+    "conflicting_evidence": 0.02,
+    "insufficient_evidence": 0.94,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "monetization_pay_to_progress",
+   "label": "Pay-to-progress or pay-to-win",
+   "category": "monetization",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.02,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.97,
+    "present": 0.02
+   }
+  },
+  {
+   "id": "monetization_dlc",
+   "label": "Paid DLC or expansions",
+   "category": "monetization",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "monetization_ads",
+   "label": "Ad-supported",
+   "category": "monetization",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_fantasy",
+   "label": "Fantasy setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.31,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.6900000000000001,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_dark_fantasy",
+   "label": "Dark fantasy setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.21,
+    "conflicting_evidence": 0.02,
+    "insufficient_evidence": 0.77,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_sci_fi",
+   "label": "Science-fiction setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.2,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.8,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_space",
+   "label": "Outer space",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.38,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.62,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_cyberpunk",
+   "label": "Cyberpunk setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "insufficient_evidence": 0.83,
+    "conflicting_evidence": 0.0,
+    "absent": 0.17,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_steampunk",
+   "label": "Steampunk setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.07,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.93,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_post_apocalyptic",
+   "label": "Post-apocalyptic setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.06,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.94,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_historical",
+   "label": "Historical setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "insufficient_evidence": 0.98,
+    "conflicting_evidence": 0.0,
+    "absent": 0.02,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_medieval",
+   "label": "Medieval setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "insufficient_evidence": 0.81,
+    "conflicting_evidence": 0.0,
+    "absent": 0.19,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_ancient",
+   "label": "Ancient-world setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.15,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.85,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_modern_day",
+   "label": "Present-day setting",
+   "category": "setting",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.5,
+   "probabilities": {
+    "insufficient_evidence": 0.49,
+    "conflicting_evidence": 0.01,
+    "absent": 0.0,
+    "present": 0.5
+   }
+  },
+  {
+   "id": "setting_urban",
+   "label": "Urban environments",
+   "category": "setting",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.91,
+   "probabilities": {
+    "absent": 0.0,
+    "conflicting_evidence": 0.01,
+    "insufficient_evidence": 0.08,
+    "present": 0.91
+   }
+  },
+  {
+   "id": "setting_rural",
+   "label": "Rural or countryside environments",
+   "category": "setting",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.62,
+   "probabilities": {
+    "absent": 0.01,
+    "conflicting_evidence": 0.03,
+    "insufficient_evidence": 0.34,
+    "present": 0.62
+   }
+  },
+  {
+   "id": "setting_wilderness",
+   "label": "Wilderness",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.35,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.02,
+    "insufficient_evidence": 0.61,
+    "present": 0.35
+   }
+  },
+  {
+   "id": "setting_underwater",
+   "label": "Underwater",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.14,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.86,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_underground",
+   "label": "Underground",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.1,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.9,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_military",
+   "label": "Military setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.14,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.86,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_western",
+   "label": "Western setting",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.09,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.91,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_mythology",
+   "label": "Mythology",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.05,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.95,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_pirate",
+   "label": "Pirates and seafaring",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.23,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.77,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_feudal_japan",
+   "label": "Feudal Japan",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.19,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.81,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_zombies",
+   "label": "Zombies or undead outbreak",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.11,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.89,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_superhero",
+   "label": "Superheroes",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.1,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.9,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "setting_school",
+   "label": "School or campus",
+   "category": "setting",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.07,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.93,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "tone_horror",
+   "label": "Horror tone",
+   "category": "tone",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.52,
+   "probabilities": {
+    "absent": 0.07,
+    "conflicting_evidence": 0.07,
+    "insufficient_evidence": 0.34,
+    "present": 0.52
+   }
+  },
+  {
+   "id": "tone_comedy",
+   "label": "Comedic tone",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.01,
+    "insufficient_evidence": 0.98,
+    "present": 0.01
+   }
+  },
+  {
+   "id": "tone_cozy",
+   "label": "Cozy and relaxing",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.15,
+    "absent": 0.1,
+    "insufficient_evidence": 0.75,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "tone_dark",
+   "label": "Dark or grim tone",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.02,
+   "probabilities": {
+    "conflicting_evidence": 0.04,
+    "absent": 0.35,
+    "insufficient_evidence": 0.59,
+    "present": 0.02
+   }
+  },
+  {
+   "id": "tone_whimsical",
+   "label": "Whimsical or lighthearted",
+   "category": "tone",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.7,
+   "probabilities": {
+    "conflicting_evidence": 0.04,
+    "absent": 0.01,
+    "insufficient_evidence": 0.25,
+    "present": 0.7
+   }
+  },
+  {
+   "id": "tone_mystery",
+   "label": "Mystery",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.1,
+    "insufficient_evidence": 0.9,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "tone_psychological",
+   "label": "Psychological",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.06,
+    "insufficient_evidence": 0.9400000000000001,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "tone_emotional",
+   "label": "Emotional drama",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.04,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "tone_suspense",
+   "label": "Suspense and tension",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.4,
+   "probabilities": {
+    "conflicting_evidence": 0.01,
+    "absent": 0.03,
+    "insufficient_evidence": 0.56,
+    "present": 0.4
+   }
+  },
+  {
+   "id": "tone_epic",
+   "label": "Epic scale",
+   "category": "tone",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.12,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.12,
+    "insufficient_evidence": 0.76,
+    "present": 0.12
+   }
+  },
+  {
+   "id": "theme_war",
+   "label": "War",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.05,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.95,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "theme_crime",
+   "label": "Crime",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.08,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.92,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "theme_revenge",
+   "label": "Revenge",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.04,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "theme_coming_of_age",
+   "label": "Coming of age",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.02,
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.98
+   }
+  },
+  {
+   "id": "theme_family",
+   "label": "Family",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.04,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "theme_friendship",
+   "label": "Friendship",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.03,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.97,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "theme_environment",
+   "label": "Nature and environment",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.02,
+   "probabilities": {
+    "absent": 0.03,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.95,
+    "present": 0.02
+   }
+  },
+  {
+   "id": "theme_politics_power",
+   "label": "Politics and power",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "absent": 0.05,
+    "conflicting_evidence": 0.0,
+    "present": 0.01,
+    "insufficient_evidence": 0.94
+   }
+  },
+  {
+   "id": "theme_survival_against_odds",
+   "label": "Survival against the odds",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.05,
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "insufficient_evidence": 0.95
+   }
+  },
+  {
+   "id": "theme_identity",
+   "label": "Identity and self-discovery",
+   "category": "theme",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.05,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.95,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "protagonist_customizable",
+   "label": "Player-created protagonist",
+   "category": "protagonist",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.03,
+    "insufficient_evidence": 0.97,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "protagonist_predefined",
+   "label": "Predefined protagonist",
+   "category": "protagonist",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.04,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "protagonist_ensemble",
+   "label": "Multiple playable characters",
+   "category": "protagonist",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.02,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "protagonist_non_human",
+   "label": "Non-human protagonist",
+   "category": "protagonist",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.4,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.27,
+    "insufficient_evidence": 0.33,
+    "present": 0.4
+   }
+  },
+  {
+   "id": "protagonist_female",
+   "label": "Female protagonist",
+   "category": "protagonist",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.04,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "protagonist_silent",
+   "label": "Silent protagonist",
+   "category": "protagonist",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 0.99,
+    "present": 0.01
+   }
+  },
+  {
+   "id": "protagonist_antihero",
+   "label": "Anti-hero or villain protagonist",
+   "category": "protagonist",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.02,
+    "insufficient_evidence": 0.98,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "visual_pixel_art",
+   "label": "Pixel art",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.0,
+    "absent": 0.33,
+    "insufficient_evidence": 0.67
+   }
+  },
+  {
+   "id": "visual_realistic",
+   "label": "Realistic visual style",
+   "category": "visual",
+   "tier": "absent",
+   "state": "absent",
+   "p_present": 0.08,
+   "probabilities": {
+    "conflicting_evidence": 0.23,
+    "present": 0.08,
+    "absent": 0.53,
+    "insufficient_evidence": 0.16
+   }
+  },
+  {
+   "id": "visual_stylized",
+   "label": "Stylized visual presentation",
+   "category": "visual",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.9,
+   "probabilities": {
+    "conflicting_evidence": 0.09,
+    "present": 0.9,
+    "absent": 0.0,
+    "insufficient_evidence": 0.01
+   }
+  },
+  {
+   "id": "visual_first_person",
+   "label": "First-person gameplay perspective",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "present": 0.01,
+    "absent": 0.3,
+    "insufficient_evidence": 0.69
+   }
+  },
+  {
+   "id": "visual_third_person",
+   "label": "Third-person gameplay perspective",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.45,
+   "probabilities": {
+    "conflicting_evidence": 0.01,
+    "present": 0.45,
+    "absent": 0.0,
+    "insufficient_evidence": 0.54
+   }
+  },
+  {
+   "id": "visual_isometric",
+   "label": "Isometric perspective",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.03,
+    "present": 0.01,
+    "absent": 0.11,
+    "insufficient_evidence": 0.85
+   }
+  },
+  {
+   "id": "visual_side_scrolling",
+   "label": "Side-scrolling perspective",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.12,
+   "probabilities": {
+    "conflicting_evidence": 0.08,
+    "present": 0.12,
+    "absent": 0.02,
+    "insufficient_evidence": 0.78
+   }
+  },
+  {
+   "id": "visual_top_down",
+   "label": "Top-down perspective",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.11,
+   "probabilities": {
+    "conflicting_evidence": 0.12,
+    "absent": 0.18,
+    "insufficient_evidence": 0.59,
+    "present": 0.11
+   }
+  },
+  {
+   "id": "visual_2d",
+   "label": "2D graphics",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.28,
+   "probabilities": {
+    "conflicting_evidence": 0.06,
+    "absent": 0.31,
+    "insufficient_evidence": 0.35,
+    "present": 0.28
+   }
+  },
+  {
+   "id": "visual_3d",
+   "label": "3D graphics",
+   "category": "visual",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.9400000000000001,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 0.06,
+    "present": 0.9400000000000001
+   }
+  },
+  {
+   "id": "visual_hand_drawn",
+   "label": "Hand-drawn art",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.04,
+   "probabilities": {
+    "conflicting_evidence": 0.02,
+    "absent": 0.35,
+    "insufficient_evidence": 0.59,
+    "present": 0.04
+   }
+  },
+  {
+   "id": "visual_cel_shaded",
+   "label": "Cel-shaded",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.22,
+   "probabilities": {
+    "conflicting_evidence": 0.05,
+    "insufficient_evidence": 0.68,
+    "absent": 0.05,
+    "present": 0.22
+   }
+  },
+  {
+   "id": "visual_low_poly",
+   "label": "Low-poly",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.19,
+   "probabilities": {
+    "conflicting_evidence": 0.01,
+    "absent": 0.01,
+    "insufficient_evidence": 0.79,
+    "present": 0.19
+   }
+  },
+  {
+   "id": "visual_voxel",
+   "label": "Voxel art",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.21,
+    "insufficient_evidence": 0.79,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "visual_anime",
+   "label": "Anime style",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.32,
+    "insufficient_evidence": 0.68,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "visual_cartoon",
+   "label": "Cartoon style",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.42,
+   "probabilities": {
+    "conflicting_evidence": 0.05,
+    "absent": 0.01,
+    "insufficient_evidence": 0.52,
+    "present": 0.42
+   }
+  },
+  {
+   "id": "visual_minimalist",
+   "label": "Minimalist style",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.3,
+   "probabilities": {
+    "conflicting_evidence": 0.24,
+    "absent": 0.11,
+    "insufficient_evidence": 0.35,
+    "present": 0.3
+   }
+  },
+  {
+   "id": "visual_retro",
+   "label": "Retro presentation",
+   "category": "visual",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.01,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.14,
+    "insufficient_evidence": 0.85,
+    "present": 0.01
+   }
+  },
+  {
+   "id": "visual_vibrant",
+   "label": "Vibrant colours",
+   "category": "visual",
+   "tier": "strong",
+   "state": "present",
+   "p_present": 0.85,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 0.15,
+    "present": 0.85
+   }
+  },
+  {
+   "id": "visual_dark_atmospheric",
+   "label": "Dark atmospheric visuals",
+   "category": "visual",
+   "tier": "absent",
+   "state": "absent",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.01,
+    "absent": 0.59,
+    "insufficient_evidence": 0.4,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "accessibility_difficulty_options",
+   "label": "Difficulty options",
+   "category": "accessibility",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "accessibility_assist_modes",
+   "label": "Assist modes",
+   "category": "accessibility",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "accessibility_colorblind",
+   "label": "Colourblind options",
+   "category": "accessibility",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "accessibility_subtitles",
+   "label": "Subtitle options",
+   "category": "accessibility",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "accessibility_remapping",
+   "label": "Control remapping",
+   "category": "accessibility",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.0,
+    "insufficient_evidence": 1.0,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "audience_family_friendly",
+   "label": "Family friendly",
+   "category": "audience",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.56,
+   "probabilities": {
+    "conflicting_evidence": 0.04,
+    "absent": 0.01,
+    "insufficient_evidence": 0.39,
+    "present": 0.56
+   }
+  },
+  {
+   "id": "audience_mature",
+   "label": "Mature content",
+   "category": "audience",
+   "tier": "absent",
+   "state": "absent",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.9400000000000001,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.06,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "audience_graphic_violence",
+   "label": "Graphic violence",
+   "category": "audience",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "absent": 0.45,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.55,
+    "present": 0.0
+   }
+  },
+  {
+   "id": "audience_casual",
+   "label": "Casual-friendly",
+   "category": "audience",
+   "tier": "likely",
+   "state": "present",
+   "p_present": 0.75,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.01,
+    "insufficient_evidence": 0.24,
+    "present": 0.75
+   }
+  },
+  {
+   "id": "audience_challenging",
+   "label": "High difficulty",
+   "category": "audience",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.02,
+   "probabilities": {
+    "absent": 0.03,
+    "conflicting_evidence": 0.0,
+    "insufficient_evidence": 0.95,
+    "present": 0.02
+   }
+  },
+  {
+   "id": "audience_educational",
+   "label": "Educational",
+   "category": "audience",
+   "tier": "unknown",
+   "state": "insufficient_evidence",
+   "p_present": 0.0,
+   "probabilities": {
+    "conflicting_evidence": 0.0,
+    "absent": 0.04,
+    "insufficient_evidence": 0.96,
+    "present": 0.0
+   }
+  }
+ ]
+}
