@@ -22,6 +22,25 @@ GAMETAGGER_LOCAL_ROLE=reviewer ./scripts/start_workspace.sh
 
 Open **http://127.0.0.1:8000**. See the [local runbook](docs/LOCAL_WORKSPACE.md), [measurement contract](docs/METRICS.md), and [execution status](docs/EXECUTION_STATUS.md). This is a working local application, not a public deployment or a newly validated model experiment.
 
+## Rich Genome mode
+
+`gametagger-genome` asks Jev about 189 attribute tags plus the v4.1 genre hierarchy. It reads
+store pages (Steam, App Store) and Wikipedia by exact ID, including store screenshots and
+trailers sampled into short frame bursts. It can use YouTube's API as a trailer backup. It
+defaults to a dry run that makes no model calls; live runs need `--live`. See [rich Genome mode](docs/GENOME_RICH_MODE.md)
+for why the pilot path returned few tags and how to run it.
+
+```bash
+gametagger-genome fixtures/genome/hollow_orchard.dossier.json            # dry run
+gametagger-genome fixtures/genome/hollow_orchard.dossier.json --offline  # pipeline check with mocks
+```
+
+`gametagger-compare` benchmarks rich mode against the original site's single Claude call. It
+runs on the top 50 Steam games and the top 50 Google Play grossing games, and both methods see
+identical evidence. It records per-stage timing, tokens and list-price cost under a hard spending
+cap, then scores against Steam user tags and a blinded owner review. Only `run --live` costs
+money. See [the benchmark runbook](docs/JEV_VS_LEGACY_BENCHMARK.md).
+
 ## Setup
 
 Python 3.11 or newer is required. The checked-in `uv.lock` records the tested dependencies.

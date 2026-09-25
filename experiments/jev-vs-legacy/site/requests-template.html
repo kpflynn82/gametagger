@@ -1,0 +1,252 @@
+<title>GameTagger Requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;800&family=Chivo+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --page:#f6f7f9;--surface:#ffffff;--ink:#11161c;--ink-2:#454c55;--muted:#6f7680;--line:#e1e4e9;
+  --field:#fbfbfc;--jev:#2a78d6;--focus:#2a78d6;
+  --new-bg:#eef4fd;--new-ink:#1c5cab;--ok-bg:#e8f5ec;--ok-ink:#006300;--no-bg:#fbeceb;--no-ink:#a3302f;
+  --done-bg:#ecebf8;--done-ink:#4a3aa7;--note-bg:#fff4e8;--note-ink:#7a3a0c;
+  --sans:Chivo,"Liberation Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Chivo Mono",ui-monospace,"DejaVu Sans Mono",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --page:#0e1114;--surface:#161a1f;--ink:#f1f3f6;--ink-2:#b8bfc8;--muted:#8b939c;--line:#2a3038;
+  --field:#1b2026;--jev:#3987e5;--focus:#86b6ef;
+  --new-bg:#15263d;--new-ink:#9ec5f4;--ok-bg:#12281a;--ok-ink:#6fd07a;--no-bg:#301716;--no-ink:#f08a89;
+  --done-bg:#211d3d;--done-ink:#b3aaf2;--note-bg:#2b1d10;--note-ink:#f3c79c}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --page:#0e1114;--surface:#161a1f;--ink:#f1f3f6;--ink-2:#b8bfc8;--muted:#8b939c;--line:#2a3038;
+  --field:#1b2026;--jev:#3987e5;--focus:#86b6ef;
+  --new-bg:#15263d;--new-ink:#9ec5f4;--ok-bg:#12281a;--ok-ink:#6fd07a;--no-bg:#301716;--no-ink:#f08a89;
+  --done-bg:#211d3d;--done-ink:#b3aaf2;--note-bg:#2b1d10;--note-ink:#f3c79c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:40px 72px;display:flex;flex-direction:column;gap:28px}
+.eyebrow{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--jev);font-weight:700}
+h1{font-weight:800;font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-.02em;margin:12px 0 0;text-wrap:balance}
+h2{font-weight:800;font-size:22px;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.lead{color:var(--ink-2);max-width:62ch;margin-top:14px;font-size:17.5px}
+.lead a{color:var(--jev)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.f{display:flex;flex-direction:column;gap:5px}
+.f.full{grid-column:1/-1}
+label{font-weight:600;font-size:14px}
+label small{font-weight:400;color:var(--muted)}
+input,select,textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
+textarea{resize:vertical;min-height:70px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+button{font:600 15px var(--sans);border-radius:8px;padding:9px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+button.primary{background:var(--jev);border-color:var(--jev);color:#fff}
+button:disabled{opacity:.55;cursor:not-allowed}
+.msg{font-size:14px;color:var(--ink-2)}
+.msg.warn{color:var(--note-ink)}
+.notice{background:var(--note-bg);color:var(--note-ink);border-radius:10px;padding:12px 14px;font-size:14.5px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip-btn{font:600 13.5px var(--sans);padding:5px 12px;border-radius:999px}
+.chip-btn[aria-pressed="true"]{background:var(--ink);color:var(--page);border-color:var(--ink)}
+.count{font:500 13px var(--mono);color:var(--muted)}
+ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.list li{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:14px 0;border-top:1px solid var(--line)}
+ul.list li:first-child{border-top:0}
+.t{font-weight:600;font-size:16.5px;overflow-wrap:anywhere}
+.m{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.m a{color:var(--jev);overflow-wrap:anywhere}
+.note{grid-column:1/-1;font-size:14.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.result{grid-column:1/-1;font-size:14px;color:var(--ink-2);background:var(--done-bg);border-radius:8px;padding:8px 10px}
+.side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.pill{font:700 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}
+.s-new{background:var(--new-bg);color:var(--new-ink)}
+.s-approved{background:var(--ok-bg);color:var(--ok-ink)}
+.s-declined{background:var(--no-bg);color:var(--no-ink)}
+.s-tagged{background:var(--done-bg);color:var(--done-ink)}
+.decide{display:flex;gap:6px}
+.decide button{font-size:13px;padding:5px 10px}
+.empty{color:var(--muted);font-size:15px;padding:8px 0}
+.who{display:inline-flex;align-items:center;gap:6px}
+.who img{width:18px;height:18px;border-radius:50%}
+@media (max-width:600px){form{grid-template-columns:1fr}ul.list li{grid-template-columns:1fr}.side{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow"><b>GameTagger</b> · requests</div>
+    <h1>Request a game to tag</h1>
+    <p class="lead">Suggest any game and it joins the queue. Kevin reviews requests, then approved games are tagged in batches with the Jev pipeline (about $0.15 each), and the result appears here. See how the method was tested on the <a id="results-link" href="/*RESULTS_URL*/" target="_blank" rel="noopener">100-game benchmark</a>.</p>
+  </header>
+
+  <div class="notice" id="offline" hidden>Requests are stored for signed-in members of the organization. This view cannot reach the request list, so the form is turned off.</div>
+
+  <section class="card" aria-labelledby="form-h">
+    <h2 id="form-h">New request</h2>
+    <form id="form" novalidate>
+      <div class="f full"><label for="title">Game title</label><input id="title" name="title" maxlength="120" required autocomplete="off" placeholder="e.g. Hades II"></div>
+      <div class="f"><label for="platform">Where to find it</label>
+        <select id="platform" name="platform"><option>Steam</option><option>Google Play</option><option>App Store</option><option>Console only</option><option>Other</option></select></div>
+      <div class="f"><label for="link">Store link <small>(optional, helps us find the exact game)</small></label><input id="link" name="link" type="url" maxlength="300" placeholder="https://store.steampowered.com/app/…"></div>
+      <div class="f full"><label for="why">Why this game? <small>(optional)</small></label><textarea id="why" name="why" maxlength="300" placeholder="What you'd like to learn from its tags"></textarea></div>
+      <div class="actions"><button class="primary" id="submit" type="submit">Add request</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="list-h">
+    <div class="tools">
+      <h2 id="list-h">Requests</h2>
+      <div class="chips" role="group" aria-label="Filter by status">
+        <button class="chip-btn" data-f="all" aria-pressed="true">All</button>
+        <button class="chip-btn" data-f="new" aria-pressed="false">New</button>
+        <button class="chip-btn" data-f="approved" aria-pressed="false">Approved</button>
+        <button class="chip-btn" data-f="tagged" aria-pressed="false">Tagged</button>
+        <button class="chip-btn" data-f="declined" aria-pressed="false">Declined</button>
+      </div>
+    </div>
+    <p class="count" id="count">Loading requests…</p>
+    <ul class="list" id="list"></ul>
+  </section>
+</div>
+
+<script>
+const BENCHMARK = /*TITLES*/;
+const $ = (id) => document.getElementById(id);
+const norm = (s) => String(s || "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, " ").trim();
+const benchSet = new Set(BENCHMARK.map(norm));
+const LABEL = {new: "New", approved: "Approved", declined: "Declined", tagged: "Tagged"};
+let db = null, user = null, me = null, canDecide = false;
+let requests = [], decisions = {}, filter = "all";
+
+function setFormEnabled(on) {
+  for (const el of $("form").elements) el.disabled = !on;
+}
+setFormEnabled(false);
+
+function when(iso) {
+  const d = new Date(iso);
+  return isNaN(d) ? "" : d.toLocaleDateString(undefined, {month: "short", day: "numeric", year: "numeric"});
+}
+function safeUrl(u) {
+  try { const x = new URL(u); return x.protocol === "https:" || x.protocol === "http:" ? x.href : null; } catch { return null; }
+}
+
+async function render() {
+  const rows = requests.map((r) => ({...r, status: decisions[r.id]?.status || "new", decision: decisions[r.id]}))
+    .filter((r) => filter === "all" || r.status === filter);
+  const ids = [...new Set(rows.map((r) => r.by).filter(Boolean))];
+  const people = user && ids.length ? await user.profiles(ids) : {};
+  const list = $("list");
+  list.replaceChildren();
+  $("count").textContent = `${rows.length} of ${requests.length} request${requests.length === 1 ? "" : "s"}`;
+  if (!rows.length) {
+    const li = document.createElement("li"); li.className = "empty";
+    li.textContent = requests.length ? "Nothing with this status." : "No requests yet. Be the first.";
+    list.append(li); return;
+  }
+  for (const r of rows) {
+    const li = document.createElement("li");
+    const main = document.createElement("div");
+    const t = document.createElement("div"); t.className = "t"; t.textContent = r.title; main.append(t);
+    const m = document.createElement("div"); m.className = "m";
+    const plat = document.createElement("span"); plat.textContent = r.platform || "Other"; m.append(plat);
+    const url = safeUrl(r.link);
+    if (url) { const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = "store link"; m.append(a); }
+    const who = document.createElement("span"); who.className = "who";
+    const p = people[r.by];
+    if (p) { const img = document.createElement("img"); img.src = p.avatarUrl; img.alt = ""; who.append(img); }
+    who.append(document.createTextNode(`${p?.isMe ? "you" : (p?.name || "Someone")} · ${when(r.createdAt)}`));
+    m.append(who); main.append(m);
+    li.append(main);
+    const side = document.createElement("div"); side.className = "side";
+    const pill = document.createElement("span"); pill.className = `pill s-${r.status}`; pill.textContent = LABEL[r.status] || r.status;
+    side.append(pill);
+    if (canDecide && (r.status === "new" || r.status === "approved" || r.status === "declined")) {
+      const box = document.createElement("div"); box.className = "decide";
+      for (const [st, lab] of [["approved", "Approve"], ["declined", "Decline"]]) {
+        if (r.status === st) continue;
+        const b = document.createElement("button"); b.type = "button"; b.textContent = lab;
+        b.setAttribute("aria-label", `${lab} ${r.title}`);
+        b.addEventListener("click", () => decide(r.id, st, b));
+        box.append(b);
+      }
+      side.append(box);
+    }
+    li.append(side);
+    if (r.why) { const n = document.createElement("div"); n.className = "note"; n.textContent = `“${r.why}”`; li.append(n); }
+    if (r.decision?.result) { const res = document.createElement("div"); res.className = "result"; res.textContent = r.decision.result; li.append(res); }
+    else if (r.status === "declined" && r.decision?.note) { const res = document.createElement("div"); res.className = "note"; res.textContent = `Declined: ${r.decision.note}`; li.append(res); }
+    list.append(li);
+  }
+}
+
+async function decide(id, status, btn) {
+  if (!db) return;
+  btn.disabled = true;
+  try {
+    const by = me?.id || null;
+    await db.doc("decisions/" + id).set({status, decidedAt: new Date().toISOString(), by});
+  } catch (e) {
+    $("msg").textContent = "That change was not saved. Only the owner and editors can approve or decline.";
+    $("msg").className = "msg warn"; btn.disabled = false;
+  }
+}
+
+$("title").addEventListener("input", () => {
+  const n = norm($("title").value);
+  const msg = $("msg"); msg.className = "msg";
+  if (!n) { msg.textContent = ""; return; }
+  if (benchSet.has(n)) { msg.textContent = "Already tagged in the 100-game benchmark. You can still request a fresh run."; msg.className = "msg warn"; }
+  else if (requests.some((r) => norm(r.title) === n)) { msg.textContent = "Someone has already requested this game."; msg.className = "msg warn"; }
+  else msg.textContent = "";
+});
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = $("title").value.trim();
+  const msg = $("msg");
+  if (!title) { msg.textContent = "Add the game's title first."; msg.className = "msg warn"; $("title").focus(); return; }
+  const linkRaw = $("link").value.trim();
+  if (linkRaw && !safeUrl(linkRaw)) { msg.textContent = "The store link should start with https://"; msg.className = "msg warn"; $("link").focus(); return; }
+  if (!db) return;
+  $("submit").disabled = true; msg.className = "msg"; msg.textContent = "Saving…";
+  try {
+    await db.collection("requests").add({
+      title, platform: $("platform").value, link: linkRaw ? safeUrl(linkRaw) : null,
+      why: $("why").value.trim() || null, by: me?.id || null, createdAt: new Date().toISOString(),
+    });
+    $("form").reset(); msg.textContent = `Added “${title}”. It now waits for review.`;
+  } catch (err) {
+    msg.className = "msg warn";
+    msg.textContent = err?.code === "quota_exceeded" ? "The request list is full. Ask Kevin to clear old requests." : "Your request was not saved. You may need Contributor access to this page.";
+  } finally { $("submit").disabled = false; }
+});
+
+document.querySelectorAll(".chip-btn").forEach((b) => b.addEventListener("click", () => {
+  filter = b.dataset.f;
+  document.querySelectorAll(".chip-btn").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  render();
+}));
+
+(async () => {
+  [db, user] = await Promise.all([window.claude?.use?.("db") ?? null, window.claude?.use?.("user") ?? null]);
+  if (!db) { $("offline").hidden = false; $("count").textContent = "Request list unavailable in this view."; return; }
+  if (user) {
+    me = await user.me();
+    canDecide = me.isOwner || me.canEdit;
+    const w = await user.can("data.write");
+    setFormEnabled(w !== false);
+    if (w === false) { $("msg").textContent = "You can view requests. Ask Kevin for Contributor access to add one."; }
+  } else setFormEnabled(true);
+  const onErr = () => { $("count").textContent = "The request list stopped updating. Reload the page."; };
+  db.collection("requests").orderBy("createdAt", "desc").limit(500).onSnapshot((snap) => {
+    requests = snap.docs.map((d) => ({id: d.id, ...d.data()})); render();
+  }, onErr);
+  db.collection("decisions").limit(1000).onSnapshot((snap) => {
+    decisions = Object.fromEntries(snap.docs.map((d) => [d.id, d.data()])); render();
+  }, onErr);
+})();
+</script>

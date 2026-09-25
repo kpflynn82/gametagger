@@ -29,11 +29,19 @@ Call record_observations.
 """
 
 
+# Cost variant: fewer, shorter statements (output tokens are most of the Observer's bill).
+BRIEF_NOTE = """
+Be brief: record at most 12 statements, each one short sentence under 20 words. Keep the facts
+most specific to this image and do not restate the same fact in other words.
+"""
+
+
 class FactualStatement(BaseModel):
     model_config = ConfigDict(extra="forbid")
     kind: Literal["visual_fact", "visual_text", "metadata_quote"]
     text: str = Field(min_length=1)
-    metadata_key: str | None
+    # Omitted means null: models sometimes leave the key out for visual kinds.
+    metadata_key: str | None = None
     image_region: ImageRegion | None = None
 
 
@@ -52,15 +60,25 @@ class AnthropicObserver(Observer):
         model: str,
         client: Any | None = None,
         workspace_id: str | None = None,
+        enforce_boundary: bool = True,
+        brief: bool = False,
     ):
         self.model = model
+        self.brief = brief
+        self.system_prompt = SYSTEM_PROMPT + (BRIEF_NOTE if brief else "")
+        if brief:
+            self.prompt_version = AnthropicObserver.prompt_version + "+brief"
+        # False only when the caller partitions results itself (rich mode quarantines).
+        self.enforce_boundary = enforce_boundary
         self.workspace_id = workspace_id
         self._client = client
         self.last_usage = None
+        self.last_quarantined: list[dict[str, str]] = []
         self.boundary = ObservationBoundary(taxonomy)
 
     def observe(self, evidence: EvidenceItem, *, image: bytes | None = None) -> list[Observation]:
         self.last_usage = None
+        self.last_quarantined = []
         if image is None or evidence.media_type is None:
             raise ValueError("AnthropicObserver requires validated image bytes")
         content = [
@@ -76,8 +94,8 @@ class AnthropicObserver(Observer):
         ]
         kwargs = dict(
             model=self.model,
-            max_tokens=2048,
-            system=SYSTEM_PROMPT,
+            max_tokens=4096,
+            system=self.system_prompt,
             messages=[{"role": "user", "content": content}],
             tools=[
                 {
@@ -97,26 +115,60 @@ class AnthropicObserver(Observer):
                 response = client.messages.create(**kwargs)
         else:
             response = self._client.messages.create(**kwargs)
-        if response.stop_reason != "tool_use":
-            raise ValueError("Observer did not complete its structured response")
         usage = getattr(response, "usage", None)
         self.last_usage = (
             {k: getattr(usage, k, None) for k in ("input_tokens", "output_tokens")}
             if usage is not None
             else None
         )
+        if response.stop_reason != "tool_use":
+            raise ValueError("Observer did not complete its structured response")
         blocks = [b for b in response.content if b.type == "tool_use"]
         if len(blocks) != 1 or blocks[0].name != "record_observations":
             raise ValueError("Observer returned an unexpected tool response")
-        parsed = ObserverResponse.model_validate(blocks[0].input)
-        observations = [
-            Observation(
-                id=f"{evidence.id}:observation:{i}",
-                evidence_id=evidence.id,
-                observer_model=response.model,
-                **statement.model_dump(),
-            )
-            for i, statement in enumerate(parsed.observations)
-        ]
-        self.boundary.validate(observations, evidence)
+        if self.enforce_boundary:
+            statements = ObserverResponse.model_validate(blocks[0].input).observations
+            observations = [
+                Observation(
+                    id=f"{evidence.id}:observation:{i}",
+                    evidence_id=evidence.id,
+                    observer_model=response.model,
+                    **statement.model_dump(),
+                )
+                for i, statement in enumerate(statements)
+            ]
+        else:
+            observations = self._lenient(blocks[0].input, evidence, response.model)
+        if self.enforce_boundary:
+            self.boundary.validate(observations, evidence)
+        return observations
+
+    def _lenient(self, payload: Any, evidence: EvidenceItem, model: str) -> list[Observation]:
+        """Rich mode: a malformed statement is quarantined alone, as boundary violations are.
+
+        A screen position on a non-text fact is extra detail the contract has no place for, so
+        it is dropped and the fact kept. Quarantined statements never reach Jev.
+        """
+        items = payload.get("observations") if isinstance(payload, dict) else None
+        if not isinstance(items, list):
+            raise ValueError("Observer returned no observations list")
+        observations = []
+        for i, item in enumerate(items):
+            oid = f"{evidence.id}:observation:{i}"
+            try:
+                statement = FactualStatement.model_validate(item).model_dump()
+                if statement["kind"] != "visual_text":
+                    statement["image_region"] = None
+                observations.append(
+                    Observation(id=oid, evidence_id=evidence.id, observer_model=model, **statement)
+                )
+            except ValueError as exc:
+                text = item.get("text") if isinstance(item, dict) else None
+                self.last_quarantined.append(
+                    {
+                        "observation_id": oid,
+                        "text": str(text or "")[:300],
+                        "reason": f"Malformed statement ({type(exc).__name__})",
+                    }
+                )
         return observations

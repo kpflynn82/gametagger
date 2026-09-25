@@ -1,0 +1,3544 @@
+{
+  "schema_version": "jev-vs-legacy-cohort-v1",
+  "created_at": "2026-09-24T06:49:23+00:00",
+  "charts": {
+    "steam": {
+      "source": "Steam most-played chart (ISteamChartsService/GetMostPlayedGames)",
+      "url": "https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/",
+      "chart_date": "2026-09-23",
+      "ranked_by": "Steam's own rank order (daily peak concurrent players)",
+      "region": "global",
+      "platform": "PC (Steam)"
+    },
+    "mobile": {
+      "source": "AppBrain Google Play ranking: top grossing games, United States",
+      "url": "https://www.appbrain.com/stats/google-play-rankings/top_grossing/game/us",
+      "chart_date": "2026-09-24",
+      "ranked_by": "grossing (AppBrain's Google Play top-grossing list)",
+      "region": "US",
+      "platform": "Android (Google Play)"
+    }
+  },
+  "rules": [
+    "Steam entries whose store type is not 'game', or that Steam files under software genres, are skipped.",
+    "A game on both charts is kept once, on the Steam list.",
+    "Two editions of one game (e.g. Legacy and Enhanced) are kept once, at the higher rank.",
+    "Store IDs are exact; titles are for display only."
+  ],
+  "games": [
+    {
+      "game_id": "steam-730",
+      "list": "steam",
+      "rank": 1,
+      "title": "Counter-Strike 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "730",
+        "wikipedia": "Counter-Strike 2"
+      },
+      "chart": {
+        "peak_in_game": 1452036,
+        "last_week_rank": 1
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=730",
+          "candidates": [
+            {
+              "qid": "Q842146",
+              "label": "Counter-Strike: Global Offensive",
+              "enwiki": "Counter-Strike: Global Offensive"
+            },
+            {
+              "qid": "Q111165107",
+              "label": "Counter-Strike 2",
+              "enwiki": "Counter-Strike 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q111165107",
+          "label": "Counter-Strike 2",
+          "wikipedia": "Counter-Strike 2",
+          "steam_app": [
+            "730"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-570",
+      "list": "steam",
+      "rank": 2,
+      "title": "Dota 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "570",
+        "wikipedia": "Dota 2"
+      },
+      "chart": {
+        "peak_in_game": 805725,
+        "last_week_rank": 2
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=570",
+          "candidates": [
+            {
+              "qid": "Q771541",
+              "label": "Dota 2",
+              "enwiki": "Dota 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q771541",
+          "label": "Dota 2",
+          "wikipedia": "Dota 2",
+          "steam_app": [
+            "570"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-578080",
+      "list": "steam",
+      "rank": 3,
+      "title": "PUBG: BATTLEGROUNDS",
+      "developers": [
+        "PUBG Corporation"
+      ],
+      "ids": {
+        "steam_app": "578080",
+        "wikipedia": "PUBG: Battlegrounds"
+      },
+      "chart": {
+        "peak_in_game": 731479,
+        "last_week_rank": 3
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=578080",
+          "candidates": [
+            {
+              "qid": "Q28937399",
+              "label": "",
+              "enwiki": "PUBG: Battlegrounds"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q28937399",
+          "label": "",
+          "wikipedia": "PUBG: Battlegrounds",
+          "steam_app": [
+            "578080"
+          ],
+          "google_play": [
+            "com.tencent.ig"
+          ],
+          "app_store": [
+            "1330123889"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-1867240",
+      "list": "steam",
+      "rank": 5,
+      "title": "WARDOGS",
+      "developers": [
+        "BULKHEAD"
+      ],
+      "ids": {
+        "steam_app": "1867240",
+        "wikipedia": "Wardogs"
+      },
+      "chart": {
+        "peak_in_game": 284112,
+        "last_week_rank": 5
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1867240",
+          "candidates": [
+            {
+              "qid": "Q138023828",
+              "label": "",
+              "enwiki": "Wardogs"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q138023828",
+          "label": "",
+          "wikipedia": "Wardogs",
+          "steam_app": [
+            "1867240"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1172470",
+      "list": "steam",
+      "rank": 6,
+      "title": "Apex Legends™",
+      "developers": [
+        "Respawn"
+      ],
+      "ids": {
+        "steam_app": "1172470",
+        "wikipedia": "Apex Legends"
+      },
+      "chart": {
+        "peak_in_game": 254139,
+        "last_week_rank": 6
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1172470",
+          "candidates": [
+            {
+              "qid": "Q61478103",
+              "label": "Apex Legends",
+              "enwiki": "Apex Legends"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q61478103",
+          "label": "Apex Legends",
+          "wikipedia": "Apex Legends",
+          "steam_app": [
+            "1172470"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-892970",
+      "list": "steam",
+      "rank": 7,
+      "title": "Valheim",
+      "developers": [
+        "Iron Gate AB"
+      ],
+      "ids": {
+        "steam_app": "892970",
+        "wikipedia": "Valheim"
+      },
+      "chart": {
+        "peak_in_game": 199097,
+        "last_week_rank": 7
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=892970",
+          "candidates": [
+            {
+              "qid": "Q105100327",
+              "label": "Valheim",
+              "enwiki": "Valheim"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q105100327",
+          "label": "Valheim",
+          "wikipedia": "Valheim",
+          "steam_app": [
+            "892970"
+          ],
+          "google_play": [],
+          "app_store": [
+            "1554294918"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-271590",
+      "list": "steam",
+      "rank": 8,
+      "title": "Grand Theft Auto V Legacy",
+      "developers": [
+        "Rockstar North"
+      ],
+      "ids": {
+        "steam_app": "271590",
+        "wikipedia": "Grand Theft Auto V"
+      },
+      "chart": {
+        "peak_in_game": 63620,
+        "last_week_rank": 10
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=271590",
+          "candidates": [
+            {
+              "qid": "Q17452",
+              "label": "Grand Theft Auto V",
+              "enwiki": "Grand Theft Auto V"
+            },
+            {
+              "qid": "Q14594724",
+              "label": "Grand Theft Auto Online",
+              "enwiki": "Grand Theft Auto Online"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q17452",
+          "label": "Grand Theft Auto V",
+          "wikipedia": "Grand Theft Auto V",
+          "steam_app": [
+            "271590"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-4126040",
+      "list": "steam",
+      "rank": 9,
+      "title": "Aniimo",
+      "developers": [
+        "Pawprint Studio"
+      ],
+      "ids": {
+        "steam_app": "4126040"
+      },
+      "chart": {
+        "peak_in_game": 145080,
+        "last_week_rank": 8
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=4126040",
+          "candidates": [
+            {
+              "qid": "Q137372092",
+              "label": "Aniimo",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q137372092",
+          "label": "Aniimo",
+          "wikipedia": null,
+          "steam_app": [
+            "4126040"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-553850",
+      "list": "steam",
+      "rank": 11,
+      "title": "HELLDIVERS™ 2",
+      "developers": [
+        "Arrowhead Game Studios"
+      ],
+      "ids": {
+        "steam_app": "553850",
+        "wikipedia": "Helldivers 2"
+      },
+      "chart": {
+        "peak_in_game": 70123,
+        "last_week_rank": 18
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=553850",
+          "candidates": [
+            {
+              "qid": "Q118645527",
+              "label": "",
+              "enwiki": "Helldivers 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q118645527",
+          "label": "",
+          "wikipedia": "Helldivers 2",
+          "steam_app": [
+            "553850"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-2868840",
+      "list": "steam",
+      "rank": 12,
+      "title": "Slay the Spire 2",
+      "developers": [
+        "Mega Crit"
+      ],
+      "ids": {
+        "steam_app": "2868840",
+        "wikipedia": "Slay the Spire II"
+      },
+      "chart": {
+        "peak_in_game": 89279,
+        "last_week_rank": 13
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=2868840",
+          "candidates": [
+            {
+              "qid": "Q125419457",
+              "label": "",
+              "enwiki": "Slay the Spire II"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q125419457",
+          "label": "",
+          "wikipedia": "Slay the Spire II",
+          "steam_app": [
+            "2868840"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-2767030",
+      "list": "steam",
+      "rank": 13,
+      "title": "Marvel Rivals",
+      "developers": [
+        "NetEase Games"
+      ],
+      "ids": {
+        "steam_app": "2767030",
+        "wikipedia": "Marvel Rivals"
+      },
+      "chart": {
+        "peak_in_game": 91844,
+        "last_week_rank": 9
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=2767030",
+          "candidates": [
+            {
+              "qid": "Q125175413",
+              "label": "Marvel Rivals",
+              "enwiki": "Marvel Rivals"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q125175413",
+          "label": "Marvel Rivals",
+          "wikipedia": "Marvel Rivals",
+          "steam_app": [
+            "2767030"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-359550",
+      "list": "steam",
+      "rank": 14,
+      "title": "Tom Clancy's Rainbow Six Siege",
+      "developers": [
+        "Ubisoft Montreal"
+      ],
+      "ids": {
+        "steam_app": "359550",
+        "wikipedia": "Tom Clancy's Rainbow Six Siege"
+      },
+      "chart": {
+        "peak_in_game": 80197,
+        "last_week_rank": 14
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=359550",
+          "candidates": [
+            {
+              "qid": "Q17183996",
+              "label": "Tom Clancy's Rainbow Six Siege",
+              "enwiki": "Tom Clancy's Rainbow Six Siege"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q17183996",
+          "label": "Tom Clancy's Rainbow Six Siege",
+          "wikipedia": "Tom Clancy's Rainbow Six Siege",
+          "steam_app": [
+            "359550"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-2357570",
+      "list": "steam",
+      "rank": 15,
+      "title": "Overwatch®",
+      "developers": [
+        "Blizzard Entertainment, Inc."
+      ],
+      "ids": {
+        "steam_app": "2357570",
+        "wikipedia": "Overwatch (2023 video game)"
+      },
+      "chart": {
+        "peak_in_game": 67532,
+        "last_week_rank": 11
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=2357570",
+          "candidates": [
+            {
+              "qid": "Q73163646",
+              "label": "Overwatch",
+              "enwiki": "Overwatch (2023 video game)"
+            },
+            {
+              "qid": "Q126954064",
+              "label": "Overwatch® 2: Rose Gold Mercy Bundle",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q73163646",
+          "label": "Overwatch",
+          "wikipedia": "Overwatch (2023 video game)",
+          "steam_app": [
+            "2357570"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-250900",
+      "list": "steam",
+      "rank": 16,
+      "title": "The Binding of Isaac: Rebirth",
+      "developers": [
+        "Nicalis, Inc.",
+        "Edmund McMillen"
+      ],
+      "ids": {
+        "steam_app": "250900",
+        "wikipedia": "The Binding of Isaac: Rebirth"
+      },
+      "chart": {
+        "peak_in_game": 73415,
+        "last_week_rank": 15
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=250900",
+          "candidates": [
+            {
+              "qid": "Q16267631",
+              "label": "",
+              "enwiki": "The Binding of Isaac: Rebirth"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q16267631",
+          "label": "",
+          "wikipedia": "The Binding of Isaac: Rebirth",
+          "steam_app": [
+            "250900"
+          ],
+          "google_play": [],
+          "app_store": [
+            "1069549814"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-236390",
+      "list": "steam",
+      "rank": 17,
+      "title": "War Thunder",
+      "developers": [
+        "Gaijin Entertainment"
+      ],
+      "ids": {
+        "steam_app": "236390",
+        "wikipedia": "War Thunder"
+      },
+      "chart": {
+        "peak_in_game": 74235,
+        "last_week_rank": 16
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=236390",
+          "candidates": [
+            {
+              "qid": "Q4052939",
+              "label": "War Thunder",
+              "enwiki": "War Thunder"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q4052939",
+          "label": "War Thunder",
+          "wikipedia": "War Thunder",
+          "steam_app": [
+            "236390"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-230410",
+      "list": "steam",
+      "rank": 18,
+      "title": "Warframe",
+      "developers": [
+        "Digital Extremes"
+      ],
+      "ids": {
+        "steam_app": "230410",
+        "wikipedia": "Warframe"
+      },
+      "chart": {
+        "peak_in_game": 108836,
+        "last_week_rank": 30
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=230410",
+          "candidates": [
+            {
+              "qid": "Q7969348",
+              "label": "Warframe",
+              "enwiki": "Warframe"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q7969348",
+          "label": "Warframe",
+          "wikipedia": "Warframe",
+          "steam_app": [
+            "230410"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-381210",
+      "list": "steam",
+      "rank": 19,
+      "title": "Dead by Daylight",
+      "developers": [
+        "Behaviour Interactive Inc."
+      ],
+      "ids": {
+        "steam_app": "381210",
+        "wikipedia": "Dead by Daylight"
+      },
+      "chart": {
+        "peak_in_game": 55910,
+        "last_week_rank": 17
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=381210",
+          "candidates": [
+            {
+              "qid": "Q24514682",
+              "label": "Dead by Daylight",
+              "enwiki": "Dead by Daylight"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q24514682",
+          "label": "Dead by Daylight",
+          "wikipedia": "Dead by Daylight",
+          "steam_app": [
+            "381210"
+          ],
+          "google_play": [
+            "com.bhvr.deadbydaylight"
+          ],
+          "app_store": [
+            "1452289752"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-322170",
+      "list": "steam",
+      "rank": 20,
+      "title": "Geometry Dash",
+      "developers": [
+        "RobTop Games"
+      ],
+      "ids": {
+        "steam_app": "322170",
+        "wikipedia": "Geometry Dash"
+      },
+      "chart": {
+        "peak_in_game": 47543,
+        "last_week_rank": 19
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=322170",
+          "candidates": [
+            {
+              "qid": "Q16190030",
+              "label": "Geometry Dash",
+              "enwiki": "Geometry Dash"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q16190030",
+          "label": "Geometry Dash",
+          "wikipedia": "Geometry Dash",
+          "steam_app": [
+            "322170"
+          ],
+          "google_play": [
+            "com.robtopx.geometryjump"
+          ],
+          "app_store": [
+            "625334537"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-1422450",
+      "list": "steam",
+      "rank": 21,
+      "title": "Deadlock",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "1422450",
+        "wikipedia": "Deadlock (video game)"
+      },
+      "chart": {
+        "peak_in_game": 69585,
+        "last_week_rank": 21
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1422450",
+          "candidates": [
+            {
+              "qid": "Q126042383",
+              "label": "Deadlock",
+              "enwiki": "Deadlock (video game)"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q126042383",
+          "label": "Deadlock",
+          "wikipedia": "Deadlock (video game)",
+          "steam_app": [
+            "1422450"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1973530",
+      "list": "steam",
+      "rank": 22,
+      "title": "Limbus Company",
+      "developers": [
+        "ProjectMoon"
+      ],
+      "ids": {
+        "steam_app": "1973530",
+        "wikipedia": "Limbus Company"
+      },
+      "chart": {
+        "peak_in_game": 43489,
+        "last_week_rank": 23
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1973530",
+          "candidates": [
+            {
+              "qid": "Q116970602",
+              "label": "Limbus Company",
+              "enwiki": "Limbus Company"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q116970602",
+          "label": "Limbus Company",
+          "wikipedia": "Limbus Company",
+          "steam_app": [
+            "1973530"
+          ],
+          "google_play": [
+            "com.ProjectMoon.LimbusCompany"
+          ],
+          "app_store": [
+            "6444112366"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-2507950",
+      "list": "steam",
+      "rank": 24,
+      "title": "Delta Force",
+      "developers": [
+        "Team Jade"
+      ],
+      "ids": {
+        "steam_app": "2507950",
+        "wikipedia": "Delta Force (2025 video game)"
+      },
+      "chart": {
+        "peak_in_game": 114606,
+        "last_week_rank": 26
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=2507950",
+          "candidates": [
+            {
+              "qid": "Q123138197",
+              "label": "Delta Force",
+              "enwiki": "Delta Force (2025 video game)"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q123138197",
+          "label": "Delta Force",
+          "wikipedia": "Delta Force (2025 video game)",
+          "steam_app": [
+            "2507950"
+          ],
+          "google_play": [
+            "com.proxima.dfm"
+          ],
+          "app_store": [
+            "6451399876"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-105600",
+      "list": "steam",
+      "rank": 25,
+      "title": "Terraria",
+      "developers": [
+        "Re-Logic"
+      ],
+      "ids": {
+        "steam_app": "105600",
+        "wikipedia": "Terraria"
+      },
+      "chart": {
+        "peak_in_game": 42706,
+        "last_week_rank": 22
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=105600",
+          "candidates": [
+            {
+              "qid": "Q332697",
+              "label": "Terraria",
+              "enwiki": "Terraria"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q332697",
+          "label": "Terraria",
+          "wikipedia": "Terraria",
+          "steam_app": [
+            "105600"
+          ],
+          "google_play": [
+            "com.and.games505.TerrariaPaid"
+          ],
+          "app_store": [
+            "640364616"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-413150",
+      "list": "steam",
+      "rank": 26,
+      "title": "Stardew Valley",
+      "developers": [
+        "ConcernedApe"
+      ],
+      "ids": {
+        "steam_app": "413150",
+        "wikipedia": "Stardew Valley"
+      },
+      "chart": {
+        "peak_in_game": 68614,
+        "last_week_rank": 27
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=413150",
+          "candidates": [
+            {
+              "qid": "Q23013817",
+              "label": "Stardew Valley",
+              "enwiki": "Stardew Valley"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q23013817",
+          "label": "Stardew Valley",
+          "wikipedia": "Stardew Valley",
+          "steam_app": [
+            "413150"
+          ],
+          "google_play": [
+            "com.chucklefish.stardewvalley"
+          ],
+          "app_store": [
+            "1406710800"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-252490",
+      "list": "steam",
+      "rank": 27,
+      "title": "Rust",
+      "developers": [
+        "Facepunch Studios"
+      ],
+      "ids": {
+        "steam_app": "252490",
+        "wikipedia": "Rust (video game)"
+      },
+      "chart": {
+        "peak_in_game": 98597,
+        "last_week_rank": 29
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=252490",
+          "candidates": [
+            {
+              "qid": "Q15304961",
+              "label": "Rust",
+              "enwiki": "Rust (video game)"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q15304961",
+          "label": "Rust",
+          "wikipedia": "Rust (video game)",
+          "steam_app": [
+            "252490"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-3405690",
+      "list": "steam",
+      "rank": 28,
+      "title": "EA SPORTS FC™ 26",
+      "developers": [
+        "EA Canada",
+        "EA Romania"
+      ],
+      "ids": {
+        "steam_app": "3405690",
+        "wikipedia": "EA Sports FC 26"
+      },
+      "chart": {
+        "peak_in_game": 44702,
+        "last_week_rank": 20
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=3405690",
+          "candidates": [
+            {
+              "qid": "Q135144851",
+              "label": "",
+              "enwiki": "EA Sports FC 26"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q135144851",
+          "label": "",
+          "wikipedia": "EA Sports FC 26",
+          "steam_app": [
+            "3405690"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-2807960",
+      "list": "steam",
+      "rank": 29,
+      "title": "Battlefield™ 6",
+      "developers": [
+        "Battlefield Studios"
+      ],
+      "ids": {
+        "steam_app": "2807960",
+        "wikipedia": "Battlefield 6"
+      },
+      "chart": {
+        "peak_in_game": 35683,
+        "last_week_rank": 28
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=2807960",
+          "candidates": [
+            {
+              "qid": "Q132178505",
+              "label": "",
+              "enwiki": "Battlefield 6"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q132178505",
+          "label": "",
+          "wikipedia": "Battlefield 6",
+          "steam_app": [
+            "2807960"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1623730",
+      "list": "steam",
+      "rank": 30,
+      "title": "Palworld",
+      "developers": [
+        "Pocketpair"
+      ],
+      "ids": {
+        "steam_app": "1623730",
+        "wikipedia": "Palworld"
+      },
+      "chart": {
+        "peak_in_game": 69035,
+        "last_week_rank": 25
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1623730",
+          "candidates": [
+            {
+              "qid": "Q113989188",
+              "label": "Palworld",
+              "enwiki": "Palworld"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q113989188",
+          "label": "Palworld",
+          "wikipedia": "Palworld",
+          "steam_app": [
+            "1623730"
+          ],
+          "google_play": [],
+          "app_store": [
+            "6503918400"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-440",
+      "list": "steam",
+      "rank": 31,
+      "title": "Team Fortress 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "440",
+        "wikipedia": "Team Fortress 2"
+      },
+      "chart": {
+        "peak_in_game": 66889,
+        "last_week_rank": 32
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=440",
+          "candidates": [
+            {
+              "qid": "Q382108",
+              "label": "Team Fortress 2",
+              "enwiki": "Team Fortress 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q382108",
+          "label": "Team Fortress 2",
+          "wikipedia": "Team Fortress 2",
+          "steam_app": [
+            "440"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-108600",
+      "list": "steam",
+      "rank": 32,
+      "title": "Project Zomboid",
+      "developers": [
+        "The Indie Stone"
+      ],
+      "ids": {
+        "steam_app": "108600",
+        "wikipedia": "Project Zomboid"
+      },
+      "chart": {
+        "peak_in_game": 53015,
+        "last_week_rank": 31
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=108600",
+          "candidates": [
+            {
+              "qid": "Q3603390",
+              "label": "",
+              "enwiki": "Project Zomboid"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q3603390",
+          "label": "",
+          "wikipedia": "Project Zomboid",
+          "steam_app": [
+            "108600"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-438100",
+      "list": "steam",
+      "rank": 33,
+      "title": "VRChat",
+      "developers": [
+        "VRChat Inc."
+      ],
+      "ids": {
+        "steam_app": "438100",
+        "wikipedia": "VRChat"
+      },
+      "chart": {
+        "peak_in_game": 52477,
+        "last_week_rank": 34
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=438100",
+          "candidates": [
+            {
+              "qid": "Q47044629",
+              "label": "",
+              "enwiki": "VRChat"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q47044629",
+          "label": "",
+          "wikipedia": "VRChat",
+          "steam_app": [
+            "438100"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1086940",
+      "list": "steam",
+      "rank": 34,
+      "title": "Baldur's Gate 3",
+      "developers": [
+        "Larian Studios"
+      ],
+      "ids": {
+        "steam_app": "1086940",
+        "wikipedia": "Baldur's Gate 3"
+      },
+      "chart": {
+        "peak_in_game": 53638,
+        "last_week_rank": 35
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1086940",
+          "candidates": [
+            {
+              "qid": "Q64441774",
+              "label": "",
+              "enwiki": "Baldur's Gate 3"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q64441774",
+          "label": "",
+          "wikipedia": "Baldur's Gate 3",
+          "steam_app": [
+            "1086940"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-550",
+      "list": "steam",
+      "rank": 35,
+      "title": "Left 4 Dead 2",
+      "developers": [
+        "Valve"
+      ],
+      "ids": {
+        "steam_app": "550",
+        "wikipedia": "Left 4 Dead 2"
+      },
+      "chart": {
+        "peak_in_game": 29297,
+        "last_week_rank": 36
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=550",
+          "candidates": [
+            {
+              "qid": "Q472909",
+              "label": "Left 4 Dead 2",
+              "enwiki": "Left 4 Dead 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q472909",
+          "label": "Left 4 Dead 2",
+          "wikipedia": "Left 4 Dead 2",
+          "steam_app": [
+            "550"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-227300",
+      "list": "steam",
+      "rank": 36,
+      "title": "Euro Truck Simulator 2",
+      "developers": [
+        "SCS Software"
+      ],
+      "ids": {
+        "steam_app": "227300",
+        "wikipedia": "Euro Truck Simulator 2"
+      },
+      "chart": {
+        "peak_in_game": 40199,
+        "last_week_rank": 38
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=227300",
+          "candidates": [
+            {
+              "qid": "Q2632206",
+              "label": "",
+              "enwiki": "Euro Truck Simulator 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q2632206",
+          "label": "",
+          "wikipedia": "Euro Truck Simulator 2",
+          "steam_app": [
+            "227300"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-2246340",
+      "list": "steam",
+      "rank": 37,
+      "title": "Monster Hunter Wilds",
+      "developers": [
+        "CAPCOM Co., Ltd."
+      ],
+      "ids": {
+        "steam_app": "2246340",
+        "wikipedia": "Monster Hunter Wilds"
+      },
+      "chart": {
+        "peak_in_game": 52507,
+        "last_week_rank": 46
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=2246340",
+          "candidates": [
+            {
+              "qid": "Q123699158",
+              "label": "Monster Hunter Wilds",
+              "enwiki": "Monster Hunter Wilds"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q123699158",
+          "label": "Monster Hunter Wilds",
+          "wikipedia": "Monster Hunter Wilds",
+          "steam_app": [
+            "2246340"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-394360",
+      "list": "steam",
+      "rank": 38,
+      "title": "Hearts of Iron IV",
+      "developers": [
+        "Paradox Development Studio"
+      ],
+      "ids": {
+        "steam_app": "394360",
+        "wikipedia": "Hearts of Iron IV"
+      },
+      "chart": {
+        "peak_in_game": 47390,
+        "last_week_rank": 44
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=394360",
+          "candidates": [
+            {
+              "qid": "Q15712701",
+              "label": "",
+              "enwiki": "Hearts of Iron IV"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q15712701",
+          "label": "",
+          "wikipedia": "Hearts of Iron IV",
+          "steam_app": [
+            "394360"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-252950",
+      "list": "steam",
+      "rank": 39,
+      "title": "Rocket League®",
+      "developers": [
+        "Psyonix LLC"
+      ],
+      "ids": {
+        "steam_app": "252950",
+        "wikipedia": "Rocket League"
+      },
+      "chart": {
+        "peak_in_game": 33981,
+        "last_week_rank": 52
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=252950",
+          "candidates": [
+            {
+              "qid": "Q20031743",
+              "label": "Rocket League",
+              "enwiki": "Rocket League"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q20031743",
+          "label": "Rocket League",
+          "wikipedia": "Rocket League",
+          "steam_app": [
+            "252950"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1174180",
+      "list": "steam",
+      "rank": 40,
+      "title": "Red Dead Redemption 2",
+      "developers": [
+        "Rockstar Games"
+      ],
+      "ids": {
+        "steam_app": "1174180",
+        "wikipedia": "Red Dead Redemption 2"
+      },
+      "chart": {
+        "peak_in_game": 34874,
+        "last_week_rank": 39
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1174180",
+          "candidates": [
+            {
+              "qid": "Q27438121",
+              "label": "Red Dead Redemption 2",
+              "enwiki": "Red Dead Redemption 2"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q27438121",
+          "label": "Red Dead Redemption 2",
+          "wikipedia": "Red Dead Redemption 2",
+          "steam_app": [
+            "1174180"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1203220",
+      "list": "steam",
+      "rank": 41,
+      "title": "NARAKA: BLADEPOINT",
+      "developers": [
+        "24 Entertainment"
+      ],
+      "ids": {
+        "steam_app": "1203220",
+        "wikipedia": "Naraka: Bladepoint"
+      },
+      "chart": {
+        "peak_in_game": 58423,
+        "last_week_rank": 48
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1203220",
+          "candidates": [
+            {
+              "qid": "Q104817349",
+              "label": "Naraka: Bladepoint",
+              "enwiki": "Naraka: Bladepoint"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q104817349",
+          "label": "Naraka: Bladepoint",
+          "wikipedia": "Naraka: Bladepoint",
+          "steam_app": [
+            "1203220"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1091500",
+      "list": "steam",
+      "rank": 42,
+      "title": "Cyberpunk 2077",
+      "developers": [
+        "CD PROJEKT RED"
+      ],
+      "ids": {
+        "steam_app": "1091500",
+        "wikipedia": "Cyberpunk 2077"
+      },
+      "chart": {
+        "peak_in_game": 33794,
+        "last_week_rank": 40
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1091500",
+          "candidates": [
+            {
+              "qid": "Q3182559",
+              "label": "Cyberpunk 2077",
+              "enwiki": "Cyberpunk 2077"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q3182559",
+          "label": "Cyberpunk 2077",
+          "wikipedia": "Cyberpunk 2077",
+          "steam_app": [
+            "1091500"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1938090",
+      "list": "steam",
+      "rank": 43,
+      "title": "Call of Duty®",
+      "developers": [
+        "Treyarch",
+        "Raven Software",
+        "Beenox",
+        "High Moon Studios",
+        "Sledgehammer Games",
+        "Infinity Ward",
+        "Activision Shanghai",
+        "Demonware"
+      ],
+      "ids": {
+        "steam_app": "1938090"
+      },
+      "chart": {
+        "peak_in_game": 32124,
+        "last_week_rank": 51
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1938090",
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "steam-3678970",
+      "list": "steam",
+      "rank": 44,
+      "title": "TBH: Task Bar Hero",
+      "developers": [
+        "Nugem Studio",
+        "Tesseract Studio"
+      ],
+      "ids": {
+        "steam_app": "3678970"
+      },
+      "chart": {
+        "peak_in_game": 88743,
+        "last_week_rank": 37
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=3678970",
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "steam-1245620",
+      "list": "steam",
+      "rank": 45,
+      "title": "ELDEN RING",
+      "developers": [
+        "FromSoftware, Inc."
+      ],
+      "ids": {
+        "steam_app": "1245620",
+        "wikipedia": "Elden Ring"
+      },
+      "chart": {
+        "peak_in_game": 35867,
+        "last_week_rank": 43
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1245620",
+          "candidates": [
+            {
+              "qid": "Q64826862",
+              "label": "",
+              "enwiki": "Elden Ring"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q64826862",
+          "label": "",
+          "wikipedia": "Elden Ring",
+          "steam_app": [
+            "1245620"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1449850",
+      "list": "steam",
+      "rank": 46,
+      "title": "Yu-Gi-Oh! Master Duel",
+      "developers": [
+        "KONAMI"
+      ],
+      "ids": {
+        "steam_app": "1449850",
+        "wikipedia": "Yu-Gi-Oh! Master Duel"
+      },
+      "chart": {
+        "peak_in_game": 18128,
+        "last_week_rank": 47
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1449850",
+          "candidates": [
+            {
+              "qid": "Q110619297",
+              "label": "Yu-Gi-Oh! Master Duel",
+              "enwiki": "Yu-Gi-Oh! Master Duel"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q110619297",
+          "label": "Yu-Gi-Oh! Master Duel",
+          "wikipedia": "Yu-Gi-Oh! Master Duel",
+          "steam_app": [
+            "1449850"
+          ],
+          "google_play": [
+            "jp.konami.masterduel"
+          ],
+          "app_store": [
+            "1554247785"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "steam-322330",
+      "list": "steam",
+      "rank": 47,
+      "title": "Don't Starve Together",
+      "developers": [
+        "Klei Entertainment"
+      ],
+      "ids": {
+        "steam_app": "322330"
+      },
+      "chart": {
+        "peak_in_game": 40711,
+        "last_week_rank": 45
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=322330",
+          "candidates": [
+            {
+              "qid": "Q22344573",
+              "label": "Don't Starve Together",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q22344573",
+          "label": "Don't Starve Together",
+          "wikipedia": null,
+          "steam_app": [
+            "322330"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-3527290",
+      "list": "steam",
+      "rank": 48,
+      "title": "PEAK",
+      "developers": [
+        "Team PEAK"
+      ],
+      "ids": {
+        "steam_app": "3527290",
+        "wikipedia": "Peak (video game)"
+      },
+      "chart": {
+        "peak_in_game": 24924,
+        "last_week_rank": 49
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=3527290",
+          "candidates": [
+            {
+              "qid": "Q134992929",
+              "label": "",
+              "enwiki": "Peak (video game)"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q134992929",
+          "label": "",
+          "wikipedia": "Peak (video game)",
+          "steam_app": [
+            "3527290"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-3241660",
+      "list": "steam",
+      "rank": 49,
+      "title": "R.E.P.O.",
+      "developers": [
+        "semiwork"
+      ],
+      "ids": {
+        "steam_app": "3241660",
+        "wikipedia": "R.E.P.O."
+      },
+      "chart": {
+        "peak_in_game": 22687,
+        "last_week_rank": 50
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=3241660",
+          "candidates": [
+            {
+              "qid": "Q133247101",
+              "label": "",
+              "enwiki": "R.E.P.O."
+            }
+          ],
+          "status": "matched",
+          "qid": "Q133247101",
+          "label": "",
+          "wikipedia": "R.E.P.O.",
+          "steam_app": [
+            "3241660"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-275850",
+      "list": "steam",
+      "rank": 50,
+      "title": "No Man's Sky",
+      "developers": [
+        "Hello Games"
+      ],
+      "ids": {
+        "steam_app": "275850",
+        "wikipedia": "No Man's Sky"
+      },
+      "chart": {
+        "peak_in_game": 34275,
+        "last_week_rank": 41
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=275850",
+          "candidates": [
+            {
+              "qid": "Q15297043",
+              "label": "No Man's Sky",
+              "enwiki": "No Man's Sky"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q15297043",
+          "label": "No Man's Sky",
+          "wikipedia": "No Man's Sky",
+          "steam_app": [
+            "275850"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-1665460",
+      "list": "steam",
+      "rank": 51,
+      "title": "eFootball™",
+      "developers": [
+        "KONAMI"
+      ],
+      "ids": {
+        "steam_app": "1665460",
+        "wikipedia": "EFootball"
+      },
+      "chart": {
+        "peak_in_game": 19790,
+        "last_week_rank": 56
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=1665460",
+          "candidates": [
+            {
+              "qid": "Q97388790",
+              "label": "eFootball",
+              "enwiki": "EFootball"
+            },
+            {
+              "qid": "Q120670173",
+              "label": "",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q97388790",
+          "label": "eFootball",
+          "wikipedia": "EFootball",
+          "steam_app": [
+            "1665460"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-4358690",
+      "list": "steam",
+      "rank": 52,
+      "title": "Graveyard Keeper 2",
+      "developers": [
+        "Lazy Bear Games"
+      ],
+      "ids": {
+        "steam_app": "4358690"
+      },
+      "chart": {
+        "peak_in_game": 54969,
+        "last_week_rank": -1
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=4358690",
+          "candidates": [
+            {
+              "qid": "Q139164798",
+              "label": "Graveyard Keeper 2",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q139164798",
+          "label": "Graveyard Keeper 2",
+          "wikipedia": null,
+          "steam_app": [
+            "4358690"
+          ],
+          "google_play": [],
+          "app_store": []
+        }
+      }
+    },
+    {
+      "game_id": "steam-284160",
+      "list": "steam",
+      "rank": 53,
+      "title": "BeamNG.drive",
+      "developers": [
+        "BeamNG"
+      ],
+      "ids": {
+        "steam_app": "284160",
+        "wikipedia": "BeamNG.drive"
+      },
+      "chart": {
+        "peak_in_game": 23124,
+        "last_week_rank": 54
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "steam_app=284160",
+          "candidates": [
+            {
+              "qid": "Q16987803",
+              "label": "BeamNG.drive",
+              "enwiki": "BeamNG.drive"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q16987803",
+          "label": "BeamNG.drive",
+          "wikipedia": "BeamNG.drive",
+          "steam_app": [
+            "284160"
+          ],
+          "google_play": [],
+          "app_store": [
+            "1440262569"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.scopely.monopolygo",
+      "list": "mobile",
+      "rank": 1,
+      "title": "MONOPOLY GO!",
+      "developers": [
+        "Scopely"
+      ],
+      "ids": {
+        "google_play": "com.scopely.monopolygo",
+        "wikipedia": "Monopoly Go!",
+        "app_store": "1621328561"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.scopely.monopolygo",
+          "candidates": [
+            {
+              "qid": "Q124179369",
+              "label": "Monopoly Go!",
+              "enwiki": "Monopoly Go!"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q124179369",
+          "label": "Monopoly Go!",
+          "wikipedia": "Monopoly Go!",
+          "steam_app": [],
+          "google_play": [
+            "com.scopely.monopolygo"
+          ],
+          "app_store": [
+            "1621328561"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.roblox.client",
+      "list": "mobile",
+      "rank": 2,
+      "title": "Roblox",
+      "developers": [
+        "Roblox Corporation"
+      ],
+      "ids": {
+        "google_play": "com.roblox.client",
+        "wikipedia": "Roblox",
+        "app_store": "431946152"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.roblox.client",
+          "candidates": [
+            {
+              "qid": "Q692989",
+              "label": "Roblox",
+              "enwiki": "Roblox"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q692989",
+          "label": "Roblox",
+          "wikipedia": "Roblox",
+          "steam_app": [],
+          "google_play": [
+            "com.roblox.client"
+          ],
+          "app_store": [
+            "431946152"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.king.candycrushsaga",
+      "list": "mobile",
+      "rank": 3,
+      "title": "Candy Crush Saga",
+      "developers": [
+        "King"
+      ],
+      "ids": {
+        "google_play": "com.king.candycrushsaga",
+        "wikipedia": "Candy Crush Saga",
+        "app_store": "553834731"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.king.candycrushsaga",
+          "candidates": [
+            {
+              "qid": "Q8768018",
+              "label": "Candy Crush Saga",
+              "enwiki": "Candy Crush Saga"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q8768018",
+          "label": "Candy Crush Saga",
+          "wikipedia": "Candy Crush Saga",
+          "steam_app": [],
+          "google_play": [
+            "com.king.candycrushsaga"
+          ],
+          "app_store": [
+            "553834731"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "list": "mobile",
+      "rank": 4,
+      "title": "Gossip Harbor: Merge & Story",
+      "developers": [
+        "Microfun Limited"
+      ],
+      "ids": {
+        "google_play": "com.mergegames.gossipharbor",
+        "app_store": "1623318294"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.mergegames.gossipharbor",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "1623318294"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.dreamgames.royalmatch",
+      "list": "mobile",
+      "rank": 5,
+      "title": "Royal Match",
+      "developers": [
+        "Dream Games, Ltd."
+      ],
+      "ids": {
+        "google_play": "com.dreamgames.royalmatch",
+        "wikipedia": "Royal Match",
+        "app_store": "1482155847"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.dreamgames.royalmatch",
+          "candidates": [
+            {
+              "qid": "Q112136792",
+              "label": "Royal Match",
+              "enwiki": "Royal Match"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q112136792",
+          "label": "Royal Match",
+          "wikipedia": "Royal Match",
+          "steam_app": [],
+          "google_play": [
+            "com.dreamgames.royalmatch"
+          ],
+          "app_store": [
+            "1482155847"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.run.tower.defense",
+      "list": "mobile",
+      "rank": 6,
+      "title": "Kingshot",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.run.tower.defense",
+        "app_store": "6739554056"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.run.tower.defense",
+          "candidates": [
+            {
+              "qid": "Q136101839",
+              "label": "Kingshot",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q136101839",
+          "label": "Kingshot",
+          "wikipedia": null,
+          "steam_app": [],
+          "google_play": [
+            "com.run.tower.defense"
+          ],
+          "app_store": [
+            "6739554056"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.gof.global",
+      "list": "mobile",
+      "rank": 7,
+      "title": "Whiteout Survival",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.gof.global",
+        "app_store": "6443575749"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.gof.global",
+          "candidates": [
+            {
+              "qid": "Q133883285",
+              "label": "Whiteout Survival",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q133883285",
+          "label": "Whiteout Survival",
+          "wikipedia": null,
+          "steam_app": [],
+          "google_play": [
+            "com.gof.global"
+          ],
+          "app_store": [
+            "6443575749"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.township",
+      "list": "mobile",
+      "rank": 8,
+      "title": "Township",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.township",
+        "wikipedia": "Township (video game)",
+        "app_store": "638689075"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.playrix.township",
+          "candidates": [
+            {
+              "qid": "Q19658446",
+              "label": "Township",
+              "enwiki": "Township (video game)"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q19658446",
+          "label": "Township",
+          "wikipedia": "Township (video game)",
+          "steam_app": [],
+          "google_play": [
+            "com.playrix.township"
+          ],
+          "app_store": [
+            "638689075"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.coinmaster",
+      "list": "mobile",
+      "rank": 9,
+      "title": "Coin Master",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.coinmaster",
+        "wikipedia": "Coin Master",
+        "app_store": "406889139"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.moonactive.coinmaster",
+          "candidates": [
+            {
+              "qid": "Q71159395",
+              "label": "Coin Master",
+              "enwiki": "Coin Master"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q71159395",
+          "label": "Coin Master",
+          "wikipedia": "Coin Master",
+          "steam_app": [],
+          "google_play": [
+            "com.moonactive.coinmaster"
+          ],
+          "app_store": [
+            "406889139"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "list": "mobile",
+      "rank": 10,
+      "title": "Royal Kingdom",
+      "developers": [
+        "Dream Games, Ltd."
+      ],
+      "ids": {
+        "google_play": "com.dreamgames.royalkingdom"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.dreamgames.royalkingdom",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.nianticlabs.pokemongo",
+      "list": "mobile",
+      "rank": 11,
+      "title": "Pokémon GO",
+      "developers": [
+        "Scopely Explore, Inc."
+      ],
+      "ids": {
+        "google_play": "com.nianticlabs.pokemongo",
+        "wikipedia": "Pokémon Go",
+        "app_store": "1094591345"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.nianticlabs.pokemongo",
+          "candidates": [
+            {
+              "qid": "Q20966579",
+              "label": "Pokémon Go",
+              "enwiki": "Pokémon Go"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q20966579",
+          "label": "Pokémon Go",
+          "wikipedia": "Pokémon Go",
+          "steam_app": [],
+          "google_play": [
+            "com.nianticlabs.pokemongo"
+          ],
+          "app_store": [
+            "1094591345"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.fun.lastwar.gp",
+      "list": "mobile",
+      "rank": 12,
+      "title": "Last War:Survival Game",
+      "developers": [
+        "FUNFLY PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.fun.lastwar.gp",
+        "wikipedia": "Last War: Survival Game",
+        "app_store": "6448786147"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.fun.lastwar.gp",
+          "candidates": [
+            {
+              "qid": "Q134964011",
+              "label": "Last War: Survival Game",
+              "enwiki": "Last War: Survival Game"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q134964011",
+          "label": "Last War: Survival Game",
+          "wikipedia": "Last War: Survival Game",
+          "steam_app": [],
+          "google_play": [
+            "com.fun.lastwar.gp"
+          ],
+          "app_store": [
+            "6448786147"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-net.peakgames.toonblast",
+      "list": "mobile",
+      "rank": 13,
+      "title": "Toon Blast",
+      "developers": [
+        "Peak"
+      ],
+      "ids": {
+        "google_play": "net.peakgames.toonblast",
+        "wikipedia": "Toon Blast",
+        "app_store": "1176027022"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=net.peakgames.toonblast",
+          "candidates": [
+            {
+              "qid": "Q134445834",
+              "label": "Toon Blast",
+              "enwiki": "Toon Blast"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q134445834",
+          "label": "Toon Blast",
+          "wikipedia": "Toon Blast",
+          "steam_app": [],
+          "google_play": [
+            "net.peakgames.toonblast"
+          ],
+          "app_store": [
+            "1176027022"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.readygo.barrel.gp",
+      "list": "mobile",
+      "rank": 14,
+      "title": "Last Z: Survival Shooter",
+      "developers": [
+        "Omnilojo Pte Ltd"
+      ],
+      "ids": {
+        "google_play": "com.readygo.barrel.gp"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.readygo.barrel.gp",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "status": "error",
+          "error": "itunes.apple.com returned HTTP 403"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.topgamesinc.evony",
+      "list": "mobile",
+      "rank": 15,
+      "title": "Evony: The King's Return",
+      "developers": [
+        "TG Inc."
+      ],
+      "ids": {
+        "google_play": "com.topgamesinc.evony"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.topgamesinc.evony",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.phs.global",
+      "list": "mobile",
+      "rank": 16,
+      "title": "Last Asylum: Plague",
+      "developers": [
+        "37GAMES GLOBAL"
+      ],
+      "ids": {
+        "google_play": "com.phs.global"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.phs.global",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.dts.freefireth",
+      "list": "mobile",
+      "rank": 17,
+      "title": "Free Fire x NARUTO SHIPPUDEN",
+      "developers": [
+        "GARENA INTERNATIONAL I"
+      ],
+      "ids": {
+        "google_play": "com.dts.freefireth",
+        "wikipedia": "Free Fire (video game)",
+        "app_store": "1300146617"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.dts.freefireth",
+          "candidates": [
+            {
+              "qid": "Q51883198",
+              "label": "",
+              "enwiki": "Free Fire (video game)"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q51883198",
+          "label": "",
+          "wikipedia": "Free Fire (video game)",
+          "steam_app": [],
+          "google_play": [
+            "com.dts.freefireth"
+          ],
+          "app_store": [
+            "1300146617"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.totalbattle",
+      "list": "mobile",
+      "rank": 18,
+      "title": "Total Battle: War Strategy",
+      "developers": [
+        "Scorewarrior"
+      ],
+      "ids": {
+        "google_play": "com.totalbattle",
+        "app_store": "1274132545"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.totalbattle",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "1274132545"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.williamsinteractive.jackpotparty",
+      "list": "mobile",
+      "rank": 19,
+      "title": "Jackpot Party Casino Slots",
+      "developers": [
+        "SciPlay"
+      ],
+      "ids": {
+        "google_play": "com.williamsinteractive.jackpotparty"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.williamsinteractive.jackpotparty",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.gardenscapes",
+      "list": "mobile",
+      "rank": 20,
+      "title": "Gardenscapes",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.gardenscapes",
+        "wikipedia": "Gardenscapes: New Acres",
+        "app_store": "1105855019"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.playrix.gardenscapes",
+          "candidates": [
+            {
+              "qid": "Q43401640",
+              "label": "Gardenscapes",
+              "enwiki": "Gardenscapes: New Acres"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q43401640",
+          "label": "Gardenscapes",
+          "wikipedia": "Gardenscapes: New Acres",
+          "steam_app": [],
+          "google_play": [
+            "com.playrix.gardenscapes"
+          ],
+          "app_store": [
+            "1105855019"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.productmadness.cashmancasino",
+      "list": "mobile",
+      "rank": 22,
+      "title": "Cashman Casino Slots Games",
+      "developers": [
+        "Product Madness"
+      ],
+      "ids": {
+        "google_play": "com.productmadness.cashmancasino",
+        "app_store": "1123582513"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.productmadness.cashmancasino",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "1123582513"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "list": "mobile",
+      "rank": 23,
+      "title": "Lightning Link Casino Slots",
+      "developers": [
+        "Product Madness"
+      ],
+      "ids": {
+        "google_play": "com.productmadness.lightninglink",
+        "app_store": "1243005112"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.productmadness.lightninglink",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "1243005112"
+        }
+      }
+    },
+    {
+      "game_id": "gp-air.com.buffalo_studios.newflashbingo",
+      "list": "mobile",
+      "rank": 24,
+      "title": "Bingo Blitz™️ - Bingo Games",
+      "developers": [
+        "Playtika Santa Monica"
+      ],
+      "ids": {
+        "google_play": "air.com.buffalo_studios.newflashbingo"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=air.com.buffalo_studios.newflashbingo",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "list": "mobile",
+      "rank": 25,
+      "title": "Fishdom",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.fishdomdd.gplay",
+        "wikipedia": "Fishdom",
+        "app_store": "664575829"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.playrix.fishdomdd.gplay",
+          "candidates": [
+            {
+              "qid": "Q4038787",
+              "label": "Fishdom",
+              "enwiki": "Fishdom"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q4038787",
+          "label": "Fishdom",
+          "wikipedia": "Fishdom",
+          "steam_app": [],
+          "google_play": [
+            "com.playrix.fishdomdd.gplay"
+          ],
+          "app_store": [
+            "664575829"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-net.peakgames.match",
+      "list": "mobile",
+      "rank": 26,
+      "title": "Match Factory!",
+      "developers": [
+        "Peak"
+      ],
+      "ids": {
+        "google_play": "net.peakgames.match"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=net.peakgames.match",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.king.candycrushsodasaga",
+      "list": "mobile",
+      "rank": 27,
+      "title": "Candy Crush Soda Saga",
+      "developers": [
+        "King"
+      ],
+      "ids": {
+        "google_play": "com.king.candycrushsodasaga",
+        "app_store": "850417475"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.king.candycrushsodasaga",
+          "candidates": [
+            {
+              "qid": "Q21190139",
+              "label": "Candy Crush Soda Saga",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q21190139",
+          "label": "Candy Crush Soda Saga",
+          "wikipedia": null,
+          "steam_app": [],
+          "google_play": [
+            "com.king.candycrushsodasaga"
+          ],
+          "app_store": [
+            "850417475"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.fatmerge.global",
+      "list": "mobile",
+      "rank": 28,
+      "title": "Tasty Travels: Merge Game",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.fatmerge.global",
+        "app_store": "6471045672"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.fatmerge.global",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "6471045672"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.homescapes",
+      "list": "mobile",
+      "rank": 29,
+      "title": "Homescapes",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.homescapes",
+        "wikipedia": "Homescapes",
+        "app_store": "1195621598"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.playrix.homescapes",
+          "candidates": [
+            {
+              "qid": "Q43401642",
+              "label": "Homescapes",
+              "enwiki": "Homescapes"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q43401642",
+          "label": "Homescapes",
+          "wikipedia": "Homescapes",
+          "steam_app": [],
+          "google_play": [
+            "com.playrix.homescapes"
+          ],
+          "app_store": [
+            "1195621598"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "list": "mobile",
+      "rank": 30,
+      "title": "Dice Dreams™️",
+      "developers": [
+        "SuperPlay."
+      ],
+      "ids": {
+        "google_play": "com.superplaystudios.dicedreams",
+        "app_store": "1484468651"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.superplaystudios.dicedreams",
+          "candidates": [
+            {
+              "qid": "Q130394500",
+              "label": "Dice Dreams",
+              "enwiki": null
+            }
+          ],
+          "status": "matched",
+          "qid": "Q130394500",
+          "label": "Dice Dreams",
+          "wikipedia": null,
+          "steam_app": [],
+          "google_play": [
+            "com.superplaystudios.dicedreams"
+          ],
+          "app_store": [
+            "1484468651"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.zjcs.android.us",
+      "list": "mobile",
+      "rank": 31,
+      "title": "Sword x Staff",
+      "developers": [
+        "BOLTRAY GAMES"
+      ],
+      "ids": {
+        "google_play": "com.zjcs.android.us",
+        "app_store": "6751270546"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.zjcs.android.us",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "6751270546"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.diamondlife.slots.vegas.free",
+      "list": "mobile",
+      "rank": 32,
+      "title": "Lotsa Slots - Casino Games",
+      "developers": [
+        "SpinX Games Limited"
+      ],
+      "ids": {
+        "google_play": "com.diamondlife.slots.vegas.free"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.diamondlife.slots.vegas.free",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.proximabeta.nikke",
+      "list": "mobile",
+      "rank": 33,
+      "title": "GODDESS OF VICTORY: NIKKE",
+      "developers": [
+        "Level Infinite"
+      ],
+      "ids": {
+        "google_play": "com.proximabeta.nikke",
+        "wikipedia": "Goddess of Victory: Nikke",
+        "app_store": "1585915174"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.proximabeta.nikke",
+          "candidates": [
+            {
+              "qid": "Q114836978",
+              "label": "Goddess of Victory: Nikke",
+              "enwiki": "Goddess of Victory: Nikke"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q114836978",
+          "label": "Goddess of Victory: Nikke",
+          "wikipedia": "Goddess of Victory: Nikke",
+          "steam_app": [],
+          "google_play": [
+            "com.proximabeta.nikke"
+          ],
+          "app_store": [
+            "1585915174"
+          ]
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.loomgames.pixelflow",
+      "list": "mobile",
+      "rank": 34,
+      "title": "Pixel Flow!",
+      "developers": [
+        "Loom Games A.Ş."
+      ],
+      "ids": {
+        "google_play": "com.loomgames.pixelflow"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.loomgames.pixelflow",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.superplaystudios.disneysolitairedreams",
+      "list": "mobile",
+      "rank": 35,
+      "title": "Disney Solitaire",
+      "developers": [
+        "SuperPlay."
+      ],
+      "ids": {
+        "google_play": "com.superplaystudios.disneysolitairedreams"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.superplaystudios.disneysolitairedreams",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "status": "error",
+          "error": "itunes.apple.com returned HTTP 403"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.combo.yarnflow",
+      "list": "mobile",
+      "rank": 36,
+      "title": "Yarn Loop",
+      "developers": [
+        "Combo Game"
+      ],
+      "ids": {
+        "google_play": "com.combo.yarnflow"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.combo.yarnflow",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "status": "error",
+          "error": "itunes.apple.com returned HTTP 403"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.readygo.dark.gp",
+      "list": "mobile",
+      "rank": 37,
+      "title": "Dark War Survival",
+      "developers": [
+        "Omnilojo Pte Ltd"
+      ],
+      "ids": {
+        "google_play": "com.readygo.dark.gp",
+        "app_store": "6670441558"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.readygo.dark.gp",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "6670441558"
+        }
+      }
+    },
+    {
+      "game_id": "gp-net.supertreat.solitaire",
+      "list": "mobile",
+      "rank": 38,
+      "title": "Solitaire Grand Harvest",
+      "developers": [
+        "Supertreat - A Playtika Studio"
+      ],
+      "ids": {
+        "google_play": "net.supertreat.solitaire"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=net.supertreat.solitaire",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.ea.game.starwarscapital_row",
+      "list": "mobile",
+      "rank": 39,
+      "title": "Star Wars™: Galaxy of Heroes",
+      "developers": [
+        "ELECTRONIC ARTS"
+      ],
+      "ids": {
+        "google_play": "com.ea.game.starwarscapital_row",
+        "wikipedia": "Star Wars: Galaxy of Heroes"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.ea.game.starwarscapital_row",
+          "candidates": [
+            {
+              "qid": "Q21775900",
+              "label": "Star Wars: Galaxy of Heroes",
+              "enwiki": "Star Wars: Galaxy of Heroes"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q21775900",
+          "label": "Star Wars: Galaxy of Heroes",
+          "wikipedia": "Star Wars: Galaxy of Heroes",
+          "steam_app": [],
+          "google_play": [
+            "com.ea.game.starwarscapital_row"
+          ],
+          "app_store": []
+        },
+        "app_store_search": {
+          "status": "error",
+          "error": "itunes.apple.com returned HTTP 403"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.global.ztmslg",
+      "list": "mobile",
+      "rank": 40,
+      "title": "Puzzles & Survival",
+      "developers": [
+        "37GAMES"
+      ],
+      "ids": {
+        "google_play": "com.global.ztmslg"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.global.ztmslg",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-slots.pcg.casino.games.free.android",
+      "list": "mobile",
+      "rank": 41,
+      "title": "Cash Frenzy™ - Casino Slots",
+      "developers": [
+        "SpinX Games Limited"
+      ],
+      "ids": {
+        "google_play": "slots.pcg.casino.games.free.android"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=slots.pcg.casino.games.free.android",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "list": "mobile",
+      "rank": 42,
+      "title": "All in Hole: Black Hole Games",
+      "developers": [
+        "Homa"
+      ],
+      "ids": {
+        "google_play": "com.homagames.studio.allinhole"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.homagames.studio.allinhole",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.cola.game",
+      "list": "mobile",
+      "rank": 43,
+      "title": "Flambé®: Merge & Cook",
+      "developers": [
+        "Microfun Limited"
+      ],
+      "ids": {
+        "google_play": "com.cola.game"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.cola.game",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "list": "mobile",
+      "rank": 45,
+      "title": "Mystery Town: Merge Games",
+      "developers": [
+        "Cedar Games Studio"
+      ],
+      "ids": {
+        "google_play": "com.cedargames.mysterytown",
+        "app_store": "6503603603"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.cedargames.mysterytown",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "6503603603"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.grandgames.magicsort",
+      "list": "mobile",
+      "rank": 46,
+      "title": "Magic Sort!",
+      "developers": [
+        "Grand Games A.Ş."
+      ],
+      "ids": {
+        "google_play": "com.grandgames.magicsort",
+        "app_store": "6499209744"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.grandgames.magicsort",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "6499209744"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "list": "mobile",
+      "rank": 47,
+      "title": "Quick Hit Casino Slots Games",
+      "developers": [
+        "SciPlay"
+      ],
+      "ids": {
+        "google_play": "com.ballytechnologies.quickhitslots"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.ballytechnologies.quickhitslots",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.joycastle.mergematch",
+      "list": "mobile",
+      "rank": 48,
+      "title": "Matching Story - Puzzle Games",
+      "developers": [
+        "VERTEX GAMES PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.joycastle.mergematch"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.joycastle.mergematch",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "status": "error",
+          "error": "itunes.apple.com returned HTTP 403"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.merge.cooking.theme.restaurant.food",
+      "list": "mobile",
+      "rank": 49,
+      "title": "Merge Cooking®",
+      "developers": [
+        "Happibits Game"
+      ],
+      "ids": {
+        "google_play": "com.merge.cooking.theme.restaurant.food"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.merge.cooking.theme.restaurant.food",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "no_match"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.cmboard",
+      "list": "mobile",
+      "rank": 50,
+      "title": "Coin Master - Board Adventure",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.cmboard",
+        "app_store": "6745761596"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.moonactive.cmboard",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "method": "app-store-search-title-and-developer",
+          "needs_owner_review": true,
+          "status": "matched",
+          "app_store": "6745761596"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.global.pnck",
+      "list": "mobile",
+      "rank": 51,
+      "title": "Puzzles & Chaos: Frozen Castle",
+      "developers": [
+        "37GAMES"
+      ],
+      "ids": {
+        "google_play": "com.global.pnck"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.global.pnck",
+          "status": "no_match"
+        },
+        "app_store_search": {
+          "status": "error",
+          "error": "itunes.apple.com returned HTTP 403"
+        }
+      }
+    },
+    {
+      "game_id": "gp-com.bandainamcogames.dbzdokkanww",
+      "list": "mobile",
+      "rank": 52,
+      "title": "DRAGON BALL Z DOKKAN BATTLE",
+      "developers": [
+        "Bandai Namco Entertainment Inc."
+      ],
+      "ids": {
+        "google_play": "com.bandainamcogames.dbzdokkanww",
+        "wikipedia": "Dragon Ball Z: Dokkan Battle",
+        "app_store": "951627425"
+      },
+      "identity": {
+        "wikidata": {
+          "method": "wikidata-exact-store-id",
+          "lookup": "google_play=com.bandainamcogames.dbzdokkanww",
+          "candidates": [
+            {
+              "qid": "Q28224681",
+              "label": "Dragon Ball Z: Dokkan Battle",
+              "enwiki": "Dragon Ball Z: Dokkan Battle"
+            }
+          ],
+          "status": "matched",
+          "qid": "Q28224681",
+          "label": "Dragon Ball Z: Dokkan Battle",
+          "wikipedia": "Dragon Ball Z: Dokkan Battle",
+          "steam_app": [],
+          "google_play": [
+            "com.bandainamcogames.dbzdokkanww"
+          ],
+          "app_store": [
+            "951627425"
+          ]
+        }
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "list": "steam",
+      "rank": 4,
+      "appid": 431960,
+      "peak_in_game": 100766,
+      "last_week_rank": 4,
+      "title": "Wallpaper Engine",
+      "reason": "Steam lists it under software genres: Animation & Modeling, Design & Illustration, Photo Editing, Utilities"
+    },
+    {
+      "list": "steam",
+      "rank": 10,
+      "appid": 2676230,
+      "peak_in_game": 182293,
+      "last_week_rank": 12,
+      "title": "FiveM",
+      "reason": "store type is 'advertising', not a game"
+    },
+    {
+      "list": "steam",
+      "rank": 23,
+      "appid": 3240220,
+      "peak_in_game": 68612,
+      "last_week_rank": 24,
+      "title": "Grand Theft Auto V Enhanced",
+      "reason": "another edition of steam-271590 (kept at its higher rank)"
+    },
+    {
+      "list": "mobile",
+      "rank": 44,
+      "package": "jp.konami.pesam",
+      "title": "eFootball™",
+      "developer": "KONAMI",
+      "reason": "same game as steam-1665460 on the Steam list"
+    }
+  ]
+}

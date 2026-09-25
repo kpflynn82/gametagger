@@ -41,6 +41,29 @@ class ObservationBoundary:
             ]
         }
 
+    def partition(
+        self, observations: list[Observation], evidence: EvidenceItem
+    ) -> tuple[list[Observation], list[dict[str, str]]]:
+        """Apply the same rules per observation, quarantining violations instead of failing.
+
+        Used by rich mode so one taxonomy word in a description cannot erase every other fact
+        from that image. Quarantined statements are returned for audit and never reach Jev.
+        """
+        kept, quarantined, seen = [], [], set()
+        for observation in observations:
+            try:
+                if observation.id in seen:
+                    raise ObserverBoundaryError("Duplicate observation IDs")
+                self.validate([observation], evidence)
+            except ObserverBoundaryError as exc:
+                quarantined.append(
+                    {"observation_id": observation.id, "text": observation.text, "reason": str(exc)}
+                )
+            else:
+                kept.append(observation)
+            seen.add(observation.id)
+        return kept, quarantined
+
     def validate(self, observations: list[Observation], evidence: EvidenceItem) -> None:
         ids = [o.id for o in observations]
         if len(ids) != len(set(ids)):

@@ -1,0 +1,771 @@
+# Extended Genome attributes for GameTagger rich mode.
+#
+# Tag names and most definitions are adapted from the owner's original GenomeTagger tag
+# glossary (kpflynn82/gametagger-web, frontend/src/components/TagGlossary.tsx). The 25 pilot
+# tags and the genre hierarchy in vgms_v4.yaml are unchanged and are NOT repeated here; rich
+# mode asks the pilot tags and these extended tags together.
+#
+# Category defaults fill evidence fields a tag does not set itself. Evidence types:
+#   gameplay_image, gameplay_clip       -> observed media (factual Observer statements)
+#   store_metadata                       -> store listing text (publisher claim)
+#   developer_documentation              -> publisher/developer pages, press kits, manuals
+#   wikipedia                            -> encyclopedia summary (third-party secondary source)
+version: genome-tags-v1
+categories:
+  gameplay:
+    label: Gameplay elements
+    description: Multi-label play elements. A game can have several; these are not primary genres.
+    evidence_class: system
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  mechanic:
+    label: Mechanics & systems
+    description: Specific systems the player uses.
+    evidence_class: system
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  narrative:
+    label: Narrative structure
+    description: How story and player choice are organised.
+    evidence_class: system
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  world:
+    label: World structure
+    description: How the playable space is organised.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  feature:
+    label: Modes & platform features
+    description: Player-count modes and supported features.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  engagement:
+    label: Social & live engagement
+    description: Social systems and retention mechanics.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  monetization:
+    label: Business model
+    description: How the game is paid for.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, store_metadata, developer_documentation, wikipedia]
+  setting:
+    label: Setting
+    description: Time, place and world genre the game is set in.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  tone:
+    label: Tone & mood
+    description: The emotional register the game is built around.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  theme:
+    label: Themes
+    description: Recurring subject matter of the story or premise.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  protagonist:
+    label: Protagonist
+    description: Who the player controls.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  visual:
+    label: Visual style & camera
+    description: Art direction and gameplay camera.
+    evidence_class: visual
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  accessibility:
+    label: Accessibility
+    description: Documented accessibility and difficulty options.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, store_metadata, developer_documentation]
+  audience:
+    label: Audience & content
+    description: Who the game is suited to and notable content.
+    evidence_class: documentary
+    allowed_evidence: [store_metadata, developer_documentation, wikipedia]
+
+tags:
+  # ---------------------------------------------------------------- gameplay elements
+  - id: gameplay_action
+    label: Action gameplay
+    category: gameplay
+    definition: Reflexes, timing and real-time execution are a substantial part of the challenge.
+  - id: gameplay_adventure
+    label: Adventure gameplay
+    category: gameplay
+    definition: Exploring places, meeting characters and progressing a story or quest structure is a substantial part of play.
+  - id: gameplay_strategy
+    label: Strategy gameplay
+    category: gameplay
+    definition: Planning, positioning, resource allocation or tactical decisions are a substantial part of play.
+  - id: gameplay_simulation
+    label: Simulation gameplay
+    category: gameplay
+    definition: Play models the rules of a real-world or fictional activity, system or lifestyle in detail.
+  - id: gameplay_management
+    label: Management gameplay
+    category: gameplay
+    definition: Running a business, settlement, team, farm or organisation through planning and optimisation is a substantial part of play.
+  - id: gameplay_puzzle
+    label: Puzzle-solving gameplay
+    category: gameplay
+    definition: Logic, pattern, spatial or physics problems the player must work out are a substantial part of play.
+  - id: gameplay_stealth
+    label: Stealth gameplay
+    category: gameplay
+    definition: Avoiding detection, sneaking and infiltration are a meaningful way to progress.
+  - id: gameplay_survival
+    label: Survival gameplay
+    category: gameplay
+    definition: Gathering resources and managing scarcity to endure a hostile environment is a substantial part of play.
+  - id: gameplay_exploration
+    label: Exploration gameplay
+    category: gameplay
+    definition: Discovering and traversing unknown places is a primary motivation of play.
+  - id: gameplay_sandbox
+    label: Sandbox play
+    category: gameplay
+    definition: Open-ended play with player-chosen goals and freeform creation or experimentation.
+  - id: gameplay_roguelike
+    label: Run-based roguelike structure
+    category: gameplay
+    definition: Play is organised into repeated runs that reset on failure, usually with varied content and some carried-over progression.
+  - id: gameplay_fighting
+    label: Fighting gameplay
+    category: gameplay
+    definition: Direct one-on-one or small-group duels with move sets, combos and special attacks.
+  - id: gameplay_racing
+    label: Racing gameplay
+    category: gameplay
+    definition: Competing on speed and route navigation, usually in vehicles.
+  - id: gameplay_sports
+    label: Sports gameplay
+    category: gameplay
+    definition: Play recreates a real or fictional athletic sport or its competitions.
+  - id: gameplay_rhythm
+    label: Rhythm gameplay
+    category: gameplay
+    definition: Actions are timed to music, beats or audio cues as a core challenge.
+  - id: gameplay_card_based
+    label: Card-based gameplay
+    category: gameplay
+    definition: Cards, decks or hands are a core way the player takes actions.
+  - id: gameplay_tower_defense
+    label: Tower defense elements
+    category: gameplay
+    definition: Placing defensive structures to stop waves of enemies is a meaningful part of play.
+
+  # ---------------------------------------------------------------- mechanics & systems
+  - id: mechanic_leveling
+    label: Experience and levels
+    category: mechanic
+    definition: The player character or units gain experience points and levels that increase capability.
+  - id: mechanic_skill_tree
+    label: Skill tree
+    category: mechanic
+    definition: The player chooses among branching ability or talent upgrades.
+  - id: mechanic_equipment
+    label: Equipment and loadouts
+    category: mechanic
+    definition: Gear, weapons or loadouts the player equips change stats or play style.
+  - id: mechanic_loot
+    label: Loot drops
+    category: mechanic
+    definition: Defeated enemies, chests or activities reward items or equipment of varying value.
+    instructions: Ordinary pickups such as ammo or health alone are not loot.
+  - id: mechanic_upgrades
+    label: Upgrade system
+    category: mechanic
+    definition: The player improves weapons, abilities, vehicles, buildings or equipment over time.
+  - id: mechanic_building
+    label: Building and construction
+    category: mechanic
+    definition: The player constructs structures, bases, rooms or environments.
+  - id: mechanic_base_building
+    label: Base or settlement building
+    category: mechanic
+    definition: The player builds and maintains a persistent home base, camp or settlement.
+  - id: mechanic_farming
+    label: Farming
+    category: mechanic
+    definition: The player plants, tends and harvests crops or raises livestock.
+  - id: mechanic_resource_gathering
+    label: Resource gathering
+    category: mechanic
+    definition: The player collects raw materials such as wood, ore or plants from the world.
+  - id: mechanic_resource_management
+    label: Resource management
+    category: mechanic
+    definition: Allocating and conserving limited resources is a meaningful decision-making layer.
+  - id: mechanic_economy
+    label: In-game economy and trading
+    category: mechanic
+    definition: The player buys, sells or trades using an in-game currency or market.
+  - id: mechanic_collection
+    label: Collecting
+    category: mechanic
+    definition: Gathering and cataloguing sets of items, creatures, cards or collectibles is a meaningful goal.
+  - id: mechanic_boss_battles
+    label: Boss battles
+    category: mechanic
+    definition: Climactic encounters against powerful unique enemies.
+  - id: mechanic_permadeath
+    label: Permadeath
+    category: mechanic
+    definition: Character death is permanent or ends the run, forcing a restart.
+  - id: mechanic_combo_system
+    label: Combo system
+    category: mechanic
+    definition: Chaining attacks or actions in sequence gives extra damage, score or effects.
+  - id: mechanic_vehicles
+    label: Drivable vehicles
+    category: mechanic
+    definition: The player drives, rides or pilots vehicles, mounts or craft.
+  - id: mechanic_parkour_climbing
+    label: Parkour and climbing
+    category: mechanic
+    definition: Athletic traversal such as climbing, wall-running, vaulting or free-running.
+  - id: mechanic_physics
+    label: Physics-based interaction
+    category: mechanic
+    definition: Simulated physics such as momentum, weight or destruction is central to how actions play out.
+  - id: mechanic_character_customization
+    label: Character customization
+    category: mechanic
+    definition: The player adjusts a character's appearance, class or attributes.
+  - id: mechanic_companions
+    label: Companions or party members
+    category: mechanic
+    definition: AI-controlled allies, pets or party members accompany or fight alongside the player.
+  - id: mechanic_time_management
+    label: Time management
+    category: mechanic
+    definition: Scheduling limited in-game time, such as days or shifts, is a core decision layer.
+  - id: mechanic_survival_needs
+    label: Hunger, thirst or survival needs
+    category: mechanic
+    definition: The player must manage needs such as hunger, thirst, temperature or sanity.
+  - id: mechanic_deck_building
+    label: Deck building
+    category: mechanic
+    definition: The player assembles or grows a deck of cards whose composition shapes play.
+  - id: mechanic_unit_command
+    label: Unit command
+    category: mechanic
+    definition: The player commands multiple units, troops or characters rather than a single avatar.
+  - id: mechanic_puzzle_environmental
+    label: Environmental puzzles
+    category: mechanic
+    definition: Obstacles in the world must be solved by manipulating switches, objects or the environment.
+  - id: mechanic_quests
+    label: Quests and missions
+    category: mechanic
+    definition: The player takes on structured objectives such as quests, missions or contracts.
+  - id: mechanic_fishing
+    label: Fishing
+    category: mechanic
+    definition: Fishing is available as an activity.
+  - id: mechanic_cooking
+    label: Cooking
+    category: mechanic
+    definition: The player prepares food or recipes from ingredients.
+
+  # ---------------------------------------------------------------- narrative structure
+  - id: narrative_branching
+    label: Branching narrative
+    category: narrative
+    definition: Story paths diverge based on player decisions.
+  - id: narrative_moral_choices
+    label: Moral choices
+    category: narrative
+    definition: The player makes ethical decisions with story or gameplay consequences.
+  - id: narrative_multiple_endings
+    label: Multiple endings
+    category: narrative
+    definition: The game has more than one possible ending.
+  - id: narrative_romance
+    label: Romance options
+    category: narrative
+    definition: The player can pursue romantic relationships with characters.
+  - id: narrative_voice_acting
+    label: Voiced dialogue
+    category: narrative
+    definition: Characters speak with recorded voice acting.
+  - id: narrative_minimal_story
+    label: Minimal or no story
+    category: narrative
+    definition: The game has little or no authored plot; play is not organised around a story.
+
+  # ---------------------------------------------------------------- world structure
+  - id: world_linear_levels
+    label: Linear levels or stages
+    category: world
+    definition: Progression runs mainly through discrete, largely linear levels, stages or missions.
+  - id: world_ability_gated
+    label: Ability-gated interconnected map
+    category: world
+    definition: An interconnected map where new abilities open previously blocked areas.
+  - id: world_hub
+    label: Hub world
+    category: world
+    definition: A central hub area connects separate levels, missions or regions.
+  - id: world_persistent_online
+    label: Persistent online world
+    category: world
+    definition: Players share a persistent online world that continues between sessions.
+  - id: world_sandbox_destructible
+    label: Destructible or editable terrain
+    category: world
+    definition: Players can dig, destroy or reshape the terrain itself.
+
+  # ---------------------------------------------------------------- modes & platform features
+  - id: feature_single_player
+    label: Single-player mode
+    category: feature
+    definition: The game can be played by one person alone.
+  - id: feature_online_multiplayer
+    label: Online multiplayer
+    category: feature
+    definition: Players can play together over the internet.
+  - id: feature_local_multiplayer
+    label: Local multiplayer
+    category: feature
+    definition: Several players can play on the same device or local network, including couch or split-screen play.
+  - id: feature_split_screen
+    label: Split-screen
+    category: feature
+    definition: Local players share one display divided into separate views.
+  - id: feature_massively_multiplayer
+    label: Massively multiplayer
+    category: feature
+    definition: Large numbers of players share the same world or servers at once.
+  - id: feature_cross_platform
+    label: Cross-platform play
+    category: feature
+    definition: Players on different platforms or devices can play together.
+  - id: feature_controller_support
+    label: Controller support
+    category: feature
+    definition: The game can be played with a gamepad or controller.
+  - id: feature_touch_controls
+    label: Touch controls
+    category: feature
+    definition: The game is designed to be played with touch input.
+  - id: feature_user_content
+    label: Mods or player-made content
+    category: feature
+    definition: Players can create, share or install mods, levels or other user-generated content.
+  - id: feature_offline_play
+    label: Offline play
+    category: feature
+    definition: The game can be played without an internet connection.
+  - id: feature_cloud_saves
+    label: Cloud saves
+    category: feature
+    definition: Save data can sync through an online service.
+
+  # ---------------------------------------------------------------- social & live engagement
+  - id: engagement_pvp
+    label: Player versus player
+    category: engagement
+    definition: Players compete directly against other human players.
+  - id: engagement_pve
+    label: Player versus environment
+    category: engagement
+    definition: Players face computer-controlled opposition, alone or together.
+  - id: engagement_ranked
+    label: Ranked or competitive play
+    category: engagement
+    definition: Skill-based ranked modes, ladders or competitive matchmaking.
+  - id: engagement_leaderboards
+    label: Leaderboards
+    category: engagement
+    definition: Scores or results are ranked against other players.
+  - id: engagement_achievements
+    label: Achievements
+    category: engagement
+    definition: Milestone rewards or trophies for completing specific challenges.
+  - id: engagement_guilds
+    label: Guilds or clans
+    category: engagement
+    definition: Players can form persistent groups with shared goals or rewards.
+  - id: engagement_live_events
+    label: Live events
+    category: engagement
+    definition: Limited-time events, seasons or rotating content with exclusive rewards.
+  - id: engagement_battle_pass
+    label: Battle pass
+    category: engagement
+    definition: A seasonal progression track with tiered rewards.
+  - id: engagement_daily_rewards
+    label: Daily rewards or quests
+    category: engagement
+    definition: Incentives for logging in or playing every day.
+  - id: engagement_energy_system
+    label: Energy or stamina timers
+    category: engagement
+    definition: A regenerating meta-resource limits how much the player can play before waiting or paying.
+    instructions: This is a session-gating timer, not an in-combat stamina bar.
+  - id: engagement_gacha
+    label: Gacha or loot boxes
+    category: engagement
+    definition: Randomised reward draws such as gacha pulls or loot boxes, often purchasable.
+  - id: engagement_auto_play
+    label: Auto-play or idle progress
+    category: engagement
+    definition: The game can progress automatically or while the player is away.
+  - id: engagement_trading_between_players
+    label: Player-to-player trading
+    category: engagement
+    definition: Players can exchange items or currency with each other.
+  - id: engagement_spectating_streaming
+    label: Spectating or streaming features
+    category: engagement
+    definition: Built-in spectator, replay-sharing or streaming features.
+
+  # ---------------------------------------------------------------- business model
+  - id: monetization_free_to_play
+    label: Free to play
+    category: monetization
+    definition: The game can be downloaded and played without an upfront purchase.
+  - id: monetization_premium
+    label: Premium purchase
+    category: monetization
+    definition: A one-time purchase is required to play.
+  - id: monetization_subscription
+    label: Subscription
+    category: monetization
+    definition: A recurring payment is required for access or core benefits.
+  - id: monetization_in_app_purchases
+    label: In-game purchases
+    category: monetization
+    definition: Players can spend real money inside the game on currency, items or content.
+  - id: monetization_cosmetic_only
+    label: Cosmetic-only purchases
+    category: monetization
+    definition: Real-money purchases are limited to cosmetic items with no gameplay advantage.
+  - id: monetization_pay_to_progress
+    label: Pay-to-progress or pay-to-win
+    category: monetization
+    definition: Real-money purchases give meaningful power or progression advantages.
+  - id: monetization_dlc
+    label: Paid DLC or expansions
+    category: monetization
+    definition: Paid downloadable content or expansions add to the base game.
+  - id: monetization_ads
+    label: Ad-supported
+    category: monetization
+    definition: The game shows advertisements, including optional rewarded ads.
+
+  # ---------------------------------------------------------------- setting
+  - id: setting_fantasy
+    label: Fantasy setting
+    category: setting
+    definition: Magic, mythical creatures or supernatural worldbuilding define the world.
+  - id: setting_dark_fantasy
+    label: Dark fantasy setting
+    category: setting
+    definition: A grim fantasy world with horror elements and moral ambiguity.
+  - id: setting_sci_fi
+    label: Science-fiction setting
+    category: setting
+    definition: Futuristic technology, space travel or speculative science define the world.
+  - id: setting_space
+    label: Outer space
+    category: setting
+    definition: Play takes place substantially in space, on spaceships or on other planets.
+  - id: setting_cyberpunk
+    label: Cyberpunk setting
+    category: setting
+    definition: A high-tech dystopia with corporate control, cybernetics and neon cities.
+  - id: setting_steampunk
+    label: Steampunk setting
+    category: setting
+    definition: Victorian-era aesthetics with steam-powered or clockwork technology.
+  - id: setting_post_apocalyptic
+    label: Post-apocalyptic setting
+    category: setting
+    definition: The world after a civilisation-ending event.
+  - id: setting_historical
+    label: Historical setting
+    category: setting
+    definition: Set in or closely inspired by a real historical period.
+  - id: setting_medieval
+    label: Medieval setting
+    category: setting
+    definition: A Middle Ages world of castles, knights and feudal societies, real or fantastical.
+  - id: setting_ancient
+    label: Ancient-world setting
+    category: setting
+    definition: Classical or ancient civilisations such as Rome, Greece or Egypt.
+  - id: setting_modern_day
+    label: Present-day setting
+    category: setting
+    definition: A contemporary, present-day world.
+  - id: setting_urban
+    label: Urban environments
+    category: setting
+    definition: Much of the game takes place in cities or metropolitan environments.
+  - id: setting_rural
+    label: Rural or countryside environments
+    category: setting
+    definition: Much of the game takes place in villages, farmland or countryside.
+  - id: setting_wilderness
+    label: Wilderness
+    category: setting
+    definition: Much of the game takes place in untamed nature such as forests, mountains or islands.
+  - id: setting_underwater
+    label: Underwater
+    category: setting
+    definition: Oceans or underwater environments are a major setting.
+  - id: setting_underground
+    label: Underground
+    category: setting
+    definition: Caves, mines, dungeons or subterranean spaces are a major setting.
+  - id: setting_military
+    label: Military setting
+    category: setting
+    definition: Armed forces, soldiers or military operations are central to the premise.
+  - id: setting_western
+    label: Western setting
+    category: setting
+    definition: The American frontier with cowboys, outlaws and frontier towns.
+  - id: setting_mythology
+    label: Mythology
+    category: setting
+    definition: Draws substantially on real-world mythological pantheons or legends.
+  - id: setting_pirate
+    label: Pirates and seafaring
+    category: setting
+    definition: Pirates, sailing ships or naval adventure are central to the premise.
+  - id: setting_feudal_japan
+    label: Feudal Japan
+    category: setting
+    definition: Samurai, shinobi or feudal-era Japan are central to the setting.
+  - id: setting_zombies
+    label: Zombies or undead outbreak
+    category: setting
+    definition: Zombies or an undead outbreak are central to the premise.
+  - id: setting_superhero
+    label: Superheroes
+    category: setting
+    definition: Characters with extraordinary powers in a superhero premise.
+  - id: setting_school
+    label: School or campus
+    category: setting
+    definition: A school, academy or campus is a major setting.
+
+  # ---------------------------------------------------------------- tone & mood
+  - id: tone_horror
+    label: Horror tone
+    category: tone
+    definition: The game aims to frighten or disturb through atmosphere, threats or dread.
+  - id: tone_comedy
+    label: Comedic tone
+    category: tone
+    definition: Humour, satire or absurdity is a defining part of the experience.
+  - id: tone_cozy
+    label: Cozy and relaxing
+    category: tone
+    definition: A low-stress, comforting experience built around relaxation rather than tension.
+  - id: tone_dark
+    label: Dark or grim tone
+    category: tone
+    definition: A bleak, grim or mature atmosphere dominates.
+  - id: tone_whimsical
+    label: Whimsical or lighthearted
+    category: tone
+    definition: A playful, charming or lighthearted atmosphere dominates.
+  - id: tone_mystery
+    label: Mystery
+    category: tone
+    definition: Investigation, secrets and revelations drive the experience.
+  - id: tone_psychological
+    label: Psychological
+    category: tone
+    definition: Explores mental states, perception or unreliable reality.
+  - id: tone_emotional
+    label: Emotional drama
+    category: tone
+    definition: Character-focused storytelling aimed at emotional impact.
+  - id: tone_suspense
+    label: Suspense and tension
+    category: tone
+    definition: Sustained tension, danger and high stakes drive the experience.
+  - id: tone_epic
+    label: Epic scale
+    category: tone
+    definition: A grand, large-scale adventure or conflict with high stakes.
+
+  # ---------------------------------------------------------------- themes
+  - id: theme_war
+    label: War
+    category: theme
+    definition: Armed conflict and its consequences are a central theme.
+  - id: theme_crime
+    label: Crime
+    category: theme
+    definition: Criminal underworlds, heists or law enforcement are central to the premise.
+  - id: theme_revenge
+    label: Revenge
+    category: theme
+    definition: Vengeance drives the story.
+  - id: theme_coming_of_age
+    label: Coming of age
+    category: theme
+    definition: Growth and maturation through formative experiences.
+  - id: theme_family
+    label: Family
+    category: theme
+    definition: Family relationships are a central theme.
+  - id: theme_friendship
+    label: Friendship
+    category: theme
+    definition: Bonds between companions are a central theme.
+  - id: theme_environment
+    label: Nature and environment
+    category: theme
+    definition: Nature, ecology or environmental change is a central theme.
+  - id: theme_politics_power
+    label: Politics and power
+    category: theme
+    definition: Political struggle, rule or the pursuit of power is a central theme.
+  - id: theme_survival_against_odds
+    label: Survival against the odds
+    category: theme
+    definition: Enduring a desperate situation is a central narrative theme.
+  - id: theme_identity
+    label: Identity and self-discovery
+    category: theme
+    definition: Self-discovery or transformation of who the protagonist is.
+
+  # ---------------------------------------------------------------- protagonist
+  - id: protagonist_customizable
+    label: Player-created protagonist
+    category: protagonist
+    definition: The player creates their own protagonist, choosing appearance or attributes.
+  - id: protagonist_predefined
+    label: Predefined protagonist
+    category: protagonist
+    definition: A fixed protagonist with an established identity and backstory.
+  - id: protagonist_ensemble
+    label: Multiple playable characters
+    category: protagonist
+    definition: Several distinct characters can be played, by switching or across the story.
+  - id: protagonist_non_human
+    label: Non-human protagonist
+    category: protagonist
+    definition: The main playable character is an animal, robot, creature or other non-human.
+  - id: protagonist_female
+    label: Female protagonist
+    category: protagonist
+    definition: A female lead character is the main or default protagonist.
+  - id: protagonist_silent
+    label: Silent protagonist
+    category: protagonist
+    definition: The protagonist does not speak or has minimal dialogue.
+  - id: protagonist_antihero
+    label: Anti-hero or villain protagonist
+    category: protagonist
+    definition: The protagonist has questionable morals or is the antagonist.
+
+  # ---------------------------------------------------------------- visual style & camera
+  - id: visual_top_down
+    label: Top-down perspective
+    category: visual
+    definition: Gameplay is primarily viewed from directly or steeply overhead.
+  - id: visual_2d
+    label: 2D graphics
+    category: visual
+    definition: Gameplay is rendered primarily with two-dimensional graphics.
+  - id: visual_3d
+    label: 3D graphics
+    category: visual
+    definition: Gameplay is rendered primarily with three-dimensional graphics.
+  - id: visual_hand_drawn
+    label: Hand-drawn art
+    category: visual
+    definition: Illustration-style graphics with visible brush, pen or painted qualities.
+  - id: visual_cel_shaded
+    label: Cel-shaded
+    category: visual
+    definition: Flat shading with bold outlines giving a cartoon or comic-book look.
+  - id: visual_low_poly
+    label: Low-poly
+    category: visual
+    definition: Simplified 3D geometry with visible facets as a deliberate style.
+  - id: visual_voxel
+    label: Voxel art
+    category: visual
+    definition: A world built from visible cubes or voxels.
+  - id: visual_anime
+    label: Anime style
+    category: visual
+    definition: Japanese animation-inspired character and art style.
+  - id: visual_cartoon
+    label: Cartoon style
+    category: visual
+    definition: Western animation-inspired style with exaggerated features.
+  - id: visual_minimalist
+    label: Minimalist style
+    category: visual
+    definition: Simplified, clean visuals with few elements and flat shapes.
+  - id: visual_retro
+    label: Retro presentation
+    category: visual
+    definition: Deliberately evokes older game hardware or eras in look and feel.
+  - id: visual_vibrant
+    label: Vibrant colours
+    category: visual
+    definition: A saturated, colourful palette dominates.
+  - id: visual_dark_atmospheric
+    label: Dark atmospheric visuals
+    category: visual
+    definition: Dim lighting, heavy shadow or a desaturated palette dominate.
+
+  # ---------------------------------------------------------------- accessibility
+  - id: accessibility_difficulty_options
+    label: Difficulty options
+    category: accessibility
+    definition: The player can choose or adjust difficulty.
+  - id: accessibility_assist_modes
+    label: Assist modes
+    category: accessibility
+    definition: Optional assists such as aim assist, invincibility or story modes.
+  - id: accessibility_colorblind
+    label: Colourblind options
+    category: accessibility
+    definition: Colourblind modes or palette options are available.
+  - id: accessibility_subtitles
+    label: Subtitle options
+    category: accessibility
+    definition: Subtitles or captions are available.
+  - id: accessibility_remapping
+    label: Control remapping
+    category: accessibility
+    definition: Controls can be remapped or customised.
+
+  # ---------------------------------------------------------------- audience & content
+  - id: audience_family_friendly
+    label: Family friendly
+    category: audience
+    definition: Suitable for children and family play.
+  - id: audience_mature
+    label: Mature content
+    category: audience
+    definition: Intended for adults because of violence, sexual content, language or disturbing themes.
+  - id: audience_graphic_violence
+    label: Graphic violence
+    category: audience
+    definition: Violence is depicted graphically, for example with blood or gore.
+  - id: audience_casual
+    label: Casual-friendly
+    category: audience
+    definition: Easy to pick up and suited to short or relaxed play sessions.
+  - id: audience_challenging
+    label: High difficulty
+    category: audience
+    definition: Deliberately demanding difficulty is a selling point.
+  - id: audience_educational
+    label: Educational
+    category: audience
+    definition: Teaching knowledge or skills is an explicit goal.

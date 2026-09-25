@@ -2,6 +2,7 @@ import base64
 import hashlib
 import io
 import json
+from types import SimpleNamespace
 from unittest.mock import Mock
 
 import httpx2
@@ -207,3 +208,38 @@ def test_malformed_model_or_usage_is_a_provider_failure(taxonomy, model, tokens)
     )
     assert attempt.status == "error" and attempt.error_code == "provider_contract"
     assert attempt.output is None
+
+
+def test_lenient_window_quarantines_malformed_statements_and_keeps_the_rest(taxonomy):
+    frames = samples()
+    reply = payload()
+    region = {"x": 0.1, "y": 0.1, "width": 0.3, "height": 0.1}
+    reply["observations"] += [
+        {"kind": "visual_fact", "text": "Two frames at once.", "frame_ids": ["frame-0", "frame-1"]},
+        {
+            "kind": "visual_fact",
+            "text": "A tree.",
+            "frame_ids": ["frame-2"],
+            "image_region": region,
+        },
+        {"kind": "visual_text", "text": "GO", "frame_ids": ["frame-2"]},
+    ]
+    usage = SimpleNamespace(
+        input_tokens=1, output_tokens=1, cache_creation_input_tokens=0, cache_read_input_tokens=0
+    )
+    block = SimpleNamespace(type="tool_use", name="record_window_observations", input=reply)
+    client = Mock()
+    client.messages.create.return_value = SimpleNamespace(
+        model="m", stop_reason="tool_use", usage=usage, content=[block]
+    )
+    strict = AnthropicOrderedObserver(taxonomy, model="test", client=client)
+    assert strict.observe_window(window(frames), frames=frames).status == "error"
+    lenient = AnthropicOrderedObserver(
+        taxonomy, model="test", client=client, enforce_boundary=False
+    )
+    attempt = lenient.observe_window(window(frames), frames=frames)
+    assert attempt.status == "valid"
+    texts = [s.text for s in attempt.output.observations]
+    assert texts[:2] == [o["text"] for o in payload()["observations"]] and texts[2] == "A tree."
+    assert attempt.output.observations[2].image_region is None
+    assert [q["text"] for q in lenient.last_quarantined] == ["Two frames at once.", "GO"]

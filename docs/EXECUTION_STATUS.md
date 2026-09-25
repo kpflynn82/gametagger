@@ -17,3 +17,163 @@ The machine-readable roadmap is a saved snapshot, not a runtime heartbeat. Earli
 PR #8 now rejects duplicate canonical game IDs within either split before replay, retains all cross-split leakage checks, and uses distinct canonical games for cohort/mobile/split qualification counts. Raw records and unresolved identities remain visible separately. Regression coverage includes both splits, mobile-minimum inflation, unknown IDs and the valid 30-distinct-game cohort. The 24 holdout candidates and frozen taxonomy are unchanged.
 
 Parallel evidence assembly is limited to the existing six development subjects. The first target is Factorio. Private packets and actual assets live in `work/clean30-development` in the task workspace; no media is published into the repository. Documented publisher press/review permissions must not be promoted to benchmark/provider-processing permission. Proposed metadata/labels and pending rights/release facts remain separate from actual human approvals. Zero human approvals or paid experiments are claimed. The task handoff records the finished review packet and exact remaining decisions.
+
+## Rich Genome mode (September 24, 2026)
+
+The owner asked for richer Jev tagging. An offline diagnosis of the pilot path at `687d0b2` found
+that store or description text reached Jev for no attribute tag, that 8 of 25 tags were never asked,
+and that one taxonomy word in an Observer sentence failed the whole run. Branch
+`claude/focused-hypatia-dyrxiz` adds `gametagger-genome`, which asks 189 tags (25 frozen pilot +
+164 extended from the owner's original glossary) plus the unchanged genre hierarchy over attributed
+text claims and screenshot facts. `vgms_v4.yaml`, the pilot pipeline, experiments and website are
+unchanged. Offline tests only; no paid or live calls were made, and live quality, cost and latency
+remain unmeasured. See [GENOME_RICH_MODE](GENOME_RICH_MODE.md). Next step: a small live comparison
+against the original site's tags once the owner sets a budget.
+
+### Rich mode media (September 24, 2026)
+
+At the owner's request, rich mode now reads Steam and App Store pages by exact ID. It downloads
+their screenshots and store trailer, and samples trailers into short frame bursts. Timing
+attributes can therefore use `gameplay_clip` evidence. Cinematic and title-card bursts are left
+out. The YouTube backup uses the Data API only, as the owner chose: it records a reference and
+YouTube's published stills, and downloads no video. Google Play is a link-only slot until the owner
+chooses a data service. The shared image loader no longer crashes on JPEG input, and ordered
+windows accept source videos up to 30 minutes (website uploads keep their 60-second limit).
+Offline tests only; no live provider, store or YouTube request was made. See
+[GENOME_RICH_MODE](GENOME_RICH_MODE.md).
+
+### Next: Jev versus previous-method benchmark (handoff, September 24, 2026)
+
+The owner wants 100 games compared: the top 50 Steam games by concurrent players and the top 50
+mobile games by grossing. The comparison is rich mode (Observer + Jev) against the original site's
+single Claude call, on identical inputs. It should measure timing per stage, tokens, cost, tags per
+game and accuracy, and end with charts and a short social-media write-up. Every figure must state
+its sample, date and answer-key method.
+
+Owner actions taken: API keys were added to the environment as `TYPESAFE_API_KEY`,
+`ANTHROPIC_API_KEY`, `ANTHROPIC_WORKSPACE_ID` (if needed) and `YOUTUBE_API_KEY`, and network
+access was requested for `api.typesafe.ai`, `api.anthropic.com`, `store.steampowered.com`,
+`api.steampowered.com`, `steamstatic.com`, `en.wikipedia.org`, `itunes.apple.com`, `mzstatic.com`,
+`www.googleapis.com` and `i.ytimg.com`. In a new session, first verify that each variable name
+exists (never print values) and that each host is reachable.
+
+Still needed from the owner before any paid run:
+- A numeric spending limit. Estimates for one 100-game pass: vision Observer on Claude Sonnet 5
+  about $8-10; previous method about $2 on Haiku 4.5 (standard) or about $9 on Opus 4.8 (deep);
+  Jev about 3.3M input tokens at the owner's TypeSafe rate. Suggested: a $40 Claude cap plus a
+  Jev cap, and a 10-game pilot first.
+- The top-50 mobile grossing list (rank, name, App Store ID and/or Google Play package; chart
+  region, platform and month). No reliable free official grossing source is known.
+- The answer-key method. Recommended: a blind human primary genre for all 100 games plus about
+  20 tags on about 30 games. Steam community tags are a cheaper, weaker PC-only option.
+- Previous-method mode: Haiku standard, Opus deep, or both (recommended: both).
+- Confirmation that non-game Steam chart entries (for example Wallpaper Engine) are skipped.
+
+To build, none of which needs keys:
+- A faithful adapter of the original `gametagger-web` tagger prompt (the decisions/legacy.py
+  placeholder), run on the same dossier.
+- A Steam most-played chart reader.
+- A batch runner recording per-stage wall clock, tokens and cost.
+- An old-59-to-new-100 genre crosswalk for the owner to approve.
+- Scoring, charts and a write-up template.
+
+### Benchmark tools built (September 24, 2026)
+
+The owner decided the open questions. The spending limit is **$40 in total**. Mobile games come
+from AppBrain's Google Play top-grossing games chart (US). Accuracy is judged by Steam user tags
+plus the owner's own blinded review. The previous method runs on both Haiku 4.5 (standard) and
+Opus 4.8 (deep). Steam non-games are skipped and listed.
+
+`gametagger-compare` is built. See [JEV_VS_LEGACY_BENCHMARK](JEV_VS_LEGACY_BENCHMARK.md) for
+steps, outputs and caveats. Its parts:
+
+* chart readers and a frozen 100-game cohort (`experiments/jev-vs-legacy/cohort.json`, charts of
+  2026-09-23 and 2026-09-24)
+* exact-ID identity through Wikidata
+* a Steam user-tag answer key
+* shared dossiers, with a new Google Play listing reader that includes the store's MP4 trailer
+* a faithful adapter of the original tagger (`decisions/legacy.py`, verbatim prompt and rules
+  from `gametagger-web@4b710fd`)
+* a budget-capped runner with per-stage timing, tokens and list-price cost
+* draft crosswalks in `taxonomy/crosswalks/`
+* scoring, a blinded review sheet, and an HTML report with a social card
+
+Environment findings:
+
+* The TypeSafe key was accepted by the free model-listing call; `jev-latest` is `jev-1.13.0` at
+  $0.042 per million input tokens.
+* The YouTube key works.
+* `ANTHROPIC_API_KEY` is not visible to the agent here. The tools also read
+  `GAMETAGGER_ANTHROPIC_API_KEY`, which the owner has added; a new session picks it up.
+* After the owner widened network access, every needed host was reachable. Wikimedia
+  rate-limits this shared address heavily, so identity and Wikipedia fetches wait and retry.
+* `ffmpeg` must be installed in each session.
+
+The only paid call so far is one live Jev check on Stardew Valley's text: 185 questions in 6 requests, 4.0 seconds, $0.0019. No Claude call has been made. Next step, in a session that can see the key: run `dossiers`, then a
+10-game pilot, then the full run and `report`, all under the same $40 ledger.
+
+### Benchmark run attempt (September 24, 2026): blocked on Anthropic credit (resolved below)
+
+* The new Anthropic key (108 characters) is accepted by the free model-listing call once the
+  `anthropic-workspace-id` header is sent; `ANTHROPIC_WORKSPACE_ID` is set and the tools send it.
+  Haiku 4.5, Opus 4.8 and Sonnet 5 are all listed.
+* Steam changed its store API: `appdetails` sometimes files its reply under another ID (a DLC or
+  package), so most Steam games read as unlisted. Fixed: a reply is accepted only when its own
+  `steam_appid` matches the requested game. Dossiers were rebuilt from scratch after the fix.
+* The 10-game pilot was refused on every Claude request with "Your credit balance is too low to
+  access the Anthropic API". Nothing was billed (30 zero-cost error rows in the ledger; the failed
+  results were deleted so they are re-run). The runner now stops the whole run on this message
+  instead of booking every remaining game as a failure.
+* **Owner action:** add prepaid credit to the Anthropic organization that owns this key
+  (Console → Plans & Billing), then re-run the pilot with `--budget-usd 39.99`.
+
+### Benchmark measured (September 25, 2026)
+
+All 300 runs finished (100 games x 3 methods) with no failures; 5 rich-mode games are `partial`
+(thin evidence or one errored Jev question). Total spend **$20.67** of the $39.99 ledger cap, plus
+the earlier $0.0019 Jev check. Sample: Steam most-played (2026-09-23) and Google Play US
+top-grossing (2026-09-24), 50 each. Accuracy uses the 50 Steam games' top 20 player tags through
+draft crosswalks.
+
+| | Jev pipeline | One prompt, Opus 4.8 | One prompt, Haiku 4.5 |
+|---|---|---|---|
+| Player-tagged attributes found (all mapped) | 77% | 45% | 23% |
+| Same, attributes both vocabularies name | 77% | 78% | 40% |
+| Player-tagged attributes called absent | 0.8% | 5.9% | 3.7% |
+| Attributes present per game (median) | 35 | 17 | 15 |
+| Time per game (median) | 100 s (observe 94.5 s, Jev 5.9 s) | 12.1 s | 7.5 s |
+| Cost per game (mean) | $0.153 (Claude $0.150, Jev $0.0028) | $0.040 | $0.006 |
+
+Jev versus Opus on the shared vocabulary is -1 point (paired 95% interval -5 to +3): no clear
+difference. In 34 of 100 games Haiku nested its answers where the original parser does not look,
+so the old site would have recorded no tags; results keep that behaviour (Opus: 0). With every
+answer readable, Haiku's all-mapped recall would be 40%.
+
+Fixes made during the run: Steam `appdetails` replies keyed by another ID are matched by
+`steam_appid`; rich mode quarantines malformed Observer statements one at a time (screenshots and
+trailer windows) and allows 4,096 output tokens; a no-credit refusal stops the run; cancelled
+jobs no longer crash the runner.
+
+Published (private until the owner shares them):
+* Results page: https://claude.ai/artifact/5pVfp8rgBXSy1rV3bx3KvG (charts, method diagram, tag
+  dictionary, per-game table, LinkedIn kit). Sources in `experiments/jev-vs-legacy/site/`.
+* Requests board: https://claude.ai/artifact/3MLmYUfDTkFgC9RFfkNiPU (organization-only; the owner
+  approves requests, which are tagged in batches under a cap the owner sets).
+* LinkedIn slides and post text: `experiments/jev-vs-legacy/linkedin/`.
+
+Owner to do: fill `experiments/jev-vs-legacy/review/owner-review.csv` (494 rows, yes/no/unsure),
+review the three draft crosswalks, confirm the 10 App Store title-and-developer matches in
+`cohort.json`. Follow-up agreed: a public GitHub Pages site with a public request form.
+
+### Cheaper image descriptions (September 25, 2026)
+
+Built saved descriptions (identical requests are never paid twice), half-price batch describing
+(`run --batch`, resumable with `--resume-batch`), and two cost-test arms. On the first 20 benchmark
+games, Haiku 4.5 through the batch cost **$0.035 per game all in versus $0.170** for the benchmark's
+Sonnet run, found 76.4% of Steam players' tags versus 78.5% (10 Steam games; not a measurable
+difference at this size), kept 93% of the benchmark's present attributes and 95% of its genre
+calls, but had more Observer statements quarantined (13.8 versus 1.2 per game). Brief Sonnet
+descriptions with duplicate skipping cost $0.070 per game. Details:
+`experiments/jev-vs-legacy/cost-test/README.md`. The test cost $1.99 for descriptions plus Jev;
+ledger total $22.86 of the $39.99 cap. Also tagged Epic Plane Evolution for cloning work
+(`experiments/single-games/epic-plane-evolution/`, $0.097).

@@ -1,0 +1,33 @@
+{
+  "schema_version": "dossier-v1",
+  "game_id": "synthetic-hollow-orchard",
+  "title": "Hollow Orchard",
+  "sources": [
+    {
+      "id": "store",
+      "type": "store_metadata",
+      "provider": "Store listing (SYNTHETIC example text for a fictional game)",
+      "reported_title": "Hollow Orchard",
+      "text": "Hollow Orchard is a cozy farming life game about restoring your grandmother's overgrown orchard in the mountain village of Brindle. Plant and harvest over 60 crops, raise chickens and goats, and craft tools, sprinklers and furniture at your workbench. Explore the old mine beneath the village, where the floors are procedurally generated each day and slimes guard rare ore. Befriend 24 villagers, choose what to say in conversations, and even fall in love and marry. Play solo or invite up to three friends to your farm in online co-op. Beautiful hand-crafted pixel art and a gentle acoustic soundtrack. Fishing contests and cooking festivals every season.",
+      "fields": {
+        "store_genres": ["Simulation", "RPG", "Indie"],
+        "store_features": ["Single-player", "Online Co-op", "Achievements", "Full controller support", "Cloud saves"],
+        "pricing": ["Requires purchase"]
+      }
+    },
+    {
+      "id": "presskit",
+      "type": "developer_documentation",
+      "provider": "Publisher press kit (SYNTHETIC example text for a fictional game)",
+      "reported_title": "Hollow Orchard",
+      "text": "Hollow Orchard is a single purchase with no microtransactions. Each in-game day lasts about 14 minutes, so players decide how to spend limited energy and hours. Combat is simple: swing a sword at slimes in the mine. There is no permadeath; fainting only costs a few items. Difficulty and game speed can be adjusted, and all text supports adjustable size and subtitles in 9 languages."
+    },
+    {
+      "id": "encyclopedia",
+      "type": "wikipedia",
+      "provider": "Encyclopedia summary (SYNTHETIC example text for a fictional game)",
+      "reported_title": "Hollow Orchard",
+      "text": "Hollow Orchard is a 2027 farming simulation video game developed by the fictional studio Quiet Lantern. Players create a customizable character who inherits an orchard. Reviewers praised its relaxing atmosphere and compared it to other life simulation games."
+    }
+  ]
+}

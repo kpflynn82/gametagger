@@ -8,7 +8,13 @@ from time import perf_counter
 
 from PIL import Image
 
-from gametagger.observers.ordered import OrderedWindow, WindowAttempt, WindowOutput, digest
+from gametagger.observers.ordered import (
+    OrderedWindow,
+    WindowAttempt,
+    WindowOutput,
+    WindowStatement,
+    digest,
+)
 
 PROMPT_VERSION = "ordered-observer-v1"
 SYSTEM_PROMPT = """You are GameTagger's factual Observer, never its classifier.
@@ -26,15 +32,20 @@ Frame order and timestamps do not prove continuity or sufficient sampling for a 
 Omit uncertain facts; an empty observations list is valid. Call record_window_observations.
 """
 PROMPT_SHA256 = digest({"system": SYSTEM_PROMPT, "schema": WindowOutput.model_json_schema()})
+# Cost variant: fewer, shorter statements (output tokens are most of the Observer's bill).
+BRIEF_NOTE = """
+Be brief: record at most 10 statements, each one short sentence under 20 words. Prefer changes
+between frames and facts specific to this window; do not restate the same fact in other words.
+"""
 
 
-def request_digest(window, model):
+def request_digest(window, model, *, prompt_version=PROMPT_VERSION, prompt_sha256=PROMPT_SHA256):
     return digest(
         {
             "window": window.model_dump(mode="json"),
             "model": model,
-            "prompt_version": PROMPT_VERSION,
-            "prompt_sha256": PROMPT_SHA256,
+            "prompt_version": prompt_version,
+            "prompt_sha256": prompt_sha256,
         }
     )
 
@@ -60,11 +71,62 @@ def validate_frames(window: OrderedWindow, frames: list[bytes]):
 class AnthropicOrderedObserver:
     prompt_version = PROMPT_VERSION
 
-    def __init__(self, taxonomy, *, model, client=None, allow_live=False, workspace_id=None):
+    def __init__(
+        self,
+        taxonomy,
+        *,
+        model,
+        client=None,
+        allow_live=False,
+        workspace_id=None,
+        enforce_boundary=True,
+        brief=False,
+    ):
         self.taxonomy, self.model, self.client = taxonomy, model, client
+        self.system_prompt = SYSTEM_PROMPT + (BRIEF_NOTE if brief else "")
+        self.prompt_version = PROMPT_VERSION + ("+brief" if brief else "")
+        self.prompt_sha256 = (
+            digest({"system": self.system_prompt, "schema": WindowOutput.model_json_schema()})
+            if brief
+            else PROMPT_SHA256
+        )
         self.allow_live, self.workspace_id = allow_live, workspace_id
+        # False only when the caller quarantines statements itself (rich mode).
+        self.enforce_boundary = enforce_boundary
+        self.last_quarantined: list[dict[str, str]] = []
+
+    def _lenient(self, payload, window: OrderedWindow):
+        """Rich mode: keep a window's valid statements and quarantine malformed ones alone.
+
+        A screen region on a non-text statement is dropped and the statement kept.
+        """
+        if not isinstance(payload, dict) or not isinstance(payload.get("observations"), list):
+            return payload
+        kept = []
+        for i, item in enumerate(payload["observations"]):
+            try:
+                statement = WindowStatement.model_validate(item)
+                if statement.kind != "visual_text":
+                    statement = statement.model_copy(update={"image_region": None})
+                elif statement.image_region is None:
+                    raise ValueError("Literal text needs a region")
+                WindowOutput(context="unknown", observations=[statement]).validate_against(
+                    window, self.taxonomy, enforce_boundary=False
+                )
+                kept.append(statement.model_dump(mode="json"))
+            except ValueError as exc:
+                text = item.get("text") if isinstance(item, dict) else None
+                self.last_quarantined.append(
+                    {
+                        "observation_id": f"statement:{i}",
+                        "text": str(text or "")[:300],
+                        "reason": f"Malformed statement ({type(exc).__name__})",
+                    }
+                )
+        return {**payload, "observations": kept[:32]}
 
     def observe_window(self, window: OrderedWindow, *, frames: list[bytes]) -> WindowAttempt:
+        self.last_quarantined = []
         # Revalidate mutable/injected models before touching a client.
         window = OrderedWindow.model_validate(window.model_dump())
         validate_frames(window, frames)
@@ -95,8 +157,8 @@ class AnthropicOrderedObserver:
             )
         kwargs = dict(
             model=self.model,
-            max_tokens=2048,
-            system=SYSTEM_PROMPT,
+            max_tokens=4096,
+            system=self.system_prompt,
             messages=[{"role": "user", "content": content}],
             tools=[
                 {
@@ -111,9 +173,14 @@ class AnthropicOrderedObserver:
             kwargs["extra_headers"] = {"anthropic-workspace-id": self.workspace_id}
         fields = dict(
             window_sha256=window.sha256,
-            request_sha256=request_digest(window, self.model),
-            prompt_version=PROMPT_VERSION,
-            prompt_sha256=PROMPT_SHA256,
+            request_sha256=request_digest(
+                window,
+                self.model,
+                prompt_version=self.prompt_version,
+                prompt_sha256=self.prompt_sha256,
+            ),
+            prompt_version=self.prompt_version,
+            prompt_sha256=self.prompt_sha256,
             requested_model=self.model,
             sdk_version=version("anthropic"),
         )
@@ -165,8 +232,11 @@ class AnthropicOrderedObserver:
                 raise ValueError("Unexpected provider envelope")
             fields["response_sha256"] = digest(blocks[0].input)
             phase = "observation_contract"
-            output = WindowOutput.model_validate(blocks[0].input).validate_against(
-                window, self.taxonomy
+            payload = blocks[0].input
+            if not self.enforce_boundary:
+                payload = self._lenient(payload, window)
+            output = WindowOutput.model_validate(payload).validate_against(
+                window, self.taxonomy, enforce_boundary=self.enforce_boundary
             )
             return WindowAttempt(
                 status="valid",

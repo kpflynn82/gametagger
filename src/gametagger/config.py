@@ -22,3 +22,15 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+# Some hosted agent environments reserve ANTHROPIC_API_KEY for the agent itself, so the key for
+# GameTagger's own Claude calls may be supplied under this second name instead.
+ANTHROPIC_KEY_NAMES = ("ANTHROPIC_API_KEY", "GAMETAGGER_ANTHROPIC_API_KEY")
+
+
+def anthropic_api_key() -> str | None:
+    """The first non-empty Anthropic key in the environment. Never log the returned value."""
+    import os
+
+    return next((v for n in ANTHROPIC_KEY_NAMES if (v := os.environ.get(n))), None)
