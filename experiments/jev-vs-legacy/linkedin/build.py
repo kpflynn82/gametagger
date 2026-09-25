@@ -20,6 +20,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE.parent / "results" / "summary.json"
+PER_GAME = HERE.parent / "results" / "per-game.jsonl"
 CHROME = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell"
 
 ARMS = ("rich", "legacy-deep", "legacy-standard")
@@ -158,6 +159,13 @@ def figures(s: dict) -> dict:
             },
         }
     f["diff"] = s["recall_difference_vs_rich"]
+    # Old-method answers the original site read as empty (no yes/no key it could unpack).
+    f["unreadable"] = {a: 0 for a in ARMS[1:]}
+    if PER_GAME.exists():
+        for line in PER_GAME.read_text().splitlines():
+            r = json.loads(line)
+            if r["arm"] in f["unreadable"] and r["status"] == "valid" and not r.get("tags"):
+                f["unreadable"][r["arm"]] += 1
     return f
 
 
@@ -219,10 +227,20 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
                 f"Jev found {pct(R['recall_all'])} of what players tag. "
                 f"One big prompt found {pct(OP['recall_all'])}.",
                 "Today's top 100 games, tagged two ways on identical evidence and checked against "
-                f"Steam players' tags. On attributes both methods can name, it is closer: "
-                f"{pct(R['recall_shared'])} vs {pct(OP['recall_shared'])}.",
+                "Steam players' tags. "
+                + (
+                    f"On attributes both methods can name, they are level: "
+                    f"{pct(R['recall_shared'])} vs {pct(OP['recall_shared'])}."
+                    if close
+                    else f"On attributes both methods can name: {pct(R['recall_shared'])} vs "
+                    f"{pct(OP['recall_shared'])}."
+                ),
                 body,
-                footer(f, accuracy=True),
+                footer(f, accuracy=True)
+                + esc(
+                    f" Haiku: the old site could not read {f['unreadable']['legacy-standard']}"
+                    f" of {H['completed']} answers, counted as given."
+                ),
                 fonts,
             ),
         )
@@ -388,7 +406,7 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         "</div>"
         + bars(rows, scale)
         + f'<div class="key"><span><i style="background:{VISION}"></i>Claude describing '
-        f'{10} images and trailer clips, one request each</span><span><i style="background:'
+        'each image and trailer clip, one request each</span><span><i style="background:'
         f'{JEV}"></i>Jev: {189}+ questions in batches</span></div></div>'
     )
     slides.append(
@@ -533,6 +551,13 @@ def build(f: dict, fonts: str) -> list[tuple[str, str]]:
         ),
         (
             "05",
+            f"<b>Old site's parser</b>: in {f['unreadable']['legacy-standard']} of "
+            f"{H['completed']} games Haiku nested its answers where the original code does not "
+            "look, so the old site would have recorded no tags. Kept as is; Opus had "
+            f"{f['unreadable']['legacy-deep']}.",
+        ),
+        (
+            "06",
             "<b>Limits</b>: one run, list prices, wall-clock times with 3 games in parallel. "
             "Steam tags reward saying yes, so precision is not measured here.",
         ),

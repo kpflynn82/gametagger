@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset=utf-8><title>Jev Benchmark Card</title><style>
+
+:root{color-scheme:light;--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink-2:#52514e;
+--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--ring:rgba(11,11,11,.10);--shared:#c3c2b7;
+--s-rich:#2a78d6;--s-haiku:#eb6834;--s-opus:#1baf7a;--good:#006300}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){color-scheme:dark;
+--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink-2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;
+--axis:#383835;--ring:rgba(255,255,255,.10);--shared:#52514e;--s-rich:#3987e5;
+--s-haiku:#d95926;--s-opus:#199e70;--good:#0ca30c}}
+:root[data-theme="dark"]{color-scheme:dark;--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;
+--ink-2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--ring:rgba(255,255,255,.10);
+--shared:#52514e;--s-rich:#3987e5;--s-haiku:#d95926;--s-opus:#199e70;--good:#0ca30c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);
+font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:34px;line-height:1.15;margin:0 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 6px}
+h3{font-size:16px;margin:0 0 2px}
+p{margin:8px 0;color:var(--ink-2)} p.lead{font-size:18px;color:var(--ink)}
+.meta{color:var(--muted);font-size:14px}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;
+padding:20px 20px 14px;margin:16px 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:24px 0}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:14px 16px}
+.tile .label{font-size:13px;color:var(--ink-2);margin-bottom:6px}
+.tile .row{display:flex;align-items:baseline;gap:8px;margin:2px 0}
+.tile .v{font-weight:600;font-size:20px;white-space:nowrap}
+.tile .n{font-size:13px;color:var(--ink-2)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin:10px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{fill:var(--ink-2);font:13px system-ui,-apple-system,"Segoe UI",sans-serif}
+svg text.value{fill:var(--ink);font-weight:600}
+svg .grid{stroke:var(--grid);stroke-width:1} svg .axis{stroke:var(--axis);stroke-width:1}
+figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+details{margin-top:10px;font-size:14px} summary{cursor:pointer;color:var(--ink-2)}
+table{border-collapse:collapse;width:100%;margin-top:8px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--grid)}
+th{color:var(--ink-2);font-weight:600}
+.watermark{position:fixed;inset:0;pointer-events:none;display:flex;align-items:center;
+justify-content:center;font-size:64px;font-weight:700;color:rgba(227,73,72,.24);transform:rotate(-18deg);z-index:9}
+.banner{background:#fde8e8;color:#7a1414;border-radius:8px;padding:10px 14px;font-weight:600}
+ul{color:var(--ink-2);padding-left:20px} li{margin:4px 0}
+@media (max-width:560px){h1{font-size:26px}.card{padding:14px}}
+
+body{margin:0;width:1200px;height:675px;overflow:hidden;background:var(--surface)}
+.c{width:1200px;height:675px;padding:48px 56px 36px;display:flex;flex-direction:column}
+.t{font-size:44px;font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
+.st{font-size:22px;color:var(--ink-2);margin-top:10px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:26px 48px;margin-top:34px;flex:1}
+.kl{font-size:20px;font-weight:600;margin-bottom:10px;color:var(--ink)}
+.b{display:grid;grid-template-columns:150px 1fr 96px;align-items:center;gap:12px;margin:7px 0}
+.k{font-size:17px;color:var(--ink-2)} .val{font-size:18px;font-weight:600;text-align:right}
+.track{height:20px;display:block} .track i{display:block;height:20px;border-radius:0 4px 4px 0}
+.f{font-size:15px;color:var(--muted);line-height:1.4}
+.wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px;
+font-weight:800;color:rgba(227,73,72,.22);transform:rotate(-14deg)}
+</style></head><body><div class="c">
+<div class="t">One LLM call vs. Jev: tagging 100 top games</div>
+<div class="st">Same evidence per game. Old tagger (Claude Haiku or Opus, one prompt) vs.
+Claude vision + Jev judging 189 attributes one by one.</div>
+<div class="g"><div class="kpi"><div class="kl">Player-tagged attributes found</div><div class="b"><span class="k">Jev rich mode</span><span class="track"><i style="width:76.9%;background:var(--s-rich)"></i></span><span class="val">77%</span></div><div class="b"><span class="k">Old · Haiku</span><span class="track"><i style="width:22.7%;background:var(--s-haiku)"></i></span><span class="val">23%</span></div><div class="b"><span class="k">Old · Opus</span><span class="track"><i style="width:44.8%;background:var(--s-opus)"></i></span><span class="val">45%</span></div></div><div class="kpi"><div class="kl">Attributes per game</div><div class="b"><span class="k">Jev rich mode</span><span class="track"><i style="width:100.0%;background:var(--s-rich)"></i></span><span class="val">35</span></div><div class="b"><span class="k">Old · Haiku</span><span class="track"><i style="width:42.9%;background:var(--s-haiku)"></i></span><span class="val">15</span></div><div class="b"><span class="k">Old · Opus</span><span class="track"><i style="width:48.6%;background:var(--s-opus)"></i></span><span class="val">17</span></div></div><div class="kpi"><div class="kl">Seconds per game</div><div class="b"><span class="k">Jev rich mode</span><span class="track"><i style="width:100.0%;background:var(--s-rich)"></i></span><span class="val">100.3 s</span></div><div class="b"><span class="k">Old · Haiku</span><span class="track"><i style="width:7.5%;background:var(--s-haiku)"></i></span><span class="val">7.5 s</span></div><div class="b"><span class="k">Old · Opus</span><span class="track"><i style="width:12.1%;background:var(--s-opus)"></i></span><span class="val">12.1 s</span></div></div><div class="kpi"><div class="kl">Cost per game</div><div class="b"><span class="k">Jev rich mode</span><span class="track"><i style="width:100.0%;background:var(--s-rich)"></i></span><span class="val">$0.153</span></div><div class="b"><span class="k">Old · Haiku</span><span class="track"><i style="width:3.8%;background:var(--s-haiku)"></i></span><span class="val">$0.006</span></div><div class="b"><span class="k">Old · Opus</span><span class="track"><i style="width:26.3%;background:var(--s-opus)"></i></span><span class="val">$0.040</span></div></div></div><div class="f">100 games: Steam most-played (2026-09-23) + Google Play US top-grossing (2026-09-24). Accuracy = share of Steam players&#x27; top-20 tags found, 50 games on Steam, draft crosswalk. Costs from list prices.</div></div></body></html>

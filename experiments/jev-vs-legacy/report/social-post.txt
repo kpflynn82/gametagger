@@ -1,0 +1,7 @@
+We re-tagged 100 of today's top games (Steam most-played + Google Play top-grossing) two ways on identical evidence: our original one-prompt tagger (Claude Haiku / Opus) and a new pipeline where Claude only describes what it sees and Jev judges each attribute.
+
+On attributes both methods can name, Jev found 77% of what Steam players tagged, versus 78% for the Old · Opus setting (-1 points, 95% interval -5 to +3: no clear difference) and 40% for the Old · Haiku setting (+38 points, 95% interval +27 to +48: higher for Jev).
+
+Jev reported a median of 35 attributes per game at $0.153 and 100.3 s per game.
+
+Answer key: Steam players' top tags (50 games); charts dated 2026-09-23 / 2026-09-24; costs from list prices.

@@ -1,0 +1,19 @@
+We tested two ways of tagging video games on today's top 100: the 50 most-played on Steam and the 50 top-grossing on Google Play (US).
+
+Method 1, one big prompt: give Claude the game's name, its store text and two screenshots, and ask for every tag at once (Haiku 4.5 or Opus 4.8).
+
+Method 2, separate looking from judging: Claude Sonnet 5 only describes what is visible in every screenshot and trailer clip. Then Jev answers each of 189 attributes on its own, using only the evidence allowed for that attribute, without being told the game's name.
+
+Checked against Steam players' own top tags (50 Steam games):
+• Jev found 77% of what players tagged. One prompt found 45% on Opus and 23% on Haiku.
+• Like for like, on attributes both methods can name, Jev and Opus are level (77% vs 78%). Jev's lead comes from covering more attributes.
+• Jev said "no" to something players had tagged 0.8% of the time; Opus did 5.9% of the time.
+• 35 attributes per game instead of 17, each linked to the evidence behind it.
+
+The efficiency numbers are the interesting part:
+• Jev's own judging step costs $0.0028 and takes 5.9 seconds per game, about a fourteenth of one Opus call.
+• The whole pipeline costs $0.15 and takes about 100 seconds per game, and 98% of that is Claude describing images one at a time. That is what we will speed up next.
+
+Caveats: one run, list prices, draft tag mappings. Steam tags cannot show false positives, so a blinded human review is under way. The cheaper Haiku setting was also held back by the old site's own code, which could not read 34 of its 100 answers.
+
+Full results, the method, and a dictionary of every tag: [link]

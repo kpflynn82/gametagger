@@ -1,0 +1,508 @@
+<title>Jev Tagging Benchmark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;800&family=Chivo+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --page:#f6f7f9;--surface:#ffffff;--ink:#11161c;--ink-2:#454c55;--muted:#6f7680;
+  --line:#e1e4e9;--track:#eef0f3;
+  --jev:#2a78d6;--opus:#1baf7a;--haiku:#eb6834;--vision:#9ec5f4;--judge:#184f95;
+  --warn-bg:#fff4e8;--warn-ink:#7a3a0c;--focus:#2a78d6;
+  --sans:Chivo,"Liberation Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Chivo Mono",ui-monospace,"DejaVu Sans Mono",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --page:#0e1114;--surface:#161a1f;--ink:#f1f3f6;--ink-2:#b8bfc8;--muted:#8b939c;
+  --line:#2a3038;--track:#20252b;
+  --jev:#3987e5;--opus:#199e70;--haiku:#d95926;--vision:#1c5cab;--judge:#9ec5f4;
+  --warn-bg:#2b1d10;--warn-ink:#f3c79c;--focus:#86b6ef}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --page:#0e1114;--surface:#161a1f;--ink:#f1f3f6;--ink-2:#b8bfc8;--muted:#8b939c;
+  --line:#2a3038;--track:#20252b;
+  --jev:#3987e5;--opus:#199e70;--haiku:#d95926;--vision:#1c5cab;--judge:#9ec5f4;
+  --warn-bg:#2b1d10;--warn-ink:#f3c79c;--focus:#86b6ef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:17px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:44px 80px}
+.eyebrow{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--jev);font-weight:700}
+h1{font-weight:800;font-size:clamp(34px,5.4vw,58px);line-height:1.04;letter-spacing:-.022em;
+  margin:18px 0 0;text-wrap:balance;max-width:17ch}
+.dek{font-size:clamp(18px,2.2vw,21px);color:var(--ink-2);max-width:62ch;margin:18px 0 0}
+.meta{font-size:14px;color:var(--muted);margin-top:14px;max-width:80ch}
+h2{font-weight:800;font-size:clamp(26px,3.4vw,34px);line-height:1.12;letter-spacing:-.015em;
+  margin:0;text-wrap:balance}
+h3{font-weight:600;font-size:17px;margin:0}
+p{margin:0}
+section{margin-top:72px;display:flex;flex-direction:column;gap:14px}
+section > p{max-width:68ch;color:var(--ink-2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:36px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px;
+  display:flex;flex-direction:column;gap:8px}
+.kpi .l{font:500 12px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi .r{display:grid;grid-template-columns:10px 1fr auto;align-items:baseline;gap:8px;font-size:14px;color:var(--ink-2)}
+.kpi .r b{font-weight:800;font-size:19px;color:var(--ink);font-variant-numeric:tabular-nums}
+.dot{width:10px;height:10px;border-radius:3px;align-self:center}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;
+  display:flex;flex-direction:column;gap:14px}
+.ct{display:flex;flex-direction:column;gap:2px}
+.ct span{font-size:14px;color:var(--muted)}
+.bars{display:flex;flex-direction:column;gap:10px}
+.row{display:grid;grid-template-columns:minmax(120px,210px) 1fr;gap:14px;align-items:center}
+.row .lab{font-size:15px;line-height:1.25}
+.row .lab small{display:block;font-size:12.5px;color:var(--muted)}
+.track{display:flex;align-items:center;gap:10px;min-width:0}
+.bar{display:flex;gap:2px;height:30px;flex:0 0 auto;min-width:3px;border-radius:0 5px 5px 0;overflow:hidden}
+.seg{height:100%;outline:none}
+.seg:hover,.seg:focus-visible{filter:brightness(1.12)}
+.val{font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.key{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13.5px;color:var(--ink-2)}
+.key span{display:inline-flex;align-items:center;gap:7px}
+.note{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.big{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.big div{border-top:4px solid;padding-top:12px}
+.big b{display:block;font-weight:800;font-size:clamp(34px,5vw,46px);line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+.big span{display:block;font-size:14.5px;color:var(--ink-2);margin-top:8px;max-width:30ch}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:18px 20px;
+  display:flex;flex-direction:column;gap:8px}
+.warn h3{color:var(--warn-ink)}
+.warn p{max-width:72ch}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg-btn{font:600 14px var(--sans);color:var(--ink-2);background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:6px 14px;cursor:pointer}
+.seg-btn[aria-pressed="true"]{background:var(--ink);color:var(--page);border-color:var(--ink)}
+.seg-btn:focus-visible,button:focus-visible,th button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 11.5px/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+  position:sticky;top:0;background:var(--surface)}
+th button{all:unset;cursor:pointer}
+th button::after{content:" ↕";opacity:.4}
+td.n{text-align:right}
+td small{color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;font:500 11px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.05em;
+  padding:0 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.gallery figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.gallery img{width:100%;height:auto;border-radius:8px;border:1px solid var(--line);display:block;background:#fff}
+.gallery figcaption{font-size:13px;color:var(--muted)}
+.wide img{border-radius:10px;border:1px solid var(--line)}
+.post{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;
+  white-space:pre-wrap;font-size:15.5px;line-height:1.55;max-width:72ch}
+.copy{align-self:flex-start;font:600 14px var(--sans);background:var(--jev);color:#fff;border:0;
+  border-radius:8px;padding:9px 16px;cursor:pointer}
+ol.method{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;max-width:74ch;color:var(--ink-2)}
+ol.method b{color:var(--ink)}
+#tip{position:fixed;z-index:10;pointer-events:none;background:var(--ink);color:var(--page);font-size:13px;
+  line-height:1.4;padding:7px 10px;border-radius:6px;max-width:260px;opacity:0;transition:opacity .08s}
+.lanes{display:grid;gap:12px}
+.lane{background:var(--surface);border:2px solid;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.lane-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-weight:800;font-size:20px}
+.lane-t small{font:500 13px var(--mono);color:var(--muted);letter-spacing:.03em}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:stretch}
+.box{background:var(--track);border-radius:8px;padding:10px 12px;font-size:15px;line-height:1.4}
+.box b{display:block;font:700 11.5px/1.4 var(--mono);letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.arrow{align-self:center;color:var(--muted)}
+.diff{width:100%;min-width:560px}
+.diff td:first-child{font-weight:600;color:var(--ink);width:26%}
+@media (max-width:640px){.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}}
+.cta{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.cta p{flex:1 1 320px;color:var(--ink-2)}
+.cta a{font:600 15px var(--sans);background:var(--ink);color:var(--page);text-decoration:none;border-radius:8px;padding:10px 16px}
+.cta a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.dict-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.dict-tools input{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 12px;flex:1 1 260px;min-width:0}
+.dict-tools input:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips .seg-btn{font-size:13px;padding:4px 11px}
+.dict{display:flex;flex-direction:column;gap:22px}
+.dgroup h3{font-size:18px;font-weight:800;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.dgroup h3 small{font:500 12.5px var(--mono);color:var(--muted)}
+.dgroup > p{font-size:14px;color:var(--muted);margin-top:2px;max-width:70ch}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;margin-top:10px}
+.term{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.term .n{font-weight:600;font-size:15.5px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+.term .n code{font:500 11.5px var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.term .d{font-size:14px;color:var(--ink-2);line-height:1.5}
+.term dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:12.5px}
+.term dt{color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;font-size:11px;padding-top:2px}
+.term dd{margin:0;color:var(--ink-2);overflow-wrap:anywhere}
+.dict-count{font:500 13px var(--mono);color:var(--muted)}
+footer{margin-top:72px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr;gap:4px}.card{padding:16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow"><b>GameTagger</b> benchmark · 100 top games · September 2026</div>
+  <h1 id="h1">Jev versus one big prompt</h1>
+  <p class="dek" id="dek"></p>
+  <p class="meta" id="meta"></p>
+  <div class="kpis" id="kpis"></div>
+
+  <section id="how">
+    <div class="eyebrow">How each method works</div>
+    <h2>Same evidence, two very different ways to use it</h2>
+    <p>The old site asks one model one big question. The new pipeline separates looking from judging: Claude only describes what is visible, and Jev decides, so every answer can be traced to what was seen.</p>
+    <div class="lanes">
+      <div class="lane" style="border-color:var(--opus)">
+        <div class="lane-t">One prompt <small>the original site · Haiku 4.5 (standard) or Opus 4.8 (deep)</small></div>
+        <div class="flow">
+          <div class="box"><b style="color:var(--opus)">Reads</b>The game's name, store and Wikipedia text cut to 1,000 characters, and 2 screenshots per store at 600 px</div><span class="arrow" aria-hidden="true">→</span>
+          <div class="box"><b style="color:var(--opus)">Asks</b>One Claude call covering the whole game</div><span class="arrow" aria-hidden="true">→</span>
+          <div class="box"><b style="color:var(--opus)">Returns</b>About 91 yes/no tags and one of 59 genres; an unlisted genre is silently replaced</div>
+        </div>
+      </div>
+      <div class="lane" style="border-color:var(--jev)">
+        <div class="lane-t">Jev pipeline <small>Claude Sonnet 5 looks · Jev (jev-1.13.0) judges</small></div>
+        <div class="flow">
+          <div class="box"><b style="color:var(--jev)">Looks</b>Claude describes every screenshot and six short trailer clips, and is not allowed to name genres or tags</div><span class="arrow" aria-hidden="true">→</span>
+          <div class="box"><b style="color:var(--jev)">Splits</b>All store text, Wikipedia and descriptions become numbered claims; the game's title is withheld</div><span class="arrow" aria-hidden="true">→</span>
+          <div class="box"><b style="color:var(--jev)">Judges</b>Jev answers 189 attribute questions, each with only the evidence allowed to answer it, then the genre hierarchy</div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap"><table class="diff">
+      <thead><tr><th scope="col">What differs</th><th scope="col">One prompt</th><th scope="col">Jev pipeline</th></tr></thead>
+      <tbody>
+        <tr><td>Knows the game's name</td><td>Yes, so it can lean on what it remembers</td><td>No, the title is withheld from Jev</td></tr>
+        <tr><td>Images</td><td>2 per store, 600 px wide</td><td>Every screenshot and 6 trailer clips</td></tr>
+        <tr><td>Model calls per game</td><td>1</td><td>One per image or clip, then Jev in batches of up to 60 questions</td></tr>
+        <tr><td>Answers</td><td>Yes or no per tag</td><td>Present, absent, unknown or conflicting, with probabilities</td></tr>
+        <tr><td>Genre</td><td>Must pick 1 of 59</td><td>Full v4.1 hierarchy; says “insufficient evidence” rather than guess</td></tr>
+        <tr><td>Evidence trail</td><td>None</td><td>Every tag cites the claims behind it</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section id="accuracy">
+    <div class="eyebrow">Accuracy</div>
+    <h2 id="acc-h"></h2>
+    <p id="acc-p"></p>
+    <div class="grid2">
+      <div class="card"><div class="ct"><h3>All attributes the Steam tags point to</h3>
+        <span>Share each method reported present</span></div><div class="bars" id="acc-all"></div></div>
+      <div class="card"><div class="ct"><h3>Only attributes both vocabularies can name</h3>
+        <span>The fair head-to-head</span></div><div class="bars" id="acc-shared"></div></div>
+    </div>
+    <div class="card"><div class="ct"><h3>Said “no” to something players tagged</h3>
+      <span>Share of player-tagged attributes a method explicitly called absent. Lower is better.</span></div>
+      <div class="bars" id="acc-absent"></div>
+      <p class="note" id="acc-note"></p></div>
+    <div class="warn" id="haiku"></div>
+  </section>
+
+  <section id="cost">
+    <div class="eyebrow">Cost</div>
+    <h2 id="cost-h"></h2>
+    <p id="cost-p"></p>
+    <div class="card"><div class="ct"><h3>Cost per game (mean)</h3><span>List prices × provider-reported tokens</span></div>
+      <div class="bars" id="cost-bars"></div>
+      <div class="key" id="split-key"></div></div>
+    <div class="big" id="cost-big"></div>
+  </section>
+
+  <section id="time">
+    <div class="eyebrow">Time per stage</div>
+    <h2 id="time-h"></h2>
+    <p id="time-p"></p>
+    <div class="card"><div class="ct"><h3>Wall-clock time per game (median of each stage)</h3>
+      <span>Shared evidence gathering excluded (identical for every method); three games ran in parallel</span></div>
+      <div class="bars" id="time-bars"></div>
+      <div class="key" id="split-key-2"></div></div>
+  </section>
+
+  <section id="tokens">
+    <div class="eyebrow">Tokens</div>
+    <h2 id="tok-h"></h2>
+    <p id="tok-p"></p>
+    <div class="card"><div class="ct"><h3>Tokens per game (mean)</h3><span>Solid: input. Lighter end: output.</span></div>
+      <div class="bars" id="tok-bars"></div></div>
+  </section>
+
+  <section id="tags">
+    <div class="eyebrow">Tags per game</div>
+    <h2 id="tags-h"></h2>
+    <p id="tags-p"></p>
+    <div class="card"><div class="ct"><h3>Attributes reported present per game (median)</h3>
+      <span>Old keys translated into the Genome vocabulary through the draft crosswalk</span></div>
+      <div class="bars" id="tags-bars"></div></div>
+  </section>
+
+  <section id="dictionary">
+    <div class="eyebrow">Tag dictionary</div>
+    <h2>What every tag means</h2>
+    <p id="dict-intro"></p>
+    <div class="tools" role="group" aria-label="Dictionary view">
+      <button class="seg-btn" id="d-tags" aria-pressed="true">Attributes</button>
+      <button class="seg-btn" id="d-genres" aria-pressed="false">Genres</button>
+    </div>
+    <div class="dict-tools">
+      <label for="d-search" class="dict-count" style="position:absolute;left:-9999px">Search the dictionary</label>
+      <input id="d-search" type="search" placeholder="Search, e.g. crafting, gacha, pixel" autocomplete="off">
+      <span class="dict-count" id="d-count"></span>
+    </div>
+    <div class="chips" id="d-cats" role="group" aria-label="Filter by category"></div>
+    <div class="dict" id="dict"></div>
+  </section>
+
+  <section id="games">
+    <div class="eyebrow">Every game</div>
+    <h2>All 100 games, side by side</h2>
+    <p>Accuracy is shown for the 50 Steam games, the only ones with a player-tag answer key. Click a column to sort.</p>
+    <div class="tools" role="group" aria-label="Filter by chart">
+      <button class="seg-btn" id="f-all" aria-pressed="true">All 100</button>
+      <button class="seg-btn" id="f-steam" aria-pressed="false">Steam 50</button>
+      <button class="seg-btn" id="f-mobile" aria-pressed="false">Mobile 50</button>
+    </div>
+    <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+  </section>
+
+  <section id="share">
+    <div class="eyebrow">LinkedIn kit</div>
+    <h2>Images and ready-to-post text</h2>
+    <p>Seven 1200 × 1500 slides for a carousel, plus a 1200 × 675 single-image card. Each image carries its sample, dates and answer key.</p>
+    <div class="gallery" id="gallery"></div>
+    <figure class="wide" style="margin:0"><img src="social-card.png" alt="Summary card: accuracy, attributes, seconds and cost per game for the three methods" loading="lazy"></figure>
+    <div class="post" id="post"></div>
+    <button class="copy" id="copy">Copy post text</button>
+  </section>
+
+  <section id="request">
+    <div class="eyebrow">Request a game</div>
+    <h2>Want a game tagged?</h2>
+    <div class="cta"><p>Team members can request any game on the requests board. Requests are reviewed, then tagged in batches with the Jev pipeline. A public request form is on the way.</p><a id="req-link" href="/*REQUEST_URL*/" target="_blank" rel="noopener">Open the requests board</a></div>
+  </section>
+
+  <section id="method">
+    <div class="eyebrow">Method and limits</div>
+    <h2>How this was measured</h2>
+    <ol class="method" id="method-list"></ol>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = /*DATA*/;
+const POST = /*POST*/;
+const F = DATA.figures, S = F.sample;
+const ARMS = ["rich", "legacy-deep", "legacy-standard"];
+const NAME = {"rich": "Jev pipeline", "legacy-deep": "One prompt · Opus 4.8", "legacy-standard": "One prompt · Haiku 4.5"};
+const SUB = {"rich": "Claude Sonnet 5 describes, Jev judges", "legacy-deep": "the old site's deep setting", "legacy-standard": "the old site's standard setting"};
+const VAR = {"rich": "--jev", "legacy-deep": "--opus", "legacy-standard": "--haiku"};
+const $ = (id) => document.getElementById(id);
+const pct = (v) => v == null ? "–" : Math.round(v * 100) + "%";
+const usd = (v, d = 3) => v == null ? "–" : "$" + v.toFixed(d);
+const secs = (ms) => ms == null ? "–" : (ms >= 20000 ? Math.round(ms / 1000) : (ms / 1000).toFixed(1)) + " s";
+const kt = (v) => (v / 1000).toFixed(1) + "k";
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const R = F.rich, O = F["legacy-deep"], H = F["legacy-standard"];
+
+const tip = $("tip");
+function showTip(e) {
+  const t = e.currentTarget.dataset.tip; if (!t) return;
+  tip.textContent = t; tip.style.opacity = 1;
+  const r = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX ?? (r.left + r.width / 2), y = e.clientY ?? r.top;
+  tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, x + 12) + "px";
+  tip.style.top = Math.max(8, y - tip.offsetHeight - 10) + "px";
+}
+function hideTip() { tip.style.opacity = 0; }
+
+// rows: [{label, sub, segs:[{v, color, tip}], text}], one linear scale shared by all rows
+function bars(el, rows, max) {
+  el.innerHTML = rows.map((r) => `<div class="row"><div class="lab">${esc(r.label)}${r.sub ? `<small>${esc(r.sub)}</small>` : ""}</div>
+    <div class="track"><div class="bar" style="width:calc((100% - 90px) * ${Math.max(0.012, r.segs.reduce((a, s) => a + s.v, 0) / max)})">
+    ${r.segs.map((s, _, all) => `<div class="seg" tabindex="0" data-tip="${esc(s.tip)}" style="width:${Math.max(1.5, 100 * s.v / all.reduce((a, x) => a + x.v, 0) || 0)}%;flex:none;background:${s.color}"></div>`).join("")}
+    </div><span class="val">${esc(r.text)}</span></div></div>`).join("");
+  el.querySelectorAll(".seg").forEach((s) => {
+    s.addEventListener("mousemove", showTip); s.addEventListener("mouseleave", hideTip);
+    s.addEventListener("focus", showTip); s.addEventListener("blur", hideTip);
+  });
+}
+const c = (a) => `var(${VAR[a]})`;
+const simple = (get, fmt, tipf) => ARMS.map((a) => ({label: NAME[a], sub: SUB[a], text: fmt(get(F[a])),
+  segs: [{v: get(F[a]) || 0, color: c(a), tip: `${NAME[a]}: ${tipf ? tipf(F[a]) : fmt(get(F[a]))}`}]}));
+
+// ---- header
+const hs = F.sensitivity || {};
+$("dek").textContent = `We tagged today's top 100 games two ways, on identical evidence: the original site's single Claude prompt (on Haiku 4.5 and on Opus 4.8), and a new pipeline where Claude only describes what it sees and Jev judges each of 189 attributes and the genre. Then we checked both against the tags Steam players vote on.`;
+$("meta").textContent = `Sample: ${S.games_compared} games, the top 50 on Steam's most-played chart (${S.chart_dates.steam}) and the top 50 on Google Play US top-grossing (${S.chart_dates.mobile}). Run ${F.run_date}. Accuracy uses the ${S.games_with_steam_answer_key} Steam games' top 20 player tags through a draft crosswalk. Costs are list prices applied to provider-reported tokens.`;
+const kpi = (label, get, fmt) => `<div class="kpi"><div class="l">${label}</div>${ARMS.map((a) =>
+  `<div class="r"><i class="dot" style="background:${c(a)}"></i><span>${esc(NAME[a].replace("One prompt · ", ""))}</span><b>${esc(fmt(get(F[a])))}</b></div>`).join("")}</div>`;
+$("kpis").innerHTML = [
+  kpi("Player tags found", (x) => x.recall_all, pct),
+  kpi("Attributes / game", (x) => x.tags, (v) => Math.round(v)),
+  kpi("Time / game", (x) => x.time, secs),
+  kpi("Cost / game", (x) => x.cost, (v) => usd(v)),
+  kpi("Tokens / game", (x) => Object.values(x.tokens).reduce((a, t) => a + t.input_tokens + t.output_tokens, 0), kt),
+].join("");
+
+// ---- accuracy
+const d = F.diff["legacy-deep"].shared_vocabulary, dAll = F.diff["legacy-deep"].all_mapped;
+const tied = d.ci95_points.low <= 0 && 0 <= d.ci95_points.high;
+$("acc-h").textContent = `Jev found ${pct(R.recall_all)} of what players tag; one prompt on Opus found ${pct(O.recall_all)}.`;
+$("acc-p").textContent = `Part of that gap is vocabulary: Jev's 189 attributes can name things the old key list cannot. On attributes both can name, ` +
+  (tied ? `the two are within noise: ${pct(R.recall_shared)} vs ${pct(O.recall_shared)} (difference ${d.rich_minus_old_points.toFixed(0)} points, 95% interval ${d.ci95_points.low.toFixed(0)} to +${d.ci95_points.high.toFixed(0)}).`
+        : `Jev still leads: ${pct(R.recall_shared)} vs ${pct(O.recall_shared)} (difference ${d.rich_minus_old_points.toFixed(0)} points, 95% interval ${d.ci95_points.low.toFixed(0)} to ${d.ci95_points.high.toFixed(0)}).`) +
+  ` A tag players did not add is never counted as a “no”, so this measures what each method finds, not how often it is wrong.`;
+bars($("acc-all"), simple((x) => x.recall_all, pct), 1);
+bars($("acc-shared"), simple((x) => x.recall_shared, pct), 1);
+bars($("acc-absent"), simple((x) => x.said_absent, pct), Math.max(0.1, ...ARMS.map((a) => F[a].said_absent)));
+$("acc-note").textContent = `Paired 95% bootstrap intervals over games. Jev minus Opus, all attributes: ${dAll.rich_minus_old_points.toFixed(0)} points (${dAll.ci95_points.low.toFixed(0)} to ${dAll.ci95_points.high.toFixed(0)}).`;
+if (hs["legacy-standard"]) {
+  const h = hs["legacy-standard"];
+  $("haiku").innerHTML = `<h3>Haiku's answers were often unreadable to the old site</h3><p>In ${h.unreadable} of ${h.answered} games, Haiku returned its yes/no answers inside a group the original site's code does not unpack, so the site would have recorded no tags at all. This benchmark keeps that behaviour, because it is how the old method actually worked. If every answer had been readable, Haiku would have found ${pct(h.recall_if_readable)} of player tags instead of ${pct(h.recall_faithful)}. Opus had ${hs["legacy-deep"].unreadable} such answers.</p>`;
+} else { $("haiku").hidden = true; }
+
+// ---- cost
+const share = R.cost_jev / R.cost;
+$("cost-h").textContent = `Jev's own step costs ${usd(R.cost_jev, 4)} a game. The pictures cost the rest.`;
+$("cost-p").textContent = `The full pipeline costs ${usd(R.cost)} a game, ${(R.cost / O.cost).toFixed(1)}× one Opus prompt. ${Math.round((1 - share) * 100)}% of that is Claude Sonnet 5 describing screenshots and trailer clips; Jev judging every attribute and the genre is ${Math.round(share * 100)}%. Jev alone costs about 1/${Math.round(O.cost / R.cost_jev)} of an Opus call.`;
+bars($("cost-bars"), [
+  {label: NAME.rich, sub: "Claude vision + Jev", text: usd(R.cost), segs: [
+    {v: R.cost_claude, color: "var(--vision)", tip: `Claude describing images: ${usd(R.cost_claude)} per game`},
+    {v: R.cost_jev, color: "var(--judge)", tip: `Jev judging: ${usd(R.cost_jev, 4)} per game`}]},
+  ...ARMS.slice(1).map((a) => ({label: NAME[a], sub: SUB[a], text: usd(F[a].cost), segs: [{v: F[a].cost, color: c(a), tip: `${NAME[a]}: ${usd(F[a].cost)} per game`}]})),
+], Math.max(...ARMS.map((a) => F[a].cost)));
+const splitKey = `<span><i class="dot" style="background:var(--vision)"></i>Claude describing screenshots and trailer clips</span><span><i class="dot" style="background:var(--judge)"></i>Jev judging every attribute</span>`;
+$("split-key").innerHTML = splitKey; $("split-key-2").innerHTML = splitKey;
+$("cost-big").innerHTML = `<div style="border-color:var(--judge)"><b>${usd(R.cost_jev, 4)}</b><span>Jev's judging step per game (${R.tokens.typesafe ? kt(R.tokens.typesafe.input_tokens) : "–"} input tokens at $0.042 per million)</span></div>
+  <div style="border-color:var(--opus)"><b>${usd(O.cost)}</b><span>One prompt on Opus 4.8 per game</span></div>
+  <div style="border-color:var(--haiku)"><b>${usd(H.cost)}</b><span>One prompt on Haiku 4.5 per game</span></div>
+  <div style="border-color:var(--jev)"><b>${usd(R.cost * S.games_compared, 2)}</b><span>The whole Jev pipeline for all ${S.games_compared} games</span></div>`;
+
+// ---- time
+const obs = R.stages.observe, dec = R.stages.decide;
+$("time-h").textContent = `Jev decides in ${secs(dec)}. Describing the pictures takes ${secs(obs)}.`;
+$("time-p").textContent = `One prompt answers in a single call: ${secs(O.time)} on Opus, ${secs(H.time)} on Haiku. The new pipeline sends each screenshot and trailer clip to Claude separately, one after another, then asks Jev its questions in batches. Jev's step alone is ${dec < O.time ? "faster than" : "comparable to"} one Opus call; the describing step is the one to speed up, for example by sending images in parallel.`;
+bars($("time-bars"), [
+  {label: NAME.rich, sub: "describe, then judge", text: secs(obs + dec), segs: [
+    {v: obs, color: "var(--vision)", tip: `Claude describing images: ${secs(obs)} (median)`},
+    {v: dec, color: "var(--judge)", tip: `Jev judging: ${secs(dec)} (median)`}]},
+  ...ARMS.slice(1).map((a) => ({label: NAME[a], sub: "one call", text: secs(F[a].time), segs: [{v: F[a].time, color: c(a), tip: `${NAME[a]}: ${secs(F[a].time)} (median)`}]})),
+], obs + dec);
+
+// ---- tokens
+const tk = (a, p, k) => (F[a].tokens[p] || {})[k] || 0;
+const tokRow = (label, sub, a, p, ci, co, text) => ({label, sub, text, segs: [
+  {v: tk(a, p, "input_tokens"), color: ci, tip: `${label}: ${kt(tk(a, p, "input_tokens"))} input tokens`},
+  ...(co ? [{v: tk(a, p, "output_tokens"), color: co, tip: `${label}: ${kt(tk(a, p, "output_tokens"))} output tokens`}] : [])]});
+const jin = tk("rich", "typesafe", "input_tokens");
+$("tok-h").textContent = `Jev reads more text (${kt(jin)} tokens a game) at a fraction of the price.`;
+$("tok-p").textContent = `Jev is asked each attribute separately, with only the evidence that may answer it, so it reads more tokens than one old-style prompt (${kt(tk("legacy-deep", "anthropic", "input_tokens"))} in on Opus). At $0.042 per million input tokens, with output free, that costs ${usd(R.cost_jev, 4)}. Claude's image descriptions in the pipeline use ${kt(tk("rich", "anthropic", "input_tokens") + tk("rich", "anthropic", "output_tokens"))} tokens a game.`;
+bars($("tok-bars"), [
+  tokRow("Claude vision", "in the Jev pipeline", "rich", "anthropic", "var(--jev)", "var(--vision)", kt(tk("rich", "anthropic", "input_tokens") + tk("rich", "anthropic", "output_tokens"))),
+  tokRow("Jev", "input; output is free", "rich", "typesafe", "var(--judge)", null, kt(jin)),
+  ...ARMS.slice(1).map((a) => tokRow(NAME[a], SUB[a], a, "anthropic", c(a), `color-mix(in srgb, ${c(a)} 40%, transparent)`, kt(tk(a, "anthropic", "input_tokens") + tk(a, "anthropic", "output_tokens")))),
+], Math.max(jin, tk("rich", "anthropic", "input_tokens") + tk("rich", "anthropic", "output_tokens")));
+
+// ---- tags
+$("tags-h").textContent = `${Math.round(R.tags)} attributes per game, each traceable to its evidence.`;
+$("tags-p").textContent = `Jev answers present, absent, unknown or conflicting for every attribute, keeps the full probability for each, and declines a genre rather than guess one. The old prompt must answer yes or no and always names a genre, substituting one when its answer is not on the list.`;
+bars($("tags-bars"), simple((x) => x.tags, (v) => String(Math.round(v))), Math.max(...ARMS.map((a) => F[a].tags)));
+
+// ---- table
+const cols = [
+  ["Game", (g) => g.title], ["Chart", (g) => g.list + g.rank],
+  ["Jev genre", (g) => g.rich?.genre || ""], ["Opus genre", (g) => g["legacy-deep"]?.genre || ""],
+  ["Jev attrs", (g) => g.rich?.present ?? -1], ["Opus attrs", (g) => g["legacy-deep"]?.present ?? -1], ["Haiku attrs", (g) => g["legacy-standard"]?.present ?? -1],
+  ["Jev found", (g) => g.rich?.recall ?? -1], ["Opus found", (g) => g["legacy-deep"]?.recall ?? -1], ["Haiku found", (g) => g["legacy-standard"]?.recall ?? -1],
+  ["Jev cost", (g) => g.rich?.cost ?? -1], ["Jev time", (g) => g.rich?.sec ?? -1],
+];
+let filter = "all", sortCol = 1, sortDir = 1;
+$("tbl").tHead.innerHTML = "<tr>" + cols.map(([h], i) => `<th scope="col"><button data-i="${i}">${h}</button></th>`).join("") + "</tr>";
+$("tbl").tHead.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+  const i = +b.dataset.i; sortDir = sortCol === i ? -sortDir : (i >= 4 ? -1 : 1); sortCol = i; renderTable();
+}));
+const fmtR = (v) => v == null ? "<small>–</small>" : pct(v);
+function renderTable() {
+  const rows = DATA.games.filter((g) => filter === "all" || g.list === filter).slice()
+    .sort((a, b) => { const x = cols[sortCol][1](a), y = cols[sortCol][1](b);
+      if (sortCol === 1) return sortDir * (a.list.localeCompare(b.list) || a.rank - b.rank);
+      return sortDir * (x < y ? -1 : x > y ? 1 : 0); });
+  $("tbl").tBodies[0].innerHTML = rows.map((g) => `<tr>
+    <td>${esc(g.title)}</td><td><span class="pill">${g.list === "steam" ? "Steam" : "Play"} #${g.rank}</span></td>
+    <td>${esc(g.rich?.genre || "—")}${g.rich?.p != null ? ` <small>${Math.round(g.rich.p * 100)}%</small>` : ""}</td>
+    <td>${esc(g["legacy-deep"]?.genre || "—")}</td>
+    <td class="n">${g.rich?.present ?? "–"}</td><td class="n">${g["legacy-deep"]?.present ?? "–"}</td><td class="n">${g["legacy-standard"]?.present ?? "–"}</td>
+    <td class="n">${fmtR(g.rich?.recall)}</td><td class="n">${fmtR(g["legacy-deep"]?.recall)}</td><td class="n">${fmtR(g["legacy-standard"]?.recall)}</td>
+    <td class="n">${g.rich ? usd(g.rich.cost) : "–"}</td><td class="n">${g.rich ? Math.round(g.rich.sec) + " s" : "–"}</td></tr>`).join("");
+}
+[["f-all", "all"], ["f-steam", "steam"], ["f-mobile", "mobile"]].forEach(([id, v]) => $(id).addEventListener("click", () => {
+  filter = v; ["f-all", "f-steam", "f-mobile"].forEach((x) => $(x).setAttribute("aria-pressed", String(x === id))); renderTable();
+}));
+renderTable();
+
+
+// ---- tag dictionary
+const G = DATA.glossary;
+let dView = "tags", dCat = "all", dQuery = "";
+$("dict-intro").textContent = `The Jev pipeline judges ${G.tags.length} attributes (Genome vocabulary ${G.version}) and one of ${G.genres.length} genres. Each attribute lists the evidence it may be decided from, the old method's key for the same idea, and the Steam player tags that count as evidence for it in the accuracy score. Mappings come from draft crosswalks pending review. ${G.old_unmapped.length} old keys have no Genome equivalent: ${G.old_unmapped.join(", ")}.`;
+const catLabel = Object.fromEntries(G.categories.map((c) => [c.id, c.label]));
+function dictChips() {
+  const groups = dView === "tags" ? G.categories.map((c) => [c.id, c.label]) : Object.entries(G.families);
+  $("d-cats").innerHTML = [["all", "All"], ...groups].map(([id, l]) => `<button class="seg-btn" data-c="${esc(id)}" aria-pressed="${id === dCat}">${esc(l)}</button>`).join("");
+  $("d-cats").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { dCat = b.dataset.c; dictChips(); renderDict(); }));
+}
+const has = (t, q) => !q || JSON.stringify(t).toLowerCase().includes(q);
+const row = (k, v) => v && v.length ? `<dt>${k}</dt><dd>${esc(Array.isArray(v) ? v.join(", ") : v)}</dd>` : "";
+function renderDict() {
+  const q = dQuery.trim().toLowerCase();
+  let html = "", n = 0;
+  if (dView === "tags") {
+    for (const c of G.categories) {
+      if (dCat !== "all" && dCat !== c.id) continue;
+      const items = G.tags.filter((t) => t.category === c.id && has(t, q));
+      if (!items.length) continue; n += items.length;
+      html += `<div class="dgroup"><h3>${esc(c.label)} <small>${items.length}</small></h3><p>${esc(c.description)}</p><div class="terms">` +
+        items.map((t) => `<div class="term"><div class="n">${esc(t.label)} <code>${esc(t.id)}</code></div><div class="d">${esc(t.definition)}</div><dl>${row("Decided from", t.evidence)}${row("Old key", t.old)}${row("Steam tags", t.steam.slice(0, 8).concat(t.steam.length > 8 ? [`+${t.steam.length - 8} more`] : []))}</dl></div>`).join("") + "</div></div>";
+    }
+  } else {
+    for (const [fid, fname] of Object.entries(G.families)) {
+      if (dCat !== "all" && dCat !== fid) continue;
+      const items = G.genres.filter((g) => g.family === fid && has(g, q));
+      if (!items.length) continue; n += items.length;
+      html += `<div class="dgroup"><h3>${esc(fname)} <small>${items.length}</small></h3><div class="terms">` +
+        items.map((g) => `<div class="term"><div class="n">${esc(g.name)} <code>${esc(g.id)}</code></div><div class="d">${esc(g.definition)}</div><dl>${row("Example", g.examples)}${row("Old genre", g.old)}</dl></div>`).join("") + "</div></div>";
+    }
+  }
+  $("dict").innerHTML = html || `<p class="dict-count">Nothing matches “${esc(dQuery)}”.</p>`;
+  $("d-count").textContent = `${n} ${dView === "tags" ? "attributes" : "genres"}`;
+}
+[["d-tags", "tags"], ["d-genres", "genres"]].forEach(([id, v]) => $(id).addEventListener("click", () => {
+  dView = v; dCat = "all";
+  ["d-tags", "d-genres"].forEach((x) => $(x).setAttribute("aria-pressed", String(x === id)));
+  dictChips(); renderDict();
+}));
+$("d-search").addEventListener("input", (e) => { dQuery = e.target.value; renderDict(); });
+dictChips(); renderDict();
+
+// ---- LinkedIn kit
+const SLIDES = [["1-accuracy", "Accuracy"], ["2-how", "How each method works"], ["3-cost", "Cost"], ["4-time", "Time per stage"], ["5-tokens", "Tokens"], ["6-depth", "Tags per game"], ["7-method", "Method"]];
+$("gallery").innerHTML = SLIDES.map(([f, t], i) => `<figure><img src="linkedin/${f}.png" alt="Slide ${i + 1}: ${t}" loading="lazy" width="1200" height="1500"><figcaption>${i + 1}. ${t}</figcaption></figure>`).join("");
+$("post").textContent = POST;
+$("copy").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(POST); $("copy").textContent = "Copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents($("post")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("copy").textContent = "Text selected: press Ctrl+C"; }
+  setTimeout(() => { $("copy").textContent = "Copy post text"; }, 2500);
+});
+
+// ---- method
+$("method-list").innerHTML = [
+  `<b>Games.</b> The top 50 on Steam's most-played chart (${S.chart_dates.steam}) and the top 50 on AppBrain's Google Play US top-grossing games chart (${S.chart_dates.mobile}). Non-games were skipped and listed; each game is identified by its exact store ID.`,
+  `<b>Same evidence.</b> Store listing text, the English Wikipedia article, up to 4 screenshots per store and the store trailer, gathered once per game and given to every method.`,
+  `<b>Old method.</b> The original site's prompt, genre list and post-processing, copied verbatim, in one Claude call with the game's name and 2 screenshots per store. Standard = Haiku 4.5, deep = Opus 4.8.`,
+  `<b>Jev pipeline.</b> Claude Sonnet 5 describes each screenshot and six short trailer clips without naming genres or tags; Jev (jev-1.13.0) then answers 189 attribute questions with four states, and the genre hierarchy. The game's title is withheld from Jev.`,
+  `<b>Answer key.</b> Each Steam game's top 20 player-voted tags, mapped to attributes through a draft crosswalk pending review. A missing tag is never counted as “absent”, so precision is not measured here. A blinded human review of 30 games is pending.`,
+  `<b>Costs and time.</b> List prices (Haiku 4.5 $1/$5, Opus 4.8 $5/$25, Sonnet 5 $2/$10 per million input/output tokens; Jev $0.042 per million input tokens). Wall-clock time with three games in parallel, retries included. One run; no repeat to measure run-to-run variance.`,
+  `<b>Failures.</b> Final failure rate: Jev pipeline ${pct(R.failure_rate)}, Opus ${pct(O.failure_rate)}, Haiku ${pct(H.failure_rate)}. Failed games stay in the denominators.`,
+].map((x) => `<li>${x}</li>`).join("");
+$("foot").textContent = `GameTagger · Jev versus previous-method benchmark · ${DATA.measured ? "measured results" : "ILLUSTRATIVE DATA"} · source: experiments/jev-vs-legacy in the gametagger repository`;
+</script>

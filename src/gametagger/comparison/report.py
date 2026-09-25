@@ -50,7 +50,8 @@ padding:20px 20px 14px;margin:16px 0}
 .tile{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:14px 16px}
 .tile .label{font-size:13px;color:var(--ink-2);margin-bottom:6px}
 .tile .row{display:flex;align-items:baseline;gap:8px;margin:2px 0}
-.tile .v{font-weight:600;font-size:20px} .tile .n{font-size:13px;color:var(--ink-2)}
+.tile .v{font-weight:600;font-size:20px;white-space:nowrap}
+.tile .n{font-size:13px;color:var(--ink-2)}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin:10px 0 0}
 .legend span{display:inline-flex;align-items:center;gap:6px}

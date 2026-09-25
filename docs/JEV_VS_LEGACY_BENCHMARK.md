@@ -133,6 +133,11 @@ Outputs:
   `social-post.txt`.
 * `benchmark-runs/` (git-ignored): dossiers, media, raw responses and the ledger.
 
+* `experiments/jev-vs-legacy/linkedin/`: `build.py` renders seven 1200 x 1500 slides from the
+  results, and `post.txt` holds the post text.
+* `experiments/jev-vs-legacy/site/`: the published results page and requests board (templates,
+  `prep.py` and `assemble.py`; the docstring gives the commands).
+
 `report` adds an "Illustrative / UI test data" watermark unless the ledger shows successful
 provider calls. Fixture numbers therefore cannot be mistaken for measurements.
 

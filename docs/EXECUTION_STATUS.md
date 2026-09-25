@@ -112,7 +112,7 @@ Environment findings:
 The only paid call so far is one live Jev check on Stardew Valley's text: 185 questions in 6 requests, 4.0 seconds, $0.0019. No Claude call has been made. Next step, in a session that can see the key: run `dossiers`, then a
 10-game pilot, then the full run and `report`, all under the same $40 ledger.
 
-### Benchmark run attempt (September 24, 2026): blocked on Anthropic credit
+### Benchmark run attempt (September 24, 2026): blocked on Anthropic credit (resolved below)
 
 * The new Anthropic key (108 characters) is accepted by the free model-listing call once the
   `anthropic-workspace-id` header is sent; `ANTHROPIC_WORKSPACE_ID` is set and the tools send it.
@@ -126,3 +126,41 @@ The only paid call so far is one live Jev check on Stardew Valley's text: 185 qu
   instead of booking every remaining game as a failure.
 * **Owner action:** add prepaid credit to the Anthropic organization that owns this key
   (Console → Plans & Billing), then re-run the pilot with `--budget-usd 39.99`.
+
+### Benchmark measured (September 25, 2026)
+
+All 300 runs finished (100 games x 3 methods) with no failures; 5 rich-mode games are `partial`
+(thin evidence or one errored Jev question). Total spend **$20.67** of the $39.99 ledger cap, plus
+the earlier $0.0019 Jev check. Sample: Steam most-played (2026-09-23) and Google Play US
+top-grossing (2026-09-24), 50 each. Accuracy uses the 50 Steam games' top 20 player tags through
+draft crosswalks.
+
+| | Jev pipeline | One prompt, Opus 4.8 | One prompt, Haiku 4.5 |
+|---|---|---|---|
+| Player-tagged attributes found (all mapped) | 77% | 45% | 23% |
+| Same, attributes both vocabularies name | 77% | 78% | 40% |
+| Player-tagged attributes called absent | 0.8% | 5.9% | 3.7% |
+| Attributes present per game (median) | 35 | 17 | 15 |
+| Time per game (median) | 100 s (observe 94.5 s, Jev 5.9 s) | 12.1 s | 7.5 s |
+| Cost per game (mean) | $0.153 (Claude $0.150, Jev $0.0028) | $0.040 | $0.006 |
+
+Jev versus Opus on the shared vocabulary is -1 point (paired 95% interval -5 to +3): no clear
+difference. In 34 of 100 games Haiku nested its answers where the original parser does not look,
+so the old site would have recorded no tags; results keep that behaviour (Opus: 0). With every
+answer readable, Haiku's all-mapped recall would be 40%.
+
+Fixes made during the run: Steam `appdetails` replies keyed by another ID are matched by
+`steam_appid`; rich mode quarantines malformed Observer statements one at a time (screenshots and
+trailer windows) and allows 4,096 output tokens; a no-credit refusal stops the run; cancelled
+jobs no longer crash the runner.
+
+Published (private until the owner shares them):
+* Results page: https://claude.ai/artifact/5pVfp8rgBXSy1rV3bx3KvG (charts, method diagram, tag
+  dictionary, per-game table, LinkedIn kit). Sources in `experiments/jev-vs-legacy/site/`.
+* Requests board: https://claude.ai/artifact/3MLmYUfDTkFgC9RFfkNiPU (organization-only; the owner
+  approves requests, which are tagged in batches under a cap the owner sets).
+* LinkedIn slides and post text: `experiments/jev-vs-legacy/linkedin/`.
+
+Owner to do: fill `experiments/jev-vs-legacy/review/owner-review.csv` (494 rows, yes/no/unsure),
+review the three draft crosswalks, confirm the 10 App Store title-and-developer matches in
+`cohort.json`. Follow-up agreed: a public GitHub Pages site with a public request form.

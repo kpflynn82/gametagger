@@ -1,0 +1,4199 @@
+{
+  "seed": 20260924,
+  "items": {
+    "R0001": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Present-day setting",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0002": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0003": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Guilds or clans",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0004": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Strategy gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0005": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0006": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Single-player mode",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0007": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Gacha or loot boxes",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0008": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "3D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0009": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Inventory system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0010": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Subscription",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0011": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Casual-friendly",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0012": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Minimal or no story",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0013": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Loot drops",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0014": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "genre",
+      "label": "Board Game",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0015": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Player-created protagonist",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0016": {
+      "game_id": "gp-com.scopely.monopolygo",
+      "kind": "tag",
+      "label": "Cartoon style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0017": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Puzzle-solving gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0018": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "genre",
+      "label": "Merge",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0019": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "genre",
+      "label": "Match-3",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0020": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Fantasy setting",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0021": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Predefined protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0022": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Mystery",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0023": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0024": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0025": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Cozy and relaxing",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0026": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0027": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Cooking",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0028": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Hand-drawn art",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0029": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Present-day setting",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0030": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Cel-shaded",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0031": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Female protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0032": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0033": {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0034": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0035": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "genre",
+      "label": "Puzzle",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0036": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Pixel art",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0037": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Crafting",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0038": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Free to play",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0039": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Inventory system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0040": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Touch controls",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0041": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Strategy gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0042": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Minimalist style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0043": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Puzzle-solving gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0044": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Whimsical or lighthearted",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0045": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0046": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Linear levels or stages",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0047": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Casual-friendly",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0048": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0049": {
+      "game_id": "gp-com.combo.yarnflow",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0050": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Ad-supported",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0051": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Cartoon style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0052": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Offline play",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0053": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Leaderboards",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0054": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "genre",
+      "label": "Physics Puzzle",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0055": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "genre",
+      "label": "Arcade",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0056": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0057": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0058": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0059": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0060": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Ranked or competitive play",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0061": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "genre",
+      "label": "Puzzle",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0062": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Present-day setting",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0063": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Non-human protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0064": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Top-down perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0065": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0066": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0067": {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "kind": "tag",
+      "label": "Whimsical or lighthearted",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0068": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0069": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Whimsical or lighthearted",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0070": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0071": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Auto-play or idle progress",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0072": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Science-fiction setting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0073": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0074": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Cozy and relaxing",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0075": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Cartoon style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0076": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0077": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "genre",
+      "label": "Arcade",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0078": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Touch controls",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0079": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Casual-friendly",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0080": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Procedural generation",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0081": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Minimal or no story",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0082": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0083": {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "kind": "tag",
+      "label": "Present-day setting",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0084": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0085": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Story-driven",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0086": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Leaderboards",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0087": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Management gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0088": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Free to play",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0089": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0090": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Energy or stamina timers",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0091": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Puzzle-solving gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0092": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Multiple playable characters",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0093": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0094": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0095": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Exploration gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0096": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Politics and power",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0097": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "genre",
+      "label": "Match-3",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0098": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Fantasy setting",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0099": {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0100": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Third-person gameplay perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0101": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Management gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0102": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Wilderness",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0103": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "genre",
+      "label": "Colony Sim",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0104": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Gacha or loot boxes",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0105": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0106": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0107": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "genre",
+      "label": "Survival",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0108": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0109": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Equipment and loadouts",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0110": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Energy or stamina timers",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0111": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "genre",
+      "label": "Management Simulation",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0112": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "3D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0113": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Player versus player",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0114": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Unit command",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0115": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Fantasy setting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0116": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Player versus environment",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0117": {
+      "game_id": "gp-com.readygo.dark.gp",
+      "kind": "tag",
+      "label": "Resource management",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0118": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Pay-to-progress or pay-to-win",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0119": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Achievements",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0120": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "genre",
+      "label": "Card Game",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0121": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Management gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0122": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0123": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Resource gathering",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0124": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0125": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0126": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0127": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Rural or countryside environments",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0128": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0129": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Companions or party members",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0130": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0131": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Farming",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0132": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0133": {
+      "game_id": "gp-net.supertreat.solitaire",
+      "kind": "tag",
+      "label": "Cozy and relaxing",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0134": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Touch controls",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0135": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Family",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0136": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0137": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Mystery",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0138": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Ad-supported",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0139": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Wilderness",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0140": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Resource management",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0141": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0142": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0143": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "genre",
+      "label": "Merge",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0144": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Cartoon style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0145": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Simulation gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0146": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Strategy gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0147": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Energy or stamina timers",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0148": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0149": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "genre",
+      "label": "Match-3",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0150": {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0151": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Touch controls",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0152": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0153": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Top-down perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0154": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0155": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Family",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0156": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0157": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Energy or stamina timers",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0158": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Free to play",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0159": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Puzzle-solving gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0160": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0161": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0162": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Guilds or clans",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0163": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Dark atmospheric visuals",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0164": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0165": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "genre",
+      "label": "Match-3",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0166": {
+      "game_id": "gp-com.playrix.homescapes",
+      "kind": "tag",
+      "label": "Single-player mode",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0167": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Unit command",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0168": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Multiplayer",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0169": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "genre",
+      "label": "4X Strategy",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0170": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Persistent online world",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0171": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Gacha or loot boxes",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0172": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Role-playing gameplay",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0173": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Suspense and tension",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0174": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0175": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0176": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0177": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Pay-to-progress or pay-to-win",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0178": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Military setting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0179": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Player-created protagonist",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0180": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Inventory system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0181": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Resource management",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0182": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "tag",
+      "label": "Energy or stamina timers",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0183": {
+      "game_id": "gp-com.totalbattle",
+      "kind": "genre",
+      "label": "Real-Time Strategy",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0184": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0185": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0186": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Energy or stamina timers",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0187": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Management gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0188": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Third-person gameplay perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0189": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0190": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Fishing",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0191": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0192": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0193": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Single-player mode",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0194": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Player versus player",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0195": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Loot drops",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0196": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0197": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "genre",
+      "label": "Match-3",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0198": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "Gacha or loot boxes",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0199": {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0200": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0201": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Player-to-player trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0202": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0203": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0204": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Gacha or loot boxes",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0205": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0206": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Casual-friendly",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0207": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Comedic tone",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0208": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Quests and missions",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0209": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Resource management",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0210": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Auto-play or idle progress",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0211": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0212": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "genre",
+      "label": "Board Game",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0213": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0214": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0215": {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "kind": "tag",
+      "label": "Card-based gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0216": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0217": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Underground",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0218": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Non-human protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0219": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Card-based gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0220": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0221": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Minimal or no story",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0222": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "genre",
+      "label": "Board Game",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0223": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0224": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0225": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0226": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Player versus player",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0227": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Multiplayer",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0228": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0229": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Cel-shaded",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0230": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0231": {
+      "game_id": "gp-com.moonactive.cmboard",
+      "kind": "tag",
+      "label": "Cartoon style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0232": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "genre",
+      "label": "Arcade",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0233": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Whimsical or lighthearted",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0234": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Simulation gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0235": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Dark atmospheric visuals",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0236": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Auto-play or idle progress",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0237": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Casual-friendly",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0238": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Player versus player",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0239": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Pay-to-progress or pay-to-win",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0240": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Mature content",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0241": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Touch controls",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0242": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0243": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0244": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Present-day setting",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0245": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0246": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Procedural generation",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0247": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "genre",
+      "label": "Casual",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0248": {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0249": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Inventory system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0250": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Player versus environment",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0251": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Friendship",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0252": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Split-screen",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0253": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Time management",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0254": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Character customization",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0255": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0256": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Mystery",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0257": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Retro presentation",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0258": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Adventure gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0259": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Minimal or no story",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0260": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Whimsical or lighthearted",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0261": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Exploration gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0262": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Multiplayer",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0263": {
+      "game_id": "steam-413150",
+      "kind": "genre",
+      "label": "Farm Simulation",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0264": {
+      "game_id": "steam-413150",
+      "kind": "tag",
+      "label": "Fishing",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0265": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Base or settlement building",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0266": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "2D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0267": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Controller support",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0268": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Historical setting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0269": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Crafting",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0270": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Nature and environment",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0271": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Cooking",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0272": {
+      "game_id": "steam-108600",
+      "kind": "genre",
+      "label": "Open World Survival Craft",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0273": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0274": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Simulation gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0275": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Cooperative multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0276": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Fishing",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0277": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Suspense and tension",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0278": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Survival gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0279": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Persistent online world",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0280": {
+      "game_id": "steam-108600",
+      "kind": "tag",
+      "label": "Mature content",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0281": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Unit command",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0282": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Simulation gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0283": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Equipment and loadouts",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0284": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Management gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0285": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Paid DLC or expansions",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0286": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Multiplayer",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0287": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Branching narrative",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0288": {
+      "game_id": "steam-394360",
+      "kind": "genre",
+      "label": "Grand Strategy",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0289": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Politics and power",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0290": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Mods or player-made content",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0291": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Difficulty options",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0292": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Cross-platform play",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0293": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0294": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Cloud saves",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0295": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "War",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0296": {
+      "game_id": "steam-394360",
+      "kind": "tag",
+      "label": "Military setting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0297": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Control remapping",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0298": {
+      "game_id": "steam-230410",
+      "kind": "genre",
+      "label": "Looter Shooter",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0299": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Subtitle options",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0300": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Character customization",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0301": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Massively multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0302": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Difficulty options",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0303": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Action gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0304": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Adventure gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0305": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Guilds or clans",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0306": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Mods or player-made content",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0307": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Non-human protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0308": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Free to play",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0309": {
+      "game_id": "steam-230410",
+      "kind": "genre",
+      "label": "Action RPG",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0310": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Mystery",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0311": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "War",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0312": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Ranged combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0313": {
+      "game_id": "steam-230410",
+      "kind": "tag",
+      "label": "Realistic visual style",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0314": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Role-playing gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0315": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Strategy gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0316": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "First-person gameplay perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0317": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Realistic visual style",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0318": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0319": {
+      "game_id": "steam-1867240",
+      "kind": "genre",
+      "label": "Tactical Shooter",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0320": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Military setting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0321": {
+      "game_id": "steam-1867240",
+      "kind": "genre",
+      "label": "First-Person Shooter",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0322": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Free to play",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0323": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Mature content",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0324": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Physics-based interaction",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0325": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "3D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0326": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Premium purchase",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0327": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Ranged combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0328": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0329": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0330": {
+      "game_id": "steam-1867240",
+      "kind": "tag",
+      "label": "Resource management",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0331": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Subtitle options",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0332": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Procedural generation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0333": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0334": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Fantasy setting",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0335": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Urban environments",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0336": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Dark or grim tone",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0337": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Realistic visual style",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0338": {
+      "game_id": "steam-381210",
+      "kind": "genre",
+      "label": "Survival",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0339": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Present-day setting",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0340": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Controller support",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0341": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0342": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Multiple playable characters",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0343": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0344": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Premium purchase",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0345": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Survival against the odds",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0346": {
+      "game_id": "steam-381210",
+      "kind": "tag",
+      "label": "Minimal or no story",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0347": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0348": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0349": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Underground",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0350": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Cooperative multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0351": {
+      "game_id": "steam-250900",
+      "kind": "genre",
+      "label": "Action Adventure",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0352": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Local multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0353": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Role-playing gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0354": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0355": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Resource management",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0356": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Suspense and tension",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0357": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Real-time combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0358": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Controller support",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0359": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0360": {
+      "game_id": "steam-250900",
+      "kind": "genre",
+      "label": "Roguelike",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0361": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Shooter gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0362": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0363": {
+      "game_id": "steam-250900",
+      "kind": "tag",
+      "label": "Psychological",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0364": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Third-person gameplay perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0365": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Character customization",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0366": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Player versus environment",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0367": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Mods or player-made content",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0368": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Family friendly",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0369": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Linear levels or stages",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0370": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Non-human protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0371": {
+      "game_id": "steam-322170",
+      "kind": "genre",
+      "label": "Rhythm Game",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0372": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Dark atmospheric visuals",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0373": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Building and construction",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0374": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Minimalist style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0375": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0376": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Minimal or no story",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0377": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Single-player mode",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0378": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Rhythm gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0379": {
+      "game_id": "steam-322170",
+      "kind": "tag",
+      "label": "Platformer gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0380": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Strategy gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0381": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Multiplayer",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0382": {
+      "game_id": "steam-578080",
+      "kind": "genre",
+      "label": "Battle Royale",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0383": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Action gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0384": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Epic scale",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0385": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "3D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0386": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0387": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Massively multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0388": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0389": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Drivable vehicles",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0390": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Real-time combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0391": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Crafting",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0392": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Battle pass",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0393": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Female protagonist",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0394": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Realistic visual style",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0395": {
+      "game_id": "steam-578080",
+      "kind": "tag",
+      "label": "Exploration gameplay",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0396": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0397": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Subtitle options",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0398": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Single-player mode",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0399": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Crafting",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0400": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Drivable vehicles",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0401": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Third-person gameplay perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0402": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Difficulty options",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0403": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Controller support",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0404": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Ranged combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0405": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Base or settlement building",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0406": {
+      "game_id": "steam-892970",
+      "kind": "genre",
+      "label": "Open World Survival Craft",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0407": {
+      "game_id": "steam-892970",
+      "kind": "genre",
+      "label": "Survival",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0408": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0409": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Realistic visual style",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0410": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Survival against the odds",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0411": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Cloud saves",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0412": {
+      "game_id": "steam-892970",
+      "kind": "tag",
+      "label": "Action gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0413": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0414": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0415": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Ranged combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0416": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0417": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Guilds or clans",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0418": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Multiple playable characters",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0419": {
+      "game_id": "steam-1203220",
+      "kind": "genre",
+      "label": "Battle Royale",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0420": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Survival against the odds",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0421": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Combo system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0422": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0423": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Fighting gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0424": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Wilderness",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0425": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Exploration gameplay",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0426": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Battle pass",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0427": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0428": {
+      "game_id": "steam-1203220",
+      "kind": "tag",
+      "label": "Mature content",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0429": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Premium purchase",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0430": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Equipment and loadouts",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0431": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Quests and missions",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0432": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Strategy gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0433": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Wilderness",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0434": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Graphic violence",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0435": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0436": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Dark or grim tone",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0437": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Drivable vehicles",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0438": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Live events",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0439": {
+      "game_id": "steam-252490",
+      "kind": "genre",
+      "label": "Open World Survival Craft",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0440": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0441": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "First-person gameplay perspective",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0442": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Base or settlement building",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0443": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Real-time combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0444": {
+      "game_id": "steam-252490",
+      "kind": "tag",
+      "label": "Guilds or clans",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0445": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Role-playing gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0446": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Vibrant colours",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0447": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Spectating or streaming features",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0448": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Suspense and tension",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0449": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0450": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0451": {
+      "game_id": "steam-1086940",
+      "kind": "genre",
+      "label": "Tactical RPG",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0452": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Difficulty options",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0453": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Quests and missions",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0454": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Emotional drama",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0455": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "3D graphics",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0456": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Subtitle options",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0457": {
+      "game_id": "steam-1086940",
+      "kind": "genre",
+      "label": "Turn-Based RPG",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0458": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Player versus environment",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0459": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Urban environments",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0460": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Control remapping",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0461": {
+      "game_id": "steam-1086940",
+      "kind": "tag",
+      "label": "Non-human protagonist",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0462": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0463": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Real-time combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0464": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Epic scale",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0465": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Base or settlement building",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0466": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Upgrade system",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0467": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Boss battles",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0468": {
+      "game_id": "steam-2507950",
+      "kind": "genre",
+      "label": "First-Person Shooter",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0469": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Player-to-player trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0470": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0471": {
+      "game_id": "steam-2507950",
+      "kind": "genre",
+      "label": "Extraction Shooter",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0472": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Collecting",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0473": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Player-created protagonist",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0474": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "In-game purchases",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0475": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Experience and levels",
+      "arms": [
+        "legacy-deep"
+      ]
+    },
+    "R0476": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Ranged combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0477": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Achievements",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0478": {
+      "game_id": "steam-2507950",
+      "kind": "tag",
+      "label": "Shooter gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0479": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Action gameplay",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0480": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Fighting gameplay",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0481": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Gacha or loot boxes",
+      "arms": [
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0482": {
+      "game_id": "steam-1172470",
+      "kind": "genre",
+      "label": "Battle Royale",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0483": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Adventure gameplay",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0484": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Shooter gameplay",
+      "arms": [
+        "legacy-deep",
+        "rich"
+      ]
+    },
+    "R0485": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Touch controls",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0486": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Daily rewards or quests",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard"
+      ]
+    },
+    "R0487": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Real-time combat",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0488": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "In-game economy and trading",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0489": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Online multiplayer",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0490": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Procedural generation",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0491": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Non-human protagonist",
+      "arms": [
+        "legacy-standard"
+      ]
+    },
+    "R0492": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Wilderness",
+      "arms": [
+        "rich"
+      ]
+    },
+    "R0493": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "Stylized visual presentation",
+      "arms": [
+        "legacy-deep",
+        "legacy-standard",
+        "rich"
+      ]
+    },
+    "R0494": {
+      "game_id": "steam-1172470",
+      "kind": "tag",
+      "label": "3D graphics",
+      "arms": [
+        "rich"
+      ]
+    }
+  }
+}
