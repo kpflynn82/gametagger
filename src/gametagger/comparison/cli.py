@@ -103,7 +103,10 @@ def cmd_run(args) -> None:
         f"${runner.ledger.spent:.2f} of ${runner.ledger.cap:.2f}",
         file=sys.stderr,
     )
-    if args.batch:
+    if args.resume_batch:
+        collected = runner.collect_batch(args.resume_batch)
+        print(json.dumps({"batch_collected": collected}, indent=2), file=sys.stderr)
+    elif args.batch:
         from gametagger.comparison.budget import BudgetExceeded
 
         try:
@@ -256,6 +259,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--batch",
         action="store_true",
         help="Describe all images first in one half-price batch (results within 24 h)",
+    )
+    p.add_argument(
+        "--resume-batch",
+        metavar="BATCH_ID",
+        help="Collect an already submitted batch (e.g. after an interruption), then run",
     )
     p.add_argument("--observer-model", default="claude-sonnet-5")
     p.add_argument("--jev-model", default="jev-latest")

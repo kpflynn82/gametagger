@@ -928,6 +928,10 @@ def test_batch_describing_saves_answers_and_the_run_reuses_them(tmp_path, monkey
     assert "Be brief" in params["system"] and params["model"] == "claude-sonnet-5"
     half = (1000 * 2 + 400 * 10) / 1e6 / 2  # Sonnet 5 list price, halved by the batch
     assert described["cost_usd"] == pytest.approx(half) and ledger.spent == pytest.approx(half)
+    # Collecting the same batch again (as after an interruption) books and stores nothing new.
+    again_collected = runner.collect_batch("batch_1")
+    assert again_collected["already_booked"] == 1 and again_collected["cost_usd"] == 0
+    assert ledger.spent == pytest.approx(half)
 
     summary = runner.run([game], ["rich-lean"], workers=1, log=lambda m: None)
     assert summary["completed"] == 1 and summary["failed"] == 0

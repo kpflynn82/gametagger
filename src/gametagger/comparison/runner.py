@@ -392,6 +392,17 @@ class Runner:
             log=log,
         )
 
+    def collect_batch(self, batch_id: str) -> dict[str, Any]:
+        """Save and book the answers of an already submitted batch (after an interruption)."""
+        from gametagger.comparison.describe_cache import collect_batch
+
+        if self.store is None:
+            raise ValueError("Collecting a batch needs a description store")
+        out = collect_batch(
+            self.client, batch_id, self.store, self.ledger, workspace_id=self.workspace_id
+        )
+        return {k: v for k, v in out.items() if k != "seen"} | {"batch_id": batch_id}
+
     def run(
         self,
         games: list[dict],

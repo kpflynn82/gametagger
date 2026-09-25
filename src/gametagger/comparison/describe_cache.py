@@ -170,6 +170,96 @@ class CollectingAnthropic:
         )
 
 
+def _booked(ledger: Ledger, batch_id: str) -> set[str]:
+    """Request ids of this batch already booked in the ledger (so collecting twice is safe)."""
+    if not ledger.path.exists():
+        return set()
+    booked = set()
+    for line in ledger.path.read_text().splitlines():
+        if line.strip() and f'"{batch_id}"' in line:
+            entry = json.loads(line)
+            if entry.get("batch_id") == batch_id and entry.get("custom_id"):
+                booked.add(entry["custom_id"])
+    return booked
+
+
+def collect_batch(
+    client,
+    batch_id: str,
+    store: DescriptionStore,
+    ledger: Ledger,
+    *,
+    worst: dict[str, float] | None = None,
+    workspace_id: str | None = None,
+) -> dict[str, Any]:
+    """Book and store the answers of a finished batch. Safe to repeat: booked ids are skipped.
+
+    Also resumes a batch whose submitting process stopped before its results were read.
+    """
+    worst = worst or {}
+    headers = {"anthropic-workspace-id": workspace_id} if workspace_id else None
+    booked = _booked(ledger, batch_id)
+    succeeded = failed = skipped = 0
+    spent = 0.0
+    seen: set[str] = set()
+    for result in client.messages.batches.results(
+        batch_id, **({"extra_headers": headers} if headers else {})
+    ):
+        key = result.custom_id
+        seen.add(key)
+        if key in booked:
+            skipped += 1
+            continue
+        entry = {
+            "arm": "batch-describe",
+            "game_id": None,
+            "provider": "anthropic",
+            "batch": True,
+            "batch_id": batch_id,
+            "custom_id": key,
+        }
+        if result.result.type != "succeeded":
+            failed += 1
+            entry.update(status="error", error=result.result.type, cost_usd=0.0)
+            ledger.settle(worst.get(key, 0.0), entry)
+            continue
+        message = result.result.message
+        usage = message.usage
+        counts = {k: getattr(usage, k, None) for k in ("input_tokens", "output_tokens")}
+        price = (cost_usd(message.model, counts) or 0.0) * BATCH_DISCOUNT
+        entry.update(
+            status="ok",
+            requested_model=message.model,
+            returned_model=message.model,
+            usage=counts,
+            cost_usd=price,
+            latency_ms=0.0,
+        )
+        ledger.settle(worst.get(key, 0.0), entry)
+        spent += price
+        if message.stop_reason == "tool_use":
+            store.put(
+                key,
+                {
+                    "message": message.model_dump(mode="json"),
+                    "usage": counts,
+                    "cost_usd": price,
+                    "batch": True,
+                    "batch_id": batch_id,
+                },
+            )
+            succeeded += 1
+        else:
+            failed += 1  # incomplete answer: left unstored, so a run describes it live
+    return {
+        "succeeded": succeeded,
+        "failed": failed,
+        "already_booked": skipped,
+        "cost_usd": round(spent, 6),
+        "seen": seen,
+    }
+
+
 def describe_in_batch(
     client,
     requests: dict[str, dict[str, Any]],
@@ -209,52 +299,12 @@ def describe_in_batch(
         )
         counts = batch.request_counts
         log(f"Batch {batch.id}: {counts.succeeded} done, {counts.processing} processing")
-    succeeded = failed = 0
-    spent = 0.0
-    seen = set()
-    for result in client.messages.batches.results(
-        batch.id, **({"extra_headers": headers} if headers else {})
-    ):
-        key = result.custom_id
-        seen.add(key)
-        entry = {
-            "arm": "batch-describe",
-            "game_id": None,
-            "provider": "anthropic",
-            "requested_model": todo[key].get("model"),
-            "batch": True,
-            "batch_id": batch.id,
-        }
-        if result.result.type != "succeeded":
-            failed += 1
-            entry.update(status="error", error=result.result.type, cost_usd=0.0)
-            ledger.settle(worst[key], entry)
-            continue
-        message = result.result.message
-        usage = message.usage
-        counts = {k: getattr(usage, k, None) for k in ("input_tokens", "output_tokens")}
-        price = (cost_usd(message.model, counts) or 0.0) * BATCH_DISCOUNT
-        entry.update(
-            status="ok", returned_model=message.model, usage=counts, cost_usd=price, latency_ms=0.0
-        )
-        ledger.settle(worst[key], entry)
-        spent += price
-        if message.stop_reason == "tool_use":
-            store.put(
-                key,
-                {
-                    "message": message.model_dump(mode="json"),
-                    "usage": counts,
-                    "cost_usd": price,
-                    "batch": True,
-                    "batch_id": batch.id,
-                },
-            )
-            succeeded += 1
-        else:
-            failed += 1  # incomplete answer: left unstored, so a run describes it live
-    for key in set(todo) - seen:  # never reported back: release the reservation
+    collected = collect_batch(
+        client, batch.id, store, ledger, worst=worst, workspace_id=workspace_id
+    )
+    for key in set(todo) - collected["seen"]:  # never reported back: release the reservation
         ledger.release(worst[key])
+    succeeded, failed, spent = collected["succeeded"], collected["failed"], collected["cost_usd"]
     return {
         "batch_id": batch.id,
         "submitted": len(todo),
