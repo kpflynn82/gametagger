@@ -211,7 +211,30 @@ Free check on 12 cohort games with `--max-videos 3`:
 
 No paid run yet.
 
-Automated play (an AI pilot tapping through a game on an Android emulator to capture shop, event
-and social screens) was drafted but not merged. This session's safety check blocked running it
-as an autonomous agent, so the code was set aside unverified and the decision is with the owner.
+YouTube gameplay videos (proof of concept, owner-approved on September 27 despite YouTube's
+terms): `--youtube-gameplay N` on `gametagger-genome` and `gametagger-compare dossiers` finds the
+N most-viewed uploads between one minute and an hour that name the game.
 
+How videos are chosen:
+* The short name is matched too ("Last War" for "Last War:Survival Game").
+* Trailers, Shorts, "fake ads" compilations, reviews, reactions, hacks and mods are dropped;
+  "fake ads" videos show the ads' invented gameplay, not the game.
+* Uploads that call themselves gameplay or walkthroughs come first.
+
+How videos are downloaded:
+* The tool downloads a video-only copy at 480p or lower with yt-dlp (optional, like FFmpeg:
+  on PATH or `GAMETAGGER_YTDLP`). Uploads longer than 15 minutes are cut to 15 minutes from
+  the one-minute mark.
+* Downloads are marked `community_video` with the channel in provenance.
+* They share the per-game burst budget with store videos.
+
+Live check:
+* Search works. After the filters it picked real play for Royal Match, Kingshot and Last War.
+* Every download from this cloud container was refused by YouTube ("Sign in to confirm you're
+  not a bot"). YouTube blocks data-center addresses, and no attempt was made to get around
+  that. Downloads are expected to work from a home connection.
+* The first check also showed that the most-viewed "gameplay" results are often "fake ads"
+  commentary, which is why the filter exists.
+
+An automated-play pilot (AI tapping through a game on an emulator) was drafted, then dropped at
+the owner's request; it was never merged.

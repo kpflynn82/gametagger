@@ -23,17 +23,21 @@ from gametagger.genome.media import (
     assemble_hls,
     burst_claims,
     download_media,
+    download_youtube,
     frame_bursts,
+    gameplay_videos,
     normalize_image,
     probe_video,
 )
 from gametagger.genome.net import SourceError, _AllowlistRedirect, check_url, host_allowed
 from gametagger.genome.sources import (
     MediaRef,
+    YouTubeVideo,
     app_store_previews,
     app_store_source,
     google_play_reference,
     steam_source,
+    youtube_gameplay,
     youtube_search,
 )
 from gametagger.genome.vocabulary import load_vocabulary
@@ -726,3 +730,89 @@ def test_cli_live_refuses_media_without_observer_and_over_vision_cap(monkeypatch
 def test_text_source_rejects_media_types():
     with pytest.raises(ValueError):
         TextSource(id="v", type=EvidenceType.GAMEPLAY_CLIP, provider="p", text="x")
+
+
+# --------------------------------------------------------------------------- YouTube gameplay
+
+
+def youtube_api(items):
+    def fetch(url):
+        if "/search?" in url:
+            return {"items": [{"id": {"videoId": v["id"]}} for v in items]}
+        return {"items": items}
+
+    return fetch
+
+
+def yt(vid, title, seconds, views, channel="Some Player"):
+    return {
+        "id": vid,
+        "snippet": {"title": title, "channelTitle": channel},
+        "statistics": {"viewCount": str(views)},
+        "contentDetails": {"duration": f"PT{seconds // 60}M{seconds % 60}S"},
+    }
+
+
+def test_youtube_gameplay_keeps_long_gameplay_uploads_that_name_the_game():
+    items = [
+        yt("aaaaaaaaaaa", "Harbor Merge gameplay part 1", 900, 5_000),
+        yt("bbbbbbbbbbb", "Harbor Merge official trailer", 90, 900_000),
+        yt("ccccccccccc", "Harbor Merge #shorts", 40, 800_000),
+        yt("ddddddddddd", "Other Game gameplay", 600, 700_000),
+        yt("eeeeeeeeeee", "HARBOR MERGE - level 1-50 walkthrough", 1500, 90_000, "Harbor Studio"),
+        yt("fffffffffff", "Harbor Merge in 30 seconds", 30, 60_000),
+        yt("ggggggggggg", "Harbor Merge: The Most Annoying Ads (Ads VS Gameplay)", 1200, 9_000_000),
+        yt("hhhhhhhhhhh", "Harbor Merge hack unlimited gems", 300, 8_000_000),
+        yt("iiiiiiiiiii", "Harbor Merge - my honest thoughts", 600, 7_000_000),
+    ]
+    found = youtube_gameplay(
+        "Harbor Merge: Seaside Puzzle",
+        "key",
+        official_names=("Harbor Studio",),
+        fetch=youtube_api(items),
+    )
+    # Uploads that say they are gameplay come first; ads, hacks and trailers are dropped, and
+    # the short name matches titles that leave out the subtitle.
+    assert [f.id for f in found] == ["eeeeeeeeeee", "aaaaaaaaaaa"]
+    assert found[0].official and not found[1].official and found[0].seconds == 1500
+    with pytest.raises(SourceError):
+        youtube_gameplay("Harbor Merge", "", fetch=youtube_api(items))
+
+
+def test_download_youtube_asks_for_a_small_video_only_copy_and_cuts_long_uploads(tmp_path):
+    calls = []
+
+    def run(cmd, **kw):
+        calls.append(cmd)
+        out = cmd[cmd.index("-o") + 1].replace("%(ext)s", "mp4")
+        Path(out).write_bytes(b"\x00\x00\x00\x18ftypmp42" + b"\x00" * 64)
+        return subprocess.CompletedProcess(cmd, 0, b"", b"")
+
+    long = YouTubeVideo("aaaaaaaaaaa", "Harbor Merge gameplay", "A Player", 10, 1500, False)
+    source = download_youtube(long, tmp_path, "youtube-gameplay1", binary="yt-dlp", run=run)
+    cmd = calls[0]
+    assert cmd[-2:] == ["--", "https://www.youtube.com/watch?v=aaaaaaaaaaa"]
+    assert "--download-sections" in cmd and "height<=480" in cmd[cmd.index("-f") + 1]
+    assert source.role == "community_video" and "community upload" in source.provider
+    assert Path(source.path).name == "youtube-gameplay1.mp4" and source.sha256
+    short = YouTubeVideo("bbbbbbbbbbb", "Harbor Merge gameplay", "A Player", 10, 300, True)
+    source = download_youtube(short, tmp_path, "youtube-gameplay2", binary="yt-dlp", run=run)
+    assert "--download-sections" not in calls[1] and "official channel" in source.provider
+    with pytest.raises(ValueError):
+        download_youtube(
+            YouTubeVideo("bad id; rm", "x", "y", 0, 100, False), tmp_path, "v", binary="yt-dlp"
+        )
+
+
+def test_gameplay_videos_turn_every_problem_into_a_note(tmp_path):
+    video = YouTubeVideo("aaaaaaaaaaa", "Harbor Merge gameplay", "A Player", 10, 300, False)
+
+    def broken(v, directory, vid):
+        raise SourceError("yt-dlp could not download the video: blocked")
+
+    videos, notes = gameplay_videos(
+        "Harbor Merge", "key", tmp_path, 1, search=lambda *a, **k: [video], download=broken
+    )
+    assert videos == [] and "Skipped YouTube gameplay video" in notes[0]
+    assert gameplay_videos("Harbor Merge", None, tmp_path, 1)[1][0].startswith("YouTube gameplay")
+    assert gameplay_videos("Harbor Merge", "key", tmp_path, 0) == ([], [])

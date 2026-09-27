@@ -20,7 +20,7 @@ from typing import Any
 from gametagger.comparison.identity import polite
 from gametagger.genome.cli import save_dossier
 from gametagger.genome.dossier import Dossier
-from gametagger.genome.media import download_media
+from gametagger.genome.media import download_media, gameplay_videos
 from gametagger.genome.net import fetch_text
 from gametagger.genome.sources import (
     SourceError,
@@ -49,6 +49,7 @@ def build_dossier(
     video: bool = True,
     max_videos: int = 1,
     youtube_key: str | None = None,
+    youtube_gameplay: int = 0,
 ) -> tuple[Dossier, dict[str, Any]]:
     ids, notes, fetched, timings = game["ids"], [], [], {}
     plan = []
@@ -115,6 +116,17 @@ def build_dossier(
         media_notes.append(f"Trailer download retried {retries} time(s); {outcome}.")
     notes += media_notes
     timings["media_download_ms"] = (perf_counter() - t0) * 1000
+    if video and youtube_gameplay:
+        t0 = perf_counter()
+        official = tuple(
+            n for s in sources for k in ("developers", "publishers") for n in s.fields.get(k, [])
+        )
+        found, yt_notes = gameplay_videos(
+            game["title"], youtube_key, media_dir, youtube_gameplay, official_names=official
+        )
+        videos += found
+        notes += yt_notes
+        timings["youtube_gameplay_ms"] = (perf_counter() - t0) * 1000
     timings["total_ms"] = (perf_counter() - start) * 1000
     if not (sources or images or videos):
         raise SourceError(f"No evidence could be gathered for {game['game_id']}")
@@ -149,6 +161,7 @@ def build_all(
     max_screenshots: int = 4,
     video: bool = True,
     max_videos: int = 1,
+    youtube_gameplay: int = 0,
     log=lambda m: print(m, file=sys.stderr),
 ) -> list[dict[str, Any]]:
     youtube_key = os.environ.get("YOUTUBE_API_KEY")
@@ -170,6 +183,7 @@ def build_all(
                 video=video,
                 max_videos=max_videos,
                 youtube_key=youtube_key,
+                youtube_gameplay=youtube_gameplay,
             )
         except (SourceError, ValueError, OSError) as exc:
             summary = {"game_id": game["game_id"], "error": str(exc)}

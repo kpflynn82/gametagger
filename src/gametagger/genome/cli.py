@@ -19,7 +19,7 @@ from gametagger.decisions.jev import TypeSafeGateway
 from gametagger.decisions.mock import MockJevGateway
 from gametagger.genome.dossier import Dossier, ImageSource, VideoSource
 from gametagger.genome.engine import GenomeEngine, GenomePipeline
-from gametagger.genome.media import download_media
+from gametagger.genome.media import download_media, gameplay_videos
 from gametagger.genome.net import fetch_text
 from gametagger.genome.report import render_plan, render_profile
 from gametagger.genome.sources import (
@@ -74,6 +74,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=2,
         help="Store videos to sample: Steam gameplay videos, Google Play trailer, App Store "
         "previews (default 2)",
+    )
+    media.add_argument(
+        "--youtube-gameplay",
+        type=int,
+        default=0,
+        metavar="N",
+        help="Also download the N most-viewed YouTube gameplay videos (1-60 min). Proof of "
+        "concept: needs YOUTUBE_API_KEY and yt-dlp; YouTube's terms do not allow downloading.",
     )
     media.add_argument(
         "--bursts", type=int, default=6, help="Frame bursts per game, shared by its videos"
@@ -214,6 +222,23 @@ def _assemble(args, parser) -> Dossier:
         images += new_images
         videos += new_videos
         for message in download_notes:
+            _note(notes, message)
+    if args.youtube_gameplay and not (args.no_media or args.no_video):
+        title = args.title or (base.title if base else None)
+        title = title or next((s.reported_title for s in sources if s.reported_title), None)
+        official = tuple(
+            n for s in sources for k in ("developers", "publishers") for n in s.fields.get(k, [])
+        )
+        safe_id = re.sub(r"[^A-Za-z0-9_.-]+", "-", game_id).strip("-")[:64] or "game"
+        found, yt_notes = gameplay_videos(
+            title or "",
+            os.environ.get("YOUTUBE_API_KEY"),
+            args.media_dir or Path("gametagger-media") / safe_id,
+            args.youtube_gameplay,
+            official_names=official,
+        )
+        videos += found
+        for message in yt_notes:
             _note(notes, message)
     taken = {x.id for x in [*sources, *images, *videos, *references]}
 

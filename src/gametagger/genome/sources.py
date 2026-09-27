@@ -672,3 +672,111 @@ def youtube_search(
         for n in (1, 2, 3)
     ]
     return Fetched(media=stills, references=[reference])
+
+
+# Uploads that show something other than the game as it plays: "fake ads" compilations show
+# the ads' invented gameplay, and hacks or mods show an altered game.
+NOT_GAMEPLAY = re.compile(
+    r"\b(ads?|advert\w*|fake|vs\.?|versus|reaction|reacts?|review|tier list|trailer|shorts|"
+    r"hack\w*|cheats?|mod(ded|s)?|apk)\b",
+    re.IGNORECASE,
+)
+PLAY_WORDS = re.compile(
+    r"\b(gameplay|walkthrough|let'?s play|playthrough|levels?|part \d+|android|ios)\b",
+    re.IGNORECASE,
+)
+
+
+def short_title(title: str) -> str:
+    """The name before a subtitle: "Last War" for "Last War:Survival Game"."""
+    return re.split(r"\s*[:|(–—]|\s+-\s+", title, maxsplit=1)[0].strip() or title
+
+
+@dataclass(frozen=True)
+class YouTubeVideo:
+    """A YouTube upload chosen as gameplay evidence (downloaded only on request)."""
+
+    id: str
+    title: str
+    channel: str
+    views: int
+    seconds: int
+    official: bool
+
+
+def youtube_gameplay(
+    title: str,
+    api_key: str,
+    *,
+    official_names: tuple[str, ...] = (),
+    limit: int = 2,
+    min_seconds: int = 60,
+    max_seconds: int = 3600,
+    fetch: Fetch = fetch_json,
+) -> list[YouTubeVideo]:
+    """Gameplay uploads whose title names the game, between one minute and an hour long.
+
+    Trailers, Shorts, "fake ads" compilations, reviews, reactions, hacks and mods are left out.
+    Uploads that call themselves gameplay, walkthroughs or let's plays come first, then views.
+    Uses search.list (100 quota units) and videos.list (1 unit).
+    """
+    name_only = short_title(title)
+    forms = {n for t in (title, name_only) if len(n := normal_title(t)) >= 3}
+    if not forms or not api_key:
+        raise SourceError("YouTube search needs a game title and YOUTUBE_API_KEY")
+    official = {normal_title(n) for n in official_names if normal_title(n)}
+    search = fetch(
+        f"{YOUTUBE_API}/search?"
+        + urlencode(
+            {
+                "part": "snippet",
+                "type": "video",
+                "maxResults": "15",
+                "q": f"{name_only} gameplay",
+                "order": "viewCount",
+                "key": api_key,
+            }
+        )
+    )
+    ids = [
+        item["id"]["videoId"]
+        for item in (search or {}).get("items") or []
+        if isinstance(item.get("id"), dict)
+        and re.fullmatch(r"[A-Za-z0-9_-]{11}", str(item["id"].get("videoId", "")))
+    ]
+    if not ids:
+        return []
+    details = fetch(
+        f"{YOUTUBE_API}/videos?"
+        + urlencode(
+            {"part": "snippet,statistics,contentDetails", "id": ",".join(ids), "key": api_key}
+        )
+    )
+    found = []
+    for v in (details or {}).get("items") or []:
+        snippet = v.get("snippet") or {}
+        name = str(snippet.get("title") or "")
+        seconds = _iso_seconds((v.get("contentDetails") or {}).get("duration"))
+        if seconds is None or not any(f in normal_title(name) for f in forms):
+            continue
+        if NOT_GAMEPLAY.search(name) or not min_seconds <= seconds <= max_seconds:
+            continue
+        channel = str(snippet.get("channelTitle") or "")
+        count = (v.get("statistics") or {}).get("viewCount")
+        found.append(
+            YouTubeVideo(
+                id=str(v.get("id")),
+                title=name,
+                channel=channel,
+                views=int(count) if str(count).isdigit() else 0,
+                seconds=seconds,
+                official=any(
+                    n in normal_title(channel) or normal_title(channel) in n for n in official
+                )
+                if channel
+                else False,
+            )
+        )
+    found = [f for f in found if re.fullmatch(r"[A-Za-z0-9_-]{11}", f.id)]
+    found.sort(key=lambda f: (bool(PLAY_WORDS.search(f.title)), f.views), reverse=True)
+    return found[:limit]

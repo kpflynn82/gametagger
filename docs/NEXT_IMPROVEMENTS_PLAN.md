@@ -87,9 +87,10 @@ teams ask about.
 
 **Status (September 27).**
 * Store videos are done: several Steam videos with gameplay-named ones first, and App Store
-  preview videos. See EXECUTION_STATUS.
-* Automated play on an emulator was drafted but not merged. This session's safety check blocked
-  running it as an autonomous agent, so it waits on the owner's decision.
+  preview videos.
+* YouTube gameplay videos are built as an owner-approved proof of concept
+  (`--youtube-gameplay N`). They download from a home connection, not from cloud machines.
+* Automated play was dropped. See EXECUTION_STATUS.
 
 **Sources, in order of preference.**
 

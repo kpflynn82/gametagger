@@ -87,7 +87,8 @@ class VideoSource(BaseModel):
     id: str = Field(pattern=SOURCE_ID)
     path: str = Field(min_length=1)
     provider: str = "local-upload"
-    role: Literal["upload", "store_trailer"] = "upload"
+    # community_video: a YouTube upload by anyone, the least trusted video evidence.
+    role: Literal["upload", "store_trailer", "community_video"] = "upload"
     title: str | None = None
     uri: str | None = None
     sha256: str | None = Field(default=None, pattern=SHA256)
