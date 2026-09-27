@@ -8,8 +8,15 @@
 <meta property="og:description" content="What is inside the top 100 Steam and Google Play games: genres, the most common tags, PC versus mobile, what the biggest hits share, and every game's tags with their evidence.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="social-card.png">
+<meta name="twitter:image" content="social-card.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>[hidden]{display:none!important}img{max-width:100%}</style>
-<title>GameTagger Top 100</title>
+<title>GameTagger · What's inside the top 100 games</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="14" fill="%23d3281f"/%3E%3Cpath d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="%23fff"/%3E%3Ccircle cx="44" cy="20" r="5.4" fill="%23d3281f"/%3E%3C/svg%3E">
+<meta name="theme-color" content="#d3281f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700;800&family=Chivo+Mono:wght@400;500;600&display=swap">
@@ -148,6 +155,49 @@ details summary{cursor:pointer;font-size:12.5px;color:var(--mute)}
 .cta a{background:var(--brand);color:var(--brand-ink);font:700 15px var(--mono);padding:10px 16px;text-decoration:none}
 footer{font:500 12.5px var(--mono);color:var(--mute);padding-block:36px 40px;border-top:1px solid var(--line);margin-top:40px}
 #tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--bg);font:500 12.5px/1.4 var(--mono);padding:6px 9px;max-width:280px;opacity:0;transition:opacity .1s}
+/* marketing pass */
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:800 20px var(--sans);letter-spacing:-.02em;color:var(--ink)}
+section,.film{scroll-margin-top:72px}
+.brand .mark{width:28px;height:28px;display:block}
+nav .nav-cta{background:var(--ink);color:var(--bg);padding:5px 10px;text-decoration:none}
+nav .nav-cta:hover,nav .nav-cta:focus-visible{color:var(--bg);background:var(--brand);text-decoration:none}
+.theme{font:500 14px var(--mono);background:transparent;border:1px solid var(--line);color:var(--ink-2);padding:4px 9px;cursor:pointer}
+.theme:hover{border-color:var(--ink);color:var(--ink)}
+.kicker{display:inline-flex;gap:8px;align-items:center;font:600 12.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 18px}
+.kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 22%,transparent)}
+h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand) 34%,transparent) 62%);color:inherit;padding:0 .04em}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 15px var(--mono);padding:11px 16px;border:2px solid var(--ink);text-decoration:none;color:var(--ink);background:transparent}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn:hover,.btn:focus-visible{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+.btn:focus-visible{outline:3px solid var(--pc);outline-offset:2px}
+.trust{font:500 13px var(--mono);color:var(--mute);margin:18px 0 0;max-width:62ch}
+.example{background:var(--panel);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:18px 18px 16px;display:grid;gap:10px;align-self:center}
+.example .ex-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.example .ex-lab{font:600 11.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.example .seg button{font-size:12px;padding:4px 8px}
+.example .ex-name{font-weight:800;font-size:28px;letter-spacing:-.03em;line-height:1.05;margin:0}
+.example .ex-genre{font:600 13.5px var(--mono);color:var(--ink-2)}
+.example .ex-genre b{color:var(--brand)}
+.example .ex-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line)}
+.example .ex-counts div{padding:8px 0}.example .ex-counts div+div{padding-left:10px;border-left:1px solid var(--line)}
+.example .ex-counts b{display:block;font:700 22px var(--mono)}.example .ex-counts span{font-size:12px;color:var(--ink-2)}
+.example .ex-open{font:600 14px var(--mono);text-decoration:none;border-bottom:2px solid var(--brand);justify-self:start}
+.pipeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);background:var(--panel);margin:8px 0 26px;counter-reset:p;list-style:none;padding:0}
+.pipeline li{padding:16px 16px 14px;position:relative}
+.pipeline li+li{border-left:1px solid var(--line)}
+.pipeline li::before{counter-increment:p;content:"0" counter(p);display:block;font:700 13px var(--mono);color:var(--brand);margin-bottom:6px}
+.pipeline b{display:block;font-size:17px;letter-spacing:-.01em;margin-bottom:3px}
+.pipeline span{font-size:14px;color:var(--ink-2);display:block}
+.pipeline .soon{position:absolute;right:12px;top:14px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--brand);color:var(--brand);padding:1px 6px}
+.film{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center;margin:0 0 34px}
+.film video{width:100%;aspect-ratio:1;display:block;background:#100f0b;border:2px solid var(--ink);box-shadow:8px 8px 0 var(--brand)}
+.film h3{font-size:24px;letter-spacing:-.02em;margin:0 0 8px}.film p{color:var(--ink-2);margin:0 0 10px}
+.film ol{margin:0;padding-left:20px;color:var(--ink-2);font-size:14.5px;display:grid;gap:4px}
+.foot-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.foot-top nav a{color:var(--ink-2)}
+@media (max-width:860px){.pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}.pipeline li:nth-child(3){border-left:0}.pipeline li:nth-child(n+3){border-top:1px solid var(--line)}.film{grid-template-columns:1fr}}
+@media (max-width:560px){.pipeline{grid-template-columns:1fr}.pipeline li+li{border-left:0;border-top:1px solid var(--line)}.example{box-shadow:5px 5px 0 var(--ink)}nav{gap:12px}}
 @media (max-width:860px){.hero{grid-template-columns:1fr;gap:24px}.grid2,.how{grid-template-columns:1fr}.cmp{grid-template-columns:repeat(2,minmax(0,1fr))}.cmp>div:nth-child(3){border-left:0}.cmp>div:nth-child(n+3){border-top:1px solid var(--line)}}
 @media (max-width:560px){.r .name{font-size:13.5px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi:nth-child(3){border-left:0;padding-left:0}.kpi:nth-child(n+3){border-top:1px solid var(--line)}.r{grid-template-columns:minmax(0,1fr)}.gcat{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -157,21 +207,26 @@ footer{font:500 12.5px var(--mono);color:var(--mute);padding-block:36px 40px;bor
 <body>
 <div class="wrap">
 <header class="top">
-  <a class="badge" href="#top" id="top">GAMETAGGER</a>
-  <nav aria-label="Sections"><a href="#dashboard">Dashboard</a><a href="#library">Games</a><a href="#dictionary">Tags</a><a href="#method">How it works</a><a href="#request">Request a game</a></nav>
+  <a class="brand" href="#top" id="top" aria-label="GameTagger, back to top"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--brand)"/><path d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="#fff"/><circle cx="44" cy="20" r="5.4" fill="var(--brand)"/></svg><span>GameTagger</span></a>
+  <nav aria-label="Sections"><a href="#dashboard">Dashboard</a><a href="#library">Games</a><a href="#dictionary">Tags</a><a href="#method">How it works</a><a class="nav-cta" href="#request">Request a game</a><button type="button" class="theme" id="theme" aria-label="Switch colour theme">Dark</button></nav>
 </header>
 
 <div class="hero">
   <div>
-    <h1>What's inside the top 100 games</h1>
+    <div class="kicker"><span class="dot"></span><span id="snap">Snapshot</span></div>
+    <h1>What's inside the <mark>top 100</mark> games</h1>
     <p class="dek" id="dek"></p>
+    <div class="ctas"><a class="btn primary" href="#library">Browse the 100 games →</a><a class="btn" href="#trailer">▶ Watch the 54-second film</a></div>
+    <p class="trust">189 gameplay tags · 100 genres · every tag traced to its evidence · decisions by Jev from TypeSafe</p>
   </div>
-  <ol class="steps" aria-label="How each game is tagged">
-    <li><span><b>Gather.</b> Store page, Wikipedia, screenshots and the trailer.</span></li>
-    <li><span><b>Describe.</b> Claude writes down only what it can see. No genres, no guesses.</span></li>
-    <li><span><b>Decide.</b> Jev judges each of 189 tags on its own, without the game's name. Yes, no, or not enough evidence.</span></li>
-  </ol>
+  <aside class="example" id="example" aria-label="An example game profile"></aside>
 </div>
+<ol class="pipeline" aria-label="How each game is tagged">
+  <li><b>Gather</b><span>Store pages, Wikipedia, screenshots and trailers, fetched by exact store ID.</span></li>
+  <li><b>Describe</b><span>Claude writes down only what it can see. It never names a genre or tag.</span></li>
+  <li><b>Decide</b><span>Jev answers 189 tag questions and the genre, each on its own, without the game's name.</span></li>
+  <li><em class="soon">Next</em><b>Play</b><span>When evidence runs out, an AI player records the shops, timers and events store pages hide.</span></li>
+</ol>
 <div class="kpis" id="kpis"></div>
 
 <div class="bar-filter" role="group" aria-label="Which chart">
@@ -268,6 +323,15 @@ footer{font:500 12.5px var(--mono);color:var(--mute);padding-block:36px 40px;bor
 <section id="method" aria-labelledby="h-h">
   <div class="eyebrow">How it works</div>
   <h2 id="h-h">Describe first, then decide</h2>
+  <div class="film" id="trailer">
+    <video controls playsinline preload="none" poster="trailer-poster.jpg" aria-label="GameTagger in 54 seconds, a silent film"><source src="trailer.mp4" type="video/mp4"></video>
+    <div><h3>GameTagger in 54 seconds</h3><p>A silent film of the whole method, with this page's own numbers.</p>
+      <ol><li>The NitroGen dataset's game list (40,000 hours of gameplay, 1,000+ games) seeded the catalog.</li>
+        <li>189 gameplay tags and 100 genres, each defined with the evidence allowed to prove it.</li>
+        <li>Claude describes screenshots and video. Jev decides, one question per tag.</li>
+        <li>When evidence runs out, an AI player plays the game.</li>
+        <li>Everything lands here.</li></ol></div>
+  </div>
   <div class="how">
     <div><h3>Claude describes</h3><p>Claude looks at each screenshot and six short trailer clips and writes down what is visible: a first-person view of a rifle, a timer, a shop screen. It is not allowed to name genres or tags.</p></div>
     <div><h3>Jev decides</h3><p>Jev, a classification model from TypeSafe, answers each of 189 tag questions on its own, using only the evidence each tag allows. It never sees the game's name, so it can't lean on reputation.</p></div>
@@ -284,7 +348,9 @@ footer{font:500 12.5px var(--mono);color:var(--mute);padding-block:36px 40px;bor
   <a href="https://claude.ai/artifact/3MLmYUfDTkFgC9RFfkNiPU" target="_blank" rel="noopener">Request a game</a></div>
 </section>
 
-<footer id="foot"></footer>
+<footer><div class="foot-top"><a class="brand" href="#top"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--brand)"/><path d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="#fff"/><circle cx="44" cy="20" r="5.4" fill="var(--brand)"/></svg><span>GameTagger</span></a>
+  <nav aria-label="Footer"><a href="#library">Games</a><a href="#dictionary">Tags</a><a href="#method">How it works</a><a href="/benchmark" target="_blank" rel="noopener">Full benchmark</a><a href="#request">Request a game</a></nav></div>
+  <p id="foot" style="margin:0"></p></footer>
 </div>
 <div id="tip" role="tooltip"></div>
 
@@ -552,6 +618,37 @@ const _renderAll = renderAll;
 renderAll = () => { _renderAll(); renderLibrary(); };
 window.addEventListener("hashchange", route);
 renderLibrary(); dictChips(); renderDict(); route();
+// ---- hero: snapshot line and an example profile
+{
+  const fmt = (d) => d ? new Date(d + "T12:00:00Z").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"}) : "";
+  $("snap").textContent = `Snapshot · Steam ${fmt(S.chart_dates?.steam)} · Google Play ${fmt(S.chart_dates?.mobile)}`;
+  const pick = {steam: GAMES.find((g) => g.list === "steam" && g.rank === 1), mobile: GAMES.find((g) => g.list === "mobile" && g.rank === 1)};
+  const card = (which) => {
+    const g = pick[which]; if (!g) return "";
+    const jev = Object.entries(g.detail?.jev || {});
+    const yes = jev.filter(([, [t]]) => t === "strong" || t === "likely").sort((a, b) => (b[1][1] ?? 0) - (a[1][1] ?? 0));
+    const no = jev.filter(([, [t]]) => t === "absent").length;
+    const genre = (g.detail?.genres || [])[0];
+    return `<div class="ex-top"><span class="ex-lab">Example profile</span><div class="seg" role="group" aria-label="Example game">
+        <button type="button" data-ex="steam" aria-pressed="${which === "steam"}">Steam #1</button><button type="button" data-ex="mobile" aria-pressed="${which === "mobile"}">Google Play #1</button></div></div>
+      <h2 class="ex-name">${esc(g.title)}</h2>
+      <div class="ex-genre">${genre ? `<b>${esc(GENRES[genre[0]]?.name || genre[0])}</b> · ${Math.round(100 * genre[1])}% sure` : "Genre not decided: evidence too thin"}</div>
+      <div class="tags">${yes.slice(0, 9).map(([t, [tier, p]]) => tagLink(t, tier, p)).join("")}</div>
+      <div class="ex-counts"><div><b>${yes.length}</b><span>present</span></div><div><b>${no}</b><span>absent</span></div><div><b>${G.tags.length - jev.length}</b><span>not enough evidence</span></div></div>
+      <a class="ex-open" href="#game-${esc(g.id)}">Open the full profile →</a>`;
+  };
+  const showEx = (which) => { $("example").innerHTML = card(which); $("example").querySelectorAll("[data-ex]").forEach((b) => b.onclick = () => showEx(b.dataset.ex)); };
+  showEx("steam");
+}
+// ---- light and dark theme switch (remembered on this device when storage is allowed)
+{
+  const root = document.documentElement, btn = $("theme");
+  const current = () => root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const paint = () => { btn.textContent = current() === "dark" ? "Light" : "Dark"; };
+  try { const saved = localStorage.getItem("gt-theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
+  btn.onclick = () => { root.dataset.theme = current() === "dark" ? "light" : "dark"; try { localStorage.setItem("gt-theme", root.dataset.theme); } catch (e) {} paint(); };
+  paint();
+}
 $("foot").textContent = `GameTagger · charts: Steam most-played (global, ${S.chart_dates?.steam}) and AppBrain's Google Play top-grossing games (US, ${S.chart_dates?.mobile}) · tags by Claude Sonnet 5 (describing) and Jev jev-1.13.0 (deciding) · crosswalks to Steam tags are drafts pending review`;
 </script>
 

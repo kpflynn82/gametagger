@@ -12,7 +12,7 @@ benchmark write-up, with its LinkedIn images and social card beside it) and
 
 With ``--standalone`` (after the positional arguments) the results page is wrapped in a full
 HTML document for ordinary static hosting such as Vercel; Artifact publishing adds that wrapper
-itself.
+itself. ``--site-url=https://...`` makes the social card link absolute, which LinkedIn needs.
 
 The page carries no store URLs: the Artifact publisher's link validation rejected a version that
 embedded 100 store links, so game profiles link only within the page.
@@ -38,8 +38,12 @@ DESCRIPTION = (
 )
 
 
-def standalone(page: str, title: str, description: str) -> str:
-    """Wrap the page body in a complete document with the resets the Artifact host supplies."""
+def standalone(page: str, title: str, description: str, image: str = "social-card.png") -> str:
+    """Wrap the page body in a complete document with the resets the Artifact host supplies.
+
+    Also links the site's icons (favicon.ico, favicon.svg, apple-touch-icon.png in ``web/``) and
+    the social card. Pass an absolute ``image`` URL (``--site-url``) for LinkedIn previews.
+    """
     head, marker, body = page.partition('<div class="wrap">')
     return (
         '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
@@ -49,6 +53,11 @@ def standalone(page: str, title: str, description: str) -> str:
         f'<meta property="og:description" content="{description}">\n'
         '<meta property="og:type" content="website">\n'
         '<meta name="twitter:card" content="summary_large_image">\n'
+        f'<meta property="og:image" content="{image}">\n'
+        f'<meta name="twitter:image" content="{image}">\n'
+        '<link rel="icon" href="/favicon.ico" sizes="any">\n'
+        '<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
+        '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
         "<style>[hidden]{display:none!important}img{max-width:100%}</style>\n"
         f"{head}</head>\n<body>\n{marker}{body}\n</body>\n</html>\n"
     )
@@ -56,6 +65,8 @@ def standalone(page: str, title: str, description: str) -> str:
 
 def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    site = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--site-url=")), "")
+    image = f"{site.rstrip('/')}/social-card.png" if site else "social-card.png"
     out = Path(args[0])
     results_url = args[1] if len(args) > 1 else "#"
     requests_url = args[2] if len(args) > 2 else "#"
@@ -67,7 +78,9 @@ def main() -> None:
     results = out / "results"
     (results / "linkedin").mkdir(parents=True, exist_ok=True)
     if "--standalone" in sys.argv:
-        page = standalone(page, "Jev versus one big prompt: tagging 100 top games", DESCRIPTION)
+        page = standalone(
+            page, "Jev versus one big prompt: tagging 100 top games", DESCRIPTION, image
+        )
     (results / "index.html").write_text(page)
     for png in sorted((EXP / "linkedin").glob("*.png")):
         shutil.copy(png, results / "linkedin" / png.name)
@@ -86,9 +99,14 @@ def main() -> None:
     home = home.replace("/*REQUEST_URL*/", requests_url).replace("/*BENCH_URL*/", benchmark_url)
     if "--standalone" in sys.argv:
         title = "GameTagger: what's inside the top 100 games"
-        home = standalone(home, title, DASHBOARD_DESCRIPTION)
+        home = standalone(home, title, DASHBOARD_DESCRIPTION, image)
     (out / "dashboard").mkdir(parents=True, exist_ok=True)
     (out / "dashboard" / "index.html").write_text(home)
+    # The home page plays the trailer (experiments/trailer) from files beside it.
+    web = EXP.parents[1] / "web"
+    for name in ("trailer.mp4", "trailer-poster.jpg"):
+        if (web / name).exists():
+            shutil.copy(web / name, out / "dashboard" / name)
 
     cohort = json.loads((EXP / "cohort.json").read_text())
     titles = json.dumps(sorted(g["title"] for g in cohort["games"]))
