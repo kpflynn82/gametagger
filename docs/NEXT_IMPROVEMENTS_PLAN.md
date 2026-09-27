@@ -183,7 +183,8 @@ a feature is done, not only whether it exists.
 
 **Design.**
 
-1. **Vocabulary v2 draft (new tags).** About 40–60 new tags in three groups, each with a plain
+1. **Vocabulary v2 draft (new tags).** *Drafted September 27, awaiting owner review:* 52 tags
+   in [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md). About 40–60 new tags in three groups, each with a plain
    definition, allowed evidence and a note on what must be visible:
    * **Meta layers:** base building, collection albums, character roster, idle rewards, merge
      board, decorating or renovation, story chapters as progression.
