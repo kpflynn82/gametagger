@@ -301,3 +301,20 @@ Not done:
   Android session.
 * Pilot comparison (unknown share and blind-review accuracy on monetization and live-ops tags,
   recorded versus store-only) is still open, as in Improvement 3.
+
+### Vocabulary v2 draft (September 27, 2026)
+
+Improvement 7, step 1:
+* Drafted 52 mobile tags for owner review: 13 meta layers, 22 live operations and offers,
+  5 advertising, and 12 follow-ups asked only when their parent tag is present.
+* Files: [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md) and
+  `taxonomy/drafts/genome_tags_v2_additions.draft.yaml`.
+* Not loaded by the pipeline. v1 is unchanged.
+* `tests/test_vocabulary_v2_draft.py` checks the draft is well formed, collides with no v1 or
+  pilot ID or label, and that every follow-up names a real parent tag.
+* No paid calls.
+
+Next:
+* The owner's decisions listed in the draft.
+* Then the loader's `requires` field and conditional asking.
+* Then a run on the 5-game recording pilot.
