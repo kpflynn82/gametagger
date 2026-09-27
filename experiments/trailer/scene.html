@@ -1,0 +1,480 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+/*FONTS*/
+:root{--bg:#100f0b;--bg2:#1a1813;--ink:#f2efe8;--ink2:#c3bfb3;--mute:#8d887c;--line:#35332b;
+--red:#e0463d;--blue:#3987e5;--orange:#d95926;--yellow:#d9a520;--green:#2fa86a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);
+font-family:Chivo,"DejaVu Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:"Chivo Mono","DejaVu Sans Mono",monospace}
+#stage{position:relative;width:1080px;height:1080px;overflow:hidden}
+.scene{position:absolute;inset:0;opacity:0}
+.a{position:absolute;will-change:transform,opacity;opacity:0}
+.head{position:absolute;left:56px;right:56px;top:44px;display:flex;justify-content:space-between;
+align-items:center;z-index:20;font:600 18px "Chivo Mono",monospace;letter-spacing:.12em}
+.badge{background:var(--ink);color:var(--bg);padding:6px 11px}
+.progress{position:absolute;left:0;bottom:0;height:5px;background:var(--red);z-index:20}
+.kicker{font:600 22px "Chivo Mono",monospace;letter-spacing:.14em;color:var(--red)}
+.title{left:56px;right:56px;top:112px;font-weight:800;font-size:60px;line-height:1.04;
+letter-spacing:-.03em}
+.cap{left:56px;right:56px;bottom:64px;font:500 22px/1.4 "Chivo Mono",monospace;color:var(--ink2)}
+.illus{position:absolute;right:56px;bottom:30px;font:500 14px "Chivo Mono",monospace;
+color:var(--mute);letter-spacing:.06em}
+/* scene 1 */
+#mosaic{position:absolute;left:50%;top:50%;width:1400px;height:1400px;margin:-700px 0 0 -700px;
+display:grid;grid-template-columns:repeat(14,1fr);gap:6px}
+#mosaic div{position:relative;border-radius:6px;overflow:hidden}
+#mosaic i{position:absolute;display:block}
+.veil{position:absolute;inset:0;background:radial-gradient(circle at 50% 48%,rgba(16,15,11,.55),
+rgba(16,15,11,.96) 70%)}
+.big{left:56px;top:330px;font-weight:900;font-size:236px;line-height:.9;letter-spacing:-.05em;
+font-variant-numeric:tabular-nums}
+.bigsub{left:62px;top:560px;font-weight:800;font-size:54px;letter-spacing:-.02em}
+.chiprow{left:60px;top:666px;display:flex;gap:14px}
+.chip{display:inline-block;font:600 24px "Chivo Mono",monospace;padding:8px 14px;border-radius:4px}
+.c-red{background:var(--red);color:#fff}.c-out{border:2px solid var(--ink);color:var(--ink)}
+.c-green{background:var(--green);color:#fff}.c-yellow{background:var(--yellow);color:#16150f}
+.c-mute{border:2px solid var(--mute);color:var(--ink2)}
+.line1{left:60px;top:770px;font:500 28px/1.4 "Chivo Mono",monospace;color:var(--ink2)}
+/* scene 2 */
+#cloud{position:absolute;left:56px;right:56px;top:300px;height:560px;display:flex;flex-wrap:wrap;
+gap:12px;align-content:flex-start;overflow:hidden}
+#cloud span{font:600 19px "Chivo Mono",monospace;padding:6px 11px;border-radius:4px;opacity:0;
+border:2px solid var(--line);color:var(--ink)}
+#cloud span.g{background:var(--red);border-color:var(--red);color:#fff}
+.counters{left:56px;right:56px;top:360px;display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.counter b{display:block;font-weight:900;font-size:190px;line-height:.9;letter-spacing:-.05em;
+font-variant-numeric:tabular-nums}
+.counter span{display:block;font-weight:700;font-size:36px;margin-top:12px}
+.counter small{display:block;font:500 22px "Chivo Mono",monospace;color:var(--ink2);margin-top:8px}
+.defcard{left:120px;right:120px;top:420px;background:var(--ink);color:#16150f;padding:34px 38px;
+border-radius:10px;box-shadow:14px 14px 0 var(--red)}
+.defcard small{display:block;font:600 18px "Chivo Mono",monospace;letter-spacing:.1em;
+color:#6b665b;margin-bottom:12px}
+.defcard h3{font-weight:900;font-size:52px;letter-spacing:-.03em;margin-bottom:14px}
+.defcard p{font-size:28px;line-height:1.35;margin-bottom:18px}
+.defcard .ev{font:600 19px "Chivo Mono",monospace;color:#4d4a42}
+/* game screen mock */
+.phone{position:absolute;background:#0b0b0d;border-radius:44px;padding:16px;
+box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 2px #2d2b25}
+.screen{position:relative;width:100%;height:100%;border-radius:30px;overflow:hidden;
+background:linear-gradient(180deg,#2a3f8f,#6a3fa0)}
+.gs{position:absolute;inset:0;opacity:0}
+.hud{position:absolute;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;
+font:700 15px "Chivo Mono",monospace;color:#fff}
+.hud span{background:rgba(0,0,0,.35);padding:4px 8px;border-radius:10px}
+.gbtn{position:absolute;border-radius:14px;color:#fff;font-weight:900;display:flex;
+align-items:center;justify-content:center;letter-spacing:.02em;box-shadow:0 5px 0 rgba(0,0,0,.3)}
+.gtitle{position:absolute;left:0;right:0;text-align:center;color:#ffd84d;font-weight:900;
+letter-spacing:-.02em;text-shadow:0 4px 0 rgba(0,0,0,.35)}
+.offer{position:absolute;left:16px;right:16px;height:92px;border-radius:14px;background:rgba(255,255,255,.14);
+color:#fff;font-weight:800;font-size:19px;padding:14px}
+.offer em{position:absolute;right:12px;bottom:12px;font-style:normal;background:#2fa86a;padding:8px 12px;
+border-radius:10px;font:800 17px "Chivo Mono",monospace}
+.ripple{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;
+border:4px solid #fff;opacity:0}
+.scan{position:absolute;left:0;right:0;height:4px;background:#8fd3ff;
+box-shadow:0 0 24px 8px rgba(120,200,255,.55);opacity:0}
+.obs{left:520px;right:56px;background:var(--bg2);border:2px solid var(--line);border-radius:10px;
+padding:16px 18px;font:500 22px/1.38 "Chivo Mono",monospace;min-height:94px}
+.obs small{display:block;color:var(--mute);font-size:15px;letter-spacing:.1em;margin-bottom:6px}
+.obshead{left:520px;top:292px;font:600 18px "Chivo Mono",monospace;letter-spacing:.12em;color:var(--blue)}
+#strip{position:absolute;left:0;top:850px;height:120px;display:flex;gap:10px}
+#strip div{width:170px;height:104px;border-radius:6px;position:relative;overflow:hidden;
+border:2px solid #2d2b25}
+.stripcap{left:56px;top:990px;font:500 18px "Chivo Mono",monospace;color:var(--mute)}
+.rows{left:56px;right:56px;top:330px}
+.row{display:grid;grid-template-columns:370px 1fr 250px;align-items:center;height:96px;
+border-bottom:1px solid var(--line);gap:20px}
+.row .n{font-weight:800;font-size:32px;letter-spacing:-.01em}
+.row .track{height:14px;background:#2b2a23;border-radius:7px;overflow:hidden}
+.row .fill{height:100%;width:0;border-radius:7px}
+.row .st{justify-self:end}
+.stamp{left:56px;right:56px;top:790px;font-weight:900;font-size:66px;letter-spacing:-.035em}
+.stamp em{font-style:normal;color:var(--red)}
+/* scene 4 */
+.goals{left:500px;right:56px;top:320px}
+.goal{display:flex;align-items:center;gap:18px;height:74px;border-bottom:1px solid var(--line);
+font-weight:800;font-size:34px}
+.goal .box{width:34px;height:34px;border-radius:6px;border:3px solid var(--mute);position:relative}
+.goal .box.on{background:var(--green);border-color:var(--green)}
+.goal .box.on:after{content:"";position:absolute;left:9px;top:3px;width:9px;height:17px;
+border:solid #fff;border-width:0 4px 4px 0;transform:rotate(45deg)}
+.goal small{margin-left:auto;font:500 20px "Chivo Mono",monospace;color:var(--mute)}
+.rec{position:absolute;top:10px;right:18px;font:800 15px "Chivo Mono",monospace;color:#fff;
+display:flex;gap:6px;align-items:center;z-index:5}
+.rec i{width:12px;height:12px;border-radius:50%;background:#ff3b30;display:block}
+.blocked{left:500px;top:720px}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:46%;background:#fff;border-radius:22px 22px 0 0;
+color:#111;padding:22px;font-weight:800;font-size:20px}
+.sheet em{display:block;margin-top:40px;background:#1a73e8;color:#fff;text-align:center;padding:12px;
+border-radius:24px;font-style:normal}
+/* scene 5 */
+.browser{left:56px;right:56px;top:290px;height:600px;background:#f3efe7;border-radius:14px;
+overflow:hidden;color:#16150f;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.bar{height:46px;background:#dcd6c9;display:flex;align-items:center;gap:8px;padding:0 16px}
+.bar i{width:13px;height:13px;border-radius:50%;background:#b8b1a2;display:block}
+.bar span{margin-left:16px;background:#f3efe7;border-radius:8px;padding:5px 14px;
+font:500 15px "Chivo Mono",monospace;color:#55524a;flex:0 0 420px}
+.web{padding:30px 34px}
+.web h4{font-weight:900;font-size:46px;letter-spacing:-.03em}
+.web .sub{font:500 17px "Chivo Mono",monospace;color:#55524a;margin:6px 0 26px}
+.cols{display:grid;grid-template-columns:1.25fr 1fr;gap:28px}
+.gbar{display:grid;grid-template-columns:230px 1fr 34px;align-items:center;gap:10px;height:52px;
+font-size:19px;font-weight:700;line-height:1.1}
+.gbar .t{height:22px;background:#e6e0d4;border-radius:0 4px 4px 0}
+.gbar .f{height:100%;background:#d3281f;border-radius:0 4px 4px 0;width:0}
+.gbar b{font:700 17px "Chivo Mono",monospace;text-align:right}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.tile{background:#fbf9f4;border:1px solid #dcd6c9;border-radius:10px;padding:12px 14px}
+.tile b{display:block;font-weight:900;font-size:44px;letter-spacing:-.03em}
+.tile span{font-size:15px;color:#55524a}
+.gamerow{display:flex;justify-content:space-between;align-items:center;height:62px;
+border-bottom:1px solid #dcd6c9;font-weight:700;font-size:18px;opacity:0}
+.gamerow span{font:500 15px "Chivo Mono",monospace;color:#55524a}
+.gamerow em{font-style:normal;font:700 16px "Chivo Mono",monospace;background:#16150f;color:#f3efe7;
+padding:3px 8px;border-radius:4px}
+/* end */
+.endbg{position:absolute;inset:0;background:var(--red);transform-origin:bottom}
+.endt{left:56px;top:340px;font-weight:900;font-size:158px;line-height:.9;letter-spacing:-.055em;
+color:#16150f}
+.endp{left:60px;top:540px;right:56px;font-weight:800;font-size:46px;line-height:1.15;color:#fff}
+.endm{left:60px;top:720px;right:56px;font:600 21px/1.6 "Chivo Mono",monospace;color:#3b0c09}
+</style></head>
+<body><div id="stage">
+
+<div class="head"><span class="badge">GAMETAGGER</span><span class="mono" id="count">01 / 05</span></div>
+
+<!-- 1: data -->
+<div class="scene" id="s1">
+  <div id="mosaic"></div><div class="veil"></div>
+  <div class="a kicker" id="s1k" style="left:62px;top:280px">IT STARTED WITH</div>
+  <div class="a big" id="s1n">0</div>
+  <div class="a bigsub" id="s1s">hours of gameplay.</div>
+  <div class="a chiprow" id="s1c"><span class="chip c-red">1,000+ games</span>
+    <span class="chip c-out">NVIDIA's NitroGen dataset</span></div>
+  <div class="a line1" id="s1l">Its game list seeded the GameTagger catalog.</div>
+</div>
+
+<!-- 2: vocabulary -->
+<div class="scene" id="s2">
+  <div class="a title" id="s2t">Then we defined what a game is made of.</div>
+  <div id="cloud"></div>
+  <div class="a counters" id="s2n">
+    <div class="counter"><b id="n189">0</b><span>gameplay attributes</span>
+      <small>in 14 categories</small></div>
+    <div class="counter"><b id="n100" style="color:var(--red)">0</b><span>genres</span>
+      <small>in 14 families</small></div>
+  </div>
+  <div class="a defcard" id="s2d"><small>ONE OF 289 · DEFINED</small><h3 id="defh"></h3>
+    <p id="defp"></p><div class="ev" id="defe"></div></div>
+  <div class="a cap" id="s2c">Every tag has a plain definition, and a list of the evidence allowed to prove it.</div>
+</div>
+
+<!-- 3: look and decide -->
+<div class="scene" id="s3">
+  <div class="a title" id="s3t">Claude looks at screenshots and gameplay video.</div>
+  <div class="a title" id="s3t2">Jev decides, tag by tag.</div>
+  <div class="phone a" id="s3p" style="left:70px;top:290px;width:360px;height:560px">
+    <div class="screen" style="background:linear-gradient(180deg,#1f2a5c,#3a2466)">
+      <div class="hud"><span>🪙 1,250</span><span>💎 30</span></div>
+      <div class="gtitle" style="top:52px;font-size:34px">SHOP</div>
+      <div style="position:absolute;left:16px;right:16px;top:100px;background:#ff5a4f;color:#fff;
+        border-radius:10px;padding:8px 12px;font:800 16px 'Chivo Mono',monospace">LIMITED OFFER · 02:14:59</div>
+      <div class="offer" style="top:150px">500 Gems<em>$4.99</em></div>
+      <div class="offer" style="top:254px">Starter Pack<em>$1.99</em></div>
+      <div class="offer" style="top:358px">Season Pass<em>$9.99</em></div>
+      <div class="scan" id="scan"></div>
+    </div>
+  </div>
+  <div class="a obshead" id="s3h">THE OBSERVER · DESCRIBES, NEVER TAGS</div>
+  <div class="a obs" id="o1" style="top:330px"><small>STATEMENT 1</small><span></span></div>
+  <div class="a obs" id="o2" style="top:450px"><small>STATEMENT 2</small><span></span></div>
+  <div class="a obs" id="o3" style="top:570px"><small>STATEMENT 3</small><span></span></div>
+  <div id="strip" class="a"></div>
+  <div class="a stripcap" id="s3sc">+ store trailers and YouTube gameplay, sampled screen by screen</div>
+  <div class="a rows" id="s3r"></div>
+  <div class="a stamp" id="s3s">“Not seen” never means <em>“no.”</em></div>
+  <div class="illus" id="s3i">ILLUSTRATIVE GAME SCREENS</div>
+</div>
+
+<!-- 4: plays -->
+<div class="scene" id="s4">
+  <div class="a title" id="s4t">Not enough evidence? It plays the game.</div>
+  <div class="phone a" id="s4p" style="left:70px;top:270px;width:380px;height:680px">
+    <div class="screen" id="pscreen">
+      <div class="rec"><i id="recdot"></i><span id="rect">REC 00:00</span></div>
+      <div class="gs" id="g-menu" style="background:linear-gradient(180deg,#2a7ad6,#79c1ff 60%,#3fb56b 60%)">
+        <div class="hud" style="top:40px"><span>LV 7</span><span>🪙 3,420</span></div>
+        <div class="gtitle" style="top:120px;font-size:44px">SKY RUSH</div>
+        <div class="gbtn" style="left:250px;top:40px;width:0;height:0"></div>
+        <div class="gbtn" style="right:18px;top:200px;width:110px;height:56px;background:#e0463d;font-size:20px">SHOP</div>
+        <div class="gbtn" style="left:18px;top:270px;width:130px;height:56px;background:#7a4be0;font-size:20px">EVENTS</div>
+        <div class="gbtn" style="left:18px;top:340px;width:130px;height:56px;background:#2d5bd1;font-size:20px">GUILD</div>
+        <div class="gbtn" style="left:70px;right:70px;top:520px;height:84px;background:#f0a500;font-size:38px">PLAY</div>
+      </div>
+      <div class="gs" id="g-shop" style="background:linear-gradient(180deg,#1f2a5c,#3a2466)">
+        <div class="gtitle" style="top:52px;font-size:34px">SHOP</div>
+        <div style="position:absolute;right:22px;top:50px;color:#fff;font:900 34px sans-serif">✕</div>
+        <div class="offer" style="top:130px">Coin Pile<em>$0.99</em></div>
+        <div class="offer" style="top:234px">Jet Upgrade Pack<em>$4.99</em></div>
+        <div class="offer" style="top:338px">No Ads<em>$2.99</em></div>
+      </div>
+      <div class="gs" id="g-event" style="background:linear-gradient(180deg,#5a1f7a,#c0397a)">
+        <div class="gtitle" style="top:70px;font-size:36px">SEASON 3</div>
+        <div style="position:absolute;left:0;right:0;top:124px;text-align:center;color:#fff;font:700 18px 'Chivo Mono',monospace">6 DAYS LEFT</div>
+        <div id="track" style="position:absolute;left:24px;right:24px;top:190px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px"></div>
+        <div class="gbtn" style="left:50px;right:50px;top:520px;height:70px;background:#ffd84d;color:#3a1250;font-size:26px">UNLOCK PREMIUM</div>
+        <div class="sheet a" id="sheet">Google Play<div style="font-weight:600;font-size:17px;margin-top:10px">Season 3 Premium · $9.99</div><em>Buy</em></div>
+      </div>
+      <div class="gs" id="g-guild" style="background:linear-gradient(180deg,#123a5c,#1f6a6a)">
+        <div class="gtitle" style="top:60px;font-size:36px">GUILDS</div>
+        <div class="offer" style="top:130px">Sky Wolves · 28/30</div>
+        <div class="offer" style="top:234px">Jet Set · 12/30</div>
+        <div class="offer" style="top:338px">Cloud Nine · 30/30</div>
+      </div>
+      <div class="ripple" id="rip"></div>
+    </div>
+  </div>
+  <div class="a goals" id="s4g">
+    <div class="goal"><div class="box" id="b1"></div>Shop<small id="m1"></small></div>
+    <div class="goal"><div class="box" id="b2"></div>Currencies<small id="m2"></small></div>
+    <div class="goal"><div class="box" id="b3"></div>Live event<small id="m3"></small></div>
+    <div class="goal"><div class="box" id="b4"></div>Guild &amp; social<small id="m4"></small></div>
+    <div class="goal"><div class="box" id="b5"></div>Reward ad<small id="m5"></small></div>
+  </div>
+  <div class="a blocked" id="s4b"><span class="chip c-red">Purchase screen closed automatically</span></div>
+  <div class="a cap" id="s4c">An AI player on an Android emulator records the shops, timers and events that store pages hide.</div>
+  <div class="illus">ILLUSTRATIVE GAME SCREENS</div>
+</div>
+
+<!-- 5: website -->
+<div class="scene" id="s5">
+  <div class="a title" id="s5t">Then it shows how the top games actually work.</div>
+  <div class="a browser" id="s5b">
+    <div class="bar"><i></i><i></i><i></i><span>gametagger · what's in the top 100</span></div>
+    <div class="web">
+      <h4>What's in the top 100</h4>
+      <div class="sub" id="websub"></div>
+      <div class="cols">
+        <div id="gbars"></div>
+        <div><div class="tiles"><div class="tile"><b id="t1">0</b><span>attributes per game (median)</span></div>
+          <div class="tile"><b id="t2">0</b><span>games tagged</span></div></div>
+          <div id="grows"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6: end -->
+<div class="scene" id="s6">
+  <div class="endbg" id="endbg"></div>
+  <div class="a endt" id="e1">GameTagger</div>
+  <div class="a endp" id="e2">How the most popular games actually work.</div>
+  <div class="a endm" id="e3"></div>
+</div>
+
+<div class="progress" id="prog"></div>
+</div>
+<script>
+const D = /*DATA*/;
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const p = (t, a, b) => clamp((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const back = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+function set(el, o, dx = 0, dy = 0, s = 1) {
+  el.style.opacity = o; el.style.transform = `translate(${dx}px,${dy}px) scale(${s})`;
+}
+function rise(el, t, a, d = .6, dy = 36) { const k = eo(p(t, a, a + d)); set(el, k, 0, (1 - k) * dy); return k; }
+function type(el, text, t, a, cps = 38) {
+  const n = Math.floor(clamp((t - a) * cps, 0, text.length));
+  el.textContent = text.slice(0, n) + (n > 0 && n < text.length ? '▌' : '');
+}
+function num(v) { return Math.round(v).toLocaleString('en-US'); }
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+// build: mosaic of abstract "gameplay" tiles
+const hues = [[42, 110, 214], [224, 70, 61], [47, 168, 106], [217, 165, 32], [122, 75, 224],
+  [217, 89, 38], [57, 135, 229], [30, 30, 36]];
+for (let i = 0; i < 196; i++) {
+  const d = document.createElement('div'); const a = hues[Math.floor(rnd() * hues.length)];
+  const b = hues[Math.floor(rnd() * hues.length)];
+  d.style.background = `linear-gradient(${Math.floor(rnd() * 360)}deg,rgb(${a}),rgb(${b}))`;
+  for (let k = 0; k < 3; k++) {
+    const s = document.createElement('i'); const w = 10 + rnd() * 40;
+    s.style.cssText = `left:${rnd() * 70}%;top:${rnd() * 70}%;width:${w}px;height:${w * (.4 + rnd())}px;` +
+      `background:rgba(255,255,255,${.12 + rnd() * .3});border-radius:${rnd() > .5 ? 50 : 4}%`;
+    d.appendChild(s);
+  }
+  $('mosaic').appendChild(d);
+}
+// build: tag cloud
+const cloudItems = D.cloud;
+cloudItems.forEach(([label, genre]) => {
+  const s = document.createElement('span'); s.textContent = label; if (genre) s.className = 'g';
+  $('cloud').appendChild(s);
+});
+const cloudEls = [...$('cloud').children];
+// build: film strip
+for (let i = 0; i < 12; i++) {
+  const d = document.createElement('div'); const a = hues[i % hues.length], b = hues[(i * 3 + 2) % hues.length];
+  d.style.background = `linear-gradient(${i * 40}deg,rgb(${a}),rgb(${b}))`;
+  const s = document.createElement('i');
+  s.style.cssText = `position:absolute;left:${20 + (i * 17) % 60}%;top:${30 + (i * 13) % 40}%;width:26px;height:26px;` +
+    `border-radius:50%;background:rgba(255,255,255,.7)`;
+  d.appendChild(s); $('strip').appendChild(d);
+}
+// build: decision rows
+const stateStyle = { present: ['c-green', 'PRESENT', 'var(--green)'],
+  unknown: ['c-yellow', 'NOT ENOUGH EVIDENCE', 'var(--yellow)'] };
+D.decisions.forEach(([label, state, prob]) => {
+  const r = document.createElement('div'); r.className = 'row';
+  r.innerHTML = `<div class="n">${label}</div><div class="track"><div class="fill" style="background:${stateStyle[state][2]}"></div></div>` +
+    `<div class="st"><span class="chip ${stateStyle[state][0]}">${stateStyle[state][1]}${prob ? ' ' + prob.toFixed(2) : ''}</span></div>`;
+  r.dataset.p = prob || .5; r.style.opacity = 0; $('s3r').appendChild(r);
+});
+const rowEls = [...$('s3r').children];
+// build: season track
+for (let i = 0; i < 10; i++) {
+  const c = document.createElement('div');
+  c.style.cssText = `height:62px;border-radius:10px;background:${i < 5 ? 'rgba(255,255,255,.22)' : 'rgba(255,216,77,.35)'};` +
+    `display:flex;align-items:center;justify-content:center;color:#fff;font:800 18px 'Chivo Mono',monospace`;
+  c.textContent = i < 5 ? '🎁' : '🔒'; $('track').appendChild(c);
+}
+// build: website
+$('websub').textContent = D.web.sub;
+D.web.genres.forEach(([name, n]) => {
+  const r = document.createElement('div'); r.className = 'gbar';
+  r.innerHTML = `<span>${name}</span><div class="t"><div class="f" data-w="${n / D.web.genres[0][1]}"></div></div><b>${n}</b>`;
+  $('gbars').appendChild(r);
+});
+D.web.games.forEach(([title, genre, n]) => {
+  const r = document.createElement('div'); r.className = 'gamerow';
+  r.innerHTML = `<div>${title}<br><span>${genre}</span></div><em>${n} tags</em>`;
+  $('grows').appendChild(r);
+});
+$('e3').innerHTML = D.endline;
+$('defh').textContent = D.def[0]; $('defp').textContent = D.def[1]; $('defe').textContent = D.def[2];
+
+const SCENES = [['s1', 0, 8], ['s2', 8, 16.4], ['s3', 16.4, 27], ['s4', 27, 37.2], ['s5', 37.2, 44], ['s6', 44, 49]];
+window.DURATION = 49;
+
+window.render = function (t) {
+  $('prog').style.width = `${100 * t / window.DURATION}%`;
+  const idx = SCENES.findIndex(([, a, b]) => t >= a && t < b);
+  $('count').textContent = `0${Math.min(5, Math.max(1, idx + 1))} / 05`;
+  $('count').parentElement.style.opacity = t > 44.2 ? 0 : 1;
+  for (const [id, a, b] of SCENES) {
+    const el = $(id); const o = id === 's6' ? (t >= a ? 1 : 0) : Math.min(p(t, a - .01, a + .35), 1 - p(t, b - .45, b));
+    el.style.opacity = o; el.style.display = o > 0 ? 'block' : 'none';
+  }
+
+  // 1 · 40,000 hours
+  if (t < 8.2) {
+    const z = 1.45 - .35 * eo(p(t, 0, 8));
+    $('mosaic').style.transform = `scale(${z}) translate(${-20 * p(t, 0, 8)}px, ${-12 * p(t, 0, 8)}px)`;
+    $('mosaic').style.opacity = .85;
+    rise($('s1k'), t, .3);
+    const k = rise($('s1n'), t, .7, .5, 50);
+    $('s1n').textContent = num(40000 * eio(p(t, .8, 3.0)));
+    rise($('s1s'), t, 1.9);
+    rise($('s1c'), t, 3.4);
+    rise($('s1l'), t, 5.0);
+  }
+  // 2 · vocabulary
+  if (t > 7.9 && t < 16.6) {
+    rise($('s2t'), t, 8.25);
+    const dim = 1 - .82 * eo(p(t, 11.6, 12.2));
+    cloudEls.forEach((el, i) => {
+      const a = 8.9 + i * .034; const k = back(p(t, a, a + .35));
+      el.style.opacity = clamp(p(t, a, a + .2)) * dim; el.style.transform = `scale(${.6 + .4 * clamp(k, 0, 1.2)})`;
+    });
+    const out = eo(p(t, 13.5, 13.9));
+    const kc = rise($('s2n'), t, 11.9, .5);
+    $('s2n').style.opacity = kc * (1 - out);
+    $('n189').textContent = num(189 * eo(p(t, 12.0, 13.1)));
+    $('n100').textContent = num(100 * eo(p(t, 12.1, 13.2)));
+    const kd = eo(p(t, 13.8, 14.3));
+    set($('s2d'), kd, 0, (1 - kd) * 60, .96 + .04 * kd);
+    rise($('s2c'), t, 14.4);
+  }
+  // 3 · look and decide
+  if (t > 16.3 && t < 27.2) {
+    const swap = eo(p(t, 21.6, 22.1));
+    rise($('s3t'), t, 16.6); $('s3t').style.opacity *= 1 - swap;
+    const k2 = eo(p(t, 21.9, 22.4)); set($('s3t2'), k2, 0, (1 - k2) * 36);
+    const kp = eo(p(t, 16.8, 17.4)); set($('s3p'), kp * (1 - swap), (1 - kp) * -60, 0);
+    const sc = p(t, 17.3, 19.2);
+    $('scan').style.opacity = sc > 0 && sc < 1 ? 1 : 0; $('scan').style.top = `${sc * 100}%`;
+    rise($('s3h'), t, 17.6); $('s3h').style.opacity *= 1 - swap;
+    D.obs.forEach((text, i) => {
+      const a = 17.9 + i * 1.15; const el = $('o' + (i + 1));
+      rise(el, t, a, .4, 20); el.style.opacity *= 1 - swap;
+      type(el.querySelector('span'), text, t, a + .2, 44);
+    });
+    const ks = eo(p(t, 19.2, 19.8));
+    $('strip').style.opacity = ks * (1 - swap);
+    $('strip').style.transform = `translateX(${56 - (t - 19.2) * 70}px)`;
+    rise($('s3sc'), t, 19.6); $('s3sc').style.opacity *= 1 - swap;
+    $('s3r').style.opacity = 1; $('s3r').style.transform = 'none';
+    rowEls.forEach((r, i) => {
+      const a = 22.4 + i * .35; const k = eo(p(t, a, a + .45));
+      set(r, k, (1 - k) * 40, 0);
+      r.querySelector('.fill').style.width = `${100 * Number(r.dataset.p) * eo(p(t, a + .2, a + 1.2))}%`;
+      r.querySelector('.st').style.opacity = p(t, a + 1.0, a + 1.3);
+    });
+    rise($('s3s'), t, 24.6, .6, 30);
+    $('s3i').style.opacity = 1 - swap;
+  }
+  // 4 · plays
+  if (t > 26.9 && t < 37.4) {
+    rise($('s4t'), t, 27.3);
+    const kp = eo(p(t, 27.5, 28.1)); set($('s4p'), kp, 0, (1 - kp) * 80);
+    rise($('s4g'), t, 28.0);
+    const secs = 372 + Math.floor((t - 27) * 11);
+    $('rect').textContent = `REC ${String(Math.floor(secs / 60)).padStart(2, '0')}:${String(secs % 60).padStart(2, '0')}`;
+    $('recdot').style.opacity = Math.floor(t * 2) % 2 ? .25 : 1;
+    // screen sequence: menu -> shop -> menu -> event (+ purchase sheet) -> guild
+    const seq = [['g-menu', 0, 29.3], ['g-shop', 29.3, 30.9], ['g-menu', 30.9, 31.8], ['g-event', 31.8, 34.4],
+      ['g-menu', 34.4, 35.0], ['g-guild', 35.0, 99]];
+    ['g-menu', 'g-shop', 'g-event', 'g-guild'].forEach(id => { $(id).style.opacity = 0; });
+    for (const [id, a, b] of seq) if (t >= a && t < b) $(id).style.opacity = 1;
+    const taps = [[29.0, 275, 228], [30.6, 318, 72], [31.5, 83, 298], [34.7, 83, 368]];
+    let rip = 0, rx = 0, ry = 0;
+    for (const [a, x, y] of taps) { const k = p(t, a, a + .45); if (k > 0 && k < 1) { rip = k; rx = x; ry = y; } }
+    $('rip').style.opacity = rip ? 1 - rip : 0; $('rip').style.left = rx + 'px'; $('rip').style.top = ry + 'px';
+    $('rip').style.transform = `scale(${1 + rip * 3})`;
+    const sheetIn = eo(p(t, 32.9, 33.3)), sheetOut = eo(p(t, 33.9, 34.2));
+    $('sheet').style.opacity = sheetIn * (1 - sheetOut);
+    $('sheet').style.transform = `translateY(${(1 - sheetIn + sheetOut) * 100}%)`;
+    const kb = eo(p(t, 33.9, 34.3)); set($('s4b'), kb * (1 - eo(p(t, 35.6, 36))), 0, (1 - kb) * 20);
+    const marks = [[29.5, '6:14'], [29.7, '6:14'], [32.0, '6:17'], [35.2, '6:21']];
+    marks.forEach(([a, m], i) => { const on = t >= a; $('b' + (i + 1)).className = 'box' + (on ? ' on' : ''); $('m' + (i + 1)).textContent = on ? m : ''; });
+    $('m5').textContent = t > 35.6 ? 'next' : '';
+    rise($('s4c'), t, 35.4);
+  }
+  // 5 · website
+  if (t > 37 && t < 44.2) {
+    rise($('s5t'), t, 37.5);
+    const kb = eo(p(t, 37.7, 38.4));
+    const zoom = 1 + .035 * p(t, 38, 44);
+    set($('s5b'), kb, 0, (1 - kb) * 90, zoom);
+    [...$('gbars').children].forEach((r, i) => {
+      const f = r.querySelector('.f'); f.style.width = `${100 * Number(f.dataset.w) * eo(p(t, 38.5 + i * .12, 39.4 + i * .12))}%`;
+    });
+    $('t1').textContent = num(D.web.median * eo(p(t, 38.6, 39.8)));
+    $('t2').textContent = num(D.web.games_total * eo(p(t, 38.7, 39.9)));
+    [...$('grows').children].forEach((r, i) => { const k = eo(p(t, 39.6 + i * .3, 40.1 + i * .3)); set(r, k, (1 - k) * 30, 0); });
+  }
+  // 6 · end
+  if (t >= 43.9) {
+    const k = eio(p(t, 44, 44.6)); $('endbg').style.transform = `scaleY(${k})`;
+    rise($('e1'), t, 44.5, .6, 50); rise($('e2'), t, 45.1); rise($('e3'), t, 45.7);
+  }
+};
+window.render(0);
+</script>
+</body></html>
