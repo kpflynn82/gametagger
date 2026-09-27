@@ -1,0 +1,543 @@
+<title>GameTagger Top 100</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700;800&family=Chivo+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f3efe7;--panel:#fbf9f4;--ink:#16150f;--ink-2:#55524a;--mute:#7d796f;--line:#dcd6c9;--track:#e6e0d4;
+  --pc:#2a78d6;--mob:#eb6834;--all:#16150f;--brand:#d3281f;--brand-ink:#fff;
+  --absent:#8c8779;--conf:#b88a00;--hatch:#cfc8b9;--hit:#fff1b8;
+  --sans:Chivo,"Liberation Sans",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#171611;--panel:#201f19;--ink:#f2efe8;--ink-2:#c3bfb3;--mute:#948f83;--line:#35332b;--track:#2b2a23;
+  --pc:#3987e5;--mob:#d95926;--all:#e9e5dc;--brand:#e0463d;--absent:#8a8578;--conf:#d9a520;--hatch:#4a473d;--hit:#4a3f12}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#171611;--panel:#201f19;--ink:#f2efe8;--ink-2:#c3bfb3;--mute:#948f83;--line:#35332b;--track:#2b2a23;
+  --pc:#3987e5;--mob:#d95926;--all:#e9e5dc;--brand:#e0463d;--absent:#8a8578;--conf:#d9a520;--hatch:#4a473d;--hit:#4a3f12}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;padding-inline:20px}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:18px;border-bottom:2px solid var(--ink)}
+.badge{background:var(--ink);color:var(--bg);font:600 14px var(--mono);letter-spacing:.08em;padding:5px 9px;text-decoration:none}
+nav{display:flex;gap:18px;flex-wrap:wrap;font:500 14px var(--mono)}
+nav a{text-decoration:none;color:var(--ink-2)}nav a:hover,nav a:focus-visible{color:var(--ink);text-decoration:underline}
+.hero{padding-block:44px 28px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;align-items:end}
+h1{font-weight:800;font-size:clamp(40px,6.4vw,76px);line-height:.98;letter-spacing:-.04em;margin:0;text-wrap:balance}
+.dek{font-size:18px;color:var(--ink-2);max-width:60ch;margin:18px 0 0}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:15px;color:var(--ink-2)}
+.steps li::before{counter-increment:s;content:counter(s);font:700 14px var(--mono);width:28px;height:28px;display:grid;place-items:center;background:var(--ink);color:var(--bg)}
+.steps b{color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--line);margin-bottom:8px}
+.kpi{padding:16px 16px 14px 0}
+.kpi+.kpi{padding-left:16px;border-left:1px solid var(--line)}
+.kpi .v{font:700 34px/1 var(--mono);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:13.5px;color:var(--ink-2);margin-top:6px}
+.bar-filter{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);display:flex;gap:10px 18px;align-items:center;flex-wrap:wrap;padding-block:12px;border-bottom:1px solid var(--line)}
+.bar-filter .lab{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.seg{display:inline-flex;border:1.5px solid var(--ink)}
+.seg button{font:600 14px var(--mono);background:transparent;color:var(--ink);border:0;padding:7px 12px;cursor:pointer}
+.seg button+button{border-left:1.5px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible,.chip:focus-visible{outline:3px solid var(--pc);outline-offset:2px}
+.swatch{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:0}
+section{padding-block:40px 8px}
+.eyebrow{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+h2{font-weight:800;font-size:clamp(26px,3.4vw,36px);line-height:1.05;letter-spacing:-.03em;margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--ink-2);max-width:68ch;margin:0 0 18px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.panel{background:var(--panel);border:1px solid var(--line);padding:18px 18px 14px;min-width:0}
+.panel h3{font-size:17px;margin:0 0 2px;letter-spacing:-.01em}
+.panel .sub{font-size:13.5px;color:var(--mute);margin:0 0 14px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font:500 13px var(--mono);color:var(--ink-2);margin:0 0 12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.chip{font:500 13px var(--mono);border:1px solid var(--line);background:transparent;color:var(--ink-2);padding:4px 9px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* bar rows */
+.rows{display:grid;gap:7px}
+.r{display:grid;grid-template-columns:minmax(120px,210px) minmax(0,1fr);gap:12px;align-items:center;font-size:14px}
+.r .name{overflow-wrap:anywhere;line-height:1.3}
+.r .name a{text-decoration:none;border-bottom:1px solid var(--line)}
+.r .name a:hover{border-color:var(--ink)}
+.tr{display:grid;gap:2px}
+.b{display:flex;align-items:center;gap:8px;min-height:15px}
+.fill{height:13px;border-radius:0 4px 4px 0;min-width:2px}
+.b .v{font:500 12.5px var(--mono);color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+/* dumbbell */
+.db{position:relative;height:22px}
+.db .axis{position:absolute;left:0;right:0;top:10px;height:1px;background:var(--line)}
+.db .link{position:absolute;top:9px;height:3px;background:var(--track)}
+.db .dot{position:absolute;top:4px;width:13px;height:13px;border-radius:50%;margin-left:-6.5px;box-shadow:0 0 0 2px var(--panel)}
+.scale{display:flex;justify-content:space-between;font:500 11px var(--mono);color:var(--mute);margin:4px 0 0}
+/* certainty stack */
+.stack{display:flex;height:15px;gap:2px}
+.stack span{display:block;height:100%}
+.s-yes{background:var(--ink)}.s-no{background:var(--absent)}.s-conf{background:var(--conf)}
+.s-unk{background:repeating-linear-gradient(135deg,var(--hatch) 0 3px,transparent 3px 6px);outline:1px solid var(--hatch);outline-offset:-1px}
+.note{font-size:13.5px;color:var(--mute);margin:12px 0 0;max-width:75ch}
+/* movers */
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink)}
+td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.up{color:var(--pc)}.down{color:var(--ink-2)}
+.tablewrap{overflow-x:auto}
+.empty{border:1.5px dashed var(--line);padding:16px 18px;color:var(--ink-2);font-size:14.5px}
+.empty b{color:var(--ink)}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid var(--line);background:var(--panel)}
+.cmp>div{padding:16px}
+.cmp>div+div{border-left:1px solid var(--line)}
+.cmp .k{font-size:13.5px;color:var(--ink-2)}
+.cmp .v{font:700 30px/1.1 var(--mono);letter-spacing:-.03em;margin-top:6px}
+.cmp .o{font:500 13px var(--mono);color:var(--mute)}
+.more{display:inline-block;margin-top:14px;font:600 14px var(--mono)}
+/* library + dictionary (carried over) */
+.tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+input[type=search]{font:15px var(--sans);padding:9px 12px;border:1.5px solid var(--ink);background:var(--panel);color:var(--ink);min-width:0;width:min(420px,100%)}
+.count{font:500 13px var(--mono);color:var(--mute)}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.gcard{text-align:left;font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);padding:10px 12px;cursor:pointer;display:grid;gap:3px}
+.gcard:hover,.gcard[aria-current="true"]{border-color:var(--ink)}
+.gcard .gt{font-weight:700}
+.gcard .gm{font-size:12.5px;color:var(--mute)}
+.pill{font:500 11.5px var(--mono);border:1px solid var(--line);padding:0 6px;margin-right:6px;white-space:nowrap}
+.gview{background:var(--panel);border:2px solid var(--ink);padding:20px;margin:0 0 16px;display:grid;gap:14px;position:relative}
+.gview .close{position:absolute;right:12px;top:12px;font:600 13px var(--mono);background:var(--ink);color:var(--bg);border:0;padding:5px 10px;cursor:pointer}
+.gname{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:2px 0 4px}
+.gsub{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2)}
+.gblock b{display:block;font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-bottom:6px}
+.gcat{display:grid;grid-template-columns:170px 1fr;gap:10px;padding:5px 0;border-top:1px solid var(--line);font-size:13.5px}
+.gcat>span{color:var(--ink-2)}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag,.gchip{font-size:13px;text-decoration:none;border:1px solid var(--line);padding:1px 8px;background:var(--bg)}
+.tag.strong{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tag.likely{border-style:dashed;border-color:var(--ink-2)}
+.tag.conflicting{background:var(--conf);color:#16150f;border-color:var(--conf)}
+.tag.absent{text-decoration:line-through;color:var(--mute)}
+.tag small,.gchip small{opacity:.75;font-family:var(--mono);font-size:11px}
+.gchip{border:1.5px solid var(--ink)}
+.glegend{display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--mute);margin-bottom:6px;align-items:center}
+.dgroup h3{font-size:18px;margin:18px 0 2px}.dgroup h3 small{font:500 12px var(--mono);color:var(--mute)}
+.dgroup>p{font-size:14px;color:var(--ink-2);margin:0 0 8px}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.term{background:var(--panel);border:1px solid var(--line);padding:10px 12px;font-size:14px;transition:background .4s}
+.term.hit{background:var(--hit)}
+.term .n{font-weight:700}.term code{font:500 11.5px var(--mono);color:var(--mute)}
+.term .d{color:var(--ink-2);margin:3px 0 6px}
+.term dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:0;font-size:12.5px}
+.term dt{color:var(--mute)}.term dd{margin:0}
+.glinks{display:flex;gap:4px 10px;flex-wrap:wrap;font-size:12.5px;margin-top:4px}
+details summary{cursor:pointer;font-size:12.5px;color:var(--mute)}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.how h3{font-size:17px;margin:0 0 4px}.how p{font-size:14.5px;color:var(--ink-2);margin:0}
+.cta{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap;border:2px solid var(--ink);padding:18px 20px;background:var(--panel)}
+.cta a{background:var(--brand);color:var(--brand-ink);font:700 15px var(--mono);padding:10px 16px;text-decoration:none}
+footer{font:500 12.5px var(--mono);color:var(--mute);padding-block:36px 40px;border-top:1px solid var(--line);margin-top:40px}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--bg);font:500 12.5px/1.4 var(--mono);padding:6px 9px;max-width:280px;opacity:0;transition:opacity .1s}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:24px}.grid2,.how{grid-template-columns:1fr}.cmp{grid-template-columns:repeat(2,minmax(0,1fr))}.cmp>div:nth-child(3){border-left:0}.cmp>div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (max-width:560px){.r .name{font-size:13.5px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi:nth-child(3){border-left:0;padding-left:0}.kpi:nth-child(n+3){border-top:1px solid var(--line)}.r{grid-template-columns:minmax(0,1fr)}.gcat{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <a class="badge" href="#top" id="top">GAMETAGGER</a>
+  <nav aria-label="Sections"><a href="#dashboard">Dashboard</a><a href="#library">Games</a><a href="#dictionary">Tags</a><a href="#method">How it works</a><a href="#request">Request a game</a></nav>
+</header>
+
+<div class="hero">
+  <div>
+    <h1>What's inside the top 100 games</h1>
+    <p class="dek" id="dek"></p>
+  </div>
+  <ol class="steps" aria-label="How each game is tagged">
+    <li><span><b>Gather.</b> Store page, Wikipedia, screenshots and the trailer.</span></li>
+    <li><span><b>Describe.</b> Claude writes down only what it can see. No genres, no guesses.</span></li>
+    <li><span><b>Decide.</b> Jev judges each of 189 tags on its own, without the game's name. Yes, no, or not enough evidence.</span></li>
+  </ol>
+</div>
+<div class="kpis" id="kpis"></div>
+
+<div class="bar-filter" role="group" aria-label="Which chart">
+  <span class="lab">Showing</span>
+  <div class="seg" id="seg">
+    <button type="button" data-l="all" aria-pressed="true">All 100</button>
+    <button type="button" data-l="steam" aria-pressed="false"><span class="swatch" style="background:var(--pc)"></span>PC · Steam 50</button>
+    <button type="button" data-l="mobile" aria-pressed="false"><span class="swatch" style="background:var(--mob)"></span>Mobile · Google Play 50</button>
+  </div>
+</div>
+
+<section id="dashboard" aria-labelledby="g-h">
+  <div class="eyebrow">Genres</div>
+  <h2 id="g-h">What people are playing and paying for</h2>
+  <p class="lede" id="g-lede"></p>
+  <div class="panel"><h3>Primary genre family</h3><p class="sub" id="g-sub"></p>
+    <div class="legend" id="g-legend"></div><div class="rows" id="genres"></div></div>
+</section>
+
+<section aria-labelledby="t-h">
+  <div class="eyebrow">Tags</div>
+  <h2 id="t-h">The most common tags</h2>
+  <p class="lede">Share of games where Jev found the tag present. Pick a category to narrow it down, and click a tag to see its definition and every game that has it.</p>
+  <div class="panel"><div class="chips" id="t-cats" role="group" aria-label="Tag category"></div>
+    <div class="rows" id="toptags"></div></div>
+</section>
+
+<section aria-labelledby="d-h">
+  <div class="eyebrow">PC vs mobile</div>
+  <h2 id="d-h">Where PC and mobile hits differ most</h2>
+  <p class="lede">The biggest gaps in how often a tag appears in Steam's 50 most-played games versus Google Play's 50 top-grossing games.</p>
+  <div class="legend"><span><span class="swatch" style="background:var(--pc);border-radius:50%"></span>PC · Steam</span><span><span class="swatch" style="background:var(--mob);border-radius:50%"></span>Mobile · Google Play</span></div>
+  <div class="grid2">
+    <div class="panel"><h3>More common on PC</h3><p class="sub">Share of games with the tag</p><div class="rows" id="gap-pc"></div><div class="scale"><span>0%</span><span>50%</span><span>100%</span></div></div>
+    <div class="panel"><h3>More common on mobile</h3><p class="sub">Share of games with the tag</p><div class="rows" id="gap-mob"></div><div class="scale"><span>0%</span><span>50%</span><span>100%</span></div></div>
+  </div>
+</section>
+
+<section aria-labelledby="p-h">
+  <div class="eyebrow">Players and ranks</div>
+  <h2 id="p-h">What the biggest hits have in common</h2>
+  <p class="lede" id="p-lede"></p>
+  <div class="grid2">
+    <div class="panel"><h3>Where Steam's players are</h3><p class="sub" id="pl-sub"></p>
+      <div class="legend"><span><span class="swatch" style="background:var(--pc)"></span>Share of peak players</span><span><span class="swatch" style="background:var(--track);outline:1px solid var(--mute)"></span>Share of games</span></div>
+      <div class="rows" id="players"></div><p class="note" id="pl-note"></p></div>
+    <div class="panel"><h3 id="top10-h">Top 10 versus the rest</h3><p class="sub" id="top10-sub"></p>
+      <div class="rows" id="top10"></div><p class="note">Ten games is a small group; read these as leads to check, not rules.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="c-h">
+  <div class="eyebrow">Certainty</div>
+  <h2 id="c-h">Where the evidence runs out</h2>
+  <p class="lede" id="c-lede"></p>
+  <div class="legend"><span><span class="swatch s-yes"></span>Present</span><span><span class="swatch s-no"></span>Absent</span><span><span class="swatch s-conf"></span>Conflicting</span><span><span class="swatch s-unk" style="outline:1px solid var(--hatch)"></span>Not enough evidence</span></div>
+  <div class="grid2">
+    <div class="panel"><h3>By category</h3><p class="sub">Share of all tag decisions in each category</p><div class="rows" id="cert-cat"></div></div>
+    <div class="panel"><h3>Business model and live features</h3><p class="sub">The tags product and monetization teams ask about most</p><div class="rows" id="cert-mon"></div></div>
+  </div>
+</section>
+
+<section aria-labelledby="m-h">
+  <div class="eyebrow">This week</div>
+  <h2 id="m-h">Steam chart movers</h2>
+  <p class="lede" id="m-lede"></p>
+  <div class="grid2">
+    <div class="panel"><h3>Climbing</h3><div class="tablewrap"><table id="climb"></table></div></div>
+    <div class="panel"><h3>Slipping</h3><div class="tablewrap"><table id="slip"></table></div></div>
+  </div>
+  <p class="empty" style="margin-top:16px"><b>Tag trends start with the next snapshot.</b> This page is one snapshot (charts from September 23 and 24, 2026). Once the charts are re-tagged each week, this section will show which tags are gaining or losing ground in the top 100, not just which games moved.</p>
+</section>
+
+<section id="library" aria-labelledby="l-h">
+  <div class="eyebrow">Games</div>
+  <h2 id="l-h">Browse all 100 games</h2>
+  <p class="lede">Open any game to see its genre call and every tag Jev decided, grouped by category. Each tag links to its definition.</p>
+  <div id="gview" hidden></div>
+  <div class="tools"><input id="g-search" type="search" placeholder="Search by title, genre or tag, e.g. merge, shooter, gacha" autocomplete="off"><span class="count" id="g-count"></span></div>
+  <div class="lib-grid" id="lib"></div>
+  <button type="button" class="chip" id="lib-more" style="margin-top:12px" hidden></button>
+</section>
+
+<section id="dictionary" aria-labelledby="dict-h">
+  <div class="eyebrow">Tags</div>
+  <h2 id="dict-h">What every tag means</h2>
+  <p class="lede" id="dict-intro"></p>
+  <div class="tools"><div class="seg"><button type="button" id="d-tags" aria-pressed="true">Tags</button><button type="button" id="d-genres" aria-pressed="false">Genres</button></div>
+    <input id="d-search" type="search" placeholder="Search all tags, e.g. crafting, gacha, pixel" autocomplete="off"><span class="count" id="d-count"></span></div>
+  <div class="chips" id="d-cats" role="group" aria-label="Filter by category"></div>
+  <div id="dict"></div>
+</section>
+
+<section id="method" aria-labelledby="h-h">
+  <div class="eyebrow">How it works</div>
+  <h2 id="h-h">Describe first, then decide</h2>
+  <div class="how">
+    <div><h3>Claude describes</h3><p>Claude looks at each screenshot and six short trailer clips and writes down what is visible: a first-person view of a rifle, a timer, a shop screen. It is not allowed to name genres or tags.</p></div>
+    <div><h3>Jev decides</h3><p>Jev, a classification model from TypeSafe, answers each of 189 tag questions on its own, using only the evidence each tag allows. It never sees the game's name, so it can't lean on reputation.</p></div>
+    <div><h3>Unknown stays unknown</h3><p>Every tag is present, absent, conflicting or not enough evidence, with a probability. A missing tag never quietly becomes a "no", and every tag keeps a record of the evidence behind it.</p></div>
+  </div>
+  <h3 style="margin:32px 0 10px;font-size:20px">Is it better than one big prompt?</h3>
+  <p class="lede" id="cmp-lede"></p>
+  <div class="cmp" id="cmp"></div>
+  <a class="more" id="bench-link" href="/*BENCH_URL*/" target="_blank" rel="noopener">Full benchmark: accuracy, cost, speed and method →</a>
+</section>
+
+<section id="request" aria-labelledby="r-h">
+  <div class="cta"><div><h2 id="r-h" style="margin:0 0 4px">Want a game tagged?</h2><p style="margin:0;color:var(--ink-2)">Request any game. Requests are reviewed, then tagged in batches.</p></div>
+  <a href="/*REQUEST_URL*/" target="_blank" rel="noopener">Request a game</a></div>
+</section>
+
+<footer id="foot"></footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = /*DATA*/;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pct = (v) => v == null ? "–" : (v < 0.1 && v > 0 ? (100 * v).toFixed(1) : Math.round(100 * v)) + "%";
+const G = DATA.glossary, F = DATA.figures, GAMES = DATA.games;
+const TAGS = Object.fromEntries(G.tags.map((t) => [t.id, t]));
+const GENRES = Object.fromEntries(G.genres.map((g) => [g.id, g]));
+const catLabel = Object.fromEntries(G.categories.map((c) => [c.id, c.label]));
+const COL = {all: "var(--all)", steam: "var(--pc)", mobile: "var(--mob)"};
+const LISTNAME = {all: "all 100 games", steam: "Steam's 50 most-played", mobile: "Google Play's 50 top-grossing"};
+const state = (g, t) => { const x = g.detail?.jev?.[t]; if (!x) return "unk"; return x[0] === "strong" || x[0] === "likely" ? "yes" : x[0] === "absent" ? "no" : "conf"; };
+const has = (g, t) => state(g, t) === "yes";
+const inList = (l) => GAMES.filter((g) => l === "all" || g.list === l);
+const share = (games, t) => games.length ? games.filter((g) => has(g, t)).length / games.length : 0;
+let LIST = "all", CAT = "all";
+
+// tooltip: every element with data-tip
+const tip = $("tip");
+document.addEventListener("pointermove", (e) => {
+  const el = e.target.closest?.("[data-tip]");
+  if (!el) { tip.style.opacity = 0; return; }
+  tip.innerHTML = el.dataset.tip; tip.style.opacity = 1;
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8), y = e.clientY + 16;
+  tip.style.left = x + "px"; tip.style.top = (y + tip.offsetHeight > innerHeight ? e.clientY - tip.offsetHeight - 10 : y) + "px";
+});
+const tagA = (t) => `<a href="#tag-${esc(t)}" title="${esc(TAGS[t]?.definition)}">${esc(TAGS[t]?.label || t)}</a>`;
+const bar = (v, col, label, tipText, max = 1) => `<div class="b" data-tip="${esc(tipText)}"><div class="fill" style="width:calc(${(100 * v / max).toFixed(1)}% * .82);background:${col}"></div><span class="v">${label}</span></div>`;
+
+// ---- header numbers
+const R = F.rich || {}, S = F.sample || {};
+const nPresent = GAMES.reduce((a, g) => a + Object.values(g.detail?.jev || {}).filter(([t]) => t === "strong" || t === "likely").length, 0);
+const decided = GAMES.reduce((a, g) => a + Object.keys(g.detail?.jev || {}).length, 0);
+const unknown = GAMES.length * G.tags.length - decided;
+$("dek").textContent = `Steam's 50 most-played games and Google Play's 50 top-grossing games in the US, from the charts of September 23 and 24, 2026. Every game was tagged the same way, and every tag can be traced to the evidence behind it.`;
+$("kpis").innerHTML = [
+  [GAMES.length, "games from two charts"],
+  [nPresent.toLocaleString(), "tags found present"],
+  [Math.round(nPresent / GAMES.length), "tags per game on average"],
+  [pct(unknown / (GAMES.length * G.tags.length)), "of questions left as not enough evidence"],
+].map(([v, l]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+
+// ---- genres
+function renderGenres() {
+  const fams = Object.entries(G.families);
+  const lists = LIST === "all" ? ["steam", "mobile"] : [LIST];
+  const rows = [...fams.map(([id, name]) => [id, name]), [null, "No confident genre"]].map(([id, name]) => {
+    const vals = lists.map((l) => { const gs = inList(l); const n = gs.filter((g) => g.family === id).length; return [l, n, n / gs.length, gs.length]; });
+    return {id, name, vals, total: vals.reduce((a, v) => a + v[1], 0)};
+  }).filter((r) => r.total > 0).sort((a, b) => (a.id === null) - (b.id === null) || b.total - a.total);
+  $("g-legend").innerHTML = lists.length > 1 ? `<span><span class="swatch" style="background:var(--pc)"></span>PC · Steam</span><span><span class="swatch" style="background:var(--mob)"></span>Mobile · Google Play</span>` : "";
+  $("g-sub").textContent = `Share of ${LIST === "all" ? "each chart's 50 games" : LISTNAME[LIST]} by the family of Jev's primary genre call`;
+  $("genres").innerHTML = rows.map((r) => `<div class="r"><div class="name">${esc(r.name)}</div><div class="tr">${r.vals.map(([l, n, s, of]) =>
+    bar(s, r.id === null ? "var(--absent)" : COL[l], `${n} · ${pct(s)}`, `${esc(r.name)}: ${n} of ${of} ${l === "steam" ? "Steam" : "Google Play"} games`, .5)).join("")}</div></div>`).join("");
+  const top = (l) => { const gs = inList(l); const c = {}; gs.forEach((g) => { if (g.family) c[g.family] = (c[g.family] || 0) + 1; }); const [f, n] = Object.entries(c).sort((a, b) => b[1] - a[1])[0]; return [G.families[f], n]; };
+  const [pf, pn] = top("steam"), [mf, mn] = top("mobile");
+  const none = GAMES.filter((g) => !g.family).length;
+  $("g-lede").textContent = `${pf} leads on PC (${pn} of 50 games). ${mf} leads on mobile (${mn} of 50). For ${none} games Jev did not settle on a primary genre; it says so instead of forcing one.`;
+}
+
+// ---- top tags
+const CATS = [["all", "All"], ...G.categories.map((c) => [c.id, c.label])];
+function renderTopTags() {
+  $("t-cats").innerHTML = CATS.map(([id, l]) => `<button type="button" class="chip" data-c="${esc(id)}" aria-pressed="${id === CAT}">${esc(l)}</button>`).join("");
+  $("t-cats").querySelectorAll("button").forEach((b) => b.onclick = () => { CAT = b.dataset.c; renderTopTags(); });
+  const gs = inList(LIST);
+  const rows = G.tags.filter((t) => CAT === "all" || t.category === CAT)
+    .map((t) => [t.id, gs.filter((g) => has(g, t.id)).length]).filter(([, n]) => n > 0)
+    .sort((a, b) => b[1] - a[1]).slice(0, 15);
+  $("toptags").innerHTML = rows.map(([t, n]) => `<div class="r"><div class="name">${tagA(t)}</div>${bar(n / gs.length, COL[LIST], `${n} of ${gs.length}`, `${esc(TAGS[t].label)}: present in ${n} of ${gs.length} games (${pct(n / gs.length)})`)}</div>`).join("")
+    || `<p class="note">No tag in this category was found present in ${LISTNAME[LIST]}.</p>`;
+}
+
+// ---- PC vs mobile gaps (always both charts)
+function renderGaps() {
+  const pcs = inList("steam"), mob = inList("mobile");
+  const d = G.tags.map((t) => [t.id, share(pcs, t.id), share(mob, t.id)]);
+  const row = ([t, a, b]) => {
+    const lo = Math.min(a, b), hi = Math.max(a, b);
+    return `<div class="r"><div class="name">${tagA(t)}</div><div class="db" data-tip="${esc(TAGS[t].label)}: PC ${pct(a)} · mobile ${pct(b)}"><div class="axis"></div><div class="link" style="left:${100 * lo}%;width:${100 * (hi - lo)}%"></div><div class="dot" style="left:${100 * a}%;background:var(--pc)"></div><div class="dot" style="left:${100 * b}%;background:var(--mob)"></div></div></div>`;
+  };
+  $("gap-pc").innerHTML = d.slice().sort((x, y) => (y[1] - y[2]) - (x[1] - x[2])).slice(0, 8).map(row).join("");
+  $("gap-mob").innerHTML = d.slice().sort((x, y) => (y[2] - y[1]) - (x[2] - x[1])).slice(0, 8).map(row).join("");
+}
+
+// ---- players (Steam only) and top 10 vs rest
+function renderPlayers() {
+  const gs = inList("steam").filter((g) => g.peak);
+  const total = gs.reduce((a, g) => a + g.peak, 0);
+  const rows = G.tags.map((t) => { const w = gs.filter((g) => has(g, t.id)); return [t.id, w.reduce((a, g) => a + g.peak, 0) / total, w.length / gs.length, w.length]; })
+    .filter((r) => r[3] >= 3).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  $("pl-sub").textContent = `Tags weighted by each game's daily peak of concurrent players on ${S.chart_dates?.steam || "chart day"}`;
+  $("players").innerHTML = rows.map(([t, ps, gsh, n]) => `<div class="r"><div class="name">${tagA(t)}</div><div class="tr">${bar(ps, "var(--pc)", pct(ps), `${esc(TAGS[t].label)}: ${pct(ps)} of peak players, ${n} of ${gs.length} games`)}${bar(gsh, "var(--track)", pct(gsh), `${esc(TAGS[t].label)}: in ${n} of ${gs.length} games (${pct(gsh)})`)}</div></div>`).join("");
+  const cs = gs.slice().sort((a, b) => b.peak - a.peak)[0];
+  $("pl-note").textContent = `${gs.length} games, ${Math.round(total / 1e6 * 10) / 10} million peak players in total. ${cs.title} alone is ${pct(cs.peak / total)} of them, so its tags weigh heavily here.`;
+  $("p-lede").textContent = `Counting games treats a niche hit and ${cs.title} the same. Weighting by players, and comparing each chart's top 10 with the rest, shows which tags travel with the biggest audiences and revenue.`;
+}
+function renderTop10() {
+  const lists = LIST === "all" ? ["steam", "mobile"] : [LIST];
+  const out = [];
+  for (const l of lists) {
+    const gs = inList(l), top = gs.filter((g) => g.rank <= 10), rest = gs.filter((g) => g.rank > 10);
+    G.tags.forEach((t) => {
+      const a = top.filter((g) => has(g, t.id)).length, b = rest.filter((g) => has(g, t.id)).length;
+      if (a >= 4) out.push([l, t.id, a, top.length, b, rest.length, a / top.length - b / rest.length]);
+    });
+  }
+  const rows = out.sort((x, y) => y[6] - x[6]).slice(0, 10);
+  $("top10-sub").textContent = `Tags that are more common in the top 10 of ${LIST === "all" ? "each chart" : LISTNAME[LIST]} than in ranks 11 to 50`;
+  $("top10").innerHTML = rows.map(([l, t, a, na, b, nb]) => `<div class="r"><div class="name">${tagA(t)}${LIST === "all" ? ` <span class="pill">${l === "steam" ? "PC" : "Mobile"}</span>` : ""}</div><div class="tr">${bar(a / na, COL[l], `${a} of ${na} in top 10`, `${esc(TAGS[t].label)}: ${a} of ${na} top-10 games`)}${bar(b / nb, "var(--track)", `${b} of ${nb} in 11–50`, `${esc(TAGS[t].label)}: ${b} of ${nb} games ranked 11–50`)}</div></div>`).join("");
+}
+
+// ---- certainty
+const stack = (c, n, label) => {
+  const seg = (k, cls, name) => c[k] ? `<span class="${cls}" style="width:${(100 * c[k] / n).toFixed(2)}%"></span>` : "";
+  const t = `${esc(label)}: present ${pct(c.yes / n)} · absent ${pct(c.no / n)} · conflicting ${pct(c.conf / n)} · not enough evidence ${pct(c.unk / n)}`;
+  return `<div data-tip="${t}"><div class="stack">${seg("yes", "s-yes")}${seg("no", "s-no")}${seg("conf", "s-conf")}${seg("unk", "s-unk")}</div></div>`;
+};
+function renderCertainty() {
+  const gs = inList(LIST);
+  const count = (tagIds) => { const c = {yes: 0, no: 0, conf: 0, unk: 0}; gs.forEach((g) => tagIds.forEach((t) => c[state(g, t)]++)); return c; };
+  $("cert-cat").innerHTML = G.categories.map((cat) => {
+    const ids = G.tags.filter((t) => t.category === cat.id).map((t) => t.id), c = count(ids), n = ids.length * gs.length;
+    return [cat, c, n];
+  }).sort((a, b) => a[1].unk / a[2] - b[1].unk / b[2]).map(([cat, c, n]) => `<div class="r"><div class="name">${esc(cat.label)}</div>${stack(c, n, cat.label)}</div>`).join("");
+  const MON = ["monetization_free_to_play", "monetization_in_app_purchases", "monetization_ads", "monetization_premium", "engagement_live_events", "engagement_battle_pass", "engagement_daily_rewards", "engagement_gacha", "engagement_energy_system", "engagement_guilds"];
+  $("cert-mon").innerHTML = MON.filter((t) => TAGS[t]).map((t) => `<div class="r"><div class="name">${tagA(t)}</div>${stack(count([t]), gs.length, TAGS[t].label)}</div>`).join("");
+  const all = count(G.tags.map((t) => t.id)), n = G.tags.length * gs.length;
+  const ads = count(["monetization_ads"]);
+  $("c-lede").textContent = `Jev leaves ${pct(all.unk / n)} of all tag questions for ${LISTNAME[LIST]} as not enough evidence. That is by design: store screenshots and trailers show combat and art style clearly, but rarely show ads, timers or social systems. In ${LISTNAME[LIST]}, ads could be settled for only ${ads.yes + ads.no + ads.conf} of ${gs.length} games. These gaps are where better evidence, such as recorded gameplay, pays off first.`;
+}
+
+// ---- movers (Steam)
+function renderMovers() {
+  const gs = inList("steam").filter((g) => g.last_week != null);
+  const fresh = gs.filter((g) => g.last_week < 0);
+  const moved = gs.filter((g) => g.last_week > 0).map((g) => [g, g.last_week - g.rank]);
+  const KEYCATS = ["gameplay", "mechanic", "engagement", "world", "setting"];
+  const top3 = (g) => Object.entries(g.detail?.jev || {}).filter(([id, [t]]) => t === "strong" && KEYCATS.includes(TAGS[id]?.category)).sort((a, b) => (b[1][1] ?? 0) - (a[1][1] ?? 0)).slice(0, 3).map(([t]) => tagA(t)).join(", ");
+  const table = (rows) => `<thead><tr><th>Game</th><th class="n">Now</th><th class="n">Last week</th><th>Genre</th></tr></thead><tbody>${rows.map(([g, d]) =>
+    `<tr><td><a href="#game-${esc(g.id)}">${esc(g.title)}</a><div style="font-size:12.5px;color:var(--mute)">${top3(g)}</div></td><td class="n">#${g.rank}</td><td class="n">${g.last_week > 0 ? "#" + g.last_week : "new"} <span class="${d > 0 ? "up" : "down"}">${d > 0 ? "▲" + d : d < 0 ? "▼" + -d : ""}</span></td><td>${esc(GENRES[g.genre_id]?.name || "Not decided")}</td></tr>`).join("")}</tbody>`;
+  $("climb").innerHTML = table([...fresh.map((g) => [g, 99]), ...moved.filter(([, d]) => d > 0).sort((a, b) => b[1] - a[1])].slice(0, 6));
+  $("slip").innerHTML = table(moved.filter(([, d]) => d < 0).sort((a, b) => a[1] - b[1]).slice(0, 6));
+  $("m-lede").textContent = `Rank on Steam's most-played chart on ${S.chart_dates?.steam || "chart day"} against the week before, as Steam reports it. ${fresh.length ? `${fresh.map((g) => g.title).join(", ")} entered the top 50 this week.` : ""}`;
+}
+
+function renderAll() { renderGenres(); renderTopTags(); renderTop10(); renderCertainty(); }
+$("seg").querySelectorAll("button").forEach((b) => b.onclick = () => {
+  LIST = b.dataset.l; $("seg").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); renderAll();
+});
+renderAll(); renderGaps(); renderPlayers(); renderMovers();
+
+// ---- compact comparison with the old one-prompt method
+const O = F["legacy-deep"] || {};
+$("cmp-lede").textContent = `We ran the original one-call tagger (Claude Opus 4.8) on exactly the same evidence and checked both against the tags Steam players vote on. On tags both methods can name they are level (${pct(R.recall_shared)} vs ${pct(O.recall_shared)}); Jev's gain is coverage and fewer wrong answers. Jev's cost here is from a ${DATA.cheap.games}-game test with Claude Haiku describing images in half-price batches; the full 100-game run used Claude Sonnet 5 at ${(100 * R.cost).toFixed(1)}¢ a game.`;
+$("cmp").innerHTML = [
+  ["Tags per game", R.tags, O.tags, (v) => Math.round(v)],
+  ["Steam player tags found", R.recall_all, O.recall_all, pct],
+  ["Said no to a tag players gave", R.said_absent, O.said_absent, pct],
+  ["Cost per game", DATA.cheap.cost, O.cost, (v) => v == null ? "–" : (100 * v).toFixed(1) + "¢"],
+].map(([k, a, b, f]) => `<div><div class="k">${k}</div><div class="v">${f(a)}</div><div class="o">one prompt: ${f(b)}</div></div>`).join("");
+
+// ---- library and dictionary
+const CAT_ORDER = G.categories.map((c) => c.id);
+const TIERS = ["strong", "likely", "conflicting", "absent"];
+const TAG_GAMES = {}, GENRE_GAMES = {};
+for (const g of GAMES) {
+  for (const [t, [tier]] of Object.entries(g.detail?.jev || {})) if (tier === "strong" || tier === "likely") (TAG_GAMES[t] ||= []).push(g);
+  if (g.genre_id && GENRES[g.genre_id]) (GENRE_GAMES[g.genre_id] ||= []).push(g);
+}
+let dView = "tags", dCat = G.categories[0].id, dQuery = "";
+$("dict-intro").textContent = `Jev judges ${G.tags.length} tags in ${G.categories.length} categories and one of ${G.genres.length} genres. Each tag lists the evidence it may be decided from and the Steam player tags that mean the same thing.`;
+function dictChips() {
+  const groups = dView === "tags" ? G.categories.map((c) => [c.id, c.label]) : Object.entries(G.families);
+  $("d-cats").innerHTML = [["all", "All"], ...groups].map(([id, l]) => `<button type="button" class="chip" data-c="${esc(id)}" aria-pressed="${id === dCat}">${esc(l)}</button>`).join("");
+  $("d-cats").querySelectorAll("button").forEach((b) => b.onclick = () => { dCat = b.dataset.c; dictChips(); renderDict(); });
+}
+const matches = (t, q) => !q || JSON.stringify(t).toLowerCase().includes(q);
+const row = (k, v) => v && v.length ? `<dt>${k}</dt><dd>${esc(Array.isArray(v) ? v.join(", ") : v)}</dd>` : "";
+function gamesWith(list, how = "") {
+  if (!list || !list.length) return `<dl><dt>Games</dt><dd>none in this snapshot</dd></dl>`;
+  const a = (g) => `<a href="#game-${esc(g.id)}">${esc(g.title)}</a>`;
+  return `<dl><dt>Games</dt><dd>${list.length} ${how}</dd></dl><div class="glinks">${list.slice(0, 8).map(a).join("")}</div>${list.length > 8 ? `<details><summary>Show all ${list.length}</summary><div class="glinks">${list.slice(8).map(a).join("")}</div></details>` : ""}`;
+}
+function renderDict() {
+  const q = dQuery.trim().toLowerCase(); let html = "", n = 0;
+  const cat = q ? "all" : dCat;
+  if (dView === "tags") {
+    for (const c of G.categories) {
+      if (cat !== "all" && cat !== c.id) continue;
+      const items = G.tags.filter((t) => t.category === c.id && matches(t, q)); if (!items.length) continue; n += items.length;
+      html += `<div class="dgroup"><h3>${esc(c.label)} <small>${items.length}</small></h3><p>${esc(c.description)}</p><div class="terms">` + items.map((t) =>
+        `<div class="term" id="tag-${esc(t.id)}"><div class="n">${esc(t.label)} <code>${esc(t.id)}</code></div><div class="d">${esc(t.definition)}</div><dl>${row("Decided from", t.evidence)}${row("Steam tags", t.steam.slice(0, 6))}</dl>${gamesWith(TAG_GAMES[t.id])}</div>`).join("") + "</div></div>";
+    }
+  } else {
+    for (const [fid, fname] of Object.entries(G.families)) {
+      if (cat !== "all" && cat !== fid) continue;
+      const items = G.genres.filter((g) => g.family === fid && matches(g, q)); if (!items.length) continue; n += items.length;
+      html += `<div class="dgroup"><h3>${esc(fname)} <small>${items.length}</small></h3><div class="terms">` + items.map((g) =>
+        `<div class="term" id="genre-${esc(g.id)}"><div class="n">${esc(g.name)} <code>${esc(g.id)}</code></div><div class="d">${esc(g.definition)}</div><dl>${row("Example", g.examples)}</dl>${gamesWith(GENRE_GAMES[g.id], "as primary genre")}</div>`).join("") + "</div></div>";
+    }
+  }
+  $("dict").innerHTML = html || `<p class="count">Nothing matches “${esc(dQuery)}”.</p>`;
+  $("d-count").textContent = `${n} ${dView === "tags" ? "tags" : "genres"}`;
+}
+[["d-tags", "tags"], ["d-genres", "genres"]].forEach(([id, v]) => $(id).onclick = () => {
+  dView = v; dCat = v === "tags" ? G.categories[0].id : Object.keys(G.families)[0]; ["d-tags", "d-genres"].forEach((x) => $(x).setAttribute("aria-pressed", String(x === id))); dictChips(); renderDict();
+});
+$("d-search").addEventListener("input", (e) => { dQuery = e.target.value; renderDict(); });
+const pctp = (p) => p == null ? "" : ` <small>${Math.round(p * 100)}%</small>`;
+const tagLink = (id, tier, p) => TAGS[id] ? `<a class="tag ${tier}" href="#tag-${esc(id)}" title="${esc(TAGS[id].definition)}">${esc(TAGS[id].label)}${tier === "absent" ? "" : pctp(p)}</a>` : "";
+const genreLink = (id, p) => GENRES[id] ? `<a class="gchip" href="#genre-${esc(id)}" title="${esc(GENRES[id].definition)}">${esc(GENRES[id].name)}${pctp(p)}</a>` : `<span class="pill">${esc(id === "insufficient_evidence" ? "Not enough evidence" : id)}${pctp(p)}</span>`;
+let libQ = "", current = null, libAll = false;
+const searchable = (g) => [g.title, ...(g.detail?.developers || []), GENRES[g.genre_id]?.name || "", ...Object.entries(g.detail?.jev || {}).filter(([, [t]]) => t === "strong" || t === "likely").map(([x]) => TAGS[x]?.label || "")].join(" ").toLowerCase();
+function renderLibrary() {
+  const q = libQ.trim().toLowerCase();
+  const rows = inList(LIST).filter((g) => !q || searchable(g).includes(q)).sort((a, b) => a.list.localeCompare(b.list) || a.rank - b.rank);
+  $("g-count").textContent = `${rows.length} game${rows.length === 1 ? "" : "s"} in ${LISTNAME[LIST]}`;
+  const shown = libAll || q ? rows : rows.slice(0, 24);
+  $("lib-more").hidden = shown.length === rows.length;
+  $("lib-more").textContent = `Show all ${rows.length} games`;
+  $("lib").innerHTML = shown.map((g) => {
+    const n = Object.values(g.detail?.jev || {}).filter(([t]) => t === "strong" || t === "likely").length;
+    return `<button class="gcard" type="button" data-id="${esc(g.id)}" aria-current="${current === g.id}"><span class="gt">${esc(g.title)}</span><span class="gm"><span class="pill">${g.list === "steam" ? "Steam" : "Play"} #${g.rank}</span>${esc(GENRES[g.genre_id]?.name || "Genre not decided")}</span><span class="gm">${n} tags present</span></button>`;
+  }).join("") || `<p class="count">No game matches “${esc(libQ)}”.</p>`;
+  $("lib").querySelectorAll(".gcard").forEach((b) => b.onclick = () => { location.hash = "game-" + b.dataset.id; });
+}
+function showGame(id) {
+  const g = GAMES.find((x) => x.id === id), box = $("gview");
+  if (!g) { box.hidden = true; current = null; renderLibrary(); return; }
+  current = id; const d = g.detail || {};
+  const rows = Object.entries(d.jev || {}).map(([t, [tier, p]]) => [t, tier, p]).sort((a, b) => TIERS.indexOf(a[1]) - TIERS.indexOf(b[1]) || (b[2] ?? 0) - (a[2] ?? 0));
+  const byCat = CAT_ORDER.map((c) => [c, rows.filter((x) => TAGS[x[0]]?.category === c)]).filter(([, xs]) => xs.length);
+  const unk = G.tags.length - rows.length;
+  box.innerHTML = `<button class="close" id="g-close" type="button">Close</button>
+    <div><div class="eyebrow">${g.list === "steam" ? "Steam most-played" : "Google Play top-grossing"} #${g.rank}${g.peak ? ` · ${g.peak.toLocaleString()} peak players` : ""}</div><h3 class="gname">${esc(g.title)}</h3>
+    <div class="gsub">${d.developers?.length ? `<span>${esc(d.developers.join(", "))}</span>` : ""}<span>${rows.filter((r) => r[1] === "strong" || r[1] === "likely").length} present · ${rows.filter((r) => r[1] === "absent").length} absent · ${unk} not enough evidence</span></div></div>
+    <div class="gblock"><b>Genre</b><div class="tags">${(d.genres || []).map(([x, p]) => genreLink(x, p)).join("") || '<span class="count">No genre decided</span>'}</div></div>
+    <div class="gblock"><b>Tags by category</b><div class="glegend"><span class="tag strong">Present</span><span class="tag likely">Likely</span><span class="tag conflicting">Conflicting</span><span class="tag absent">Absent</span><span>Percent: Jev's probability the tag is present. Tags not listed had too little evidence to decide.</span></div>
+    ${byCat.map(([c, xs]) => `<div class="gcat"><span>${esc(catLabel[c])}</span><div class="tags">${xs.map(([t, tier, p]) => tagLink(t, tier, p)).join("")}</div></div>`).join("")}</div>
+    ${d.steam?.length ? `<div class="gblock"><b>Steam players' top ${d.steam.length} tags</b><p style="font-size:14px;color:var(--ink-2);margin:0">${esc(d.steam.join(" · "))}</p></div>` : ""}`;
+  box.className = "gview"; box.hidden = false;
+  $("g-close").onclick = () => { history.replaceState(null, "", location.pathname + location.search); showGame(null); };
+  renderLibrary(); box.scrollIntoView({block: "start"});
+}
+function openDefinition(kind, id) {
+  dView = kind; dCat = "all"; dQuery = ""; $("d-search").value = "";
+  $("d-tags").setAttribute("aria-pressed", String(kind === "tags")); $("d-genres").setAttribute("aria-pressed", String(kind === "genres"));
+  dictChips(); renderDict();
+  const el = document.getElementById((kind === "tags" ? "tag-" : "genre-") + id); if (!el) return;
+  el.classList.add("hit"); el.scrollIntoView({block: "center"}); setTimeout(() => el.classList.remove("hit"), 2400);
+}
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h.startsWith("game-")) showGame(h.slice(5));
+  else if (h.startsWith("tag-")) openDefinition("tags", h.slice(4));
+  else if (h.startsWith("genre-")) openDefinition("genres", h.slice(6));
+}
+$("g-search").addEventListener("input", (e) => { libQ = e.target.value; renderLibrary(); });
+$("lib-more").onclick = () => { libAll = true; renderLibrary(); };
+const _renderAll = renderAll;
+renderAll = () => { _renderAll(); renderLibrary(); };
+window.addEventListener("hashchange", route);
+renderLibrary(); dictChips(); renderDict(); route();
+$("foot").textContent = `GameTagger · charts: Steam most-played (global, ${S.chart_dates?.steam}) and AppBrain's Google Play top-grossing games (US, ${S.chart_dates?.mobile}) · tags by Claude Sonnet 5 (describing) and Jev jev-1.13.0 (deciding) · crosswalks to Steam tags are drafts pending review`;
+</script>

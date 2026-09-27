@@ -155,7 +155,14 @@ trailer windows) and allows 4,096 output tokens; a no-credit refusal stops the r
 jobs no longer crash the runner.
 
 Published (private until the owner shares them):
-* Results page: https://claude.ai/artifact/5pVfp8rgBXSy1rV3bx3KvG (charts, method diagram, tag
+* Home page (dashboard, September 27): https://claude.ai/artifact/26Pbg1Lbt3wzadN5b3qwMS. What is
+  in the top 100 (genre mix, most common tags, PC versus mobile gaps, tags weighted by Steam peak
+  players, top 10 versus the rest, where evidence runs out, Steam chart movers), the game library
+  and tag dictionary, a short method and comparison. Built from
+  `experiments/jev-vs-legacy/site/dashboard-template.html`; `web/` serves it at `/` with the
+  benchmark write-up at `/benchmark`. Trends over time need a second weekly snapshot and the page
+  says so.
+* Benchmark write-up (the earlier results page): https://claude.ai/artifact/5pVfp8rgBXSy1rV3bx3KvG (charts, method diagram, tag
   dictionary, per-game table, LinkedIn kit). Sources in `experiments/jev-vs-legacy/site/`.
 * Requests board: https://claude.ai/artifact/3MLmYUfDTkFgC9RFfkNiPU (organization-only; the owner
   approves requests, which are tagged in batches under a cap the owner sets).
@@ -163,7 +170,8 @@ Published (private until the owner shares them):
 
 Owner to do: fill `experiments/jev-vs-legacy/review/owner-review.csv` (494 rows, yes/no/unsure),
 review the three draft crosswalks, confirm the 10 App Store title-and-developer matches in
-`cohort.json`. Follow-up agreed: a public GitHub Pages site with a public request form.
+`cohort.json`. Next improvements (evidence follow-up, recorded gameplay, lower cost, a deeper mobile
+vocabulary) are planned in [NEXT_IMPROVEMENTS_PLAN.md](NEXT_IMPROVEMENTS_PLAN.md). Follow-up agreed: a public GitHub Pages site with a public request form.
 
 ### Cheaper image descriptions (September 25, 2026)
 

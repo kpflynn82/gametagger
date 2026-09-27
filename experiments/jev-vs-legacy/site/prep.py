@@ -81,6 +81,15 @@ for g in cohort["games"]:
             "unreadable": r["status"] == "valid" and not r.get("tags"),
         }
     row["detail"] = detail
+    # Dashboard fields: the chart's own popularity figures (Steam only) and the genre family of
+    # Jev's primary genre, if it decided one.
+    chart = g.get("chart") or {}
+    row["peak"] = chart.get("peak_in_game")
+    row["last_week"] = chart.get("last_week_rank")
+    gid = rich.get("primary_genre")
+    genre = taxonomy.genres_by_id.get(gid) if gid else None
+    row["genre_id"] = genre.id if genre else None
+    row["family"] = genre.family if genre else None
     games.append(row)
 
 # Sensitivity: the original parser only unpacks nested groups named "*_tags". How many old
