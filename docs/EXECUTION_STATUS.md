@@ -288,6 +288,11 @@ Measured:
   * Haiku 4.5 returned an invalid action name on the shop screen. The player defaults to
     Sonnet 5, and five malformed answers in a row stop a session.
 * The owner set `OBSERVER_MODEL=claude-sonnet-5` for this work.
+* The same session also spent $0.069 checking a separate project, the owner's long-session
+  "teardown player" (kept outside this repository), with the same Anthropic key. The session's
+  total spend was $0.116.
+* A marketing trailer is on branch `claude/marketing-trailer` (`experiments/trailer/`). It
+  involved no paid calls.
 
 Not done:
 * No real emulator session and no real YouTube download has run. Both need the owner's Mac;
