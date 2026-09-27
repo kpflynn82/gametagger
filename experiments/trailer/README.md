@@ -1,6 +1,6 @@
 # GameTagger trailer
 
-`gametagger-trailer.mp4`: a silent, square (1080 x 1080) video of 54 seconds, for LinkedIn and
+`web/trailer.mp4` (played on the site, poster `web/trailer-poster.jpg`): a silent, square (1080 x 1080) video of 54 seconds, for LinkedIn and
 the site. It has six parts:
 
 1. It started with the 40,000 hours of gameplay (1,000+ games) in NVIDIA's NitroGen dataset.

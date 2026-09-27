@@ -231,7 +231,7 @@ def data() -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--fonts", type=Path)
-    parser.add_argument("--out", type=Path, default=HERE / "gametagger-trailer.mp4")
+    parser.add_argument("--out", type=Path, default=ROOT / "web" / "trailer.mp4")
     parser.add_argument("--still", help="comma-separated times: render stills to PNGs instead")
     args = parser.parse_args()
     fonts = args.fonts.read_text() if args.fonts and args.fonts.exists() else ""
