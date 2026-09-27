@@ -19,7 +19,8 @@ from gametagger.decisions.jev import TypeSafeGateway
 from gametagger.decisions.mock import MockJevGateway
 from gametagger.genome.dossier import Dossier, ImageSource, VideoSource
 from gametagger.genome.engine import GenomeEngine, GenomePipeline
-from gametagger.genome.media import download_media
+from gametagger.genome.media import download_media, gameplay_videos
+from gametagger.genome.net import fetch_text
 from gametagger.genome.report import render_plan, render_profile
 from gametagger.genome.sources import (
     SourceError,
@@ -67,7 +68,24 @@ def build_parser() -> argparse.ArgumentParser:
     media.add_argument("--no-video", action="store_true", help="Skip trailers and videos")
     media.add_argument("--no-media", action="store_true", help="Text only: no images or video")
     media.add_argument("--media-dir", type=Path, help="Where downloads are kept")
-    media.add_argument("--bursts", type=int, default=6, help="Frame bursts per video")
+    media.add_argument(
+        "--max-videos",
+        type=int,
+        default=2,
+        help="Store videos to sample: Steam gameplay videos, Google Play trailer, App Store "
+        "previews (default 2)",
+    )
+    media.add_argument(
+        "--youtube-gameplay",
+        type=int,
+        default=0,
+        metavar="N",
+        help="Also download the N most-viewed YouTube gameplay videos (1-60 min). Proof of "
+        "concept: needs YOUTUBE_API_KEY and yt-dlp; YouTube's terms do not allow downloading.",
+    )
+    media.add_argument(
+        "--bursts", type=int, default=6, help="Frame bursts per game, shared by its videos"
+    )
     media.add_argument("--frames-per-burst", type=int, default=6)
 
     parser.add_argument("--categories", help="Comma-separated Genome categories to ask")
@@ -139,7 +157,11 @@ def _assemble(args, parser) -> Dossier:
         (
             "App Store",
             args.app_store,
-            lambda x: app_store_source(x, country=args.app_store_country),
+            lambda x: app_store_source(
+                x,
+                country=args.app_store_country,
+                fetch_page=fetch_text if args.max_videos > 1 and not args.no_video else None,
+            ),
         ),
         ("Google Play", args.google_play, google_play_source),
         ("Wikipedia", args.wikipedia, wikipedia_source),
@@ -153,6 +175,8 @@ def _assemble(args, parser) -> Dossier:
                 _note(notes, f"{name}: {exc}")
                 if fetch is google_play_source:
                     fetched.append(google_play_reference(identifier))
+    for message in (n for f in fetched for n in f.notes):
+        _note(notes, message)
     sources += [f.text for f in fetched if f.text]
     references += [r for f in fetched for r in f.references]
     refs = [m for f in fetched for m in f.media]
@@ -189,11 +213,32 @@ def _assemble(args, parser) -> Dossier:
         safe_id = re.sub(r"[^A-Za-z0-9_.-]+", "-", game_id).strip("-")[:64] or "game"
         directory = args.media_dir or Path("gametagger-media") / safe_id
         new_images, new_videos, download_notes = download_media(
-            refs, directory, max_screenshots=args.max_screenshots, video=not args.no_video
+            refs,
+            directory,
+            max_screenshots=args.max_screenshots,
+            video=not args.no_video,
+            max_videos=args.max_videos,
         )
         images += new_images
         videos += new_videos
         for message in download_notes:
+            _note(notes, message)
+    if args.youtube_gameplay and not (args.no_media or args.no_video):
+        title = args.title or (base.title if base else None)
+        title = title or next((s.reported_title for s in sources if s.reported_title), None)
+        official = tuple(
+            n for s in sources for k in ("developers", "publishers") for n in s.fields.get(k, [])
+        )
+        safe_id = re.sub(r"[^A-Za-z0-9_.-]+", "-", game_id).strip("-")[:64] or "game"
+        found, yt_notes = gameplay_videos(
+            title or "",
+            os.environ.get("YOUTUBE_API_KEY"),
+            args.media_dir or Path("gametagger-media") / safe_id,
+            args.youtube_gameplay,
+            official_names=official,
+        )
+        videos += found
+        for message in yt_notes:
             _note(notes, message)
     taken = {x.id for x in [*sources, *images, *videos, *references]}
 

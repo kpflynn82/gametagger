@@ -1,9 +1,12 @@
 """Assemble the published benchmark pages from committed results.
 
     uv run python experiments/jev-vs-legacy/site/prep.py <out>/data.json
-    uv run python experiments/jev-vs-legacy/site/assemble.py <out> [results-url] [requests-url]
+    uv run python experiments/jev-vs-legacy/site/assemble.py <out> [results-url] [requests-url] \
+        [benchmark-url]
 
-Writes ``<out>/results/index.html`` (with its LinkedIn images and social card beside it) and
+Writes ``<out>/dashboard/index.html`` (the home page: what is in the top 100, the game library
+and tag dictionary, a short method and comparison), ``<out>/results/index.html`` (the full
+benchmark write-up, with its LinkedIn images and social card beside it) and
 ``<out>/requests/index.html``. Publish each folder as its own page; the requests page needs the
 ``db`` and ``user`` capabilities described in docs/JEV_VS_LEGACY_BENCHMARK.md.
 
@@ -24,6 +27,10 @@ HERE = Path(__file__).resolve().parent
 EXP = HERE.parent
 
 
+DASHBOARD_DESCRIPTION = (
+    "What is inside the top 100 Steam and Google Play games: genres, the most common tags, PC "
+    "versus mobile, what the biggest hits share, and every game's tags with their evidence."
+)
 DESCRIPTION = (
     "Today's top 100 Steam and Google Play games tagged two ways on identical evidence: the "
     "original one-prompt tagger and the Jev pipeline. Accuracy, cost, time, a game library and "
@@ -31,15 +38,15 @@ DESCRIPTION = (
 )
 
 
-def standalone(page: str) -> str:
+def standalone(page: str, title: str, description: str) -> str:
     """Wrap the page body in a complete document with the resets the Artifact host supplies."""
     head, marker, body = page.partition('<div class="wrap">')
     return (
         '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-        f'<meta name="description" content="{DESCRIPTION}">\n'
-        '<meta property="og:title" content="Jev versus one big prompt: tagging 100 top games">\n'
-        f'<meta property="og:description" content="{DESCRIPTION}">\n'
+        f'<meta name="description" content="{description}">\n'
+        f'<meta property="og:title" content="{title}">\n'
+        f'<meta property="og:description" content="{description}">\n'
         '<meta property="og:type" content="website">\n'
         '<meta name="twitter:card" content="summary_large_image">\n'
         "<style>[hidden]{display:none!important}img{max-width:100%}</style>\n"
@@ -52,6 +59,7 @@ def main() -> None:
     out = Path(args[0])
     results_url = args[1] if len(args) > 1 else "#"
     requests_url = args[2] if len(args) > 2 else "#"
+    benchmark_url = args[3] if len(args) > 3 else results_url
     post = (EXP / "linkedin/post.txt").read_text().strip().replace("[link]", results_url)
     page = (HERE / "results-template.html").read_text()
     page = page.replace("/*DATA*/", (out / "data.json").read_text())
@@ -59,11 +67,28 @@ def main() -> None:
     results = out / "results"
     (results / "linkedin").mkdir(parents=True, exist_ok=True)
     if "--standalone" in sys.argv:
-        page = standalone(page)
+        page = standalone(page, "Jev versus one big prompt: tagging 100 top games", DESCRIPTION)
     (results / "index.html").write_text(page)
     for png in sorted((EXP / "linkedin").glob("*.png")):
         shutil.copy(png, results / "linkedin" / png.name)
     shutil.copy(EXP / "report/social-card.png", results / "social-card.png")
+
+    # The dashboard home page. Jev's comparison cost is the cheaper-describing test's figure,
+    # labelled as such on the page.
+    data = json.loads((out / "data.json").read_text())
+    test = json.loads((EXP / "cost-test/summary.json").read_text())
+    data["cheap"] = {
+        "games": test["games"],
+        "cost": test["arms"]["rich-haiku"]["total_cost_per_game"],
+    }
+    home = (HERE / "dashboard-template.html").read_text()
+    home = home.replace("/*DATA*/", json.dumps(data, separators=(",", ":")))
+    home = home.replace("/*REQUEST_URL*/", requests_url).replace("/*BENCH_URL*/", benchmark_url)
+    if "--standalone" in sys.argv:
+        title = "GameTagger: what's inside the top 100 games"
+        home = standalone(home, title, DASHBOARD_DESCRIPTION)
+    (out / "dashboard").mkdir(parents=True, exist_ok=True)
+    (out / "dashboard" / "index.html").write_text(home)
 
     cohort = json.loads((EXP / "cohort.json").read_text())
     titles = json.dumps(sorted(g["title"] for g in cohort["games"]))
@@ -71,7 +96,7 @@ def main() -> None:
     board = board.replace("/*TITLES*/", titles).replace("/*RESULTS_URL*/", results_url)
     (out / "requests").mkdir(parents=True, exist_ok=True)
     (out / "requests" / "index.html").write_text(board)
-    print(f"wrote {results / 'index.html'} and {out / 'requests' / 'index.html'}")
+    print(f"wrote {out / 'dashboard'}, {results} and {out / 'requests'}")
 
 
 if __name__ == "__main__":

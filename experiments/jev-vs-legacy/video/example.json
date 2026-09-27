@@ -1,0 +1,57 @@
+{
+  "note": "Counter-Strike 2 (steam-730) from the 100-game benchmark. Jev values are the full state distributions from the rich run (jev-1.13.0); old values are the one-prompt tagger on Claude Opus 4.8 (null = that tag is not in its vocabulary). The quote is the Observer's own description of store screenshot 4. players = the tag is among the game's top 20 Steam player tags after the benchmark's crosswalk (FPS, Shooter, PvP, Military, Co-op).",
+  "game": "Counter-Strike 2",
+  "quote": "First-person view of a hand wearing a fingerless glove gripping the foregrip of an assault rifle.",
+  "old_answers": 55,
+  "old_no": 36,
+  "rows": [
+    {
+      "tag": "first_person",
+      "color": "blue",
+      "state": "present",
+      "p": 0.97,
+      "old": null,
+      "players": true
+    },
+    {
+      "tag": "shooter",
+      "color": "red",
+      "state": "present",
+      "p": 1.0,
+      "old": true,
+      "players": true
+    },
+    {
+      "tag": "pvp",
+      "color": "yellow",
+      "state": "present",
+      "p": 1.0,
+      "old": true,
+      "players": true
+    },
+    {
+      "tag": "military",
+      "color": "ink",
+      "state": "likely",
+      "p": 0.54,
+      "old": null,
+      "players": true
+    },
+    {
+      "tag": "fantasy",
+      "color": "green",
+      "state": "absent",
+      "p": 0.57,
+      "old": false,
+      "players": false
+    },
+    {
+      "tag": "co_op",
+      "color": "blue",
+      "state": "insufficient_evidence",
+      "p": 0.83,
+      "old": null,
+      "players": true
+    }
+  ]
+}

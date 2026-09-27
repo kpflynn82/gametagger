@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import os
 import re
 import shutil
 import subprocess
@@ -24,7 +25,7 @@ from pydantic import ValidationError
 from gametagger.domain import EvidenceItem, EvidenceType, Observation
 from gametagger.genome.dossier import Claim, ImageSource, VideoSource
 from gametagger.genome.net import SourceError, fetch_bytes
-from gametagger.genome.sources import MediaRef
+from gametagger.genome.sources import MediaRef, YouTubeVideo, youtube_gameplay
 from gametagger.observers.boundary import ObservationBoundary
 from gametagger.observers.ordered import OrderedWindow, TimedFrame, WindowOutput
 
@@ -168,23 +169,151 @@ def download_video(ref: MediaRef, directory: Path, video_id: str, *, fetch: Fetc
     )
 
 
-def download_media(refs, directory: Path, *, max_screenshots: int, video: bool, fetch=fetch_bytes):
-    """Download screenshots (per source) and the first trailer; failures become notes."""
+YTDLP_ENV = "GAMETAGGER_YTDLP"
+
+
+def ytdlp_path() -> str | None:
+    """yt-dlp is optional, like FFmpeg: found on PATH or named by GAMETAGGER_YTDLP."""
+    return os.environ.get(YTDLP_ENV) or shutil.which("yt-dlp")
+
+
+def download_youtube(
+    video: YouTubeVideo,
+    directory: Path,
+    video_id: str,
+    *,
+    binary: str | None = None,
+    run: Callable[..., subprocess.CompletedProcess] = subprocess.run,
+) -> VideoSource:
+    """A low-resolution, video-only copy of a YouTube upload for frame sampling.
+
+    Long uploads are cut to the first 15 minutes after the one-minute mark, the most frame
+    sampling accepts. Proof of concept: YouTube's terms do not allow downloading, so this runs
+    only when asked for, and the copy stays in the git-ignored work directory.
+    """
+    if not re.fullmatch(r"[A-Za-z0-9_-]{11}", video.id):
+        raise ValueError("Not a YouTube video ID")
+    binary = binary or ytdlp_path()
+    if not binary:
+        raise SourceError("YouTube download needs yt-dlp (pip install yt-dlp)")
+    directory.mkdir(parents=True, exist_ok=True)
+    for old in directory.glob(f"{video_id}.*"):
+        old.unlink()
+    cmd = [
+        binary,
+        "--no-playlist",
+        "--quiet",
+        "--no-warnings",
+        "-f",
+        "bv*[height<=480][ext=mp4]/bv*[height<=480]/wv*",
+        "--max-filesize",
+        f"{MAX_VIDEO_BYTES // (1024 * 1024)}M",
+        "-o",
+        str(directory / f"{video_id}.%(ext)s"),
+    ]
+    if video.seconds > MAX_VIDEO_SECONDS:
+        start = 60
+        cmd += ["--download-sections", f"*{start}-{start + MAX_VIDEO_SECONDS - 10}"]
+    cmd += ["--", f"https://www.youtube.com/watch?v={video.id}"]
+    try:
+        run(cmd, capture_output=True, timeout=900, check=True)
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or b"").decode("utf-8", "replace").strip().splitlines()[-1:] or [""]
+        raise SourceError(f"yt-dlp could not download the video: {detail[0][:160]}") from None
+    except subprocess.TimeoutExpired:
+        raise SourceError("yt-dlp timed out") from None
+    files = [f for f in directory.glob(f"{video_id}.*") if not f.name.endswith(".part")]
+    if not files:
+        raise SourceError("yt-dlp finished without a video file (too large or unavailable?)")
+    path = files[0]
+    data = path.read_bytes()
+    if len(data) > MAX_VIDEO_BYTES:
+        path.unlink()
+        raise ValueError("The downloaded video is larger than allowed")
+    _container(data)
+    who = "official channel" if video.official else "community upload"
+    return VideoSource(
+        id=video_id,
+        path=str(path),
+        provider=f"YouTube gameplay video ({who})",
+        role="community_video",
+        title=f"{video.title} · {video.channel}"[:200],
+        uri=f"https://www.youtube.com/watch?v={video.id}",
+        sha256=sha256(data),
+    )
+
+
+def gameplay_videos(
+    title: str,
+    api_key: str | None,
+    directory: Path,
+    count: int,
+    *,
+    official_names: tuple[str, ...] = (),
+    search=youtube_gameplay,
+    download=download_youtube,
+) -> tuple[list[VideoSource], list[str]]:
+    """Find and download up to ``count`` YouTube gameplay videos; problems become notes."""
+    if count <= 0:
+        return [], []
+    if not api_key:
+        return [], ["YouTube gameplay: set YOUTUBE_API_KEY to search for videos."]
+    try:
+        found = search(title, api_key, official_names=official_names, limit=count)
+    except SourceError as exc:
+        return [], [f"YouTube gameplay search: {exc}"]
+    videos, notes = [], []
+    if not found:
+        notes.append("YouTube gameplay: no upload over a minute long names this game.")
+    for n, video in enumerate(found, 1):
+        try:
+            videos.append(download(video, directory, f"youtube-gameplay{n}"))
+        except (SourceError, ValueError, OSError) as exc:
+            notes.append(f"Skipped YouTube gameplay video {video.id} ({exc}).")
+    return videos, notes
+
+
+def _video_order(refs) -> list:
+    """Videos to try: the first from each source, then the rest, keeping store order."""
+    seen, first, rest = set(), [], []
+    for ref in refs:
+        (rest if ref.source_id in seen else first).append(ref)
+        seen.add(ref.source_id)
+    return first + rest
+
+
+def download_media(
+    refs,
+    directory: Path,
+    *,
+    max_screenshots: int,
+    video: bool,
+    max_videos: int = 1,
+    fetch=fetch_bytes,
+):
+    """Download screenshots (per source) and up to ``max_videos`` videos, one per source before a
+    second from any source. A video that fails is replaced by the next. Failures become notes."""
     images, videos, notes, counts = [], [], [], {}
     for ref in refs:
+        if ref.kind != "image":
+            continue
         try:
-            if ref.kind == "image":
-                if counts.get(ref.source_id, 0) >= max_screenshots:
-                    continue
-                n = counts[ref.source_id] = counts.get(ref.source_id, 0) + 1
-                name = "still" if ref.role == "video_still" else "shot"
-                images.append(
-                    download_image(ref, directory, f"{ref.source_id}-{name}{n}", fetch=fetch)
-                )
-            elif video and not videos:
-                videos.append(
-                    download_video(ref, directory, f"{ref.source_id}-trailer", fetch=fetch)
-                )
+            if counts.get(ref.source_id, 0) >= max_screenshots:
+                continue
+            n = counts[ref.source_id] = counts.get(ref.source_id, 0) + 1
+            name = "still" if ref.role == "video_still" else "shot"
+            images.append(download_image(ref, directory, f"{ref.source_id}-{name}{n}", fetch=fetch))
+        except (SourceError, ValueError) as exc:
+            notes.append(f"Skipped {ref.provider.lower()} ({exc}).")
+    taken: dict[str, int] = {}
+    for ref in _video_order([r for r in refs if r.kind != "image"]) if video else []:
+        if len(videos) >= max_videos:
+            break
+        n = taken.get(ref.source_id, 0) + 1
+        video_id = f"{ref.source_id}-trailer" + ("" if n == 1 else str(n))
+        try:
+            videos.append(download_video(ref, directory, video_id, fetch=fetch))
+            taken[ref.source_id] = n
         except (SourceError, ValueError) as exc:
             notes.append(f"Skipped {ref.provider.lower()} ({exc}).")
     return images, videos, notes

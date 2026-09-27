@@ -1,0 +1,19 @@
+I've been tinkering with a side project called GameTagger - it looks at a game's store page, screenshots and trailer and tags what the game actually is.
+
+The first version handed Claude everything in one big prompt and asked for the tags. It worked, but I always wondered - was it really looking at the game, or just remembering what it knew about the name?
+
+So I split the job in two. Claude now only describes what it can see in each screenshot and trailer clip. Then Jev, a model from TypeSafe, judges each of 189 tags one at a time, using only the evidence allowed to answer it - and it never gets told the game's name. It can also say "not enough evidence" instead of guessing.
+
+I ran both on the top 100 games (Steam most-played + Google Play top-grossing) and checked them against the tags Steam players vote on:
+
+- 35 tags per game instead of 17, each one traceable to its evidence
+- Jev found 77% of what players tagged vs 45% for the old prompt (on tags both can describe, they're basically tied - the gain is coverage)
+- Jev said "no" to something players had tagged under 1% of the time, vs about 6%
+
+The surprise was cost. Jev's own judging step is under a third of a cent per game. Nearly everything else is Claude describing images - and in an early 20-game test, moving that to Claude Haiku in half-price batches got the whole thing under 4 cents a game with nearly the same results.
+
+Why it matters: better tags are what make discovery work - recommendations, "more like this", finding true comps. And an honest "not enough evidence" beats a confident guess.
+
+Next up: a blind human review and a site where anyone can request games. Which game would you want tagged first?
+
+Full results and every tag's definition: [link]

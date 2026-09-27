@@ -20,7 +20,7 @@ from typing import Any
 from gametagger.comparison.identity import polite
 from gametagger.genome.cli import save_dossier
 from gametagger.genome.dossier import Dossier
-from gametagger.genome.media import download_media
+from gametagger.genome.media import download_media, gameplay_videos
 from gametagger.genome.net import fetch_text
 from gametagger.genome.sources import (
     SourceError,
@@ -47,7 +47,9 @@ def build_dossier(
     *,
     max_screenshots: int = 4,
     video: bool = True,
+    max_videos: int = 1,
     youtube_key: str | None = None,
+    youtube_gameplay: int = 0,
 ) -> tuple[Dossier, dict[str, Any]]:
     ids, notes, fetched, timings = game["ids"], [], [], {}
     plan = []
@@ -55,10 +57,16 @@ def build_dossier(
         plan.append(("steam", ids.get("steam_app"), steam_source))
     else:
         plan.append(("google_play", ids.get("google_play"), google_play_source))
-        plan.append(("app_store", ids.get("app_store"), app_store_source))
     # Wikimedia rate-limits shared addresses. When its API refuses, the source reads the
     # ordinary (cached) article page instead; that page gets a short wait-and-retry too.
     polite_page = polite(fetch_text, tries=3, wait=5)
+    if game["list"] != "steam":
+        # App Store preview videos are read only when more than one video is wanted; a
+        # one-video dossier keeps the Google Play trailer and skips the extra page.
+        page = polite_page if video and max_videos > 1 else None
+        plan.append(
+            ("app_store", ids.get("app_store"), lambda a: app_store_source(a, fetch_page=page))
+        )
     plan.append(
         ("wikipedia", ids.get("wikipedia"), lambda t: wikipedia_source(t, fetch_page=polite_page))
     )
@@ -74,6 +82,7 @@ def build_dossier(
             if fetch is google_play_source:
                 fetched.append(google_play_reference(identifier))
         timings[f"source_{name}_ms"] = (perf_counter() - t0) * 1000
+    notes += [n for f in fetched for n in f.notes]
     sources = [f.text for f in fetched if f.text]
     references = [r for f in fetched for r in f.references]
     refs = [m for f in fetched for m in f.media]
@@ -90,7 +99,7 @@ def build_dossier(
     t0 = perf_counter()
     media_dir = dossier_path(workdir, game["game_id"]).parent / "media"
     images, videos, media_notes = download_media(
-        refs, media_dir, max_screenshots=max_screenshots, video=video
+        refs, media_dir, max_screenshots=max_screenshots, video=video, max_videos=max_videos
     )
     # Trailers are large and CDN hiccups happen; only rich mode uses them, so a transient failure
     # would bias the comparison. Retry the trailer alone before giving up.
@@ -99,7 +108,7 @@ def build_dossier(
     while video and trailer_refs and not videos and retries < 2:
         retries += 1
         _, videos, retry_notes = download_media(
-            trailer_refs, media_dir, max_screenshots=0, video=True
+            trailer_refs, media_dir, max_screenshots=0, video=True, max_videos=max_videos
         )
         media_notes += retry_notes
     if retries:
@@ -107,6 +116,17 @@ def build_dossier(
         media_notes.append(f"Trailer download retried {retries} time(s); {outcome}.")
     notes += media_notes
     timings["media_download_ms"] = (perf_counter() - t0) * 1000
+    if video and youtube_gameplay:
+        t0 = perf_counter()
+        official = tuple(
+            n for s in sources for k in ("developers", "publishers") for n in s.fields.get(k, [])
+        )
+        found, yt_notes = gameplay_videos(
+            game["title"], youtube_key, media_dir, youtube_gameplay, official_names=official
+        )
+        videos += found
+        notes += yt_notes
+        timings["youtube_gameplay_ms"] = (perf_counter() - t0) * 1000
     timings["total_ms"] = (perf_counter() - start) * 1000
     if not (sources or images or videos):
         raise SourceError(f"No evidence could be gathered for {game['game_id']}")
@@ -140,6 +160,8 @@ def build_all(
     force: bool = False,
     max_screenshots: int = 4,
     video: bool = True,
+    max_videos: int = 1,
+    youtube_gameplay: int = 0,
     log=lambda m: print(m, file=sys.stderr),
 ) -> list[dict[str, Any]]:
     youtube_key = os.environ.get("YOUTUBE_API_KEY")
@@ -159,7 +181,9 @@ def build_all(
                 workdir,
                 max_screenshots=max_screenshots,
                 video=video,
+                max_videos=max_videos,
                 youtube_key=youtube_key,
+                youtube_gameplay=youtube_gameplay,
             )
         except (SourceError, ValueError, OSError) as exc:
             summary = {"game_id": game["game_id"], "error": str(exc)}

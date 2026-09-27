@@ -69,6 +69,8 @@ def cmd_dossiers(args) -> None:
         force=args.force,
         max_screenshots=args.max_screenshots,
         video=not args.no_video,
+        max_videos=args.max_videos,
+        youtube_gameplay=args.youtube_gameplay,
     )
     failed = [s["game_id"] for s in summaries if "error" in s]
     print(f"{len(summaries) - len(failed)} dossiers ready; {len(failed)} failed {failed or ''}")
@@ -236,6 +238,22 @@ def build_parser() -> argparse.ArgumentParser:
     selection(p)
     p.add_argument("--max-screenshots", type=int, default=4)
     p.add_argument("--no-video", action="store_true")
+    p.add_argument(
+        "--max-videos",
+        type=int,
+        default=1,
+        help="Store videos per game: Steam gameplay videos, the Google Play trailer and App Store "
+        "previews (default 1, as in the benchmark). The burst budget is shared among them.",
+    )
+    p.add_argument(
+        "--youtube-gameplay",
+        type=int,
+        default=0,
+        metavar="N",
+        help="Also download the N most-viewed YouTube gameplay videos (1-60 min) per game. "
+        "Proof of concept: needs YOUTUBE_API_KEY and yt-dlp; YouTube's terms do not allow "
+        "downloading.",
+    )
     p.set_defaults(func=cmd_dossiers)
 
     p = sub.add_parser("answer-key", help="Collect Steam user tags with vote counts (free)")

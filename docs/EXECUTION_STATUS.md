@@ -155,7 +155,14 @@ trailer windows) and allows 4,096 output tokens; a no-credit refusal stops the r
 jobs no longer crash the runner.
 
 Published (private until the owner shares them):
-* Results page: https://claude.ai/artifact/5pVfp8rgBXSy1rV3bx3KvG (charts, method diagram, tag
+* Home page (dashboard, September 27): https://claude.ai/artifact/26Pbg1Lbt3wzadN5b3qwMS. What is
+  in the top 100 (genre mix, most common tags, PC versus mobile gaps, tags weighted by Steam peak
+  players, top 10 versus the rest, where evidence runs out, Steam chart movers), the game library
+  and tag dictionary, a short method and comparison. Built from
+  `experiments/jev-vs-legacy/site/dashboard-template.html`; `web/` serves it at `/` with the
+  benchmark write-up at `/benchmark`. Trends over time need a second weekly snapshot and the page
+  says so.
+* Benchmark write-up (the earlier results page): https://claude.ai/artifact/5pVfp8rgBXSy1rV3bx3KvG (charts, method diagram, tag
   dictionary, per-game table, LinkedIn kit). Sources in `experiments/jev-vs-legacy/site/`.
 * Requests board: https://claude.ai/artifact/3MLmYUfDTkFgC9RFfkNiPU (organization-only; the owner
   approves requests, which are tagged in batches under a cap the owner sets).
@@ -163,7 +170,8 @@ Published (private until the owner shares them):
 
 Owner to do: fill `experiments/jev-vs-legacy/review/owner-review.csv` (494 rows, yes/no/unsure),
 review the three draft crosswalks, confirm the 10 App Store title-and-developer matches in
-`cohort.json`. Follow-up agreed: a public GitHub Pages site with a public request form.
+`cohort.json`. Next improvements (evidence follow-up, recorded gameplay, lower cost, a deeper mobile
+vocabulary) are planned in [NEXT_IMPROVEMENTS_PLAN.md](NEXT_IMPROVEMENTS_PLAN.md). Follow-up agreed: a public GitHub Pages site with a public request form.
 
 ### Cheaper image descriptions (September 25, 2026)
 
@@ -177,3 +185,56 @@ descriptions with duplicate skipping cost $0.070 per game. Details:
 `experiments/jev-vs-legacy/cost-test/README.md`. The test cost $1.99 for descriptions plus Jev;
 ledger total $22.86 of the $39.99 cap. Also tagged Epic Plane Evolution for cloning work
 (`experiments/single-games/epic-plane-evolution/`, $0.097).
+
+### More store videos per game (September 27, 2026)
+
+Rich mode can now sample several store videos per game instead of one:
+* Steam videos named as gameplay come first, then highlights, up to three.
+* The Google Play trailer is kept.
+* App Store preview videos are read from the product page (`apps.apple.com`, exact app ID).
+  Apple asks that previews be captured from the app itself.
+
+Other details:
+* Videos are taken one per store before a second from any store, and a failed download is
+  replaced by the next.
+* The per-game burst budget is shared across videos (at least two bursts each), so Observer cost
+  does not grow with the number of videos.
+* Options: `gametagger-genome --max-videos` (default 2) and `gametagger-compare dossiers
+  --max-videos` (default 1, as in the benchmark).
+
+Free check on 12 cohort games with `--max-videos 3`:
+* All 4 Steam games got 2–3 videos (two had one video fail to download and fall back).
+* 5 of 8 mobile games got the Google Play trailer plus 1–2 App Store previews.
+* The other 3 (Royal Match, Kingshot, Last War) have no App Store preview and no direct Google
+  Play video; their only video is a YouTube trailer, which is recorded as a reference and not
+  downloaded.
+
+No paid run yet.
+
+YouTube gameplay videos (proof of concept, owner-approved on September 27 despite YouTube's
+terms): `--youtube-gameplay N` on `gametagger-genome` and `gametagger-compare dossiers` finds the
+N most-viewed uploads between one minute and an hour that name the game.
+
+How videos are chosen:
+* The short name is matched too ("Last War" for "Last War:Survival Game").
+* Trailers, Shorts, "fake ads" compilations, reviews, reactions, hacks and mods are dropped;
+  "fake ads" videos show the ads' invented gameplay, not the game.
+* Uploads that call themselves gameplay or walkthroughs come first.
+
+How videos are downloaded:
+* The tool downloads a video-only copy at 480p or lower with yt-dlp (optional, like FFmpeg:
+  on PATH or `GAMETAGGER_YTDLP`). Uploads longer than 15 minutes are cut to 15 minutes from
+  the one-minute mark.
+* Downloads are marked `community_video` with the channel in provenance.
+* They share the per-game burst budget with store videos.
+
+Live check:
+* Search works. After the filters it picked real play for Royal Match, Kingshot and Last War.
+* Every download from this cloud container was refused by YouTube ("Sign in to confirm you're
+  not a bot"). YouTube blocks data-center addresses, and no attempt was made to get around
+  that. Downloads are expected to work from a home connection.
+* The first check also showed that the most-viewed "gameplay" results are often "fake ads"
+  commentary, which is why the filter exists.
+
+An automated-play pilot (AI tapping through a game on an emulator) was drafted, then dropped at
+the owner's request; it was never merged.

@@ -47,6 +47,8 @@ class Fetched:
     text: TextSource | None = None
     media: list[MediaRef] = field(default_factory=list)
     references: list[Reference] = field(default_factory=list)
+    # Optional parts that could not be read, e.g. preview videos; the source itself succeeded.
+    notes: list[str] = field(default_factory=list)
 
 
 def _now() -> str:
@@ -81,20 +83,44 @@ def normal_title(value: str) -> str:
 # --------------------------------------------------------------------------- Steam
 
 
-def _steam_trailer(movies: Any) -> MediaRef | None:
+STEAM_MAX_TRAILERS = 3
+
+
+def _steam_trailers(movies: Any, limit: int = STEAM_MAX_TRAILERS) -> list[MediaRef]:
+    """Store videos in the order worth sampling: ones named as gameplay, then highlights."""
     if not isinstance(movies, list):
-        return None
+        return []
     movies = [m for m in movies if isinstance(m, dict)]
-    for movie in sorted(movies, key=lambda m: not m.get("highlight")):  # highlights first
+
+    def order(movie: dict) -> tuple[bool, bool]:
+        gameplay = "gameplay" in str(movie.get("name") or "").casefold()
+        return (not gameplay, not movie.get("highlight"))
+
+    found = []
+    for movie in sorted(movies, key=order):  # stable: store order within each group
         mp4 = movie.get("mp4") if isinstance(movie.get("mp4"), dict) else {}
         options = [("video", mp4.get("480")), ("video", mp4.get("max"))]
         options.append(("hls", movie.get("hls_h264")))
         for kind, url in options:
             if url := _https(url):
-                return MediaRef(
-                    kind, url, "Steam store trailer", "store_trailer", "steam", movie.get("name")
+                found.append(
+                    MediaRef(
+                        kind,
+                        url,
+                        "Steam store trailer",
+                        "store_trailer",
+                        "steam",
+                        movie.get("name"),
+                    )
                 )
-    return None
+                break
+        if len(found) >= limit:
+            break
+    return found
+
+
+def _steam_trailer(movies: Any) -> MediaRef | None:
+    return next(iter(_steam_trailers(movies, limit=1)), None)
 
 
 def steam_app_entry(payload: Any, app: str) -> dict[str, Any]:
@@ -153,8 +179,7 @@ def steam_source(app_id: str | int, *, fetch: Fetch = fetch_json) -> Fetched:
         for shot in data.get("screenshots") or []
         if isinstance(shot, dict) and (u := _https(shot.get("path_full")))
     ]
-    if trailer := _steam_trailer(data.get("movies")):
-        media.append(trailer)
+    media.extend(_steam_trailers(data.get("movies")))
     return Fetched(
         text=TextSource(
             id="steam",
@@ -173,7 +198,38 @@ def steam_source(app_id: str | int, *, fetch: Fetch = fetch_json) -> Fetched:
 # --------------------------------------------------------------------------- Apple App Store
 
 
-def app_store_source(app_id: str | int, *, country: str = "us", fetch: Fetch = fetch_json):
+APP_PREVIEW = re.compile(r"https://apptrailers\.itunes\.apple\.com/[^\"'\s<>]+?\.m3u8")
+APP_STORE_MAX_PREVIEWS = 3
+
+
+def app_store_previews(page: str, *, limit: int = APP_STORE_MAX_PREVIEWS) -> list[MediaRef]:
+    """Preview videos from an App Store product page. Apple asks for these to be captured from
+    the app itself, so they are closer to gameplay than most trailers."""
+    urls: list[str] = []
+    for match in APP_PREVIEW.findall(page.replace("\\/", "/")):
+        url = _https(html_lib.unescape(match))
+        if url and url not in urls:
+            urls.append(url)
+    return [
+        MediaRef(
+            "hls",
+            u,
+            "Apple App Store preview video",
+            "store_trailer",
+            "appstore",
+            f"App preview {i}",
+        )
+        for i, u in enumerate(urls[:limit], 1)
+    ]
+
+
+def app_store_source(
+    app_id: str | int,
+    *,
+    country: str = "us",
+    fetch: Fetch = fetch_json,
+    fetch_page: Callable[[str], str] | None = None,
+):
     app = str(app_id).strip().removeprefix("id")
     if not app.isdigit():
         raise SourceError("An App Store ID must be numeric (the digits after 'id' in its URL)")
@@ -206,7 +262,14 @@ def app_store_source(app_id: str | int, *, country: str = "us", fetch: Fetch = f
         for shot in shots
         if (u := _https(shot))
     ]
+    notes = []
+    if fetch_page is not None:  # preview videos live only on the product page, not in the API
+        try:
+            media += app_store_previews(fetch_page(f"https://apps.apple.com/{country}/app/id{app}"))
+        except SourceError as exc:
+            notes.append(f"App Store preview videos not read ({exc}).")
     return Fetched(
+        notes=notes,
         text=TextSource(
             id="appstore",
             type=EvidenceType.STORE_METADATA,
@@ -609,3 +672,111 @@ def youtube_search(
         for n in (1, 2, 3)
     ]
     return Fetched(media=stills, references=[reference])
+
+
+# Uploads that show something other than the game as it plays: "fake ads" compilations show
+# the ads' invented gameplay, and hacks or mods show an altered game.
+NOT_GAMEPLAY = re.compile(
+    r"\b(ads?|advert\w*|fake|vs\.?|versus|reaction|reacts?|review|tier list|trailer|shorts|"
+    r"hack\w*|cheats?|mod(ded|s)?|apk)\b",
+    re.IGNORECASE,
+)
+PLAY_WORDS = re.compile(
+    r"\b(gameplay|walkthrough|let'?s play|playthrough|levels?|part \d+|android|ios)\b",
+    re.IGNORECASE,
+)
+
+
+def short_title(title: str) -> str:
+    """The name before a subtitle: "Last War" for "Last War:Survival Game"."""
+    return re.split(r"\s*[:|(–—]|\s+-\s+", title, maxsplit=1)[0].strip() or title
+
+
+@dataclass(frozen=True)
+class YouTubeVideo:
+    """A YouTube upload chosen as gameplay evidence (downloaded only on request)."""
+
+    id: str
+    title: str
+    channel: str
+    views: int
+    seconds: int
+    official: bool
+
+
+def youtube_gameplay(
+    title: str,
+    api_key: str,
+    *,
+    official_names: tuple[str, ...] = (),
+    limit: int = 2,
+    min_seconds: int = 60,
+    max_seconds: int = 3600,
+    fetch: Fetch = fetch_json,
+) -> list[YouTubeVideo]:
+    """Gameplay uploads whose title names the game, between one minute and an hour long.
+
+    Trailers, Shorts, "fake ads" compilations, reviews, reactions, hacks and mods are left out.
+    Uploads that call themselves gameplay, walkthroughs or let's plays come first, then views.
+    Uses search.list (100 quota units) and videos.list (1 unit).
+    """
+    name_only = short_title(title)
+    forms = {n for t in (title, name_only) if len(n := normal_title(t)) >= 3}
+    if not forms or not api_key:
+        raise SourceError("YouTube search needs a game title and YOUTUBE_API_KEY")
+    official = {normal_title(n) for n in official_names if normal_title(n)}
+    search = fetch(
+        f"{YOUTUBE_API}/search?"
+        + urlencode(
+            {
+                "part": "snippet",
+                "type": "video",
+                "maxResults": "15",
+                "q": f"{name_only} gameplay",
+                "order": "viewCount",
+                "key": api_key,
+            }
+        )
+    )
+    ids = [
+        item["id"]["videoId"]
+        for item in (search or {}).get("items") or []
+        if isinstance(item.get("id"), dict)
+        and re.fullmatch(r"[A-Za-z0-9_-]{11}", str(item["id"].get("videoId", "")))
+    ]
+    if not ids:
+        return []
+    details = fetch(
+        f"{YOUTUBE_API}/videos?"
+        + urlencode(
+            {"part": "snippet,statistics,contentDetails", "id": ",".join(ids), "key": api_key}
+        )
+    )
+    found = []
+    for v in (details or {}).get("items") or []:
+        snippet = v.get("snippet") or {}
+        name = str(snippet.get("title") or "")
+        seconds = _iso_seconds((v.get("contentDetails") or {}).get("duration"))
+        if seconds is None or not any(f in normal_title(name) for f in forms):
+            continue
+        if NOT_GAMEPLAY.search(name) or not min_seconds <= seconds <= max_seconds:
+            continue
+        channel = str(snippet.get("channelTitle") or "")
+        count = (v.get("statistics") or {}).get("viewCount")
+        found.append(
+            YouTubeVideo(
+                id=str(v.get("id")),
+                title=name,
+                channel=channel,
+                views=int(count) if str(count).isdigit() else 0,
+                seconds=seconds,
+                official=any(
+                    n in normal_title(channel) or normal_title(channel) in n for n in official
+                )
+                if channel
+                else False,
+            )
+        )
+    found = [f for f in found if re.fullmatch(r"[A-Za-z0-9_-]{11}", f.id)]
+    found.sort(key=lambda f: (bool(PLAY_WORDS.search(f.title)), f.views), reverse=True)
+    return found[:limit]
