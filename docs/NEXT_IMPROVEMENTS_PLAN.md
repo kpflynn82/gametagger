@@ -90,7 +90,10 @@ teams ask about.
   preview videos.
 * YouTube gameplay videos are built as an owner-approved proof of concept
   (`--youtube-gameplay N`). They download from a home connection, not from cloud machines.
-* Automated play was dropped. See EXECUTION_STATUS.
+* Automated play was dropped, then rebuilt at the owner's request on September 27:
+  `gametagger-play` (see below and `docs/MAC_TOOLS.md`).
+* The "systems" scene-change sampler and `capture_context` are built (see Design). A paid
+  pilot on real recordings is still to do.
 
 **Sources, in order of preference.**
 
@@ -116,6 +119,10 @@ teams ask about.
 
 **Design.**
 
+* **Built September 27:** `genome/systems.py` (scene-change sampler, `--burst-strategy
+  auto|even|systems`), recordings as `gameplay_recording` videos with `capture_method` and
+  `capture_contexts`, and the automated Android player (`gametagger-play`, `src/gametagger/play/`)
+  as a recording source beside owner recordings.
 * A new evidence type is optional. The existing `gameplay_clip` type already covers "short
   bursts of consecutive frames". Recordings get a `capture_context` field (first session, shop,
   event, social) so Jev's questions can weigh a shop screen properly for monetization tags.

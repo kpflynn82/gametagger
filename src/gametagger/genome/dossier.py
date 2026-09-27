@@ -41,6 +41,13 @@ READING_GUIDE = (
     "these sources only, not outside knowledge of the title. Attributes are independent; "
     "several can apply to one game."
 )
+# Added only when a gameplay recording is among the sources, so earlier states are unchanged.
+RECORDING_GUIDE = (
+    "Some gameplay_clip claims come from a screen recording of the game being played. Their "
+    "label may add a capture context: the screen the person or automated player was trying to "
+    "reach at that moment (for example the shop). A capture context is navigation, not "
+    "observation: judge each attribute from the described frames."
+)
 
 
 class TextSource(BaseModel):
@@ -80,6 +87,53 @@ class ImageSource(BaseModel):
     sha256: str | None = Field(default=None, pattern=SHA256)
 
 
+CaptureContext = Literal[
+    "first_session",
+    "tutorial",
+    "gameplay",
+    "shop",
+    "currency",
+    "event",
+    "social",
+    "progression",
+    "ad",
+    "settings",
+    "loading",
+    "other",
+]
+# How a capture context reads inside a claim. It says what the person or the automated player
+# was trying to reach at that moment, not what the screen proves.
+CAPTURE_PHRASES: dict[str, str] = {
+    "first_session": "the first minutes of play",
+    "tutorial": "the tutorial",
+    "gameplay": "normal play",
+    "shop": "the shop",
+    "currency": "a currency or wallet screen",
+    "event": "an event or live-operations screen",
+    "social": "a social, guild or friends screen",
+    "progression": "a progression, upgrade or collection menu",
+    "ad": "an advertisement",
+    "settings": "the settings",
+    "loading": "a loading screen",
+    "other": "another screen",
+}
+
+
+class CaptureSegment(BaseModel):
+    """A stretch of a gameplay recording and what the player was trying to reach during it."""
+
+    model_config = ConfigDict(extra="forbid")
+    start_seconds: float = Field(ge=0)
+    end_seconds: float = Field(ge=0)
+    context: CaptureContext
+
+    @model_validator(mode="after")
+    def ordered(self):
+        if self.end_seconds < self.start_seconds:
+            raise ValueError("A capture segment must end after it starts")
+        return self
+
+
 class VideoSource(BaseModel):
     """A local video file, such as a downloaded store trailer, sampled in short frame bursts."""
 
@@ -88,10 +142,21 @@ class VideoSource(BaseModel):
     path: str = Field(min_length=1)
     provider: str = "local-upload"
     # community_video: a YouTube upload by anyone, the least trusted video evidence.
-    role: Literal["upload", "store_trailer", "community_video"] = "upload"
+    # gameplay_recording: a screen recording of the game being played, by the owner or by the
+    # automated Android player; it can show shops, timers and event screens trailers hide.
+    role: Literal["upload", "store_trailer", "community_video", "gameplay_recording"] = "upload"
     title: str | None = None
     uri: str | None = None
     sha256: str | None = Field(default=None, pattern=SHA256)
+    capture_method: Literal["owner", "automated_play"] | None = None
+    capture_contexts: list[CaptureSegment] = Field(default_factory=list)
+
+    def capture_at(self, seconds: float) -> str | None:
+        """The capture context covering this moment of the recording, if one was recorded."""
+        for segment in self.capture_contexts:
+            if segment.start_seconds <= seconds <= segment.end_seconds:
+                return segment.context
+        return None
 
 
 class Reference(BaseModel):
@@ -222,10 +287,11 @@ def claims_from_observations(observations: list[Observation], item: EvidenceItem
 
 def build_state(claims: list[Claim], evidence: list[EvidenceItem], allowed: set[str]) -> str | None:
     """Compact JSON state with only the claims whose evidence type this question may use."""
-    groups = []
+    groups, used = [], set()
     for item in evidence:
         chosen = [c for c in claims if c.evidence_id == item.id and c.evidence_type in allowed]
         if chosen:
+            used.add(item.id)
             groups.append(
                 {
                     "source": item.id,
@@ -239,5 +305,8 @@ def build_state(claims: list[Claim], evidence: list[EvidenceItem], allowed: set[
             )
     if not groups:
         return None
-    payload = {"reading_guide": READING_GUIDE, "sources": groups}
+    guide = READING_GUIDE
+    if any(item.metadata.get("capture_method") for item in evidence if item.id in used):
+        guide += " " + RECORDING_GUIDE
+    payload = {"reading_guide": guide, "sources": groups}
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":"))

@@ -26,3 +26,6 @@ gametagger-media/
 
 # Benchmark work area: dossiers, downloaded media and raw responses (third-party content)
 benchmark-runs/
+
+# Automated Android play sessions: recordings and screenshots (third-party content)
+gametagger-play/

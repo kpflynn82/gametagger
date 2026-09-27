@@ -392,42 +392,74 @@ def frame_bursts(
     directory.mkdir(parents=True, exist_ok=True)
     results = []
     for i, start in enumerate(starts):
-        for old in directory.glob(f"{video.id}-w{i}-*.jpg"):
-            old.unlink()
-        result = _ffmpeg(
-            "-v", "info", "-threads", "1", "-copyts", "-ss", f"{start:.3f}", *_input(path),
-            "-an", "-vf",
-            f"select='isnan(prev_selected_t)+gte(t-prev_selected_t\\,{spacing})',"
-            f"scale={FRAME_SIDE}:{FRAME_SIDE}:force_original_aspect_ratio=decrease"
-            ":force_divisible_by=2,showinfo",
-            "-fps_mode", "vfr", "-frames:v", str(frames), "-q:v", "3", "-y",
-            str(directory / f"{video.id}-w{i}-%02d.jpg"),
-            timeout=60,
-        )  # fmt: skip
-        stamps = re.findall(rb"pts_time:(-?[0-9.]+)", result.stderr)
-        files = sorted(directory.glob(f"{video.id}-w{i}-*.jpg"))
-        if result.returncode != 0 or len(files) < 2 or len(stamps) < len(files):
-            continue
-        data = [f.read_bytes() for f in files]
-        try:
-            window = OrderedWindow(
-                source_asset_sha256=asset,
-                duration_seconds=duration,
-                selection_strategy=WINDOW_STRATEGY,
-                frames=[
-                    TimedFrame(
-                        evidence_id=f"{video.id}:w{i}:f{k}",
-                        asset_sha256=asset,
-                        frame_sha256=sha256(b),
-                        timestamp_seconds=max(0.0, float(stamps[k]) - offset),
-                    )
-                    for k, b in enumerate(data)
-                ],
-            )
-        except ValidationError:
-            continue  # sampled frames too far apart or out of range: not a usable burst
-        results.append((window, data))
+        sampled = extract_burst(
+            path,
+            video.id,
+            i,
+            start,
+            directory,
+            asset=asset,
+            duration=duration,
+            offset=offset,
+            frames=frames,
+            spacing=spacing,
+            strategy=WINDOW_STRATEGY,
+        )
+        if sampled:
+            results.append(sampled)
     return results
+
+
+def extract_burst(
+    path: Path,
+    video_id: str,
+    index: int,
+    start: float,
+    directory: Path,
+    *,
+    asset: str,
+    duration: float,
+    offset: float,
+    frames: int,
+    spacing: float,
+    strategy: str,
+) -> tuple[OrderedWindow, list[bytes]] | None:
+    """One burst of ``frames`` consecutive frames from ``start``; None when it is not usable."""
+    for old in directory.glob(f"{video_id}-w{index}-*.jpg"):
+        old.unlink()
+    result = _ffmpeg(
+        "-v", "info", "-threads", "1", "-copyts", "-ss", f"{start:.3f}", *_input(path),
+        "-an", "-vf",
+        f"select='isnan(prev_selected_t)+gte(t-prev_selected_t\\,{spacing})',"
+        f"scale={FRAME_SIDE}:{FRAME_SIDE}:force_original_aspect_ratio=decrease"
+        ":force_divisible_by=2,showinfo",
+        "-fps_mode", "vfr", "-frames:v", str(frames), "-q:v", "3", "-y",
+        str(directory / f"{video_id}-w{index}-%02d.jpg"),
+        timeout=60,
+    )  # fmt: skip
+    stamps = re.findall(rb"pts_time:(-?[0-9.]+)", result.stderr)
+    files = sorted(directory.glob(f"{video_id}-w{index}-*.jpg"))
+    if result.returncode != 0 or len(files) < 2 or len(stamps) < len(files):
+        return None
+    data = [f.read_bytes() for f in files]
+    try:
+        window = OrderedWindow(
+            source_asset_sha256=asset,
+            duration_seconds=duration,
+            selection_strategy=strategy,
+            frames=[
+                TimedFrame(
+                    evidence_id=f"{video_id}:w{index}:f{k}",
+                    asset_sha256=asset,
+                    frame_sha256=sha256(b),
+                    timestamp_seconds=max(0.0, float(stamps[k]) - offset),
+                )
+                for k, b in enumerate(data)
+            ],
+        )
+    except ValidationError:
+        return None  # sampled frames too far apart or out of range: not a usable burst
+    return window, data
 
 
 def burst_claims(
@@ -436,8 +468,14 @@ def burst_claims(
     window: OrderedWindow,
     output: WindowOutput,
     boundary: ObservationBoundary,
+    *,
+    capture: str | None = None,
 ) -> tuple[list[Claim], list[dict[str, str]], int]:
     """Turn one burst's Observer output into gameplay_clip claims.
+
+    ``capture`` is the recording's capture context for this moment (what the person or the
+    automated player was trying to reach, e.g. "shop"). It is added to each claim's label as
+    context, never as an observation.
 
     Returns (claims, quarantined statements, statements excluded because the Observer labelled
     the burst cinematic or a title card, which cannot establish normal gameplay).
@@ -469,6 +507,8 @@ def burst_claims(
             continue
         t0, t1 = times[statement.frame_ids[0]], times[statement.frame_ids[-1]]
         span = f"{t0:.1f}s" if t0 == t1 else f"{t0:.1f}-{t1:.1f}s"
+        if capture:
+            span += f", capture context: {capture}"
         claims.append(
             Claim(
                 id=claim_id,
