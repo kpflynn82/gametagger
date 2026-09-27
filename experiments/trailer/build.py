@@ -209,8 +209,8 @@ def data() -> dict:
             "Evidence allowed: screenshots · gameplay video · store listing · developer docs",
         ],
         "obs": [
-            "A banner reads LIMITED OFFER with a countdown of 02:14:59.",
-            "Three items are listed with prices of $4.99, $1.99 and $9.99.",
+            "A banner reads STARTER BUNDLE with a countdown of 02:14:59.",
+            "Four items are listed, priced from $1.99 to $9.99.",
             "The top bar shows 1,250 coins and 30 gems.",
         ],
         "jev": jev(),
@@ -237,6 +237,7 @@ def main() -> None:
     fonts = args.fonts.read_text() if args.fonts and args.fonts.exists() else ""
     page = (HERE / "scene.html").read_text()
     page = page.replace("/*FONTS*/", fonts).replace("/*DATA*/", json.dumps(data()))
+    page = page.replace("/*GAMES*/", (HERE / "games.js").read_text())
     node_root = subprocess.run(["npm", "root", "-g"], capture_output=True, text=True).stdout
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp)

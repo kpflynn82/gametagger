@@ -61,17 +61,6 @@ box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 2px #2d2b25}
 .screen{position:relative;width:100%;height:100%;border-radius:30px;overflow:hidden;
 background:linear-gradient(180deg,#2a3f8f,#6a3fa0)}
 .gs{position:absolute;inset:0;opacity:0}
-.hud{position:absolute;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;
-font:700 15px "Chivo Mono",monospace;color:#fff}
-.hud span{background:rgba(0,0,0,.35);padding:4px 8px;border-radius:10px}
-.gbtn{position:absolute;border-radius:14px;color:#fff;font-weight:900;display:flex;
-align-items:center;justify-content:center;letter-spacing:.02em;box-shadow:0 5px 0 rgba(0,0,0,.3)}
-.gtitle{position:absolute;left:0;right:0;text-align:center;color:#ffd84d;font-weight:900;
-letter-spacing:-.02em;text-shadow:0 4px 0 rgba(0,0,0,.35)}
-.offer{position:absolute;left:16px;right:16px;height:92px;border-radius:14px;background:rgba(255,255,255,.14);
-color:#fff;font-weight:800;font-size:19px;padding:14px}
-.offer em{position:absolute;right:12px;bottom:12px;font-style:normal;background:#2fa86a;padding:8px 12px;
-border-radius:10px;font:800 17px "Chivo Mono",monospace}
 .ripple{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;
 border:4px solid #fff;opacity:0}
 .scan{position:absolute;left:0;right:0;height:4px;background:#8fd3ff;
@@ -93,6 +82,88 @@ border-bottom:1px solid var(--line);gap:20px}
 .row .st{justify-self:end}
 .stamp{left:56px;right:56px;top:790px;font-weight:900;font-size:66px;letter-spacing:-.035em}
 .stamp em{font-style:normal;color:var(--red)}
+/* invented game UI */
+.gi{display:inline-block;vertical-align:middle;flex:none}.gi svg{width:100%;height:100%;display:block}
+.screen{font-family:Fredoka,"DejaVu Sans",sans-serif}
+.gt{position:absolute;left:0;right:0;text-align:center;font-family:"Lilita One",sans-serif;color:#fff;letter-spacing:.02em;
+-webkit-text-stroke:2px #2a1466;paint-order:stroke fill;text-shadow:0 4px 0 rgba(0,0,0,.35)}
+.topbar{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:flex-end;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 8px 0 3px;border-radius:14px;background:rgba(0,0,0,.42);
+color:#fff;font:700 15px Fredoka,sans-serif;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
+.pill .gi{width:24px!important;height:24px!important}
+.pill b{display:grid;place-items:center;width:18px;height:18px;border-radius:5px;background:#3ec46d;font-size:15px;line-height:1;margin-left:2px}
+.gbuy{position:absolute;display:flex;align-items:center;justify-content:center;gap:4px;color:#fff;font-family:"Lilita One",sans-serif;
+border-radius:14px;text-shadow:0 2px 0 rgba(0,0,0,.3);letter-spacing:.02em}
+.gbuy.green{background:linear-gradient(#6fe08f,#27a34f);box-shadow:inset 0 -5px 0 #1b7a3a,0 3px 0 rgba(0,0,0,.25)}
+.gbuy.orange{background:linear-gradient(#ffd24d,#ff8a1f);box-shadow:inset 0 -7px 0 #c25a00,0 5px 0 rgba(0,0,0,.25)}
+.gbuy.gold{background:linear-gradient(#fff08a,#ffb31f);color:#5a2a00;text-shadow:none;box-shadow:inset 0 -6px 0 #c77f00,0 4px 0 rgba(0,0,0,.25)}
+.gbuy.purple{background:linear-gradient(#c58bff,#7a3be0);box-shadow:inset 0 -5px 0 #5122a8}
+.gbuy.grey{background:linear-gradient(#b8b8c8,#7d7d92);box-shadow:inset 0 -5px 0 #5a5a6e}
+.gbuy.small{position:static;height:34px;font-size:17px;padding:0 10px;min-width:66px}
+.gbuy::after{content:"";position:absolute;left:8%;right:8%;top:4px;height:30%;border-radius:10px;background:rgba(255,255,255,.28)}
+.hero-offer{position:absolute;left:12px;right:12px;top:92px;height:200px;border-radius:18px;
+background:linear-gradient(135deg,#ff8fb1,#ff5f6d 55%,#ffb347);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5),0 6px 0 rgba(0,0,0,.25);overflow:hidden}
+.ribbon{position:absolute;left:0;top:14px;background:#2a1466;color:#fff;font:400 17px "Lilita One";padding:5px 14px 5px 12px;border-radius:0 12px 12px 0}
+.mascot{position:absolute;left:8px;bottom:-6px;width:130px;height:130px}
+.contents{position:absolute;left:136px;top:56px;display:flex;align-items:center;gap:4px 8px;flex-wrap:wrap;width:110px;color:#fff;font:700 15px Fredoka}
+.contents .q{display:inline-flex;align-items:center;gap:2px}
+.timer{position:absolute;left:12px;top:50px;background:rgba(0,0,0,.4);color:#fff;font:700 14px Fredoka;padding:4px 9px;border-radius:10px}
+.burst{position:absolute;right:10px;top:10px;width:66px;height:66px;border-radius:50%;background:#ffe14d;color:#b3122e;
+font:400 16px/1 "Lilita One";display:grid;place-items:center;text-align:center;transform:rotate(12deg);box-shadow:0 0 0 4px #fff}
+.burst small{font-size:11px}
+.grid4{position:absolute;left:12px;right:12px;top:306px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{position:relative;height:100px;border-radius:14px;background:linear-gradient(#fff,#e9e2ff);box-shadow:0 4px 0 rgba(0,0,0,.25);
+display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;align-items:center;padding:8px;gap:0 6px}
+.item .iname{font:700 14px Fredoka;color:#2a1466;line-height:1.1}
+.item .gbuy{grid-column:1/3;justify-self:stretch;height:30px;font-size:16px}
+.item.best{box-shadow:0 0 0 3px #ffd83a,0 4px 0 rgba(0,0,0,.25)}
+.tagbest{position:absolute;left:50%;top:-10px;transform:translateX(-50%);background:#ffd83a;color:#7a3d00;font:400 12px "Lilita One";
+padding:2px 8px;border-radius:8px;white-space:nowrap;z-index:2}
+.sparkles i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;opacity:.5}
+.skybg{position:absolute;inset:0;background:linear-gradient(#56b6ff,#bfe6ff 60%,#ffe7c2)}
+#clouds .cl{position:absolute;background:#fff;border-radius:40px;opacity:.95}
+#clouds .cl::before,#clouds .cl::after{content:"";position:absolute;background:#fff;border-radius:50%}
+#clouds .cl::before{width:55%;height:160%;left:15%;top:-70%}#clouds .cl::after{width:40%;height:120%;right:10%;top:-45%}
+.hills{position:absolute;left:-40px;right:-40px;top:360px;height:140px;background:radial-gradient(60% 100% at 30% 100%,#5bbf5f 60%,transparent 61%),radial-gradient(60% 100% at 80% 100%,#4aa84f 60%,transparent 61%)}
+.runway{position:absolute;left:0;right:0;top:440px;bottom:0;background:linear-gradient(#58b85c,#3f9a45)}
+.runway::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:120px;margin-left:-60px;background:#555;clip-path:polygon(40% 0,60% 0,100% 100%,0 100%)}
+.planebig{position:absolute;left:69px;top:300px;width:210px;height:105px;transform:rotate(-8deg);filter:drop-shadow(0 12px 6px rgba(0,0,0,.25))}
+.hudbar{position:absolute;left:10px;right:10px;top:34px;display:flex;align-items:center;gap:6px}
+.hudbar .pill{height:26px;font-size:14px}
+.lvl{width:34px;height:34px;border-radius:50%;background:radial-gradient(#ffd83a,#ff9a1f);color:#5a2a00;font:400 18px "Lilita One";
+display:grid;place-items:center;box-shadow:0 0 0 3px #fff,0 3px 0 rgba(0,0,0,.3)}
+.logo{position:absolute;left:0;right:0;top:86px;text-align:center;font:400 44px/0.92 "Lilita One";color:#ffd83a;-webkit-text-stroke:3px #23305a;
+paint-order:stroke fill;text-shadow:0 5px 0 #23305a;transform:rotate(-3deg)}
+.sidebtn{position:absolute;width:68px;height:68px;border-radius:18px;display:grid;place-items:center;box-shadow:inset 0 -5px 0 rgba(0,0,0,.25),0 4px 0 rgba(0,0,0,.25)}
+.sidebtn em{position:absolute;bottom:-18px;left:-10px;right:-10px;text-align:center;font:400 14px "Lilita One";font-style:normal;color:#fff;
+-webkit-text-stroke:2px #23305a;paint-order:stroke fill}
+.sidebtn .note{position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:#ff3b30;color:#fff;
+font:400 15px/22px "Lilita One";text-align:center;font-style:normal;box-shadow:0 0 0 2px #fff}
+.navbar{position:absolute;left:0;right:0;bottom:0;height:62px;background:linear-gradient(#2d3f7a,#1c2a57);display:flex;justify-content:space-around;align-items:center;
+border-top:3px solid #4a63b5}
+.navbar .on{width:58px!important;height:58px!important;margin-top:-26px;border-radius:50%;background:radial-gradient(#ffd24d,#ff8a1f);box-shadow:0 0 0 4px #fff;padding:6px}
+.xbtn{position:absolute;width:38px;height:38px;border-radius:12px;background:linear-gradient(#ff7a5c,#e0463d);color:#fff;font:700 22px/38px Fredoka;
+text-align:center;box-shadow:inset 0 -4px 0 #a82a22}
+.row-offer,.grow{position:absolute;left:12px;right:12px;height:84px;border-radius:16px;background:linear-gradient(#fff,#e2ecff);display:flex;
+align-items:center;gap:10px;padding:0 10px;box-shadow:0 4px 0 rgba(0,0,0,.25);color:#1c2a57}
+.row-offer b,.grow b{display:block;font:700 17px Fredoka}.row-offer small,.grow small{display:block;font:500 13px Fredoka;color:#55607f}
+.row-offer>div:nth-child(2),.row-offer>div:nth-child(3):not(.gbuy),.grow>div:nth-child(2){flex:1}
+.row-offer.best{box-shadow:0 0 0 3px #ffd83a,0 4px 0 rgba(0,0,0,.25)}
+.subpill{position:absolute;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.4);color:#fff;font:700 13px Fredoka;padding:5px 12px;border-radius:12px;white-space:nowrap}
+.track2{position:absolute;left:12px;right:12px;top:130px;display:grid;gap:10px}
+.lane{background:rgba(255,255,255,.18);border-radius:14px;padding:26px 8px 8px;position:relative}
+.lane em{position:absolute;left:10px;top:5px;font:400 13px "Lilita One";font-style:normal;color:#fff;letter-spacing:.06em}
+.lane.prem{background:linear-gradient(rgba(255,216,58,.35),rgba(255,160,40,.25));box-shadow:inset 0 0 0 2px rgba(255,216,58,.7)}
+.lane>div{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.cell{height:62px;border-radius:12px;background:rgba(255,255,255,.85);display:grid;place-items:center;position:relative}
+.cell .lk{position:absolute;right:-4px;bottom:-4px;width:24px;height:24px}
+.cell.done::after{content:"✓";position:absolute;left:4px;top:2px;font:700 14px Fredoka;color:#27a34f}
+.passlvl{position:absolute;left:0;right:0;top:360px;text-align:center;color:#fff;font:700 14px Fredoka;letter-spacing:.06em}
+.prog{height:12px;border-radius:6px;background:rgba(0,0,0,.35);overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,#ffe14d,#ff8a1f)}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:44%;background:#fff;border-radius:22px 22px 0 0;color:#1f1f1f;padding:22px 22px;
+font-family:"DejaVu Sans",sans-serif;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
+.sheet b{font-size:19px}.sheet .sl{font-size:15px;color:#555;margin-top:10px}.sheet .sp{font-size:22px;font-weight:700;margin-top:6px}
+.sheet em{display:block;margin-top:26px;background:#1a73e8;color:#fff;text-align:center;padding:12px;border-radius:24px;font-style:normal;font-weight:700}
 /* jev */
 .legend{left:56px;top:318px;display:flex;gap:26px;font:600 20px "Chivo Mono",monospace;color:var(--ink2)}
 .legend span{display:flex;align-items:center;gap:9px}.legend i{width:16px;height:16px;border-radius:3px;display:block}
@@ -118,14 +189,10 @@ font-weight:800;font-size:34px}
 .goal .box.on:after{content:"";position:absolute;left:9px;top:3px;width:9px;height:17px;
 border:solid #fff;border-width:0 4px 4px 0;transform:rotate(45deg)}
 .goal small{margin-left:auto;font:500 20px "Chivo Mono",monospace;color:var(--mute)}
-.rec{position:absolute;top:10px;right:18px;font:800 15px "Chivo Mono",monospace;color:#fff;
+.rec{position:absolute;top:10px;left:18px;font:800 15px "Chivo Mono",monospace;color:#fff;
 display:flex;gap:6px;align-items:center;z-index:5}
 .rec i{width:12px;height:12px;border-radius:50%;background:#ff3b30;display:block}
 .blocked{left:500px;top:720px}
-.sheet{position:absolute;left:0;right:0;bottom:0;height:46%;background:#fff;border-radius:22px 22px 0 0;
-color:#111;padding:22px;font-weight:800;font-size:20px}
-.sheet em{display:block;margin-top:40px;background:#1a73e8;color:#fff;text-align:center;padding:12px;
-border-radius:24px;font-style:normal}
 /* scene 5 */
 .browser{left:56px;right:56px;top:290px;height:600px;background:#f3efe7;border-radius:14px;
 overflow:hidden;color:#16150f;box-shadow:0 30px 80px rgba(0,0,0,.55)}
@@ -192,14 +259,24 @@ color:#16150f}
 <div class="scene" id="s3">
   <div class="a title" id="s3t">Claude looks at screenshots and gameplay video.</div>
   <div class="phone a" id="s3p" style="left:70px;top:290px;width:360px;height:560px">
-    <div class="screen" style="background:linear-gradient(180deg,#1f2a5c,#3a2466)">
-      <div class="hud"><span>🪙 1,250</span><span>💎 30</span></div>
-      <div class="gtitle" style="top:52px;font-size:34px">SHOP</div>
-      <div style="position:absolute;left:16px;right:16px;top:100px;background:#ff5a4f;color:#fff;
-        border-radius:10px;padding:8px 12px;font:800 16px 'Chivo Mono',monospace">LIMITED OFFER · 02:14:59</div>
-      <div class="offer" style="top:150px">500 Gems<em>$4.99</em></div>
-      <div class="offer" style="top:254px">Starter Pack<em>$1.99</em></div>
-      <div class="offer" style="top:358px">Season Pass<em>$9.99</em></div>
+    <div class="screen" id="shop1" style="background:radial-gradient(120% 80% at 50% 0%,#6b3fd1,#2a1466 70%)">
+      <div class="sparkles" id="spark1"></div>
+      <div class="topbar"><span class="pill" data-i="coin">1,250<b>+</b></span><span class="pill" data-i="gem">30<b>+</b></span></div>
+      <div class="gt" style="top:44px;font-size:34px">SHOP</div>
+      <div class="hero-offer">
+        <div class="ribbon">STARTER BUNDLE</div>
+        <div class="mascot" id="mascot"></div>
+        <div class="contents"><span data-i="chest" data-s="46"></span><span class="q" data-i="gem" data-s="24">×500</span><span class="q" data-i="coin" data-s="24">×5,000</span></div>
+        <div class="timer">⏱ 02:14:59</div>
+        <div class="gbuy green" style="right:12px;bottom:12px;width:104px;height:44px;font-size:21px">$4.99</div>
+        <div class="burst">+300%<br><small>VALUE</small></div>
+      </div>
+      <div class="grid4">
+        <div class="item"><span data-i="gem" data-s="42"></span><div class="iname">80 Gems</div><div class="gbuy green small">$1.99</div></div>
+        <div class="item best"><div class="tagbest">BEST VALUE</div><span data-i="chest" data-s="42"></span><div class="iname">500 Gems</div><div class="gbuy green small">$4.99</div></div>
+        <div class="item"><span data-i="star" data-s="40"></span><div class="iname">Season Pass</div><div class="gbuy green small">$9.99</div></div>
+        <div class="item"><span data-i="ad" data-s="40"></span><div class="iname">No Ads</div><div class="gbuy green small">$2.99</div></div>
+      </div>
       <div class="scan" id="scan"></div>
     </div>
   </div>
@@ -233,34 +310,40 @@ color:#16150f}
   <div class="phone a" id="s4p" style="left:70px;top:270px;width:380px;height:680px">
     <div class="screen" id="pscreen">
       <div class="rec"><i id="recdot"></i><span id="rect">REC 00:00</span></div>
-      <div class="gs" id="g-menu" style="background:linear-gradient(180deg,#2a7ad6,#79c1ff 60%,#3fb56b 60%)">
-        <div class="hud" style="top:40px"><span>LV 7</span><span>🪙 3,420</span></div>
-        <div class="gtitle" style="top:120px;font-size:44px">SKY RUSH</div>
-        <div class="gbtn" style="left:250px;top:40px;width:0;height:0"></div>
-        <div class="gbtn" style="right:18px;top:200px;width:110px;height:56px;background:#e0463d;font-size:20px">SHOP</div>
-        <div class="gbtn" style="left:18px;top:270px;width:130px;height:56px;background:#7a4be0;font-size:20px">EVENTS</div>
-        <div class="gbtn" style="left:18px;top:340px;width:130px;height:56px;background:#2d5bd1;font-size:20px">GUILD</div>
-        <div class="gbtn" style="left:70px;right:70px;top:520px;height:84px;background:#f0a500;font-size:38px">PLAY</div>
+      <div class="gs" id="g-menu">
+        <div class="skybg"></div><div id="clouds"></div>
+        <div class="hills"></div><div class="runway"></div>
+        <div class="planebig" data-i="plane" data-s="210"></div>
+        <div class="hudbar"><span class="lvl">7</span><span class="pill" data-i="coin">3,420</span><span class="pill" data-i="gem">45</span><span class="pill" data-i="bolt">5/5</span></div>
+        <div class="logo">CLOUD<br>HOPPER</div>
+        <div class="sidebtn" style="right:14px;top:188px;background:linear-gradient(#ff7a5c,#e0463d)"><span data-i="cart" data-s="34"></span><em>SHOP</em></div>
+        <div class="sidebtn" style="left:14px;top:188px;background:linear-gradient(#c58bff,#8a4be0)"><span data-i="calendar" data-s="34"></span><em>EVENTS</em><i class="note">!</i></div>
+        <div class="sidebtn" style="left:14px;top:282px;background:linear-gradient(#6aa8ff,#2d5bd1)"><span data-i="shield" data-s="34"></span><em>GUILD</em></div>
+        <div class="gbuy orange" style="left:64px;right:64px;top:470px;height:80px;font-size:40px">PLAY</div>
+        <div class="navbar"><span data-i="cart" data-s="26"></span><span data-i="trophy" data-s="26"></span><span class="on" data-i="plane" data-s="40"></span><span data-i="shield" data-s="26"></span><span data-i="gift" data-s="26"></span></div>
       </div>
-      <div class="gs" id="g-shop" style="background:linear-gradient(180deg,#1f2a5c,#3a2466)">
-        <div class="gtitle" style="top:52px;font-size:34px">SHOP</div>
-        <div style="position:absolute;right:22px;top:50px;color:#fff;font:900 34px sans-serif">✕</div>
-        <div class="offer" style="top:130px">Coin Pile<em>$0.99</em></div>
-        <div class="offer" style="top:234px">Jet Upgrade Pack<em>$4.99</em></div>
-        <div class="offer" style="top:338px">No Ads<em>$2.99</em></div>
+      <div class="gs" id="g-shop" style="background:radial-gradient(120% 80% at 50% 0%,#3f7fe0,#142a66 70%)">
+        <div class="topbar"><span class="pill" data-i="coin">3,420<b>+</b></span><span class="pill" data-i="gem">45<b>+</b></span></div>
+        <div class="gt" style="top:48px;font-size:36px">SHOP</div><div class="xbtn" style="right:12px;top:40px">✕</div>
+        <div class="row-offer" style="top:108px"><span data-i="coin" data-s="54"></span><div><b>Coin Stack</b><small>×2,500 coins</small></div><div class="gbuy green small">$0.99</div></div>
+        <div class="row-offer best" style="top:206px"><div class="tagbest">BEST VALUE</div><span data-i="plane" data-s="70" data-a="#3ec46d"></span><div><b>Jet Pack Bundle</b><small>new plane + 300 gems</small></div><div class="gbuy green small">$4.99</div></div>
+        <div class="row-offer" style="top:304px"><span data-i="ad" data-s="50"></span><div><b>No Ads</b><small>forever</small></div><div class="gbuy green small">$2.99</div></div>
+        <div class="row-offer" style="top:402px"><span data-i="bolt" data-s="50"></span><div><b>Energy Refill</b><small>5 flights</small></div><div class="gbuy purple small"><span data-i="gem" data-s="18"></span>50</div></div>
       </div>
-      <div class="gs" id="g-event" style="background:linear-gradient(180deg,#5a1f7a,#c0397a)">
-        <div class="gtitle" style="top:70px;font-size:36px">SEASON 3</div>
-        <div style="position:absolute;left:0;right:0;top:124px;text-align:center;color:#fff;font:700 18px 'Chivo Mono',monospace">6 DAYS LEFT</div>
-        <div id="track" style="position:absolute;left:24px;right:24px;top:190px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px"></div>
-        <div class="gbtn" style="left:50px;right:50px;top:520px;height:70px;background:#ffd84d;color:#3a1250;font-size:26px">UNLOCK PREMIUM</div>
-        <div class="sheet a" id="sheet">Google Play<div style="font-weight:600;font-size:17px;margin-top:10px">Season 3 Premium · $9.99</div><em>Buy</em></div>
+      <div class="gs" id="g-event" style="background:radial-gradient(120% 80% at 50% 0%,#ff6fae,#5a1f7a 70%)">
+        <div class="gt" style="top:40px;font-size:30px">SKY FESTIVAL</div>
+        <div class="subpill" style="top:84px">SEASON 3 · 6 DAYS LEFT</div>
+        <div class="track2"><div class="lane"><em>FREE</em><div id="freeRow"></div></div><div class="lane prem"><em>PREMIUM</em><div id="premRow"></div></div><div class="prog"><i style="width:38%"></i></div></div>
+        <div class="passlvl">PASS LEVEL 4 / 30</div>
+        <div class="gbuy gold" style="left:40px;right:40px;top:402px;height:66px;font-size:24px">UNLOCK PREMIUM</div>
+        <div class="sheet a" id="sheet"><b>Confirm purchase</b><div class="sl">Sky Festival Premium Pass</div><div class="sp">$9.99</div><em>Buy</em></div>
       </div>
-      <div class="gs" id="g-guild" style="background:linear-gradient(180deg,#123a5c,#1f6a6a)">
-        <div class="gtitle" style="top:60px;font-size:36px">GUILDS</div>
-        <div class="offer" style="top:130px">Sky Wolves · 28/30</div>
-        <div class="offer" style="top:234px">Jet Set · 12/30</div>
-        <div class="offer" style="top:338px">Cloud Nine · 30/30</div>
+      <div class="gs" id="g-guild" style="background:radial-gradient(120% 80% at 50% 0%,#2fb5a3,#123a5c 70%)">
+        <div class="gt" style="top:44px;font-size:34px">GUILDS</div>
+        <div class="grow" style="top:110px"><span data-i="shield" data-s="54" data-a="#e0463d"></span><div><b>Sky Wolves</b><small>Lv 12 · 28/30</small></div><div class="gbuy green small">JOIN</div></div>
+        <div class="grow" style="top:196px"><span data-i="shield" data-s="54" data-a="#ffb703"></span><div><b>Jet Set</b><small>Lv 8 · 12/30</small></div><div class="gbuy green small">JOIN</div></div>
+        <div class="grow" style="top:282px"><span data-i="shield" data-s="54" data-a="#b15cff"></span><div><b>Cloud Nine</b><small>Lv 15 · 30/30</small></div><div class="gbuy grey small">FULL</div></div>
+        <div class="grow" style="top:368px"><span data-i="shield" data-s="54" data-a="#3ec46d"></span><div><b>Tailwinds</b><small>Lv 5 · 9/30</small></div><div class="gbuy green small">JOIN</div></div>
       </div>
       <div class="ripple" id="rip"></div>
     </div>
@@ -306,6 +389,7 @@ color:#16150f}
 <div class="progress" id="prog"></div>
 </div>
 <script>
+/*GAMES*/
 const D = /*DATA*/;
 const $ = id => document.getElementById(id);
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -324,20 +408,9 @@ function type(el, text, t, a, cps = 38) {
 function num(v) { return Math.round(v).toLocaleString('en-US'); }
 let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-// build: mosaic of abstract "gameplay" tiles
-const hues = [[42, 110, 214], [224, 70, 61], [47, 168, 106], [217, 165, 32], [122, 75, 224],
-  [217, 89, 38], [57, 135, 229], [30, 30, 36]];
+// build: mosaic of invented gameplay thumbnails
 for (let i = 0; i < 196; i++) {
-  const d = document.createElement('div'); const a = hues[Math.floor(rnd() * hues.length)];
-  const b = hues[Math.floor(rnd() * hues.length)];
-  d.style.background = `linear-gradient(${Math.floor(rnd() * 360)}deg,rgb(${a}),rgb(${b}))`;
-  for (let k = 0; k < 3; k++) {
-    const s = document.createElement('i'); const w = 10 + rnd() * 40;
-    s.style.cssText = `left:${rnd() * 70}%;top:${rnd() * 70}%;width:${w}px;height:${w * (.4 + rnd())}px;` +
-      `background:rgba(255,255,255,${.12 + rnd() * .3});border-radius:${rnd() > .5 ? 50 : 4}%`;
-    d.appendChild(s);
-  }
-  $('mosaic').appendChild(d);
+  const d = document.createElement('div'); d.innerHTML = GAMES.randomScene(100, 100); $('mosaic').appendChild(d);
 }
 // build: tag cloud
 const cloudItems = D.cloud;
@@ -346,15 +419,10 @@ cloudItems.forEach(([label, genre]) => {
   $('cloud').appendChild(s);
 });
 const cloudEls = [...$('cloud').children];
-// build: film strip
-for (let i = 0; i < 12; i++) {
-  const d = document.createElement('div'); const a = hues[i % hues.length], b = hues[(i * 3 + 2) % hues.length];
-  d.style.background = `linear-gradient(${i * 40}deg,rgb(${a}),rgb(${b}))`;
-  const s = document.createElement('i');
-  s.style.cssText = `position:absolute;left:${20 + (i * 17) % 60}%;top:${30 + (i * 13) % 40}%;width:26px;height:26px;` +
-    `border-radius:50%;background:rgba(255,255,255,.7)`;
-  d.appendChild(s); $('strip').appendChild(d);
-}
+// build: film strip of sampled frames
+GAMES.KINDS.concat(GAMES.KINDS).slice(0, 12).forEach((kind) => {
+  const d = document.createElement('div'); d.innerHTML = GAMES.scene(kind, 170, 104); $('strip').appendChild(d);
+});
 // build: Jev's decision rows (full four-way distributions) and benchmark tiles
 const SEG = ['var(--green)', 'var(--red)', 'var(--yellow)', 'var(--blue)'];
 const CHIP = { present: ['c-green', 'PRESENT'], unknown: ['c-yellow', 'NOT ENOUGH EVIDENCE'] };
@@ -376,13 +444,25 @@ D.jev.tiles.forEach(([value, decimals, prefix, suffix, label, note]) => {
 const tileEls = [...$('jtiles').children];
 $('jf').textContent = D.jev.foot;
 const qLabels = D.cloud.filter(([, g]) => !g).map(([l]) => l);
-// build: season track
-for (let i = 0; i < 10; i++) {
-  const c = document.createElement('div');
-  c.style.cssText = `height:62px;border-radius:10px;background:${i < 5 ? 'rgba(255,255,255,.22)' : 'rgba(255,216,77,.35)'};` +
-    `display:flex;align-items:center;justify-content:center;color:#fff;font:800 18px 'Chivo Mono',monospace`;
-  c.textContent = i < 5 ? '🎁' : '🔒'; $('track').appendChild(c);
-}
+// build: game art (icons, mascot, clouds, sparkles, season reward lanes)
+const freeR = [['coin'], ['gem'], ['chest'], ['coin'], ['gift']], premR = [['plane', '#b15cff'], ['gem'], ['chest'], ['star'], ['trophy']];
+freeR.forEach(([n], k) => { $('freeRow').insertAdjacentHTML('beforeend', `<div class="cell${k < 2 ? ' done' : ''}"><span data-i="${n}" data-s="${n === 'plane' ? 50 : 36}"></span></div>`); });
+premR.forEach(([n, c], k) => { $('premRow').insertAdjacentHTML('beforeend', `<div class="cell"><span data-i="${n}" data-s="${n === 'plane' ? 50 : 36}"${c ? ` data-a="${c}"` : ''}></span><span class="lk">${GAMES.icon.lock()}</span></div>`); });
+document.querySelectorAll('[data-i]').forEach((el) => {
+  const size = Number(el.dataset.s || 24), args = el.dataset.a ? [el.dataset.a] : [];
+  const svg = `<span class="gi" style="width:${size}px;height:${size * (el.dataset.i === 'plane' ? .5 : 1)}px">${GAMES.icon[el.dataset.i](...args)}</span>`;
+  if (el.classList.contains('pill')) el.insertAdjacentHTML('afterbegin', svg); else el.innerHTML = svg + el.innerHTML;
+});
+$('mascot').innerHTML = `<svg viewBox="0 0 130 130"><defs><radialGradient id="mb" cx="40%" cy="35%"><stop offset="0" stop-color="#b8f5a0"/><stop offset="1" stop-color="#3fae4a"/></radialGradient></defs>
+  <path d="M65 22c-4-14 8-20 16-18-2 10-8 14-16 18z" fill="#3ec46d" stroke="#1f6b2a" stroke-width="2.5"/><path d="M65 24c2-12-8-18-16-16 2 9 8 13 16 16z" fill="#56d493" stroke="#1f6b2a" stroke-width="2.5"/>
+  <ellipse cx="65" cy="80" rx="52" ry="48" fill="url(#mb)" stroke="#1f6b2a" stroke-width="3"/>
+  <ellipse cx="48" cy="74" rx="9" ry="12" fill="#fff"/><ellipse cx="82" cy="74" rx="9" ry="12" fill="#fff"/><circle cx="50" cy="77" r="5.5" fill="#1b1b2e"/><circle cx="84" cy="77" r="5.5" fill="#1b1b2e"/>
+  <circle cx="52" cy="74" r="2" fill="#fff"/><circle cx="86" cy="74" r="2" fill="#fff"/><ellipse cx="36" cy="92" rx="7" ry="4" fill="#ff8fb1" opacity=".8"/><ellipse cx="94" cy="92" rx="7" ry="4" fill="#ff8fb1" opacity=".8"/>
+  <path d="M55 98q10 9 20 0" fill="none" stroke="#1b1b2e" stroke-width="3" stroke-linecap="round"/></svg>`;
+[[20, 150, 110, 30], [200, 120, 90, 26], [120, 250, 130, 34], [260, 290, 80, 22]].forEach(([x, y, w, h]) => {
+  $('clouds').insertAdjacentHTML('beforeend', `<div class="cl" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"></div>`);
+});
+for (let k = 0; k < 26; k++) $('spark1').insertAdjacentHTML('beforeend', `<i style="left:${(k * 37) % 320}px;top:${(k * 53) % 520}px;opacity:${.2 + (k % 5) / 10}"></i>`);
 // build: website
 $('websub').textContent = D.web.sub;
 D.web.genres.forEach(([name, n]) => {
@@ -500,7 +580,7 @@ window.render = function (T) {
       ['g-menu', 34.4, 35.0], ['g-guild', 35.0, 99]];
     ['g-menu', 'g-shop', 'g-event', 'g-guild'].forEach(id => { $(id).style.opacity = 0; });
     for (const [id, a, b] of seq) if (t >= a && t < b) $(id).style.opacity = 1;
-    const taps = [[29.0, 275, 228], [30.6, 318, 72], [31.5, 83, 298], [34.7, 83, 368]];
+    const taps = [[29.0, 300, 222], [30.6, 329, 59], [31.5, 48, 222], [34.7, 48, 316]];
     let rip = 0, rx = 0, ry = 0;
     for (const [a, x, y] of taps) { const k = p(t, a, a + .45); if (k > 0 && k < 1) { rip = k; rx = x; ry = y; } }
     $('rip').style.opacity = rip ? 1 - rip : 0; $('rip').style.left = rx + 'px'; $('rip').style.top = ry + 'px';

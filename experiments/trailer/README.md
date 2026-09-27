@@ -16,7 +16,9 @@ the site. It has six parts:
    events and guild screens. A purchase screen is closed automatically.
 6. The site shows what is in the top 100 (real figures from `web/index.html`).
 
-The game screens are invented illustrations and are labelled as such. The counts come from
+The game screens are invented, original games drawn in code (`games.js`: icons, mini gameplay
+scenes in common genres, and full phone screens for a puzzle shop and a flight game). They copy
+no real game and are labelled as illustrations. The counts come from
 `taxonomy/`, Jev's figures from `experiments/jev-vs-legacy/results/`, and the top-100
 figures from the published dashboard data.
 
