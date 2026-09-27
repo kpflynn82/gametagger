@@ -19,6 +19,7 @@ API_HOSTS = frozenset(
         "api.steampowered.com",  # Steam most-played chart (benchmark cohort only)
         "en.wikipedia.org",
         "itunes.apple.com",
+        "apps.apple.com",  # App Store product pages, read by exact app ID for preview videos
         "www.googleapis.com",
         "play.google.com",  # Google Play listing pages, read by exact package name
         "www.appbrain.com",  # Google Play top-grossing chart (benchmark cohort only)
@@ -31,6 +32,7 @@ MEDIA_HOST_SUFFIXES = frozenset(
         "steamstatic.com",  # Steam screenshots and trailers
         "steamcdn-a.akamaihd.net",  # older Steam asset host (exact host only)
         "mzstatic.com",  # Apple App Store screenshots
+        "apptrailers.itunes.apple.com",  # App Store preview videos (exact host only)
         "ytimg.com",  # YouTube published still images
         "play-lh.googleusercontent.com",  # Google Play screenshots (exact host only)
         "play-games.googleusercontent.com",  # Google Play trailer video (exact host only)

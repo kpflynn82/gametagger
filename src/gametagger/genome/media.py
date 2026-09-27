@@ -168,23 +168,47 @@ def download_video(ref: MediaRef, directory: Path, video_id: str, *, fetch: Fetc
     )
 
 
-def download_media(refs, directory: Path, *, max_screenshots: int, video: bool, fetch=fetch_bytes):
-    """Download screenshots (per source) and the first trailer; failures become notes."""
+def _video_order(refs) -> list:
+    """Videos to try: the first from each source, then the rest, keeping store order."""
+    seen, first, rest = set(), [], []
+    for ref in refs:
+        (rest if ref.source_id in seen else first).append(ref)
+        seen.add(ref.source_id)
+    return first + rest
+
+
+def download_media(
+    refs,
+    directory: Path,
+    *,
+    max_screenshots: int,
+    video: bool,
+    max_videos: int = 1,
+    fetch=fetch_bytes,
+):
+    """Download screenshots (per source) and up to ``max_videos`` videos, one per source before a
+    second from any source. A video that fails is replaced by the next. Failures become notes."""
     images, videos, notes, counts = [], [], [], {}
     for ref in refs:
+        if ref.kind != "image":
+            continue
         try:
-            if ref.kind == "image":
-                if counts.get(ref.source_id, 0) >= max_screenshots:
-                    continue
-                n = counts[ref.source_id] = counts.get(ref.source_id, 0) + 1
-                name = "still" if ref.role == "video_still" else "shot"
-                images.append(
-                    download_image(ref, directory, f"{ref.source_id}-{name}{n}", fetch=fetch)
-                )
-            elif video and not videos:
-                videos.append(
-                    download_video(ref, directory, f"{ref.source_id}-trailer", fetch=fetch)
-                )
+            if counts.get(ref.source_id, 0) >= max_screenshots:
+                continue
+            n = counts[ref.source_id] = counts.get(ref.source_id, 0) + 1
+            name = "still" if ref.role == "video_still" else "shot"
+            images.append(download_image(ref, directory, f"{ref.source_id}-{name}{n}", fetch=fetch))
+        except (SourceError, ValueError) as exc:
+            notes.append(f"Skipped {ref.provider.lower()} ({exc}).")
+    taken: dict[str, int] = {}
+    for ref in _video_order([r for r in refs if r.kind != "image"]) if video else []:
+        if len(videos) >= max_videos:
+            break
+        n = taken.get(ref.source_id, 0) + 1
+        video_id = f"{ref.source_id}-trailer" + ("" if n == 1 else str(n))
+        try:
+            videos.append(download_video(ref, directory, video_id, fetch=fetch))
+            taken[ref.source_id] = n
         except (SourceError, ValueError) as exc:
             notes.append(f"Skipped {ref.provider.lower()} ({exc}).")
     return images, videos, notes

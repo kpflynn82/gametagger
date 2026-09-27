@@ -30,6 +30,7 @@ from gametagger.genome.media import (
 from gametagger.genome.net import SourceError, _AllowlistRedirect, check_url, host_allowed
 from gametagger.genome.sources import (
     MediaRef,
+    app_store_previews,
     app_store_source,
     google_play_reference,
     steam_source,
@@ -121,15 +122,74 @@ def test_steam_collects_screenshots_and_prefers_highlight_mp4():
     fetched = steam_source("4242", fetch=lambda url: steam_payload(movies))
     shots = [m for m in fetched.media if m.kind == "image"]
     assert len(shots) == 6  # the off-allowlist screenshot is dropped
-    trailer = fetched.media[-1]
+    trailer, other = [m for m in fetched.media if m.kind != "image"]
     assert trailer.title == "Launch Trailer" and trailer.role == "store_trailer"
     assert trailer.url == "https://video.akamai.steamstatic.com/launch.mp4"  # upgraded to https
+    assert other.title == "Old"  # further store videos follow the highlight
+
+
+def test_steam_prefers_gameplay_videos_and_caps_the_count():
+    movies = [
+        {
+            "name": f"Trailer {i}",
+            "highlight": i == 0,
+            "mp4": {"480": f"https://v.steamstatic.com/{i}.mp4"},
+        }
+        for i in range(5)
+    ]
+    movies.insert(
+        3, {"name": "Gameplay Walkthrough", "mp4": {"480": "https://v.steamstatic.com/g.mp4"}}
+    )
+    videos = [
+        m
+        for m in steam_source("4242", fetch=lambda url: steam_payload(movies)).media
+        if m.kind != "image"
+    ]
+    assert [v.title for v in videos] == ["Gameplay Walkthrough", "Trailer 0", "Trailer 1"]
 
 
 def test_steam_falls_back_to_hls_trailer():
     movies = [{"name": "T", "hls_h264": "https://video.fastly.steamstatic.com/t/master.m3u8"}]
     fetched = steam_source("4242", fetch=lambda url: steam_payload(movies))
     assert fetched.media[-1].kind == "hls"
+
+
+APP_PAGE = (
+    '<script>{"videoUrl":"https:\\/\\/apptrailers.itunes.apple.com\\/itunes-assets\\/a\\/P1_default.m3u8"}'
+    '<source src="https://apptrailers.itunes.apple.com/itunes-assets/b/P2_default.m3u8">'
+    '<source src="https://apptrailers.itunes.apple.com/itunes-assets/a/P1_default.m3u8">'
+    '<source src="https://evil.test/x/P3_default.m3u8"></script>'
+)
+
+
+def test_app_store_previews_come_from_the_product_page():
+    previews = app_store_previews(APP_PAGE)
+    assert [p.url.rsplit("/", 1)[1] for p in previews] == ["P1_default.m3u8", "P2_default.m3u8"]
+    assert all(p.kind == "hls" and p.role == "store_trailer" for p in previews)
+    assert previews[0].provider == "Apple App Store preview video"
+
+
+def test_app_store_source_adds_previews_only_when_asked(monkeypatch):
+    payload = {
+        "results": [{"kind": "software", "trackName": "Pocket Farm", "description": "Grow."}]
+    }
+    pages = []
+
+    def page(url):
+        pages.append(url)
+        return APP_PAGE
+
+    plain = app_store_source("123", fetch=lambda url: payload)
+    assert not [m for m in plain.media if m.kind != "image"] and not pages
+    fetched = app_store_source("123", fetch=lambda url: payload, fetch_page=page)
+    assert pages == ["https://apps.apple.com/us/app/id123"]
+    assert len([m for m in fetched.media if m.kind == "hls"]) == 2
+
+    def down(url):
+        raise SourceError("blocked")
+
+    failed = app_store_source("123", fetch=lambda url: payload, fetch_page=down)
+    assert failed.text is not None and "preview videos not read" in failed.notes[0]
 
 
 def test_app_store_lookup():
@@ -299,6 +359,24 @@ def test_download_media_caps_per_source_and_keeps_first_trailer(tmp_path):
     assert len(notes) == 1 and "could not be safely decoded" in notes[0]
     _, none, _ = download_media(refs, tmp_path / "t", max_screenshots=0, video=False, fetch=fetch)
     assert none == []
+
+
+def test_download_media_takes_one_video_per_source_first(tmp_path):
+    def ref(src, name):
+        return MediaRef("video", f"https://v.steamstatic.com/{name}.mp4", src, "store_trailer", src)
+
+    refs = [ref("steam", "a"), ref("steam", "b"), ref("googleplay", "c"), ref("appstore", "bad")]
+
+    def fetch(url, *, max_bytes, media, timeout=30):
+        return b"garbage" if "bad" in url else b"\x00\x00\x00\x18ftypmp42" + b"\x00" * 64
+
+    _, videos, notes = download_media(
+        refs, tmp_path, max_screenshots=0, video=True, max_videos=3, fetch=fetch
+    )
+    # The first video of each source comes before a second from any source; a failed one is
+    # replaced by the next candidate.
+    assert [v.id for v in videos] == ["steam-trailer", "googleplay-trailer", "steam-trailer2"]
+    assert len(notes) == 1
 
 
 # --------------------------------------------------------------------------- HLS
@@ -545,6 +623,21 @@ def test_unobserved_video_is_sampled_and_reported(taxonomy, trailer):
     assert prepared.observer_calls == 2 and len(prepared.observer_image_sizes) == 6
     assert prepared.observer_estimate()["approx_input_tokens_total"] > 0
     assert any("not observed" in w for w in prepared.warnings)
+
+
+@needs_ffmpeg
+def test_videos_share_the_per_game_burst_budget(taxonomy, trailer):
+    engine = GenomeEngine(taxonomy, load_vocabulary(taxonomy), RecordingGateway())
+    second = trailer.model_copy(update={"id": "appstore-trailer"})
+    third = trailer.model_copy(update={"id": "googleplay-trailer"})
+    prepared = GenomePipeline(engine, bursts=6, frames_per_burst=2).prepare(
+        Dossier(game_id="g", videos=[trailer, second]), observe=False
+    )
+    assert [m["bursts"] for m in prepared.media] == [3, 3]  # 6 shared, not 6 each
+    prepared = GenomePipeline(engine, bursts=4, frames_per_burst=2).prepare(
+        Dossier(game_id="g", videos=[trailer, second, third]), observe=False
+    )
+    assert [m["bursts"] for m in prepared.media] == [2, 2, 2]  # never fewer than 2 per video
 
 
 STEAM_NO_TRAILER = {

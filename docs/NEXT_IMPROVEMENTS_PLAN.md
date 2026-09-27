@@ -85,6 +85,12 @@ that stays legal and repeatable.
 which is where Jev is already strong. They rarely show the systems product and monetization
 teams ask about.
 
+**Status (September 27).**
+* Store videos are done: several Steam videos with gameplay-named ones first, and App Store
+  preview videos. See EXECUTION_STATUS.
+* Automated play on an emulator was drafted but not merged. This session's safety check blocked
+  running it as an autonomous agent, so it waits on the owner's decision.
+
 **Sources, in order of preference.**
 
 1. **Owner-supplied recordings (best quality, clearest rights).** A short capture protocol for

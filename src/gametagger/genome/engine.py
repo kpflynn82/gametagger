@@ -386,9 +386,12 @@ class GenomePipeline:
         for image in dossier.images:
             self._image(image, p, observe)
         if dossier.videos:
+            # The burst budget is per game, not per video: several videos share it (at least two
+            # bursts each), so more store videos widen coverage without multiplying cost.
+            windows = max(2, round(self.bursts / len(dossier.videos)))
             with tempfile.TemporaryDirectory(prefix="gametagger-frames-") as frames:
                 for video in dossier.videos:
-                    self._video(video, Path(frames), p, observe)
+                    self._video(video, Path(frames), p, observe, windows=windows)
         return p
 
     def _image(self, image, p: Prepared, observe: bool) -> None:
@@ -454,7 +457,9 @@ class GenomePipeline:
             }
         )
 
-    def _video(self, video, frames_dir: Path, p: Prepared, observe: bool) -> None:
+    def _video(
+        self, video, frames_dir: Path, p: Prepared, observe: bool, *, windows: int | None = None
+    ) -> None:
         summary = {
             "id": video.id,
             "kind": "video",
@@ -476,7 +481,7 @@ class GenomePipeline:
             return
         try:
             bursts = frame_bursts(
-                video, frames_dir, windows=self.bursts, frames=self.frames_per_burst
+                video, frames_dir, windows=windows or self.bursts, frames=self.frames_per_burst
             )
         except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
             p.warnings.append(f"Video '{video.id}' could not be sampled: {exc}")

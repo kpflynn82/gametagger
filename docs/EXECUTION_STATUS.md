@@ -185,3 +185,33 @@ descriptions with duplicate skipping cost $0.070 per game. Details:
 `experiments/jev-vs-legacy/cost-test/README.md`. The test cost $1.99 for descriptions plus Jev;
 ledger total $22.86 of the $39.99 cap. Also tagged Epic Plane Evolution for cloning work
 (`experiments/single-games/epic-plane-evolution/`, $0.097).
+
+### More store videos per game (September 27, 2026)
+
+Rich mode can now sample several store videos per game instead of one:
+* Steam videos named as gameplay come first, then highlights, up to three.
+* The Google Play trailer is kept.
+* App Store preview videos are read from the product page (`apps.apple.com`, exact app ID).
+  Apple asks that previews be captured from the app itself.
+
+Other details:
+* Videos are taken one per store before a second from any store, and a failed download is
+  replaced by the next.
+* The per-game burst budget is shared across videos (at least two bursts each), so Observer cost
+  does not grow with the number of videos.
+* Options: `gametagger-genome --max-videos` (default 2) and `gametagger-compare dossiers
+  --max-videos` (default 1, as in the benchmark).
+
+Free check on 12 cohort games with `--max-videos 3`:
+* All 4 Steam games got 2–3 videos (two had one video fail to download and fall back).
+* 5 of 8 mobile games got the Google Play trailer plus 1–2 App Store previews.
+* The other 3 (Royal Match, Kingshot, Last War) have no App Store preview and no direct Google
+  Play video; their only video is a YouTube trailer, which is recorded as a reference and not
+  downloaded.
+
+No paid run yet.
+
+Automated play (an AI pilot tapping through a game on an Android emulator to capture shop, event
+and social screens) was drafted but not merged. This session's safety check blocked running it
+as an autonomous agent, so the code was set aside unverified and the decision is with the owner.
+
