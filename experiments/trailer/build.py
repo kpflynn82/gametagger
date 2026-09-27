@@ -1,4 +1,4 @@
-"""Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 49 seconds).
+"""Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 54 seconds).
 
     uv run python experiments/trailer/build.py [--fonts fonts.css] [--still SECONDS]
 
@@ -6,6 +6,7 @@ The scenes live in ``scene.html``; ``render(t)`` draws the frame at time ``t``. 
 comes from the repository:
 
 * the tag and genre counts from ``taxonomy/``;
+* Jev's figures from the benchmark in ``experiments/jev-vs-legacy/results/``;
 * the top-100 figures from the published dashboard data in ``web/index.html``.
 
 Game screens are invented illustrations; no store screenshots, trailers or logos are used.
@@ -35,7 +36,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 CHROME = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell"
-FPS, SECONDS = 30, 49.0
+FPS, SECONDS = 30, 54.4
 
 RENDER_JS = """
 const { chromium } = require('playwright');
@@ -132,6 +133,47 @@ CLOUD_GENRES = [
 ]
 
 
+def jev() -> dict:
+    """Jev's scene: illustrative decisions for the mock shop, then measured benchmark figures."""
+    exp = ROOT / "experiments/jev-vs-legacy/results"
+    summary = json.loads((exp / "summary.json").read_text())
+    rich, old = summary["arms"]["rich"], summary["arms"]["legacy-deep"]
+    per_game = [json.loads(x) for x in (exp / "per-game.jsonl").read_text().splitlines()]
+    asked = statistics.median(g["questions_asked"] for g in per_game if g["arm"] == "rich")
+    decide_s = rich["latency_ms"]["stages"]["decide"]["median"] / 1000
+    jev_cents = 100 * rich["cost_usd"]["typesafe_total"] / rich["games"]
+    said_no = 100 * rich["steam_tags"]["all_mapped"]["contradiction_rate"]
+    old_no = 100 * old["steam_tags"]["all_mapped"]["contradiction_rate"]
+    sample = summary["sample"]
+    return {
+        "questions": int(asked),
+        # present, absent, not enough evidence, conflicting (illustrative, for the mock shop)
+        "rows": [
+            ["In-game purchases", [0.97, 0.01, 0.01, 0.01], "present"],
+            ["Live events", [0.91, 0.02, 0.06, 0.01], "present"],
+            ["Energy or stamina timers", [0.12, 0.03, 0.82, 0.03], "unknown"],
+            ["Guilds or clans", [0.08, 0.05, 0.84, 0.03], "unknown"],
+        ],
+        "tiles": [
+            [asked, 0, "", "", "questions per game", "median, every tag plus genre"],
+            [decide_s, 1, "", " s", "to decide a game", "median"],
+            [jev_cents, 1, "", "¢", "Jev's cost per game", "the Observer's image reading is extra"],
+            [
+                said_no,
+                1,
+                "",
+                "%",
+                "player tags wrongly called absent",
+                f"one big Claude prompt: {old_no:.1f}%",
+            ],
+        ],
+        "foot": f"Measured on the top 100 ({sample['steam_games']} Steam most-played + "
+        f'{sample["mobile_games"]} Google Play top-grossing, Sept 2026). "Wrongly called absent" '
+        "uses the 50 Steam games' top player tags; the big prompt is Claude Opus 4.8. "
+        "The per-tag decisions shown before are illustrative.",
+    }
+
+
 def data() -> dict:
     tags = yaml.safe_load((ROOT / "taxonomy/genome_tags_v1.yaml").read_text())
     genres = yaml.safe_load((ROOT / "taxonomy/vgms_v4.yaml").read_text())
@@ -171,12 +213,7 @@ def data() -> dict:
             "Three items are listed with prices of $4.99, $1.99 and $9.99.",
             "The top bar shows 1,250 coins and 30 gems.",
         ],
-        "decisions": [
-            ["In-game purchases", "present", 0.97],
-            ["Live events", "present", 0.91],
-            ["Energy or stamina timers", "unknown", None],
-            ["Guilds or clans", "unknown", None],
-        ],
+        "jev": jev(),
         "web": {
             "sub": f"{sample['steam_games']} Steam most-played + {sample['mobile_games']} "
             f"Google Play top-grossing · charts of Sept {sample['chart_dates']['steam'][-2:]} and "

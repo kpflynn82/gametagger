@@ -93,6 +93,22 @@ border-bottom:1px solid var(--line);gap:20px}
 .row .st{justify-self:end}
 .stamp{left:56px;right:56px;top:790px;font-weight:900;font-size:66px;letter-spacing:-.035em}
 .stamp em{font-style:normal;color:var(--red)}
+/* jev */
+.legend{left:56px;top:318px;display:flex;gap:26px;font:600 20px "Chivo Mono",monospace;color:var(--ink2)}
+.legend span{display:flex;align-items:center;gap:9px}.legend i{width:16px;height:16px;border-radius:3px;display:block}
+.ticker{left:56px;top:372px;font:600 22px "Chivo Mono",monospace;color:var(--ink)}
+.ticker b{color:var(--red)}
+#jr{top:420px}
+.row .stack{display:flex;gap:2px;height:22px}
+.row .stack i{display:block;height:100%;width:0}
+.row .stack i:first-child{border-radius:4px 0 0 4px}.row .stack i:last-child{border-radius:0 4px 4px 0}
+.jtiles{left:56px;right:56px;top:330px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.jtile{background:var(--bg2);border:2px solid var(--line);border-radius:12px;padding:20px 24px}
+.jtile b{display:block;font-weight:900;font-size:68px;letter-spacing:-.04em;line-height:1}
+.jtile span{display:block;font-weight:700;font-size:25px;margin-top:8px}
+.jtile small{display:block;font:500 17px "Chivo Mono",monospace;color:var(--mute);margin-top:6px}
+#js{top:760px}
+.jfoot{left:56px;right:56px;bottom:40px;font:500 15px/1.45 "Chivo Mono",monospace;color:var(--mute)}
 /* scene 4 */
 .goals{left:500px;right:56px;top:320px}
 .goal{display:flex;align-items:center;gap:18px;height:74px;border-bottom:1px solid var(--line);
@@ -175,7 +191,6 @@ color:#16150f}
 <!-- 3: look and decide -->
 <div class="scene" id="s3">
   <div class="a title" id="s3t">Claude looks at screenshots and gameplay video.</div>
-  <div class="a title" id="s3t2">Jev decides, tag by tag.</div>
   <div class="phone a" id="s3p" style="left:70px;top:290px;width:360px;height:560px">
     <div class="screen" style="background:linear-gradient(180deg,#1f2a5c,#3a2466)">
       <div class="hud"><span>🪙 1,250</span><span>💎 30</span></div>
@@ -194,12 +209,25 @@ color:#16150f}
   <div class="a obs" id="o3" style="top:570px"><small>STATEMENT 3</small><span></span></div>
   <div id="strip" class="a"></div>
   <div class="a stripcap" id="s3sc">+ store trailers and YouTube gameplay, sampled screen by screen</div>
-  <div class="a rows" id="s3r"></div>
-  <div class="a stamp" id="s3s">“Not seen” never means <em>“no.”</em></div>
   <div class="illus" id="s3i">ILLUSTRATIVE GAME SCREENS</div>
 </div>
 
-<!-- 4: plays -->
+<!-- 4: jev -->
+<div class="scene" id="sj">
+  <div class="a kicker" id="jk" style="left:56px;top:112px">MEET JEV · BY TYPESAFE</div>
+  <div class="a title" id="jt" style="top:150px">Jev decides. One question per tag, every answer weighed.</div>
+  <div class="a legend" id="jl"><span><i style="background:var(--green)"></i>present</span>
+    <span><i style="background:var(--red)"></i>absent</span>
+    <span><i style="background:var(--yellow)"></i>not enough evidence</span>
+    <span><i style="background:var(--blue)"></i>conflicting</span></div>
+  <div class="a ticker" id="jq"></div>
+  <div class="a rows" id="jr"></div>
+  <div class="a jtiles" id="jtiles"></div>
+  <div class="a stamp" id="js">“Not seen” never means <em>“no.”</em></div>
+  <div class="a jfoot" id="jf"></div>
+</div>
+
+<!-- 5: plays -->
 <div class="scene" id="s4">
   <div class="a title" id="s4t">Not enough evidence? It plays the game.</div>
   <div class="phone a" id="s4p" style="left:70px;top:270px;width:380px;height:680px">
@@ -249,7 +277,7 @@ color:#16150f}
   <div class="illus">ILLUSTRATIVE GAME SCREENS</div>
 </div>
 
-<!-- 5: website -->
+<!-- 6: website -->
 <div class="scene" id="s5">
   <div class="a title" id="s5t">Then it shows how the top games actually work.</div>
   <div class="a browser" id="s5b">
@@ -267,7 +295,7 @@ color:#16150f}
   </div>
 </div>
 
-<!-- 6: end -->
+<!-- 7: end -->
 <div class="scene" id="s6">
   <div class="endbg" id="endbg"></div>
   <div class="a endt" id="e1">GameTagger</div>
@@ -327,16 +355,27 @@ for (let i = 0; i < 12; i++) {
     `border-radius:50%;background:rgba(255,255,255,.7)`;
   d.appendChild(s); $('strip').appendChild(d);
 }
-// build: decision rows
-const stateStyle = { present: ['c-green', 'PRESENT', 'var(--green)'],
-  unknown: ['c-yellow', 'NOT ENOUGH EVIDENCE', 'var(--yellow)'] };
-D.decisions.forEach(([label, state, prob]) => {
+// build: Jev's decision rows (full four-way distributions) and benchmark tiles
+const SEG = ['var(--green)', 'var(--red)', 'var(--yellow)', 'var(--blue)'];
+const CHIP = { present: ['c-green', 'PRESENT'], unknown: ['c-yellow', 'NOT ENOUGH EVIDENCE'] };
+D.jev.rows.forEach(([label, dist, state]) => {
   const r = document.createElement('div'); r.className = 'row';
-  r.innerHTML = `<div class="n">${label}</div><div class="track"><div class="fill" style="background:${stateStyle[state][2]}"></div></div>` +
-    `<div class="st"><span class="chip ${stateStyle[state][0]}">${stateStyle[state][1]}${prob ? ' ' + prob.toFixed(2) : ''}</span></div>`;
-  r.dataset.p = prob || .5; r.style.opacity = 0; $('s3r').appendChild(r);
+  const top = Math.max(...dist);
+  r.innerHTML = `<div class="n">${label}</div><div class="stack">` +
+    dist.map((v, i) => `<i data-v="${v}" style="background:${SEG[i]}"></i>`).join('') + `</div>` +
+    `<div class="st"><span class="chip ${CHIP[state][0]}">${CHIP[state][1]} ${top.toFixed(2)}</span></div>`;
+  r.style.opacity = 0; $('jr').appendChild(r);
 });
-const rowEls = [...$('s3r').children];
+const rowEls = [...$('jr').children];
+D.jev.tiles.forEach(([value, decimals, prefix, suffix, label, note]) => {
+  const d = document.createElement('div'); d.className = 'jtile';
+  d.innerHTML = `<b data-v="${value}" data-d="${decimals}" data-p="${prefix}" data-s="${suffix}"></b>` +
+    `<span>${label}</span><small>${note}</small>`;
+  d.style.opacity = 0; $('jtiles').appendChild(d);
+});
+const tileEls = [...$('jtiles').children];
+$('jf').textContent = D.jev.foot;
+const qLabels = D.cloud.filter(([, g]) => !g).map(([l]) => l);
 // build: season track
 for (let i = 0; i < 10; i++) {
   const c = document.createElement('div');
@@ -359,14 +398,17 @@ D.web.games.forEach(([title, genre, n]) => {
 $('e3').innerHTML = D.endline;
 $('defh').textContent = D.def[0]; $('defp').textContent = D.def[1]; $('defe').textContent = D.def[2];
 
-const SCENES = [['s1', 0, 8], ['s2', 8, 16.4], ['s3', 16.4, 27], ['s4', 27, 37.2], ['s5', 37.2, 44], ['s6', 44, 49]];
-window.DURATION = 49;
+const SH = 5.4;  // the Jev scene pushes everything after it back by this much
+const SCENES = [['s1', 0, 8], ['s2', 8, 16.4], ['s3', 16.4, 22.6], ['sj', 22.6, 32.4],
+  ['s4', 32.4, 42.6], ['s5', 42.6, 49.4], ['s6', 49.4, 54.4]];
+window.DURATION = 54.4;
 
-window.render = function (t) {
+window.render = function (T) {
+  const t = T;
   $('prog').style.width = `${100 * t / window.DURATION}%`;
   const idx = SCENES.findIndex(([, a, b]) => t >= a && t < b);
-  $('count').textContent = `0${Math.min(5, Math.max(1, idx + 1))} / 05`;
-  $('count').parentElement.style.opacity = t > 44.2 ? 0 : 1;
+  $('count').textContent = `0${Math.min(6, Math.max(1, idx + 1))} / 06`;
+  $('count').parentElement.style.opacity = t > 49.6 ? 0 : 1;
   for (const [id, a, b] of SCENES) {
     const el = $(id); const o = id === 's6' ? (t >= a ? 1 : 0) : Math.min(p(t, a - .01, a + .35), 1 - p(t, b - .45, b));
     el.style.opacity = o; el.style.display = o > 0 ? 'block' : 'none';
@@ -401,11 +443,10 @@ window.render = function (t) {
     set($('s2d'), kd, 0, (1 - kd) * 60, .96 + .04 * kd);
     rise($('s2c'), t, 14.4);
   }
-  // 3 · look and decide
-  if (t > 16.3 && t < 27.2) {
-    const swap = eo(p(t, 21.6, 22.1));
-    rise($('s3t'), t, 16.6); $('s3t').style.opacity *= 1 - swap;
-    const k2 = eo(p(t, 21.9, 22.4)); set($('s3t2'), k2, 0, (1 - k2) * 36);
+  // 3 · Claude looks
+  if (t > 16.3 && t < 22.8) {
+    const swap = 0;
+    rise($('s3t'), t, 16.6);
     const kp = eo(p(t, 16.8, 17.4)); set($('s3p'), kp * (1 - swap), (1 - kp) * -60, 0);
     const sc = p(t, 17.3, 19.2);
     $('scan').style.opacity = sc > 0 && sc < 1 ? 1 : 0; $('scan').style.top = `${sc * 100}%`;
@@ -419,17 +460,34 @@ window.render = function (t) {
     $('strip').style.opacity = ks * (1 - swap);
     $('strip').style.transform = `translateX(${56 - (t - 19.2) * 70}px)`;
     rise($('s3sc'), t, 19.6); $('s3sc').style.opacity *= 1 - swap;
-    $('s3r').style.opacity = 1; $('s3r').style.transform = 'none';
-    rowEls.forEach((r, i) => {
-      const a = 22.4 + i * .35; const k = eo(p(t, a, a + .45));
-      set(r, k, (1 - k) * 40, 0);
-      r.querySelector('.fill').style.width = `${100 * Number(r.dataset.p) * eo(p(t, a + .2, a + 1.2))}%`;
-      r.querySelector('.st').style.opacity = p(t, a + 1.0, a + 1.3);
-    });
-    rise($('s3s'), t, 24.6, .6, 30);
-    $('s3i').style.opacity = 1 - swap;
   }
-  // 4 · plays
+  // 4 · Jev decides
+  if (t > 22.5 && t < 32.6) {
+    rise($('jk'), t, 22.9, .5, 20); rise($('jt'), t, 23.1);
+    const rowsOut = eo(p(t, 27.9, 28.3));
+    rise($('jl'), t, 23.7, .5, 16); $('jl').style.opacity *= 1 - rowsOut;
+    const n = Math.max(1, Math.round(D.jev.questions * eio(p(t, 24.0, 27.6))));
+    $('jq').innerHTML = `Question <b>${n}</b> of ${D.jev.questions} · Does the game have: ${qLabels[n % qLabels.length]}?`;
+    rise($('jq'), t, 23.9, .4, 12); $('jq').style.opacity *= 1 - rowsOut;
+    $('jr').style.opacity = 1 - rowsOut; $('jr').style.transform = 'none';
+    rowEls.forEach((r, i) => {
+      const a = 24.4 + i * .45; const k = eo(p(t, a, a + .45));
+      set(r, k, (1 - k) * 40, 0);
+      const g = eo(p(t, a + .2, a + 1.1));
+      r.querySelectorAll('.stack i').forEach(seg => { seg.style.width = `${100 * Number(seg.dataset.v) * g}%`; });
+      r.querySelector('.st').style.opacity = p(t, a + .9, a + 1.2);
+    });
+    $('jtiles').style.opacity = 1; $('jtiles').style.transform = 'none';
+    tileEls.forEach((d, i) => {
+      const a = 28.4 + i * .25; const k = eo(p(t, a, a + .45)); set(d, k, 0, (1 - k) * 30);
+      const b = d.querySelector('b'); const v = Number(b.dataset.v) * eo(p(t, a, a + 1.1));
+      b.textContent = b.dataset.p + v.toFixed(Number(b.dataset.d)) + b.dataset.s;
+    });
+    rise($('jf'), t, 28.8, .5, 10);
+    rise($('js'), t, 30.1, .6, 30);
+  }
+  { const t = T - SH;
+  // 5 · plays (times below are before the shift)
   if (t > 26.9 && t < 37.4) {
     rise($('s4t'), t, 27.3);
     const kp = eo(p(t, 27.5, 28.1)); set($('s4p'), kp, 0, (1 - kp) * 80);
@@ -456,7 +514,7 @@ window.render = function (t) {
     $('m5').textContent = t > 35.6 ? 'next' : '';
     rise($('s4c'), t, 35.4);
   }
-  // 5 · website
+  // 6 · website
   if (t > 37 && t < 44.2) {
     rise($('s5t'), t, 37.5);
     const kb = eo(p(t, 37.7, 38.4));
@@ -469,10 +527,11 @@ window.render = function (t) {
     $('t2').textContent = num(D.web.games_total * eo(p(t, 38.7, 39.9)));
     [...$('grows').children].forEach((r, i) => { const k = eo(p(t, 39.6 + i * .3, 40.1 + i * .3)); set(r, k, (1 - k) * 30, 0); });
   }
-  // 6 · end
+  // 7 · end
   if (t >= 43.9) {
     const k = eio(p(t, 44, 44.6)); $('endbg').style.transform = `scaleY(${k})`;
     rise($('e1'), t, 44.5, .6, 50); rise($('e2'), t, 45.1); rise($('e3'), t, 45.7);
+  }
   }
 };
 window.render(0);
