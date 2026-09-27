@@ -37,6 +37,7 @@ from gametagger.domain import (
 )
 from gametagger.evidence import prepare_evidence
 from gametagger.genome.dossier import (
+    CAPTURE_PHRASES,
     Claim,
     Dossier,
     Reference,
@@ -51,6 +52,7 @@ from gametagger.genome.media import (
     ffmpeg_available,
     frame_bursts,
 )
+from gametagger.genome.systems import SYSTEMS_STRATEGY, systems_bursts
 from gametagger.genome.vocabulary import (
     EVIDENCE_POLICY_VERSION,
     GenomeVocabulary,
@@ -339,6 +341,7 @@ class Prepared:
     media: list[dict[str, Any]] = field(default_factory=list)
     observer_image_sizes: list[tuple[int, int]] = field(default_factory=list)
     observer_calls: int = 0
+    burst_strategies: list[str] = field(default_factory=list)
 
     def observer_estimate(self) -> dict[str, Any]:
         """Rough Claude vision input tokens for describing every screenshot and burst."""
@@ -361,7 +364,11 @@ class GenomePipeline:
         *,
         bursts: int = 6,
         frames_per_burst: int = 6,
+        burst_strategy: Literal["even", "systems", "auto"] = "even",
     ):
+        if burst_strategy not in {"even", "systems", "auto"}:
+            raise ValueError("burst_strategy must be even, systems or auto")
+        self.burst_strategy = burst_strategy
         self.engine = engine
         self.observer = observer
         self.ordered_observer = ordered_observer
@@ -457,9 +464,16 @@ class GenomePipeline:
             }
         )
 
+    def strategy_for(self, video) -> str:
+        """auto: scene-change sampling for long play footage, even bursts for store trailers."""
+        if self.burst_strategy != "auto":
+            return self.burst_strategy
+        return "systems" if video.role in {"community_video", "gameplay_recording"} else "even"
+
     def _video(
         self, video, frames_dir: Path, p: Prepared, observe: bool, *, windows: int | None = None
     ) -> None:
+        strategy = self.strategy_for(video)
         summary = {
             "id": video.id,
             "kind": "video",
@@ -474,21 +488,38 @@ class GenomePipeline:
             "excluded_statements": 0,
             "errors": 0,
             "claims": 0,
+            "strategy": strategy,
         }
+        if video.capture_method:
+            summary["capture_method"] = video.capture_method
         p.media.append(summary)
         if not ffmpeg_available():
             p.warnings.append(f"Video '{video.id}' skipped: install ffmpeg to sample trailers.")
             return
         try:
-            bursts = frame_bursts(
-                video, frames_dir, windows=windows or self.bursts, frames=self.frames_per_burst
-            )
+            if strategy == "systems":
+                bursts = systems_bursts(
+                    video, frames_dir, windows=windows or self.bursts, frames=self.frames_per_burst
+                )
+            else:
+                bursts = [
+                    (window, frames, None)
+                    for window, frames in frame_bursts(
+                        video,
+                        frames_dir,
+                        windows=windows or self.bursts,
+                        frames=self.frames_per_burst,
+                    )
+                ]
         except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
             p.warnings.append(f"Video '{video.id}' could not be sampled: {exc}")
             return
         if not bursts:
             p.warnings.append(f"Video '{video.id}' produced no usable frame bursts.")
             return
+        name = SYSTEMS_STRATEGY if strategy == "systems" else WINDOW_STRATEGY
+        if name not in p.burst_strategies:
+            p.burst_strategies.append(name)
         p.evidence.append(
             EvidenceItem(
                 id=video.id,
@@ -496,10 +527,17 @@ class GenomePipeline:
                 source=video.provider,
                 uri=video.path,
                 sha256=bursts[0][0].source_asset_sha256,
+                metadata=(
+                    {"role": video.role, "capture_method": video.capture_method}
+                    if video.capture_method
+                    else {}
+                ),
             )
         )
-        summary.update(bursts=len(bursts), frames=sum(len(w.frames) for w, _ in bursts))
-        for _, frames in bursts:
+        summary.update(bursts=len(bursts), frames=sum(len(w.frames) for w, _, _ in bursts))
+        if any(c for _, _, c in bursts):
+            summary["capture_contexts"] = [c for _, _, c in bursts]
+        for _, frames, _ in bursts:
             for data in frames:
                 with Image.open(io.BytesIO(data)) as decoded:
                     p.observer_image_sizes.append(decoded.size)
@@ -508,7 +546,7 @@ class GenomePipeline:
             p.warnings.append(f"Video '{video.id}' was sampled but not observed in this run.")
             return
         summary["observed"] = True
-        for index, (window, frames) in enumerate(bursts):
+        for index, (window, frames, capture) in enumerate(bursts):
             attempt = self.ordered_observer.observe_window(window, frames=frames)
             malformed = getattr(self.ordered_observer, "last_quarantined", None) or []
             p.quarantined.extend(
@@ -532,7 +570,12 @@ class GenomePipeline:
             context = attempt.output.context
             summary["contexts"][context] = summary["contexts"].get(context, 0) + 1
             new, rejected, excluded = burst_claims(
-                video.id, index, window, attempt.output, self.boundary
+                video.id,
+                index,
+                window,
+                attempt.output,
+                self.boundary,
+                capture=CAPTURE_PHRASES.get(capture) if capture else None,
             )
             p.claims.extend(new)
             p.quarantined.extend(rejected)
@@ -598,7 +641,7 @@ class GenomePipeline:
                 "returned_decision_model": returned,
                 "observer_model": getattr(self.observer, "model", None),
                 "ordered_observer_model": getattr(self.ordered_observer, "model", None),
-                "burst_strategy": WINDOW_STRATEGY if dossier.videos else None,
+                "burst_strategy": "; ".join(p.burst_strategies) or None,
                 "observer_requests": p.observer_requests,
                 "questions_asked": len(asked),
                 "requests": len(executor.attempts),

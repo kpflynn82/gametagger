@@ -14,6 +14,13 @@ import re
 import sys
 from pathlib import Path
 
+from gametagger.comparison.budget import (
+    BudgetExceeded,
+    Ledger,
+    Meter,
+    MeteredAnthropic,
+    metered_jev_gateway,
+)
 from gametagger.config import anthropic_api_key
 from gametagger.decisions.jev import TypeSafeGateway
 from gametagger.decisions.mock import MockJevGateway
@@ -87,6 +94,13 @@ def build_parser() -> argparse.ArgumentParser:
         "--bursts", type=int, default=6, help="Frame bursts per game, shared by its videos"
     )
     media.add_argument("--frames-per-burst", type=int, default=6)
+    media.add_argument(
+        "--burst-strategy",
+        choices=["auto", "even", "systems"],
+        default="auto",
+        help="auto (default): scene-change sampling for YouTube gameplay and play recordings, "
+        "even spacing for store trailers. systems: scene-change for every video.",
+    )
 
     parser.add_argument("--categories", help="Comma-separated Genome categories to ask")
     parser.add_argument("--max-questions-per-request", type=int, default=60)
@@ -107,6 +121,17 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--observer-model", default=os.environ.get("OBSERVER_MODEL"))
     parser.add_argument("--jev-model", default=os.environ.get("TYPESAFE_MODEL", "jev-latest"))
+    parser.add_argument(
+        "--budget-usd",
+        type=float,
+        help="Hard spending cap for a live run, shared with every run booked in --ledger",
+    )
+    parser.add_argument(
+        "--ledger",
+        type=Path,
+        default=Path("benchmark-runs") / "ledger.jsonl",
+        help="Spending ledger (default benchmark-runs/ledger.jsonl, shared with the benchmark)",
+    )
     parser.add_argument("--format", choices=["summary", "json"], default="summary")
     parser.add_argument("--output", type=Path, help="Write the result to this file")
     parser.add_argument("--save-dossier", type=Path, help="Write the assembled dossier here")
@@ -294,6 +319,7 @@ def main(argv: list[str] | None = None) -> None:
     categories = [c.strip() for c in args.categories.split(",")] if args.categories else None
     has_media = bool(dossier.images or dossier.videos)
 
+    meter = None
     if args.live:
         if not os.environ.get("TYPESAFE_API_KEY"):
             parser.error("Set TYPESAFE_API_KEY in the environment for a live run")
@@ -303,7 +329,19 @@ def main(argv: list[str] | None = None) -> None:
                 "GAMETAGGER_ANTHROPIC_API_KEY) and --observer-model "
                 "(a vision-capable Claude model), or use --no-media for a text-only run"
             )
-        gateway = TypeSafeGateway(model=args.jev_model)
+        if args.budget_usd is not None:
+            try:
+                ledger = Ledger(args.ledger, args.budget_usd)
+            except ValueError as exc:
+                parser.error(str(exc))
+            meter = Meter(ledger, "genome-cli", dossier.game_id, [])
+            print(
+                f"Budget: ${ledger.spent:.2f} already spent of ${ledger.cap:.2f} ({args.ledger}).",
+                file=sys.stderr,
+            )
+            gateway = metered_jev_gateway(meter, args.jev_model)
+        else:
+            gateway = TypeSafeGateway(model=args.jev_model)
     else:
         gateway = MockJevGateway()
     try:
@@ -326,6 +364,8 @@ def main(argv: list[str] | None = None) -> None:
 
         workspace = os.environ.get("ANTHROPIC_WORKSPACE_ID")
         client = Anthropic(api_key=anthropic_api_key(), timeout=60, max_retries=0)
+        if meter is not None:
+            client = MeteredAnthropic(client, meter)
         observer = AnthropicObserver(
             taxonomy,
             model=args.observer_model,
@@ -350,6 +390,7 @@ def main(argv: list[str] | None = None) -> None:
             ordered,
             bursts=args.bursts,
             frames_per_burst=args.frames_per_burst,
+            burst_strategy=args.burst_strategy,
         )
         prepared = pipeline.prepare(dossier, observe=False)
     except ValueError as exc:
@@ -408,7 +449,17 @@ def main(argv: list[str] | None = None) -> None:
             f"{vision['approx_input_tokens_total']:,} vision input tokens (rough estimates).",
             file=sys.stderr,
         )
-    profile = pipeline.analyze(dossier, offline=args.offline)
+    try:
+        profile = pipeline.analyze(dossier, offline=args.offline)
+    except BudgetExceeded as exc:  # also AccountStopped
+        parser.exit(2, f"Stopped: {exc}\n")
+    if args.live and meter is not None:
+        spent = sum(c.get("cost_usd") or 0 for c in meter.calls)
+        print(
+            f"This run cost ${spent:.4f}; ledger total ${meter.ledger.spent:.2f} of "
+            f"${meter.ledger.cap:.2f}.",
+            file=sys.stderr,
+        )
     payload = profile.model_dump_json(indent=2)
     if args.output:
         args.output.write_text(payload + "\n")
