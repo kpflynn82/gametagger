@@ -41,6 +41,15 @@ identical evidence. It records per-stage timing, tokens and list-price cost unde
 cap, then scores against Steam user tags and a blinded owner review. Only `run --live` costs
 money. See [the benchmark runbook](docs/JEV_VS_LEGACY_BENCHMARK.md).
 
+Long play footage gets better evidence than store media, from two sources. Both run on the
+owner's Mac; see [the Mac guide](docs/MAC_TOOLS.md):
+
+* **YouTube gameplay videos.** `gametagger-genome --youtube-gameplay N` downloads the videos
+  and samples them screen by screen (`--burst-strategy auto`).
+* **Automated Android play.** `gametagger-play <package>` lets Claude play the game on an
+  emulator, records the screen, and writes a dossier. Shops, timers and event screens are
+  labelled with capture contexts.
+
 ## Setup
 
 Python 3.11 or newer is required. The checked-in `uv.lock` records the tested dependencies.

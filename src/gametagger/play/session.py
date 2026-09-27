@@ -159,14 +159,17 @@ class PlaySession:
 
     def apply(self, action: PlayerAction, size: tuple[int, int]) -> None:
         w, h = size
+        fw, fh = action.frame_size or size
+
+        def px(x: int, y: int) -> tuple[int, int]:
+            return grid(x, fw, w), grid(y, fh, h)
+
         if action.action == "tap":
-            self.device.tap(grid(action.x, w), grid(action.y, h))
+            self.device.tap(*px(action.x, action.y))
         elif action.action == "long_press":
-            self.device.long_press(grid(action.x, w), grid(action.y, h))
+            self.device.long_press(*px(action.x, action.y))
         elif action.action == "swipe":
-            self.device.swipe(
-                grid(action.x, w), grid(action.y, h), grid(action.x2, w), grid(action.y2, h)
-            )
+            self.device.swipe(*px(action.x, action.y), *px(action.x2, action.y2))
         elif action.action == "back":
             self.device.back()
         elif action.action == "type_text":

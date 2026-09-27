@@ -11,10 +11,10 @@ same burst budget on what is distinct:
 2. Segment: consecutive seconds whose hashes stay close are one *still screen* (menus, shops and
    dialogs hold still); everything else is *motion* (play).
 3. Deduplicate: a still screen that looks like an earlier one is a repeat and is dropped.
-4. Allocate: about a third of the bursts go to motion, spread over the play time; the rest go
-   to distinct still screens, spread over the video. When a recording carries capture contexts
-   (shop, event, social...), still screens are taken round-robin across contexts so each gets a
-   burst before any gets two.
+4. Allocate: a recording's capture contexts for systems screens (shop, event, social...) get
+   one burst each first. About a third of the rest goes to motion, spread over the play time,
+   and the remainder to distinct still screens, round-robin across contexts. Budget still left
+   fills the largest gaps, so a video with few scene changes is still covered end to end.
 5. Extract: motion bursts keep the usual frame count; still screens get 3 frames, since six
    copies of a still menu add cost and nothing else.
 
@@ -160,6 +160,11 @@ class BurstPlan:
     context: str | None
 
 
+# Capture contexts worth a guaranteed burst: the screens trailers hide.
+SYSTEM_CONTEXTS = ("shop", "currency", "event", "social", "progression", "ad")
+MIN_GAP = 3.0  # seconds: a fill-in burst never lands this close to another burst
+
+
 def plan_bursts(
     segments: list[Segment],
     windows: int,
@@ -167,37 +172,75 @@ def plan_bursts(
     frames: int,
     spacing: float,
     duration: float,
+    captures: list[tuple[float, float, str]] = (),
 ) -> list[BurstPlan]:
-    """Choose burst start times: distinct still screens first, then motion spread over play."""
+    """Choose burst start times for the per-video budget of ``windows`` bursts.
+
+    1. One burst for each systems capture context the recording reached (shop, event, ...).
+    2. Distinct still screens, round-robin across contexts when there are any.
+    3. About a third of the budget for motion, spread over play time.
+    4. Anything left fills the largest gaps, so a video with few scene changes (a puzzle
+       board that barely moves, say) still gets its whole budget spread across it.
+    """
+    still_frames = min(frames, STILL_FRAMES)
+    still_span, full_span = (still_frames - 1) * spacing, (frames - 1) * spacing
+    plans: list[BurstPlan] = []
+
+    def add(start: float, count: int, still: bool, context: str | None) -> None:
+        span = (count - 1) * spacing
+        latest = max(0.0, duration - span - 0.05)
+        plans.append(BurstPlan(round(min(max(start, 0.0), latest), 3), count, still, context))
+
+    def still_start(s: Segment) -> float:
+        # Half a second in, past any transition, but inside the still stretch when possible.
+        return min(s.start + 0.5, max(s.start, s.end - still_span))
+
     stills = distinct_stills(segments)
+    used: set[int] = set()
+    # 1. systems contexts
+    seen: set[str] = set()
+    for c_start, c_end, context in captures:
+        if context not in SYSTEM_CONTEXTS or context in seen or len(plans) >= windows:
+            continue
+        seen.add(context)
+        overlapping = [
+            (i, Segment(max(s.start, c_start), min(s.end, c_end), True, s.hash))
+            for i, s in enumerate(stills)
+            if min(s.end, c_end) - max(s.start, c_start) >= 1.0
+        ]
+        if overlapping:
+            i, part = overlapping[0]
+            used.add(i)
+            add(still_start(part), still_frames, True, context)
+        else:
+            add(c_start + min(1.0, (c_end - c_start) / 2), frames, False, context)
+    # 2 and 3. distinct stills and motion share what is left
+    left = windows - len(plans)
+    others = [s for i, s in enumerate(stills) if i not in used]
     motion = [s for s in segments if not s.still]
     motion_time = sum(s.length for s in motion)
-    want_motion = max(1, round(windows * MOTION_SHARE)) if motion_time > 0 else 0
-    want_motion = min(want_motion, windows)
-    want_stills = min(len(stills), windows - want_motion)
-    want_motion = windows - want_stills if motion_time > 0 else 0  # unused still slots
-    has_contexts = any(s.context for s in stills)
-    picked = _round_robin(stills, want_stills) if has_contexts else _spread(stills, want_stills)
-
-    plans = []
-    still_frames = min(frames, STILL_FRAMES)
+    want_motion = min(left, max(1, round(windows * MOTION_SHARE))) if motion_time > 0 else 0
+    want_stills = min(len(others), left - want_motion)
+    has_contexts = any(s.context for s in others)
+    picked = _round_robin(others, want_stills) if has_contexts else _spread(others, want_stills)
     for s in picked:
-        span = (still_frames - 1) * spacing
-        # Half a second in, past any transition, but inside the still stretch when possible.
-        start = min(s.start + 0.5, max(s.start, s.end - span))
-        latest = max(0.0, duration - span - 0.05)
-        plans.append(BurstPlan(min(start, latest), still_frames, True, s.context))
-    span = (frames - 1) * spacing
+        add(still_start(s), still_frames, True, s.context)
+    want_motion = min(want_motion, windows - len(plans))
     for k in range(want_motion):
         # Positions spread evenly over total motion time, mapped back onto the video.
         target = motion_time * (k + 0.5) / want_motion
         for s in motion:
             if target <= s.length:
-                start = s.start + min(target, max(0.0, s.length - span))
-                latest = max(0.0, duration - span - 0.05)
-                plans.append(BurstPlan(min(start, latest), frames, False, s.context))
+                add(s.start + min(target, max(0.0, s.length - full_span)), frames, False, s.context)
                 break
             target -= s.length
+    # 4. fill the largest gaps
+    while len(plans) < windows and duration > 0:
+        edges = sorted({0.0, duration, *(p.start for p in plans)})
+        gap, a = max((b - a, a) for a, b in zip(edges, edges[1:], strict=False))
+        if gap < 2 * MIN_GAP:
+            break
+        add(a + gap / 2, frames, False, None)
     return sorted(plans, key=lambda p: p.start)
 
 
@@ -227,7 +270,10 @@ def systems_bursts(
     duration, offset, _, _ = probe_video(path)
     segments = segment_scans(scan_video(path, duration, offset))
     label_contexts(segments, video)
-    plans = plan_bursts(segments, windows, frames=frames, spacing=spacing, duration=duration)
+    captures = [(c.start_seconds, c.end_seconds, c.context) for c in video.capture_contexts]
+    plans = plan_bursts(
+        segments, windows, frames=frames, spacing=spacing, duration=duration, captures=captures
+    )
     directory.mkdir(parents=True, exist_ok=True)
     results = []
     for i, plan in enumerate(plans):

@@ -238,3 +238,61 @@ Live check:
 
 An automated-play pilot (AI tapping through a game on an emulator) was drafted, then dropped at
 the owner's request; it was never merged.
+
+### Scene-change sampler and automated Android player (September 27, 2026)
+
+The owner asked for the YouTube video analyzer and an Android game player, with AI play
+(reversing the earlier drop) and up to $2 of paid testing. Branch
+`claude/android-player-youtube-systems`.
+
+Built:
+* **Scene-change ("systems") sampling** (`genome/systems.py`, Improvement 3):
+  * One 8x8 average hash per second (free, local ffmpeg, decoded in 60-second chunks to stay
+    under the decoder's CPU limit) splits a video into still screens and motion.
+  * Repeated still screens are dropped. A recording's systems contexts (shop, currency, event,
+    social, progression, ad) each get one burst first.
+  * About a third of the rest goes to motion, then distinct stills round-robin across
+    contexts, and any budget left fills the largest gaps.
+  * Still screens get 3-frame bursts instead of 6.
+  * `--burst-strategy auto` (the new `gametagger-genome` default) uses it for
+    `community_video` and `gameplay_recording`. Store trailers keep `even-bursts-v1`, so the
+    benchmark's sampling is unchanged.
+* **Recordings in dossiers.**
+  * `VideoSource` gains the role `gameplay_recording`, plus `capture_method`
+    (owner / automated_play) and `capture_contexts` (time ranges with a fixed label set).
+  * Claims read `[menu, 12.0-12.8s, capture context: the shop] ...`.
+  * When a recording is present, Jev's reading guide adds that a capture context is
+    navigation, not observation. States without recordings are byte-identical to before.
+* **`gametagger-genome --budget-usd/--ledger`.** Live runs can now be capped on the shared
+  ledger, as `gametagger-compare` already was.
+* **`gametagger-play`** (`src/gametagger/play/`):
+  * adb device wrapper, segmented screen recording joined at a constant 10 fps.
+  * Claude picks one action per screenshot through a validated `act` tool, playing normally
+    for 5 minutes and then visiting the systems goals.
+  * Code-level guards close purchase screens (activity names containing billing, purchase and
+    similar words) and undo leaving the game.
+  * Outputs: a recording, steps, screenshots, a session summary and a dossier.
+  * `--check` is free; live runs need `--budget-usd`.
+* **Mac scripts** (`scripts/mac/`) and the plain-language guide `docs/MAC_TOOLS.md`. Keys are
+  read from `~/Claude Workspace/gametagger/gametagger.env`, outside the repository.
+
+Measured:
+* 417 tests pass offline (1 live test skipped); ruff clean.
+* **Live check, $0.0468 in total** (cloud ledger, 8 Claude calls; no Jev, store or YouTube
+  call, because this cloud session cannot reach them). The player agent was run on three
+  synthetic game screens (menu, shop, purchase confirmation):
+  * The first version asked for coordinates on a 0-1000 grid. Claude answered in image
+    pixels, so the tap meant for "Cancel" would have hit "Buy".
+  * Coordinates are now image pixels, scaled to the device. Sonnet 5 then hit Shop and Cancel
+    correctly and scrolled the shop instead of tapping a price.
+  * Haiku 4.5 returned an invalid action name on the shop screen. The player defaults to
+    Sonnet 5, and five malformed answers in a row stop a session.
+* The owner set `OBSERVER_MODEL=claude-sonnet-5` for this work.
+
+Not done:
+* No real emulator session and no real YouTube download has run. Both need the owner's Mac;
+  see `docs/MAC_TOOLS.md`.
+* Suggested first paid test, within the $2 authorization: one YouTube game and one 6-minute
+  Android session.
+* Pilot comparison (unknown share and blind-review accuracy on monetization and live-ops tags,
+  recorded versus store-only) is still open, as in Improvement 3.

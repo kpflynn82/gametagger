@@ -107,12 +107,15 @@ def test_package_names_are_validated():
 def test_actions_are_validated_and_mapped_to_pixels():
     assert PlayerAction(screen="shop", action="tap", x=500, y=1000, note="n").x == 500
     with pytest.raises(ValueError):
+        PlayerAction(screen="shop", action="tap", x=-1, y=5, note="negative")
+    with pytest.raises(ValueError):
         PlayerAction(screen="shop", action="tap", note="missing point")
     with pytest.raises(ValueError):
         PlayerAction(screen="energy_system", action="back", note="unknown screen label")
     action = PlayerAction(screen="event", action="back", goals_reached=["event", "win"], note="")
     assert action.goals_reached == ["event"]
-    assert to_device(0, 1080) == 0 and to_device(1000, 1080) == 1079
+    assert to_device(0, 576, 1080) == 0 and to_device(575, 576, 1080) == 1079
+    assert to_device(288, 576, 1080) == 540 and to_device(900, 576, 1080) == 1079
     jpeg, size = model_image(png())
     assert size == (1080, 1920)
     with Image.open(io.BytesIO(jpeg)) as image:
@@ -150,7 +153,9 @@ def test_agent_sends_one_image_and_the_workspace_header():
     agent = PlayAgent(client, model="claude-sonnet-5", workspace_id="wrkspc_x")
     action = agent.decide(png(), "Minute 0.1")
     assert action.action == "tap" and agent.last_usage["input_tokens"] == 1500
+    assert action.frame_size == (576, 1024)
     request = client.requests[0]
+    assert request["messages"][0]["content"][1]["text"].startswith("Screenshot size: 576x1024")
     blocks = request["messages"][0]["content"]
     assert [b["type"] for b in blocks] == ["image", "text"]
     assert request["extra_headers"] == {"anthropic-workspace-id": "wrkspc_x"}
@@ -167,6 +172,9 @@ def test_agent_rejects_missing_or_malformed_tool_calls():
         agent.decide(png(), "")
     with pytest.raises(ValueError, match="Malformed"):
         agent.decide(png(), "")
+    outside = {"screen": "shop", "action": "tap", "x": 600, "y": 10, "note": ""}
+    with pytest.raises(ValueError, match="outside the screenshot"):
+        PlayAgent(FakeClient([outside]), model="m").decide(png(), "")
 
 
 # --------------------------------------------------------------------------- session
@@ -281,7 +289,7 @@ def test_session_plays_records_and_writes_a_taggable_dossier(tmp_path):
     result = s.run()
     assert result.stop_reason == "all_goals_reached"
     assert set(result.goals_reached) == set(GOALS)
-    assert ("tap", 540, 960) in device.calls  # 500/1000 of a 1080x1920 screen
+    assert ("tap", 938, 938) in device.calls  # (500, 500) on the 576x1024 image the model saw
     dossier = Dossier.model_validate_json(result.dossier_path.read_text())
     video = dossier.videos[0]
     assert video.role == "gameplay_recording" and video.capture_method == "automated_play"

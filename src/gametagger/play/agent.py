@@ -47,8 +47,9 @@ The session has two phases:
 Goals: {"; ".join(f"{k}: {v}" for k, v in GOALS.items())}
 
 Every turn you see the current screenshot and call the act tool exactly once.
-Coordinates are on a 0-1000 grid over the screenshot: x=0 is the left edge, x=1000 the right
-edge, y=0 the top, y=1000 the bottom. Aim at the centre of the button.
+Coordinates are pixels in the screenshot exactly as you see it (its size is given each turn):
+x counts from the left edge, y from the top. Aim at the centre of the button you mean, and
+check that the point you give lies inside that button and not a neighbouring one.
 
 Rules you must always follow:
 - Never buy anything. Do not tap prices, "Buy", "Purchase" or payment buttons; if a payment or
@@ -79,10 +80,10 @@ ACT_TOOL = {
         "properties": {
             "screen": {"type": "string", "enum": SCREENS},
             "action": {"type": "string", "enum": list(get_args(Action))},
-            "x": {"type": "integer", "minimum": 0, "maximum": 1000},
-            "y": {"type": "integer", "minimum": 0, "maximum": 1000},
-            "x2": {"type": "integer", "minimum": 0, "maximum": 1000},
-            "y2": {"type": "integer", "minimum": 0, "maximum": 1000},
+            "x": {"type": "integer", "minimum": 0},
+            "y": {"type": "integer", "minimum": 0},
+            "x2": {"type": "integer", "minimum": 0},
+            "y2": {"type": "integer", "minimum": 0},
             "text": {"type": "string", "maxLength": 16},
             "seconds": {"type": "number", "minimum": 1, "maximum": 10},
             "goals_reached": {"type": "array", "items": {"type": "string", "enum": list(GOALS)}},
@@ -97,14 +98,16 @@ class PlayerAction(BaseModel):
     model_config = ConfigDict(extra="ignore")
     screen: CaptureContext
     action: Action
-    x: int | None = Field(default=None, ge=0, le=1000)
-    y: int | None = Field(default=None, ge=0, le=1000)
-    x2: int | None = Field(default=None, ge=0, le=1000)
-    y2: int | None = Field(default=None, ge=0, le=1000)
+    x: int | None = Field(default=None, ge=0)
+    y: int | None = Field(default=None, ge=0)
+    x2: int | None = Field(default=None, ge=0)
+    y2: int | None = Field(default=None, ge=0)
     text: str | None = Field(default=None, max_length=16)
     seconds: float | None = Field(default=None, ge=1, le=10)
     goals_reached: list[str] = Field(default_factory=list)
     note: str = Field(default="", max_length=400)
+    # Size of the image the model saw; set by PlayAgent, never by the model.
+    frame_size: tuple[int, int] | None = None
 
     @model_validator(mode="after")
     def needs_points(self):
@@ -129,9 +132,10 @@ def model_image(png: bytes) -> tuple[bytes, tuple[int, int]]:
     return out.getvalue(), size
 
 
-def to_device(value: int, size: int) -> int:
-    """0-1000 grid position to a device pixel."""
-    return round(value / 1000 * (size - 1))
+def to_device(value: int, frame_side: int, device_side: int) -> int:
+    """A pixel in the image the model saw, to the same point on the device screen."""
+    scaled = round(value * (device_side - 1) / max(1, frame_side - 1))
+    return min(max(scaled, 0), device_side - 1)
 
 
 class PlayAgent:
@@ -150,6 +154,9 @@ class PlayAgent:
     def decide(self, screenshot_png: bytes, situation: str) -> PlayerAction:
         """One action for this screenshot. Raises ValueError on a malformed answer."""
         jpeg, _ = model_image(screenshot_png)
+        with Image.open(io.BytesIO(jpeg)) as shown:
+            frame = shown.size
+        situation = f"Screenshot size: {frame[0]}x{frame[1]} pixels.\n{situation}"
         kwargs: dict[str, Any] = dict(
             model=self.model,
             max_tokens=self.max_tokens,
@@ -193,6 +200,12 @@ class PlayAgent:
         if block is None:
             raise ValueError("The model did not call the act tool")
         try:
-            return PlayerAction.model_validate(block.input)
+            action = PlayerAction.model_validate({**block.input, "frame_size": None})
         except ValidationError as exc:
             raise ValueError(f"Malformed action: {exc.errors()[0]['msg']}") from None
+        for name, limit in (("x", frame[0]), ("y", frame[1]), ("x2", frame[0]), ("y2", frame[1])):
+            value = getattr(action, name)
+            if value is not None and value >= limit:
+                raise ValueError(f"Malformed action: {name}={value} is outside the screenshot")
+        action.frame_size = frame
+        return action

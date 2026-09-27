@@ -82,10 +82,26 @@ def test_plan_gives_still_screens_short_bursts_and_spreads_motion():
     assert [p.start for p in plans] == sorted(p.start for p in plans)
 
 
-def test_plan_without_motion_uses_only_distinct_stills():
+def test_plan_without_motion_takes_distinct_stills_then_fills_gaps():
     segments = [Segment(0, 5, True, A), Segment(5, 10, True, B), Segment(10, 15, True, A)]
     plans = plan_bursts(segments, 6, frames=6, spacing=0.4, duration=15)
-    assert len(plans) == 2 and all(p.still for p in plans)
+    assert [p.start for p in plans if p.still] == [0.5, 5.5]
+    starts = [p.start for p in plans]
+    assert all(b - a >= 3 for a, b in zip(starts, starts[1:], strict=False))
+
+
+def test_one_long_still_video_still_spends_its_budget_across_it():
+    plans = plan_bursts([Segment(0, 600, True, A)], 6, frames=6, spacing=0.4, duration=600)
+    starts = [p.start for p in plans]
+    assert len(plans) == 6 and starts[0] < 5 and starts[-1] > 250
+
+
+def test_each_systems_context_gets_a_burst_even_without_a_still_screen():
+    segments = [Segment(0, 40, True, A)]
+    captures = [(0.0, 20.0, "first_session"), (20.0, 30.0, "shop"), (30.0, 40.0, "event")]
+    plans = plan_bursts(segments, 4, frames=6, spacing=0.4, duration=40, captures=captures)
+    by_context = {p.context: p.start for p in plans if p.context}
+    assert 20 <= by_context["shop"] < 30 and 30 <= by_context["event"] < 40
 
 
 def test_capture_contexts_are_taken_round_robin():
