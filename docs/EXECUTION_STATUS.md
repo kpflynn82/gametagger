@@ -301,3 +301,26 @@ Not done:
   Android session.
 * Pilot comparison (unknown share and blind-review accuracy on monetization and live-ops tags,
   recorded versus store-only) is still open, as in Improvement 3.
+
+### Fold & Fly prototype and the Epic Plane teardown (September 29, 2026)
+
+A separate project, kept outside this repository: a fairer version of Epic Plane Evolution,
+built overnight in three.js from the teardown player's measurements. No GameTagger code
+changed and no paid run came from this repository; the game itself makes no model calls.
+
+* Where it lives: the owner's Mac at `~/Claude Workspace/fold-and-fly` (a git clone, with
+  `fold-and-fly.bundle` beside it); the playable "Fold & Fly" artifact on claude.ai; the
+  "Fold & Fly: morning report" doc.
+* The original, measured by the teardown player (first 8 hours, one free player): 0.97 forced
+  ads per flight, 19.4 per play-hour, 27 s median each (Pangle and AppLovin). After 13 hours
+  of play it was still on its first plane, and an energy limit (5 flights, refilled on a timer)
+  appeared at about 11 hours. From about 8 hours in, two copies of the teardown player wrote
+  into the same run, so only per-flight ratios are used after that point.
+* Paid spend: none here. The teardown player (separate project) shows $6.95 in its own ledger
+  for that run.
+* Fold & Fly, simulated (8 bot players, 6 hours): 0.11 forced ads per flight for a good player
+  (11% of the original) and 0.05 for a casual one; 4.1 per hour (21%) and 6.6 per hour (34%).
+  A 12-minute gap brings the casual player to 23%.
+* Left for the owner: name and theme, pacing, the ad gap, the remove-ads price, feel on a real
+  phone, and permission to install the teardown player's optional-ad guard (commit `375c332`
+  in the teardown-player repository).
