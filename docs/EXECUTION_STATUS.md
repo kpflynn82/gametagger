@@ -324,3 +324,8 @@ changed and no paid run came from this repository; the game itself makes no mode
 * Left for the owner: name and theme, pacing, the ad gap, the remove-ads price, feel on a real
   phone, and permission to install the teardown player's optional-ad guard (commit `375c332`
   in the teardown-player repository).
+* Update, same day (owner feedback: "fairly basic, geometric shapes"; "planes start almost fully
+  upgraded"): each plane now starts as a bare fuselage and gains wings and propeller, tail,
+  cockpit and paint, boosters and gold trim every five levels, as in the original. Trees, bushes,
+  flowers, rocks and ruin pieces are now real models from CC0 packs (Quaternius Stylized Nature
+  MegaKit, Kenney kits), with the owner's approval. Still no paid runs.
