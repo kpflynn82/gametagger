@@ -329,3 +329,21 @@ changed and no paid run came from this repository; the game itself makes no mode
   cockpit and paint, boosters and gold trim every five levels, as in the original. Trees, bushes,
   flowers, rocks and ruin pieces are now real models from CC0 packs (Quaternius Stylized Nature
   MegaKit, Kenney kits), with the owner's approval. Still no paid runs.
+* Update, September 29-30 (owner feedback: the bare fuselage "looks like a rotating turd"; put it
+  in the slingshot as in the original; wings before the propeller; one-time rocket jets; real
+  ground effect; a UI like the original's, including its shaking gift chest):
+  * The first plane is a card tube on wheels with an open nose and cockpit, resting in the
+    slingshot's rope in the hangar, shot from the front right as in the original. Stages are now
+    bare fuselage, wings, propeller (the engine), tail and rudder, cockpit and paint, big
+    propeller and gold trim.
+  * Ground effect follows the FAA handbook's figures (about 25% less induced drag at a quarter
+    span, 50% at a tenth), measured against a 15 m "span" so it can be used in play.
+  * Rocket jets: unlocked with wings (3 free), bought with coins or found in the chest, one pair
+    per flight. The chest opens every 2 hours (first after 3 flights), with no ad.
+  * Hangar, launch and flight report restyled after the original.
+  * Simulated again (6 bots): a good player sees 0.107 forced ads per flight (11% of the
+    original) and 5.1 per hour (26%, up from 21% because the glider stage has shorter flights);
+    a casual player 0.047 per flight (5%) and 6.7 per hour (34%). First new plane at 23 minutes
+    (was 22). Bots don't use rocket jets.
+  * Tests: 22 rule tests and 10 browser checks pass. The Mac copy is at commit `bae3613`.
+    Still no paid runs.
