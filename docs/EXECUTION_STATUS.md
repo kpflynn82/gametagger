@@ -347,3 +347,18 @@ changed and no paid run came from this repository; the game itself makes no mode
     (was 22). Bots don't use rocket jets.
   * Tests: 22 rule tests and 10 browser checks pass. The Mac copy is at commit `bae3613`.
     Still no paid runs.
+* Update, September 30 (owner: upgrade prices should rise with a new chassis; give course 2 an
+  interesting theme, such as a town or a beach):
+  * Prices now step up when the wings (x1.3) and the propeller (x1.65) are fitted, and each new
+    plane's prices and coin values scale up together. Before, the propeller stage's upgrades cost
+    about a third of a flight each, and the old course's winnings bought 15-21 of a new plane's
+    upgrades at once (its whole bare-fuselage stage); now 8-12. `sim/pace.mjs` measures this.
+  * Course 2 is a harbour town built from Kenney's CC0 building blocks (mirrored in the public
+    repository Paumen/Taalei): a beach and promenade, main streets, a square with a fountain and
+    clock tower, the harbour with docks, boats and a lighthouse, a winding alley with bridges.
+    It draws in 156-233 calls and 229-344k triangles, about as much as course 1.
+  * Simulated (6 bots): good players 0.107 forced ads per flight (11% of the original), 5.3 per
+    hour (27%), all six planes in 4 hours; casual players 0.048 per flight (5%), 6.7 per hour
+    (34%).
+  * Tests: 24 rule tests and 10 browser checks pass. The Mac copy is at commit `4d8b078`. Still
+    no paid runs.
