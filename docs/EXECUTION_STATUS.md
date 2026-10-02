@@ -404,6 +404,8 @@ a playable prototype in days). Branch `claude/trailer-prototype`. No paid calls.
   because the headless browser here cannot play H.264.
 
 Left for the owner:
+* Merge PR #14 to put the film and the Play-testing section on gametagger.vercel.app (CI and
+  the Vercel preview passed; the session's merge was blocked pending the owner's review).
 * Whether to name the original game in the video (it is named in the repository docs).
 * The end-card line ("Learn why hit games work. Prototype the next one in days.") and the
   length; a 30-second cut for social could reuse the Play, Learn and Build scenes.
