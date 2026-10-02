@@ -1,0 +1,90 @@
+{
+ "fps": 30,
+ "width": 390,
+ "height": 844,
+ "clips": [
+  {
+   "name": "hangar",
+   "start": 0,
+   "seconds": 2.9,
+   "taps": [
+    {
+     "t": 0.7,
+     "x": 195,
+     "y": 803
+    },
+    {
+     "t": 2.1,
+     "x": 69,
+     "y": 803
+    }
+   ]
+  },
+  {
+   "name": "launch",
+   "start": 2.9,
+   "seconds": 2.3,
+   "taps": []
+  },
+  {
+   "name": "valley",
+   "start": 5.2,
+   "seconds": 2.5,
+   "taps": []
+  },
+  {
+   "name": "finish",
+   "start": 7.7,
+   "seconds": 3.1,
+   "taps": []
+  },
+  {
+   "name": "town",
+   "start": 10.8,
+   "seconds": 4.2,
+   "taps": [
+    {
+     "t": 1.9,
+     "x": 334,
+     "y": 776
+    }
+   ]
+  },
+  {
+   "name": "plane1",
+   "start": 15,
+   "seconds": 0.7,
+   "taps": []
+  },
+  {
+   "name": "plane2",
+   "start": 15.7,
+   "seconds": 0.7,
+   "taps": []
+  },
+  {
+   "name": "plane3",
+   "start": 16.4,
+   "seconds": 0.7,
+   "taps": []
+  },
+  {
+   "name": "plane4",
+   "start": 17.1,
+   "seconds": 0.7,
+   "taps": []
+  },
+  {
+   "name": "plane5",
+   "start": 17.8,
+   "seconds": 0.7,
+   "taps": []
+  },
+  {
+   "name": "plane6",
+   "start": 18.5,
+   "seconds": 0.7,
+   "taps": []
+  }
+ ]
+}

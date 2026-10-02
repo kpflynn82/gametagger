@@ -144,26 +144,6 @@ border-top:3px solid #4a63b5}
 .navbar .on{width:58px!important;height:58px!important;margin-top:-26px;border-radius:50%;background:radial-gradient(#ffd24d,#ff8a1f);box-shadow:0 0 0 4px #fff;padding:6px}
 .xbtn{position:absolute;width:38px;height:38px;border-radius:12px;background:linear-gradient(#ff7a5c,#e0463d);color:#fff;font:700 22px/38px Fredoka;
 text-align:center;box-shadow:inset 0 -4px 0 #a82a22}
-.row-offer,.grow{position:absolute;left:12px;right:12px;height:84px;border-radius:16px;background:linear-gradient(#fff,#e2ecff);display:flex;
-align-items:center;gap:10px;padding:0 10px;box-shadow:0 4px 0 rgba(0,0,0,.25);color:#1c2a57}
-.row-offer b,.grow b{display:block;font:700 17px Fredoka}.row-offer small,.grow small{display:block;font:500 13px Fredoka;color:#55607f}
-.row-offer>div:nth-child(2),.row-offer>div:nth-child(3):not(.gbuy),.grow>div:nth-child(2){flex:1}
-.row-offer.best{box-shadow:0 0 0 3px #ffd83a,0 4px 0 rgba(0,0,0,.25)}
-.subpill{position:absolute;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.4);color:#fff;font:700 13px Fredoka;padding:5px 12px;border-radius:12px;white-space:nowrap}
-.track2{position:absolute;left:12px;right:12px;top:130px;display:grid;gap:10px}
-.lane{background:rgba(255,255,255,.18);border-radius:14px;padding:26px 8px 8px;position:relative}
-.lane em{position:absolute;left:10px;top:5px;font:400 13px "Lilita One";font-style:normal;color:#fff;letter-spacing:.06em}
-.lane.prem{background:linear-gradient(rgba(255,216,58,.35),rgba(255,160,40,.25));box-shadow:inset 0 0 0 2px rgba(255,216,58,.7)}
-.lane>div{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.cell{height:62px;border-radius:12px;background:rgba(255,255,255,.85);display:grid;place-items:center;position:relative}
-.cell .lk{position:absolute;right:-4px;bottom:-4px;width:24px;height:24px}
-.cell.done::after{content:"✓";position:absolute;left:4px;top:2px;font:700 14px Fredoka;color:#27a34f}
-.passlvl{position:absolute;left:0;right:0;top:360px;text-align:center;color:#fff;font:700 14px Fredoka;letter-spacing:.06em}
-.prog{height:12px;border-radius:6px;background:rgba(0,0,0,.35);overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,#ffe14d,#ff8a1f)}
-.sheet{position:absolute;left:0;right:0;bottom:0;height:44%;background:#fff;border-radius:22px 22px 0 0;color:#1f1f1f;padding:22px 22px;
-font-family:"DejaVu Sans",sans-serif;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
-.sheet b{font-size:19px}.sheet .sl{font-size:15px;color:#555;margin-top:10px}.sheet .sp{font-size:22px;font-weight:700;margin-top:6px}
-.sheet em{display:block;margin-top:26px;background:#1a73e8;color:#fff;text-align:center;padding:12px;border-radius:24px;font-style:normal;font-weight:700}
 /* jev */
 .legend{left:56px;top:318px;display:flex;gap:26px;font:600 20px "Chivo Mono",monospace;color:var(--ink2)}
 .legend span{display:flex;align-items:center;gap:9px}.legend i{width:16px;height:16px;border-radius:3px;display:block}
@@ -180,19 +160,10 @@ font-family:"DejaVu Sans",sans-serif;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
 .jtile small{display:block;font:500 17px "Chivo Mono",monospace;color:var(--mute);margin-top:6px}
 #js{top:760px}
 .jfoot{left:56px;right:56px;bottom:40px;font:500 15px/1.45 "Chivo Mono",monospace;color:var(--mute)}
-/* scene 4 */
-.goals{left:500px;right:56px;top:320px}
-.goal{display:flex;align-items:center;gap:18px;height:74px;border-bottom:1px solid var(--line);
-font-weight:800;font-size:34px}
-.goal .box{width:34px;height:34px;border-radius:6px;border:3px solid var(--mute);position:relative}
-.goal .box.on{background:var(--green);border-color:var(--green)}
-.goal .box.on:after{content:"";position:absolute;left:9px;top:3px;width:9px;height:17px;
-border:solid #fff;border-width:0 4px 4px 0;transform:rotate(45deg)}
-.goal small{margin-left:auto;font:500 20px "Chivo Mono",monospace;color:var(--mute)}
+/* phone recording badge */
 .rec{position:absolute;top:10px;left:18px;font:800 15px "Chivo Mono",monospace;color:#fff;
 display:flex;gap:6px;align-items:center;z-index:5}
 .rec i{width:12px;height:12px;border-radius:50%;background:#ff3b30;display:block}
-.blocked{left:500px;top:720px}
 /* scene 5 */
 .browser{left:56px;right:56px;top:290px;height:600px;background:#f3efe7;border-radius:14px;
 overflow:hidden;color:#16150f;box-shadow:0 30px 80px rgba(0,0,0,.55)}
@@ -218,6 +189,79 @@ border-bottom:1px solid #dcd6c9;font-weight:700;font-size:18px;opacity:0}
 .gamerow span{font:500 15px "Chivo Mono",monospace;color:#55524a}
 .gamerow em{font-style:normal;font:700 16px "Chivo Mono",monospace;background:#16150f;color:#f3efe7;
 padding:3px 8px;border-radius:4px}
+/* plays: invented slingshot-plane screens */
+.subpill{position:absolute;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.4);color:#fff;font:700 13px Fredoka;padding:5px 12px;border-radius:12px;white-space:nowrap}
+.fsky{position:absolute;inset:0;background:linear-gradient(#4aa8ff,#bfe6ff 58%,#eaf7ff)}
+.fhills{position:absolute;left:-80px;right:-80px;top:356px;height:96px;background:radial-gradient(50% 100% at 22% 100%,#86d486 60%,transparent 61%),radial-gradient(50% 100% at 74% 100%,#73c776 60%,transparent 61%)}
+.fground{position:absolute;left:0;right:0;top:440px;bottom:0;background:repeating-linear-gradient(90deg,#5cc062 0 46px,#4fae55 46px 92px);border-top:6px solid #3d9a44}
+.fcl{position:absolute;background:#fff;border-radius:30px;height:24px;opacity:.95}
+.fplane{position:absolute;left:92px;top:250px;width:170px;height:85px;filter:drop-shadow(0 14px 5px rgba(0,0,0,.18))}
+.fshadow{position:absolute;left:132px;top:520px;width:96px;height:16px;border-radius:50%;background:rgba(0,0,0,.2)}
+.fdist{position:absolute;left:0;right:0;top:70px;text-align:center;font:400 44px "Lilita One";color:#fff;-webkit-text-stroke:3px #23305a;paint-order:stroke fill}
+.repcard{position:absolute;left:22px;right:22px;top:140px;background:#fff;border-radius:18px;padding:10px 20px;color:#1c2a57;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.repcard div{display:flex;justify-content:space-between;align-items:center;font:700 18px Fredoka;height:62px;border-bottom:2px solid #e3e8f5}
+.repcard div:last-child{border:0}
+.repcard b{font:400 28px "Lilita One";display:flex;align-items:center;gap:6px}
+.adtag{position:absolute;left:16px;top:42px;background:#ffd83a;color:#16150f;font:700 13px "DejaVu Sans",sans-serif;padding:3px 7px;border-radius:4px}
+.adclock{position:absolute;right:16px;top:34px;width:42px;height:42px;border-radius:50%;border:3px solid rgba(255,255,255,.75);color:#fff;font:700 16px/36px "DejaVu Sans",sans-serif;text-align:center}
+.adcard{position:absolute;left:20px;right:20px;top:120px;height:350px;border-radius:22px;overflow:hidden;background:linear-gradient(150deg,#ffb347,#ff4f7b 50%,#7a3be0)}
+.adcard .gt{top:30px;font-size:36px;line-height:1}
+.adbar{position:absolute;left:20px;right:20px;top:500px;height:6px;border-radius:3px;background:rgba(255,255,255,.2)}
+.adbar i{display:block;height:100%;width:0;background:#fff;border-radius:3px}
+.bolts{position:absolute;left:0;right:0;top:200px;display:flex;justify-content:center;gap:8px}
+.bolts span{opacity:.3;filter:grayscale(1)}
+/* right column of the new scenes */
+.pcount{left:470px;right:56px;top:322px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcount b{display:block;font-weight:900;font-size:76px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.pcount span{display:block;font:500 18px/1.35 "Chivo Mono",monospace;color:var(--ink2);margin-top:8px}
+.notes{left:470px;right:56px;top:500px;background:var(--bg2);border:2px solid var(--line);border-radius:12px;padding:18px 22px;
+font:500 20px/1.42 "Chivo Mono",monospace;min-height:400px}
+.notes small{display:block;color:var(--blue);font-size:16px;letter-spacing:.1em;margin-bottom:12px}
+.notes p{margin-bottom:14px;min-height:28px}
+.notes p i{font-style:normal;color:var(--mute);margin-right:10px}
+.foot{left:56px;right:56px;bottom:34px;font:500 15px/1.45 "Chivo Mono",monospace;color:var(--mute)}
+/* learn */
+.utab{left:56px;right:56px;top:322px}
+.uhead,.urow{display:grid;grid-template-columns:290px 250px 1fr;gap:20px;align-items:center}
+.uhead{font:600 16px "Chivo Mono",monospace;letter-spacing:.1em;color:var(--mute);height:40px;border-bottom:2px solid var(--line)}
+.urow{height:82px;border-bottom:1px solid var(--line);opacity:0}
+.urow .n{font-weight:800;font-size:25px;letter-spacing:-.01em;line-height:1.1}
+.urow .chip{font-size:15px;padding:6px 9px}
+.urow .m{font-weight:700;font-size:21px;line-height:1.22;display:flex;align-items:center;gap:12px;opacity:0}
+.urow .m .chip{flex:none;font-size:14px;padding:5px 8px}
+.unext{left:56px;right:56px;top:796px;font-weight:900;font-size:46px;letter-spacing:-.03em}
+.unext em{font-style:normal;color:var(--red)}
+.uloop{left:56px;right:56px;top:322px;height:180px}
+.node{position:absolute;top:0;width:200px;height:84px;border-radius:12px;background:var(--ink);color:#16150f;display:grid;place-items:center;
+text-align:center;font-weight:800;font-size:25px;line-height:1.1;letter-spacing:-.01em;opacity:0}
+.node.alt{background:var(--red);color:#fff}
+.arrow{position:absolute;top:28px;font-weight:900;font-size:30px;color:var(--mute);opacity:0}
+.uloop svg{position:absolute;left:0;top:0;overflow:visible}
+.kdr{left:56px;right:56px;top:530px;display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:22px}
+.kcol{opacity:0}
+.kcol h5{font:700 20px "Chivo Mono",monospace;letter-spacing:.12em;padding:8px 12px;border-radius:4px;display:inline-block;margin-bottom:12px}
+.kcol div{font-weight:700;font-size:22px;line-height:1.25;padding:10px 0;border-bottom:1px solid var(--line);opacity:0}
+.kcol div small{display:block;font:500 17px "Chivo Mono",monospace;color:var(--ink2);margin-top:3px}
+/* build */
+.btitle{left:56px;width:500px;top:150px;font-weight:800;font-size:58px;line-height:1.04;letter-spacing:-.03em}
+.bstats{left:56px;width:500px;top:372px}
+.bstat{border-top:2px solid var(--line);padding:14px 0 16px;opacity:0}
+.bstat b{display:block;font-weight:900;font-size:56px;letter-spacing:-.035em;line-height:1}
+.bstat span{display:block;font:500 18px/1.38 "Chivo Mono",monospace;color:var(--ink2);margin-top:8px}
+.bphone{left:597px;top:150px;width:427px;height:882px}
+.bphone .screen{background:#000}
+.bphone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.flabel{right:56px;top:116px;font:600 16px "Chivo Mono",monospace;letter-spacing:.12em;color:var(--red)}
+/* pitch */
+.qtitle{left:56px;right:56px;top:112px;font-weight:900;font-size:70px;line-height:1.02;letter-spacing:-.04em}
+.qsteps{left:56px;right:56px;top:330px}
+.qstep{display:grid;grid-template-columns:110px 220px 1fr;align-items:center;height:104px;border-bottom:1px solid var(--line);opacity:0}
+.qstep i{font:700 22px "Chivo Mono",monospace;font-style:normal;color:var(--mute)}
+.qstep b{font-weight:900;font-size:46px;letter-spacing:-.03em}
+.qstep span{font-size:28px;font-weight:700;color:var(--ink2);line-height:1.2}
+.qstep.on b{color:var(--red)}
+.qstamp{left:56px;right:56px;top:810px;font-weight:900;font-size:54px;line-height:1.08;letter-spacing:-.03em}
+.qstamp em{font-style:normal;color:var(--red)}
 /* end */
 .endbg{position:absolute;inset:0;background:var(--red);transform-origin:bottom}
 .endt{left:56px;top:340px;font-weight:900;font-size:158px;line-height:.9;letter-spacing:-.055em;
@@ -227,7 +271,7 @@ color:#16150f}
 </style></head>
 <body><div id="stage">
 
-<div class="head"><span class="badge">GAMETAGGER</span><span class="mono" id="count">01 / 05</span></div>
+<div class="head"><span class="badge">GAMETAGGER</span><span class="mono" id="count">01 / 10</span></div>
 
 <!-- 1: data -->
 <div class="scene" id="s1">
@@ -304,63 +348,7 @@ color:#16150f}
   <div class="a jfoot" id="jf"></div>
 </div>
 
-<!-- 5: plays -->
-<div class="scene" id="s4">
-  <div class="a title" id="s4t">Not enough evidence? It plays the game.</div>
-  <div class="phone a" id="s4p" style="left:70px;top:270px;width:380px;height:680px">
-    <div class="screen" id="pscreen">
-      <div class="rec"><i id="recdot"></i><span id="rect">REC 00:00</span></div>
-      <div class="gs" id="g-menu">
-        <div class="skybg"></div><div id="clouds"></div>
-        <div class="hills"></div><div class="runway"></div>
-        <div class="planebig" data-i="plane" data-s="210"></div>
-        <div class="hudbar"><span class="lvl">7</span><span class="pill" data-i="coin">3,420</span><span class="pill" data-i="gem">45</span><span class="pill" data-i="bolt">5/5</span></div>
-        <div class="logo">CLOUD<br>HOPPER</div>
-        <div class="sidebtn" style="right:14px;top:188px;background:linear-gradient(#ff7a5c,#e0463d)"><span data-i="cart" data-s="34"></span><em>SHOP</em></div>
-        <div class="sidebtn" style="left:14px;top:188px;background:linear-gradient(#c58bff,#8a4be0)"><span data-i="calendar" data-s="34"></span><em>EVENTS</em><i class="note">!</i></div>
-        <div class="sidebtn" style="left:14px;top:282px;background:linear-gradient(#6aa8ff,#2d5bd1)"><span data-i="shield" data-s="34"></span><em>GUILD</em></div>
-        <div class="gbuy orange" style="left:64px;right:64px;top:470px;height:80px;font-size:40px">PLAY</div>
-        <div class="navbar"><span data-i="cart" data-s="26"></span><span data-i="trophy" data-s="26"></span><span class="on" data-i="plane" data-s="40"></span><span data-i="shield" data-s="26"></span><span data-i="gift" data-s="26"></span></div>
-      </div>
-      <div class="gs" id="g-shop" style="background:radial-gradient(120% 80% at 50% 0%,#3f7fe0,#142a66 70%)">
-        <div class="topbar"><span class="pill" data-i="coin">3,420<b>+</b></span><span class="pill" data-i="gem">45<b>+</b></span></div>
-        <div class="gt" style="top:48px;font-size:36px">SHOP</div><div class="xbtn" style="right:12px;top:40px">✕</div>
-        <div class="row-offer" style="top:108px"><span data-i="coin" data-s="54"></span><div><b>Coin Stack</b><small>×2,500 coins</small></div><div class="gbuy green small">$0.99</div></div>
-        <div class="row-offer best" style="top:206px"><div class="tagbest">BEST VALUE</div><span data-i="plane" data-s="70" data-a="#3ec46d"></span><div><b>Jet Pack Bundle</b><small>new plane + 300 gems</small></div><div class="gbuy green small">$4.99</div></div>
-        <div class="row-offer" style="top:304px"><span data-i="ad" data-s="50"></span><div><b>No Ads</b><small>forever</small></div><div class="gbuy green small">$2.99</div></div>
-        <div class="row-offer" style="top:402px"><span data-i="bolt" data-s="50"></span><div><b>Energy Refill</b><small>5 flights</small></div><div class="gbuy purple small"><span data-i="gem" data-s="18"></span>50</div></div>
-      </div>
-      <div class="gs" id="g-event" style="background:radial-gradient(120% 80% at 50% 0%,#ff6fae,#5a1f7a 70%)">
-        <div class="gt" style="top:40px;font-size:30px">SKY FESTIVAL</div>
-        <div class="subpill" style="top:84px">SEASON 3 · 6 DAYS LEFT</div>
-        <div class="track2"><div class="lane"><em>FREE</em><div id="freeRow"></div></div><div class="lane prem"><em>PREMIUM</em><div id="premRow"></div></div><div class="prog"><i style="width:38%"></i></div></div>
-        <div class="passlvl">PASS LEVEL 4 / 30</div>
-        <div class="gbuy gold" style="left:40px;right:40px;top:402px;height:66px;font-size:24px">UNLOCK PREMIUM</div>
-        <div class="sheet a" id="sheet"><b>Confirm purchase</b><div class="sl">Sky Festival Premium Pass</div><div class="sp">$9.99</div><em>Buy</em></div>
-      </div>
-      <div class="gs" id="g-guild" style="background:radial-gradient(120% 80% at 50% 0%,#2fb5a3,#123a5c 70%)">
-        <div class="gt" style="top:44px;font-size:34px">GUILDS</div>
-        <div class="grow" style="top:110px"><span data-i="shield" data-s="54" data-a="#e0463d"></span><div><b>Sky Wolves</b><small>Lv 12 · 28/30</small></div><div class="gbuy green small">JOIN</div></div>
-        <div class="grow" style="top:196px"><span data-i="shield" data-s="54" data-a="#ffb703"></span><div><b>Jet Set</b><small>Lv 8 · 12/30</small></div><div class="gbuy green small">JOIN</div></div>
-        <div class="grow" style="top:282px"><span data-i="shield" data-s="54" data-a="#b15cff"></span><div><b>Cloud Nine</b><small>Lv 15 · 30/30</small></div><div class="gbuy grey small">FULL</div></div>
-        <div class="grow" style="top:368px"><span data-i="shield" data-s="54" data-a="#3ec46d"></span><div><b>Tailwinds</b><small>Lv 5 · 9/30</small></div><div class="gbuy green small">JOIN</div></div>
-      </div>
-      <div class="ripple" id="rip"></div>
-    </div>
-  </div>
-  <div class="a goals" id="s4g">
-    <div class="goal"><div class="box" id="b1"></div>Shop<small id="m1"></small></div>
-    <div class="goal"><div class="box" id="b2"></div>Currencies<small id="m2"></small></div>
-    <div class="goal"><div class="box" id="b3"></div>Live event<small id="m3"></small></div>
-    <div class="goal"><div class="box" id="b4"></div>Guild &amp; social<small id="m4"></small></div>
-    <div class="goal"><div class="box" id="b5"></div>Reward ad<small id="m5"></small></div>
-  </div>
-  <div class="a blocked" id="s4b"><span class="chip c-red">Purchase screen closed automatically</span></div>
-  <div class="a cap" id="s4c">An AI player on an Android emulator records the shops, timers and events that store pages hide.</div>
-  <div class="illus">ILLUSTRATIVE GAME SCREENS</div>
-</div>
-
-<!-- 6: website -->
+<!-- 5: website -->
 <div class="scene" id="s5">
   <div class="a title" id="s5t">Then it shows how the top games actually work.</div>
   <div class="a browser" id="s5b">
@@ -378,11 +366,93 @@ color:#16150f}
   </div>
 </div>
 
-<!-- 7: end -->
+<!-- 6: plays -->
+<div class="scene" id="sp">
+  <div class="a kicker" id="spk" style="left:56px;top:112px">PLAY</div>
+  <div class="a title" id="spt" style="top:150px">Store pages leave gaps. So now it plays the game.</div>
+  <div class="phone a" id="spp" style="left:56px;top:322px;width:380px;height:680px">
+    <div class="screen" id="pscreen">
+      <div class="gs" id="g-menu">
+        <div class="skybg"></div><div id="clouds"></div>
+        <div class="hills"></div><div class="runway"></div>
+        <div class="planebig" data-i="plane" data-s="210"></div>
+        <div class="hudbar"><span class="lvl">1</span><span class="pill" data-i="coin" id="menucoins">3,420</span><span class="pill" data-i="bolt" id="menubolt">5/5</span></div>
+        <div class="logo">CLOUD<br>HOPPER</div>
+        <div class="sidebtn" style="right:14px;top:188px;background:linear-gradient(#ff7a5c,#e0463d)"><span data-i="cart" data-s="34"></span><em>SHOP</em></div>
+        <div class="sidebtn" style="left:14px;top:188px;background:linear-gradient(#c58bff,#8a4be0)"><span data-i="gift" data-s="34"></span><em>DAILY</em><i class="note">!</i></div>
+        <div class="gbuy orange" style="left:64px;right:64px;top:470px;height:80px;font-size:40px">PLAY</div>
+        <div class="navbar"><span data-i="cart" data-s="26"></span><span data-i="trophy" data-s="26"></span><span class="on" data-i="plane" data-s="40"></span><span data-i="star" data-s="26"></span><span data-i="gift" data-s="26"></span></div>
+      </div>
+      <div class="gs" id="g-fly">
+        <div class="fsky"></div><div id="fclouds"></div><div class="fhills"></div><div class="fground" id="fground"></div>
+        <div class="fshadow" id="fshadow"></div>
+        <div class="fplane" id="fplane" data-i="plane" data-s="170"></div>
+        <div class="topbar" style="top:34px"><span class="pill" data-i="coin" id="flycoins">0</span></div>
+        <div class="fdist" id="fdist">0 m</div>
+      </div>
+      <div class="gs" id="g-rep" style="background:radial-gradient(120% 80% at 50% 0%,#3f7fe0,#142a66 70%)">
+        <div class="gt" style="top:66px;font-size:34px">FLIGHT REPORT</div>
+        <div class="repcard"><div>Distance<b id="repdist">1,512 m</b></div><div>Coins<b><span data-i="coin" data-s="26"></span>690</b></div><div>Best<b>1,534 m</b></div></div>
+        <div class="gbuy purple" style="left:40px;right:40px;top:380px;height:70px;font-size:28px"><span data-i="ad" data-s="34"></span>&nbsp;×2 COINS</div>
+        <div class="gbuy green" style="left:100px;right:100px;top:500px;height:54px;font-size:24px">NEXT</div>
+      </div>
+      <div class="gs" id="g-ad" style="background:#0e0d12">
+        <div class="adtag">Ad</div><div class="adclock" id="adclock">27</div>
+        <div class="adcard"><div class="gt">PUZZLE<br>PALACE</div>
+          <div style="position:absolute;left:0;right:0;top:120px;display:flex;justify-content:center;gap:10px"><span data-i="gem" data-s="64"></span><span data-i="chest" data-s="64"></span><span data-i="star" data-s="64"></span></div>
+          <div class="gbuy green" style="left:60px;right:60px;bottom:28px;height:58px;font-size:26px">INSTALL</div></div>
+        <div class="adbar"><i id="adbar"></i></div>
+      </div>
+      <div class="gs" id="g-energy" style="background:radial-gradient(120% 80% at 50% 0%,#8a4be0,#2a1466 70%)">
+        <div class="gt" style="top:110px;font-size:36px">OUT OF ENERGY</div>
+        <div class="bolts"><span data-i="bolt" data-s="46"></span><span data-i="bolt" data-s="46"></span><span data-i="bolt" data-s="46"></span><span data-i="bolt" data-s="46"></span><span data-i="bolt" data-s="46"></span></div>
+        <div class="subpill" style="top:280px;font-size:17px;padding:8px 16px" id="etimer">NEXT FLIGHT IN 41:58</div>
+        <div class="gbuy purple" style="left:56px;right:56px;top:360px;height:66px;font-size:26px">REFILL&nbsp;<span data-i="gem" data-s="28"></span>50</div>
+        <div class="gbuy grey" style="left:96px;right:96px;top:450px;height:50px;font-size:22px">WAIT</div>
+      </div>
+      <div class="rec"><i id="recdot"></i><span id="rect">REC 0:00:00</span></div>
+      <div class="ripple" id="rip"></div>
+    </div>
+  </div>
+  <div class="a pcount" id="pcount"></div>
+  <div class="a notes" id="pnotes"><small>THE AI PLAYER'S OWN NOTES</small></div>
+  <div class="a foot" id="pfoot" style="left:470px"></div>
+  <div class="illus" style="left:56px;right:auto;bottom:40px">ILLUSTRATIVE GAME SCREENS</div>
+</div>
+
+<!-- 7: learn -->
+<div class="scene" id="su">
+  <div class="a kicker" id="suk" style="left:56px;top:112px">LEARN</div>
+  <div class="a title" id="sut" style="top:150px">Then it works out what makes the game work.</div>
+  <div class="a utab" id="utab"><div class="uhead"><span>TAG</span><span>FROM THE STORE PAGE</span><span>FROM 13 HOURS OF PLAY</span></div></div>
+  <div class="a unext" id="unext"></div>
+  <div class="a uloop" id="uloop"></div>
+  <div class="a kdr" id="kdr"></div>
+  <div class="a cap" id="suc" style="bottom:40px">Keep what's fun. Drop what only extracts. Design a fair replacement.</div>
+</div>
+
+<!-- 8: build -->
+<div class="scene" id="sb">
+  <div class="a kicker" id="sbk" style="left:56px;top:112px">BUILD</div>
+  <div class="a btitle" id="sbt">Then it builds a playable prototype.</div>
+  <div class="a bstats" id="bstats"></div>
+  <div class="a flabel" id="flabel">REAL PROTOTYPE FOOTAGE</div>
+  <div class="phone a bphone" id="sbp"><div class="screen"><img id="foot" alt=""><div class="ripple" id="rip2"></div></div></div>
+  <div class="a foot" id="bfoot" style="right:540px"></div>
+</div>
+
+<!-- 9: pitch -->
+<div class="scene" id="sq">
+  <div class="a qtitle" id="sqt">From the charts to a playable prototype, in days.</div>
+  <div class="a qsteps" id="qsteps"></div>
+  <div class="a qstamp" id="qstamp">Find out if a feature is <em>fun</em> before you staff a team.</div>
+</div>
+
+<!-- 10: end -->
 <div class="scene" id="s6">
   <div class="endbg" id="endbg"></div>
   <div class="a endt" id="e1">GameTagger</div>
-  <div class="a endp" id="e2">How the most popular games actually work.</div>
+  <div class="a endp" id="e2"></div>
   <div class="a endm" id="e3"></div>
 </div>
 
@@ -406,6 +476,12 @@ function type(el, text, t, a, cps = 38) {
   el.textContent = text.slice(0, n) + (n > 0 && n < text.length ? '▌' : '');
 }
 function num(v) { return Math.round(v).toLocaleString('en-US'); }
+function ripple(el, t, taps, sx = 1, sy = 1) {
+  let k = 0, x = 0, y = 0;
+  for (const [a, tx, ty] of taps) { const q = p(t, a, a + .45); if (q > 0 && q < 1) { k = q; x = tx; y = ty; } }
+  el.style.opacity = k ? 1 - k : 0; el.style.left = `${x * sx}px`; el.style.top = `${y * sy}px`;
+  el.style.transform = `scale(${1 + k * 3})`;
+}
 let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
 // build: mosaic of invented gameplay thumbnails
@@ -413,8 +489,7 @@ for (let i = 0; i < 196; i++) {
   const d = document.createElement('div'); d.innerHTML = GAMES.randomScene(100, 100); $('mosaic').appendChild(d);
 }
 // build: tag cloud
-const cloudItems = D.cloud;
-cloudItems.forEach(([label, genre]) => {
+D.cloud.forEach(([label, genre]) => {
   const s = document.createElement('span'); s.textContent = label; if (genre) s.className = 'g';
   $('cloud').appendChild(s);
 });
@@ -444,10 +519,50 @@ D.jev.tiles.forEach(([value, decimals, prefix, suffix, label, note]) => {
 const tileEls = [...$('jtiles').children];
 $('jf').textContent = D.jev.foot;
 const qLabels = D.cloud.filter(([, g]) => !g).map(([l]) => l);
-// build: game art (icons, mascot, clouds, sparkles, season reward lanes)
-const freeR = [['coin'], ['gem'], ['chest'], ['coin'], ['gift']], premR = [['plane', '#b15cff'], ['gem'], ['chest'], ['star'], ['trophy']];
-freeR.forEach(([n], k) => { $('freeRow').insertAdjacentHTML('beforeend', `<div class="cell${k < 2 ? ' done' : ''}"><span data-i="${n}" data-s="${n === 'plane' ? 50 : 36}"></span></div>`); });
-premR.forEach(([n, c], k) => { $('premRow').insertAdjacentHTML('beforeend', `<div class="cell"><span data-i="${n}" data-s="${n === 'plane' ? 50 : 36}"${c ? ` data-a="${c}"` : ''}></span><span class="lk">${GAMES.icon.lock()}</span></div>`); });
+// build: the AI player's counters and notes
+D.play.counters.forEach(([value, label, red]) => {
+  $('pcount').insertAdjacentHTML('beforeend', `<div><b data-v="${value}"${red ? ' style="color:var(--red)"' : ''}>0</b><span>${label}</span></div>`);
+});
+const countEls = [...$('pcount').querySelectorAll('b')];
+D.play.notes.forEach(([when]) => { $('pnotes').insertAdjacentHTML('beforeend', `<p><i>${when}</i><span></span></p>`); });
+const noteEls = [...$('pnotes').querySelectorAll('p')];
+$('pfoot').textContent = D.play.foot;
+// build: the learn table, the core loop and keep / drop / replace
+const LCHIP = { present: 'c-green', insufficient_evidence: 'c-yellow' };
+D.learn.rows.forEach(([label, state, chip, kind, text]) => {
+  $('utab').insertAdjacentHTML('beforeend', `<div class="urow"><div class="n">${label}</div>` +
+    `<div><span class="chip ${LCHIP[state]}">${chip}</span></div>` +
+    `<div class="m"><span class="chip ${kind === 'MEASURED' ? 'c-red' : 'c-out'}">${kind}</span><span>${text}</span></div></div>`);
+});
+const urowEls = [...$('utab').querySelectorAll('.urow')];
+$('unext').innerHTML = D.learn.next;
+D.learn.loop.forEach((label, i) => {
+  const x = i * 254;
+  $('uloop').insertAdjacentHTML('beforeend', `<div class="node${i === D.learn.loop.length - 1 ? ' alt' : ''}" style="left:${x}px">${label}</div>` +
+    (i < D.learn.loop.length - 1 ? `<div class="arrow" style="left:${x + 210}px">→</div>` : ''));
+});
+$('uloop').insertAdjacentHTML('beforeend', `<svg width="968" height="150"><path id="ret" d="M862 84 C862 156, 100 156, 100 92" fill="none" stroke="var(--mute)" stroke-width="4" stroke-dasharray="1000" stroke-dashoffset="1000"/><path id="reth" d="M88 104 L100 86 L112 104" fill="none" stroke="var(--mute)" stroke-width="4" opacity="0"/><text x="481" y="176" fill="var(--ink2)" font-family="Chivo Mono" font-size="17" text-anchor="middle" id="rett" opacity="0">${D.learn.loopNote}</text></svg>`);
+const nodeEls = [...$('uloop').querySelectorAll('.node')], arrowEls = [...$('uloop').querySelectorAll('.arrow')];
+D.learn.kdr.forEach(([head, color, items]) => {
+  $('kdr').insertAdjacentHTML('beforeend', `<div class="kcol"><h5 style="background:${color};color:#fff">${head}</h5>` +
+    items.map(([a, b]) => `<div>${a}${b ? `<small>→ ${b}</small>` : ''}</div>`).join('') + `</div>`);
+});
+const kcolEls = [...$('kdr').querySelectorAll('.kcol')];
+// build: the prototype's stats and footage edit
+D.build.stats.forEach(([big, small]) => {
+  $('bstats').insertAdjacentHTML('beforeend', `<div class="bstat"><b>${big}</b><span>${small}</span></div>`);
+});
+const bstatEls = [...$('bstats').children];
+$('bfoot').textContent = D.build.foot;
+let cut = 0;
+const EDL = D.build.edl.map(([start, a, b, taps]) => { const seg = { start, a, b, at: cut, taps }; cut += b - a; return seg; });
+const FOOT_AT = .6;
+// build: the pitch steps
+D.pitch.forEach(([n, word, line]) => {
+  $('qsteps').insertAdjacentHTML('beforeend', `<div class="qstep"><i>${n}</i><b>${word}</b><span>${line}</span></div>`);
+});
+const qstepEls = [...$('qsteps').children];
+// build: game art (icons, mascot, clouds, sparkles)
 document.querySelectorAll('[data-i]').forEach((el) => {
   const size = Number(el.dataset.s || 24), args = el.dataset.a ? [el.dataset.a] : [];
   const svg = `<span class="gi" style="width:${size}px;height:${size * (el.dataset.i === 'plane' ? .5 : 1)}px">${GAMES.icon[el.dataset.i](...args)}</span>`;
@@ -462,6 +577,9 @@ $('mascot').innerHTML = `<svg viewBox="0 0 130 130"><defs><radialGradient id="mb
 [[20, 150, 110, 30], [200, 120, 90, 26], [120, 250, 130, 34], [260, 290, 80, 22]].forEach(([x, y, w, h]) => {
   $('clouds').insertAdjacentHTML('beforeend', `<div class="cl" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"></div>`);
 });
+[[30, 150, 110], [220, 110, 90], [140, 230, 130], [330, 300, 80], [420, 170, 100]].forEach(([x, y, w]) => {
+  $('fclouds').insertAdjacentHTML('beforeend', `<div class="fcl" data-x="${x}" style="top:${y}px;width:${w}px"></div>`);
+});
 for (let k = 0; k < 26; k++) $('spark1').insertAdjacentHTML('beforeend', `<i style="left:${(k * 37) % 320}px;top:${(k * 53) % 520}px;opacity:${.2 + (k % 5) / 10}"></i>`);
 // build: website
 $('websub').textContent = D.web.sub;
@@ -475,39 +593,32 @@ D.web.games.forEach(([title, genre, n]) => {
   r.innerHTML = `<div>${title}<br><span>${genre}</span></div><em>${n} tags</em>`;
   $('grows').appendChild(r);
 });
+$('e2').innerHTML = D.endtitle;
 $('e3').innerHTML = D.endline;
 $('defh').textContent = D.def[0]; $('defp').textContent = D.def[1]; $('defe').textContent = D.def[2];
 
-const SH = 5.4;  // the Jev scene pushes everything after it back by this much
-const SCENES = [['s1', 0, 8], ['s2', 8, 16.4], ['s3', 16.4, 22.6], ['sj', 22.6, 32.4],
-  ['s4', 32.4, 42.6], ['s5', 42.6, 49.4], ['s6', 49.4, 54.4]];
-window.DURATION = 54.4;
+// The timeline. The first five scenes keep their original timings (OLD) and play a little
+// faster to make room for the four new ones; the new scenes are drawn in their own local time.
+const SCENES = [['s1', 0, 5], ['s2', 5, 11.6], ['s3', 11.6, 16.8], ['sj', 16.8, 25.2], ['s5', 25.2, 30.6],
+  ['sp', 30.6, 40.8], ['su', 40.8, 52.6], ['sb', 52.6, 69.2], ['sq', 69.2, 76.6], ['s6', 76.6, 81.6]];
+const OLD = { s1: [0, 8], s2: [8, 16.4], s3: [16.4, 22.6], sj: [22.6, 32.4], s5: [37.2, 44.0] };
+window.DURATION = 81.6;
 
-window.render = function (T) {
-  const t = T;
-  $('prog').style.width = `${100 * t / window.DURATION}%`;
-  const idx = SCENES.findIndex(([, a, b]) => t >= a && t < b);
-  $('count').textContent = `0${Math.min(6, Math.max(1, idx + 1))} / 06`;
-  $('count').parentElement.style.opacity = t > 49.6 ? 0 : 1;
-  for (const [id, a, b] of SCENES) {
-    const el = $(id); const o = id === 's6' ? (t >= a ? 1 : 0) : Math.min(p(t, a - .01, a + .35), 1 - p(t, b - .45, b));
-    el.style.opacity = o; el.style.display = o > 0 ? 'block' : 'none';
-  }
-
+const DRAW = {
   // 1 · 40,000 hours
-  if (t < 8.2) {
+  s1(t) {
     const z = 1.45 - .35 * eo(p(t, 0, 8));
     $('mosaic').style.transform = `scale(${z}) translate(${-20 * p(t, 0, 8)}px, ${-12 * p(t, 0, 8)}px)`;
     $('mosaic').style.opacity = .85;
     rise($('s1k'), t, .3);
-    const k = rise($('s1n'), t, .7, .5, 50);
+    rise($('s1n'), t, .7, .5, 50);
     $('s1n').textContent = num(40000 * eio(p(t, .8, 3.0)));
     rise($('s1s'), t, 1.9);
     rise($('s1c'), t, 3.4);
     rise($('s1l'), t, 5.0);
-  }
+  },
   // 2 · vocabulary
-  if (t > 7.9 && t < 16.6) {
+  s2(t) {
     rise($('s2t'), t, 8.25);
     const dim = 1 - .82 * eo(p(t, 11.6, 12.2));
     cloudEls.forEach((el, i) => {
@@ -522,27 +633,25 @@ window.render = function (T) {
     const kd = eo(p(t, 13.8, 14.3));
     set($('s2d'), kd, 0, (1 - kd) * 60, .96 + .04 * kd);
     rise($('s2c'), t, 14.4);
-  }
+  },
   // 3 · Claude looks
-  if (t > 16.3 && t < 22.8) {
-    const swap = 0;
+  s3(t) {
     rise($('s3t'), t, 16.6);
-    const kp = eo(p(t, 16.8, 17.4)); set($('s3p'), kp * (1 - swap), (1 - kp) * -60, 0);
+    const kp = eo(p(t, 16.8, 17.4)); set($('s3p'), kp, (1 - kp) * -60, 0);
     const sc = p(t, 17.3, 19.2);
     $('scan').style.opacity = sc > 0 && sc < 1 ? 1 : 0; $('scan').style.top = `${sc * 100}%`;
-    rise($('s3h'), t, 17.6); $('s3h').style.opacity *= 1 - swap;
+    rise($('s3h'), t, 17.6);
     D.obs.forEach((text, i) => {
       const a = 17.9 + i * 1.15; const el = $('o' + (i + 1));
-      rise(el, t, a, .4, 20); el.style.opacity *= 1 - swap;
+      rise(el, t, a, .4, 20);
       type(el.querySelector('span'), text, t, a + .2, 44);
     });
-    const ks = eo(p(t, 19.2, 19.8));
-    $('strip').style.opacity = ks * (1 - swap);
+    $('strip').style.opacity = eo(p(t, 19.2, 19.8));
     $('strip').style.transform = `translateX(${56 - (t - 19.2) * 70}px)`;
-    rise($('s3sc'), t, 19.6); $('s3sc').style.opacity *= 1 - swap;
-  }
+    rise($('s3sc'), t, 19.6);
+  },
   // 4 · Jev decides
-  if (t > 22.5 && t < 32.6) {
+  sj(t) {
     rise($('jk'), t, 22.9, .5, 20); rise($('jt'), t, 23.1);
     const rowsOut = eo(p(t, 27.9, 28.3));
     rise($('jl'), t, 23.7, .5, 16); $('jl').style.opacity *= 1 - rowsOut;
@@ -565,54 +674,134 @@ window.render = function (T) {
     });
     rise($('jf'), t, 28.8, .5, 10);
     rise($('js'), t, 30.1, .6, 30);
-  }
-  { const t = T - SH;
-  // 5 · plays (times below are before the shift)
-  if (t > 26.9 && t < 37.4) {
-    rise($('s4t'), t, 27.3);
-    const kp = eo(p(t, 27.5, 28.1)); set($('s4p'), kp, 0, (1 - kp) * 80);
-    rise($('s4g'), t, 28.0);
-    const secs = 372 + Math.floor((t - 27) * 11);
-    $('rect').textContent = `REC ${String(Math.floor(secs / 60)).padStart(2, '0')}:${String(secs % 60).padStart(2, '0')}`;
-    $('recdot').style.opacity = Math.floor(t * 2) % 2 ? .25 : 1;
-    // screen sequence: menu -> shop -> menu -> event (+ purchase sheet) -> guild
-    const seq = [['g-menu', 0, 29.3], ['g-shop', 29.3, 30.9], ['g-menu', 30.9, 31.8], ['g-event', 31.8, 34.4],
-      ['g-menu', 34.4, 35.0], ['g-guild', 35.0, 99]];
-    ['g-menu', 'g-shop', 'g-event', 'g-guild'].forEach(id => { $(id).style.opacity = 0; });
-    for (const [id, a, b] of seq) if (t >= a && t < b) $(id).style.opacity = 1;
-    const taps = [[29.0, 300, 222], [30.6, 329, 59], [31.5, 48, 222], [34.7, 48, 316]];
-    let rip = 0, rx = 0, ry = 0;
-    for (const [a, x, y] of taps) { const k = p(t, a, a + .45); if (k > 0 && k < 1) { rip = k; rx = x; ry = y; } }
-    $('rip').style.opacity = rip ? 1 - rip : 0; $('rip').style.left = rx + 'px'; $('rip').style.top = ry + 'px';
-    $('rip').style.transform = `scale(${1 + rip * 3})`;
-    const sheetIn = eo(p(t, 32.9, 33.3)), sheetOut = eo(p(t, 33.9, 34.2));
-    $('sheet').style.opacity = sheetIn * (1 - sheetOut);
-    $('sheet').style.transform = `translateY(${(1 - sheetIn + sheetOut) * 100}%)`;
-    const kb = eo(p(t, 33.9, 34.3)); set($('s4b'), kb * (1 - eo(p(t, 35.6, 36))), 0, (1 - kb) * 20);
-    const marks = [[29.5, '6:14'], [29.7, '6:14'], [32.0, '6:17'], [35.2, '6:21']];
-    marks.forEach(([a, m], i) => { const on = t >= a; $('b' + (i + 1)).className = 'box' + (on ? ' on' : ''); $('m' + (i + 1)).textContent = on ? m : ''; });
-    $('m5').textContent = t > 35.6 ? 'next' : '';
-    rise($('s4c'), t, 35.4);
-  }
-  // 6 · website
-  if (t > 37 && t < 44.2) {
+  },
+  // 5 · website
+  s5(t) {
     rise($('s5t'), t, 37.5);
     const kb = eo(p(t, 37.7, 38.4));
-    const zoom = 1 + .035 * p(t, 38, 44);
-    set($('s5b'), kb, 0, (1 - kb) * 90, zoom);
+    set($('s5b'), kb, 0, (1 - kb) * 90, 1 + .035 * p(t, 38, 44));
     [...$('gbars').children].forEach((r, i) => {
       const f = r.querySelector('.f'); f.style.width = `${100 * Number(f.dataset.w) * eo(p(t, 38.5 + i * .12, 39.4 + i * .12))}%`;
     });
     $('t1').textContent = num(D.web.median * eo(p(t, 38.6, 39.8)));
     $('t2').textContent = num(D.web.games_total * eo(p(t, 38.7, 39.9)));
     [...$('grows').children].forEach((r, i) => { const k = eo(p(t, 39.6 + i * .3, 40.1 + i * .3)); set(r, k, (1 - k) * 30, 0); });
+  },
+  // 6 · it plays (invented screens; the numbers and notes are the AI player's)
+  sp(u) {
+    rise($('spk'), u, .2, .5, 20); rise($('spt'), u, .35);
+    const kp = eo(p(u, .6, 1.2)); set($('spp'), kp, 0, (1 - kp) * 80);
+    const seq = [['g-menu', 0, 1.7], ['g-fly', 1.7, 3.2], ['g-rep', 3.2, 4.0], ['g-ad', 4.0, 5.3], ['g-menu', 5.3, 5.8],
+      ['g-fly', 5.8, 6.9], ['g-ad', 6.9, 7.6], ['g-energy', 7.6, 99]];
+    let screen = 'g-menu', since = 0;
+    for (const [id, a, b] of seq) if (u >= a && u < b) { screen = id; since = u - a; }
+    ['g-menu', 'g-fly', 'g-rep', 'g-ad', 'g-energy'].forEach(id => { $(id).style.opacity = id === screen ? 1 : 0; });
+    ripple($('rip'), u, [[1.45, 174, 510], [3.75, 174, 527], [5.05, 316, 55], [5.55, 174, 510], [7.4, 316, 55]]);
+    // flight: the ground runs by, the distance climbs
+    const second = u > 5.8;
+    $('fground').style.backgroundPosition = `${-u * 420}px 0`;
+    $('fclouds').querySelectorAll('.fcl').forEach(c => { c.style.left = `${((Number(c.dataset.x) - u * 60) % 480 + 480) % 480 - 100}px`; });
+    $('fplane').style.transform = `translateY(${Math.sin(u * 5) * 6}px) rotate(${-4 + Math.sin(u * 3) * 3}deg)`;
+    const dist = (second ? 1534 : 1512) * eo(clamp(since / 1.3));
+    $('fdist').textContent = `${num(dist)} m`;
+    $('flycoins').lastChild.textContent = num(3420 + dist * .46);
+    $('menucoins').lastChild.textContent = second ? '4,800' : '3,420';
+    $('menubolt').lastChild.textContent = second ? '3/5' : '4/5';
+    // the ad: a countdown, then the close button
+    $('adclock').textContent = since > .9 ? '✕' : String(27 - Math.floor(since * 6));
+    $('adbar').style.width = `${100 * clamp(since / 1.3)}%`;
+    $('etimer').textContent = `NEXT FLIGHT IN 41:${String(58 - Math.floor(Math.max(0, u - 7.6) * 2)).padStart(2, '0')}`;
+    const h = D.play.hours * eio(p(u, .9, 9.2)) * 3600;
+    $('rect').textContent = `REC ${Math.floor(h / 3600)}:${String(Math.floor(h / 60) % 60).padStart(2, '0')}:${String(Math.floor(h) % 60).padStart(2, '0')}`;
+    $('recdot').style.opacity = Math.floor(u * 2) % 2 ? .25 : 1;
+    // the counters and the notes
+    $('pcount').style.opacity = 1; $('pcount').style.transform = 'none';
+    countEls.forEach((b, i) => {
+      const d = b.parentElement; rise(d, u, 1.2 + i * .25, .5, 24);
+      const v = Number(b.dataset.v) * eio(p(u, 1.3, 9.0));
+      b.textContent = Number(b.dataset.v) % 1 ? v.toFixed(1) : num(v);
+    });
+    rise($('pnotes'), u, 1.6, .5, 24);
+    const noteAt = [1.9, 3.4, 4.3, 7.8];
+    noteEls.forEach((el, i) => {
+      el.style.opacity = u > noteAt[i] ? 1 : 0;
+      type(el.querySelector('span'), D.play.notes[i][1], u, noteAt[i], 46);
+    });
+    rise($('pfoot'), u, 8.2, .5, 10);
+  },
+  // 7 · learns what makes it work
+  su(u) {
+    rise($('suk'), u, .2, .5, 20); rise($('sut'), u, .35);
+    const out = eo(p(u, 6.2, 6.6));
+    $('utab').style.transform = 'none';
+    $('utab').style.opacity = eo(p(u, .8, 1.2)) * (1 - out);
+    urowEls.forEach((r, i) => {
+      const a = 1.0 + i * .28; const k = eo(p(u, a, a + .45)); set(r, k, (1 - k) * 30, 0);
+      const m = r.querySelector('.m'); const km = eo(p(u, 2.5 + i * .45, 2.9 + i * .45));
+      m.style.opacity = km; m.style.transform = `translateX(${(1 - km) * 24}px)`;
+    });
+    rise($('unext'), u, 4.9, .5, 20); $('unext').style.opacity *= 1 - out;
+    // the core loop, then keep / drop / replace
+    $('uloop').style.opacity = 1; $('uloop').style.transform = 'none';
+    nodeEls.forEach((n, i) => { const k = eo(p(u, 6.6 + i * .18, 7.0 + i * .18)); set(n, k, 0, (1 - k) * 24); });
+    arrowEls.forEach((a, i) => { a.style.opacity = p(u, 6.8 + i * .18, 7.1 + i * .18); });
+    $('ret').setAttribute('stroke-dashoffset', 1000 * (1 - eo(p(u, 7.4, 8.0))));
+    $('reth').setAttribute('opacity', p(u, 7.9, 8.1));
+    $('rett').setAttribute('opacity', p(u, 8.0, 8.3));
+    $('kdr').style.opacity = 1; $('kdr').style.transform = 'none';
+    kcolEls.forEach((c, i) => {
+      const a = 8.0 + i * .5; rise(c, u, a, .5, 24);
+      c.querySelectorAll('div').forEach((d, j) => { const k = eo(p(u, a + .2 + j * .16, a + .5 + j * .16)); set(d, k, 0, (1 - k) * 12); });
+    });
+    rise($('suc'), u, 9.8, .5, 16);
+  },
+  // 8 · builds a playable prototype (real footage)
+  sb(u) {
+    rise($('sbk'), u, .2, .5, 20); rise($('sbt'), u, .35);
+    const kp = eo(p(u, .25, .85)); set($('sbp'), kp, (1 - kp) * 120, 0);
+    rise($('flabel'), u, .9, .4, 10);
+    $('bstats').style.opacity = 1; $('bstats').style.transform = 'none';
+    D.build.statAt.forEach((a, i) => rise(bstatEls[i], u, a, .5, 24));
+    rise($('bfoot'), u, 1.6, .5, 10);
+    const f = Math.max(0, u - FOOT_AT);
+    let seg = EDL[EDL.length - 1];
+    for (const s of EDL) if (f >= s.at) seg = s;
+    const local = Math.min(seg.a + (f - seg.at), seg.b - .5 / D.build.fps);
+    const frame = Math.round((seg.start + local) * D.build.fps);
+    const img = $('foot'); const src = `footage/${String(frame).padStart(5, '0')}.jpg`;
+    const sx = 395 / D.build.width, sy = 850 / D.build.height;
+    ripple($('rip2'), local, seg.taps.map(({ t, x, y }) => [t, x, y]), sx, sy);
+    if (img.getAttribute('src') !== src) { img.setAttribute('src', src); return img.decode().catch(() => {}); }
+    return null;
+  },
+  // 9 · the pitch
+  sq(u) {
+    rise($('sqt'), u, .3);
+    $('qsteps').style.opacity = 1; $('qsteps').style.transform = 'none';
+    qstepEls.forEach((s, i) => { const a = 1.0 + i * .45; rise(s, u, a, .5, 20); s.classList.toggle('on', u > a + .2 && u < a + .65); });
+    rise($('qstamp'), u, 3.3, .6, 30);
+  },
+  // 10 · end
+  s6(u) {
+    $('endbg').style.transform = `scaleY(${eio(p(u, 0, .6))})`;
+    rise($('e1'), u, .5, .6, 50); rise($('e2'), u, 1.1); rise($('e3'), u, 1.7);
+  },
+};
+
+window.render = function (T) {
+  $('prog').style.width = `${100 * T / window.DURATION}%`;
+  const idx = Math.max(0, SCENES.findIndex(([, a, b]) => T >= a && T < b));
+  $('count').textContent = `${String(idx + 1).padStart(2, '0')} / ${SCENES.length}`;
+  $('count').parentElement.style.opacity = T > 76.8 ? 0 : 1;
+  let wait = null;
+  for (const [id, a, b] of SCENES) {
+    const el = $(id); const o = id === 's6' ? (T >= a ? 1 : 0) : Math.min(p(T, a - .01, a + .35), 1 - p(T, b - .45, b));
+    el.style.opacity = o; el.style.display = o > 0 ? 'block' : 'none';
+    if (o <= 0 && !(T >= a && T < b)) continue;
+    if (OLD[id]) { const [oa, ob] = OLD[id]; DRAW[id](oa + (T - a) * (ob - oa) / (b - a)); }
+    else wait = DRAW[id](T - a) || wait;
   }
-  // 7 · end
-  if (t >= 43.9) {
-    const k = eio(p(t, 44, 44.6)); $('endbg').style.transform = `scaleY(${k})`;
-    rise($('e1'), t, 44.5, .6, 50); rise($('e2'), t, 45.1); rise($('e3'), t, 45.7);
-  }
-  }
+  return wait;
 };
 window.render(0);
 </script>
