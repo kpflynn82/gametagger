@@ -362,3 +362,39 @@ changed and no paid run came from this repository; the game itself makes no mode
     (34%).
   * Tests: 24 rule tests and 10 browser checks pass. The Mac copy is at commit `4d8b078`. Still
     no paid runs.
+
+### Trailer: play, learn, build (October 2, 2026)
+
+The owner asked to extend the trailer: keep how the tag database was built and how tags are
+assigned, and lean into the newer loop (play a game for hours, learn what makes it work, build
+a playable prototype in days). Branch `claude/trailer-prototype`. No paid calls.
+
+* `web/trailer.mp4` is now 82 seconds in ten parts (was 54 s in six). The first five (NitroGen,
+  vocabulary, Observer, Jev, top-100 site) keep their animation and play a little faster. The
+  invented "Cloud Hopper" shop and guild scene is replaced by four new ones:
+  * Play: the AI player's run on the plane game (13.2 hours; in the first 8 hours, 159 flights
+    and 154 forced ads), with four of its own notes, trimmed. The phone screens are invented and
+    labelled; the original game is not named and none of its screenshots are used.
+  * Learn: the store-page tags from `experiments/single-games/epic-plane-evolution/tags.json`
+    (Ad-supported, Energy or stamina timers and Pay-to-progress were "not enough evidence")
+    next to what playing measured; the core loop; keep / drop / replace from the Fold & Fly
+    design.
+  * Build: 16 seconds of real Fold & Fly footage (hangar upgrade, slingshot launch, valley
+    arches, a finish line, the harbour town with rocket jets, all six planes) beside four
+    figures: first playable overnight, 1 forced ad in 9 flights and the first new plane in 25
+    minutes (both simulated), six planes and six courses.
+  * Pitch: spot, play, learn, build. "Find out if a feature is fun before you staff a team."
+* The footage (`experiments/trailer/footage/prototype.mp4`, 3.6 MB, and `prototype.json`) was
+  recorded by Fold & Fly's new `scripts/trailer-clips.mjs` (Fold & Fly commit `9f705b5`), which
+  runs the game on a virtual clock so every frame is exactly 1/30 s apart.
+* Cost figure shown: model calls for the AI player's whole run were $6.95 paid plus $76.69 of
+  subscription calls at API prices, so the video says "about $84 at API prices".
+* The site's film blurb now says 82 seconds and lists the new parts. New poster from the Build
+  scene.
+
+Left for the owner:
+* Whether to name the original game in the video (it is named in the repository docs).
+* The end-card line ("Learn why hit games work. Prototype the next one in days.") and the
+  length; a 30-second cut for social could reuse the Play, Learn and Build scenes.
+* The first new plane "in 25 minutes" and "1 in 9 flights" are bot simulations, labelled as
+  such on screen; nobody has played Fold & Fly on a phone for pacing yet.

@@ -1,4 +1,4 @@
-"""Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 54 seconds).
+"""Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 82 seconds).
 
     uv run python experiments/trailer/build.py [--fonts fonts.css] [--still SECONDS]
 
@@ -7,9 +7,15 @@ comes from the repository:
 
 * the tag and genre counts from ``taxonomy/``;
 * Jev's figures from the benchmark in ``experiments/jev-vs-legacy/results/``;
-* the top-100 figures from the published dashboard data in ``web/index.html``.
+* the top-100 figures from the published dashboard data in ``web/index.html``;
+* the plane game's store-page tags from ``experiments/single-games/epic-plane-evolution/``;
+* the AI player's measurements and the prototype's simulated figures from the teardown and
+  Fold & Fly entries in ``docs/EXECUTION_STATUS.md`` (see ``PLAY`` and ``BUILD`` below);
+* the prototype footage from ``footage/prototype.mp4``, recorded from the Fold & Fly
+  prototype by its ``scripts/trailer-clips.mjs``.
 
-Game screens are invented illustrations; no store screenshots, trailers or logos are used.
+The original game's screens are invented illustrations; no store screenshots, trailers or
+logos are used, and the original game is not named. The prototype footage is real.
 NitroGen figures are from NVIDIA's public release: 40,000 hours of gameplay video across more
 than 1,000 games. GameTagger used its game list to seed the catalog, and no model was trained
 on it.
@@ -36,7 +42,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 CHROME = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell"
-FPS, SECONDS = 30, 54.4
+FPS, SECONDS = 30, 81.6
 
 RENDER_JS = """
 const { chromium } = require('playwright');
@@ -174,6 +180,133 @@ def jev() -> dict:
     }
 
 
+# Measured by the teardown player (an AI player on an Android emulator, a separate project) on
+# Sept 28-29, 2026: 13.2 hours of play; in the first 8 hours (159 flights) 154 forced ads, a
+# median 27 s each; an energy limit (5 flights, then a wait of about 42 minutes) from about
+# hour 11; still on the first plane after 13 hours. Model calls for the whole run: $6.95 paid
+# plus $76.69 of subscription calls priced at API rates. See docs/EXECUTION_STATUS.md.
+PLAY = {
+    "hours": 13.2,
+    "counters": [
+        [13.2, "hours of play", False],
+        [159, "flights in the first 8 hours", False],
+        [154, "forced ads in those 8 hours", True],
+    ],
+    # The player's own notes, trimmed (steps.jsonl of the run), with the play time.
+    "notes": [
+        ["0:00:36", "Trying a drag from the plane's nose further down to launch it."],
+        ["0:04:48", "Tapping NEXT, avoiding the ad-based multiply option."],
+        ["1:55:48", "Ad showing. Waiting for the close button to appear."],
+        ["11:06:00", "Energy still regenerating (10:18 timer). Waiting."],
+    ],
+    "foot": "An AI player on an Android emulator, Sept 28-29, 2026. Model calls for the whole "
+    "run: about $84 at API prices. The phone screens are invented; the numbers and notes are "
+    "the AI player's.",
+}
+
+# The prototype, Fold & Fly (a separate repository): bot players simulate the economy and the
+# ad policy (sim/sim.mjs, 6 players each): a good player sees 0.107 forced ads per flight (11%
+# of the original's 0.97) and reaches the second plane in about 25 minutes. The first playable
+# build was made overnight, Sept 28-29; six planes and six courses by Sept 30.
+BUILD = {
+    "stats": [
+        ["Overnight", "to a first playable build: three.js, in a web browser."],
+        ["1 in 9 flights", "ends in a forced ad, in bot-player tests. The original: about 1 in 1."],
+        [
+            "25 minutes",
+            "to the first new plane, simulated. Our AI player didn't reach one in 13 "
+            "hours of the original.",
+        ],
+        ["6 planes, 6 courses", "including a harbour town, built from free CC0 models."],
+    ],
+    "foot": "Footage: the Fold & Fly prototype, recorded frame by frame. Bot-player figures are "
+    "simulated.",
+    # The edit: [clip, seconds in, seconds out] from footage/prototype.json.
+    "edit": [
+        ["hangar", 0.2, 2.9],
+        ["launch", 0.5, 2.3],
+        ["valley", 0.2, 2.4],
+        ["finish", 0.5, 3.1],
+        ["town", 0.3, 4.2],
+    ]
+    + [[f"plane{i}", 0.1, 0.55] for i in range(1, 7)],
+}
+
+
+def learn() -> dict:
+    """The store page's tags for the plane game, next to what playing it measured."""
+    profile = json.loads(
+        (ROOT / "experiments/single-games/epic-plane-evolution/tags.json").read_text()
+    )
+    tags = {t["id"]: t for t in profile["tags"]}
+    measured = [
+        ("mechanic_upgrades", "CONFIRMED", "three tracks: slingshot, plane, income"),
+        ("mechanic_physics", "CONFIRMED", "slingshot launch, glide, skim the ground"),
+        ("monetization_ads", "MEASURED", "0.97 forced ads per flight, 27 s each"),
+        ("engagement_energy_system", "MEASURED", "5 flights, then a 42-minute wait"),
+        ("monetization_pay_to_progress", "MEASURED", "a gem every 5 levels: ad, wait or pay"),
+    ]
+    rows = []
+    for tag_id, kind, text in measured:
+        tag = tags[tag_id]
+        state = tag["state"]
+        prob = tag["probabilities"][state]
+        chip = {"present": "PRESENT", "insufficient_evidence": "NOT ENOUGH EVIDENCE"}[state]
+        rows.append([tag["label"], state, f"{chip} {prob:.2f}", kind, text])
+    return {
+        "rows": rows,
+        "next": "Next plane: <em>not reached in 13 hours.</em>",
+        "loop": ["Slingshot", "Glide and skim", "Coins", "Upgrade"],
+        "loopNote": "every flight, the plane goes a little further",
+        "kdr": [
+            [
+                "KEEP",
+                "var(--green)",
+                [
+                    ["Slingshot timing", ""],
+                    ["Skimming the ground", ""],
+                    ["Three upgrade tracks", ""],
+                    ["A new plane at each finish line", ""],
+                ],
+            ],
+            [
+                "DROP",
+                "var(--red)",
+                [["A forced ad after almost every flight", ""], ["The energy limit", ""]],
+            ],
+            [
+                "REPLACE",
+                "var(--blue)",
+                [
+                    ["A gem every 5 levels", "paid in coins"],
+                    ["A booster upgraded by ads", "rocket jets you earn"],
+                    ["A ×2 needle gamble for an ad", "an optional ×2"],
+                ],
+            ],
+        ],
+    }
+
+
+def build() -> dict:
+    manifest = json.loads((HERE / "footage/prototype.json").read_text())
+    clips = {c["name"]: c for c in manifest["clips"]}
+    edl = []
+    for name, a, b in BUILD["edit"]:
+        clip = clips[name]
+        assert b <= clip["seconds"] + 1e-6, f"{name} is only {clip['seconds']} s long"
+        taps = [t for t in clip["taps"] if a <= t["t"] <= b]
+        edl.append([clip["start"], a, b, taps])
+    return {
+        "fps": manifest["fps"],
+        "width": manifest["width"],
+        "height": manifest["height"],
+        "edl": edl,
+        "stats": BUILD["stats"],
+        "statAt": [1.0, 3.4, 7.4, 9.9],
+        "foot": BUILD["foot"],
+    }
+
+
 def data() -> dict:
     tags = yaml.safe_load((ROOT / "taxonomy/genome_tags_v1.yaml").read_text())
     genres = yaml.safe_load((ROOT / "taxonomy/vgms_v4.yaml").read_text())
@@ -223,7 +356,17 @@ def data() -> dict:
             "games_total": len(games),
             "games": rows,
         },
-        "endline": "Claude describes · Jev decides, tag by tag<br>"
+        "play": PLAY,
+        "learn": learn(),
+        "build": build(),
+        "pitch": [
+            ["01", "Spot", "a game climbing the charts"],
+            ["02", "Play", "an AI player plays it for hours"],
+            ["03", "Learn", "what makes it work, tag by tag"],
+            ["04", "Build", "a playable prototype, tuned by bot players"],
+        ],
+        "endtitle": "Learn why hit games work.<br>Prototype the next one in days.",
+        "endline": "Claude describes · Jev decides, tag by tag · an AI player plays<br>"
         "Catalog seeded from the NitroGen game list · Jev by TypeSafe",
     }
 
@@ -242,15 +385,38 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp)
         (work / "scene.html").write_text(page)
+        (work / "footage").mkdir()
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-v",
+                "error",
+                "-i",
+                str(HERE / "footage/prototype.mp4"),
+                "-q:v",
+                "2",
+                "-start_number",
+                "0",
+                str(work / "footage/%05d.jpg"),
+            ],
+            check=True,
+        )
         (work / "render.js").write_text(RENDER_JS)
         frames = work / "frames"
         frames.mkdir()
         subprocess.run(
-            ["node", str(work / "render.js"), (work / "scene.html").as_uri(), str(frames),
-             str(FPS), str(SECONDS), args.still or ""],
+            [
+                "node",
+                str(work / "render.js"),
+                (work / "scene.html").as_uri(),
+                str(frames),
+                str(FPS),
+                str(SECONDS),
+                args.still or "",
+            ],
             check=True,
             env={**os.environ, "NODE_PATH": node_root.strip(), "CHROME": CHROME},
-        )  # fmt: skip
+        )
         if args.still:
             for i, t in enumerate(args.still.split(",")):
                 target = args.out.with_name(f"still-{float(t):05.1f}.png")
@@ -258,11 +424,29 @@ def main() -> None:
                 print(target)
             return
         subprocess.run(
-            ["ffmpeg", "-v", "error", "-y", "-framerate", str(FPS), "-i", str(frames / "%05d.png"),
-             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-preset", "slow",
-             "-movflags", "+faststart", str(args.out)],
+            [
+                "ffmpeg",
+                "-v",
+                "error",
+                "-y",
+                "-framerate",
+                str(FPS),
+                "-i",
+                str(frames / "%05d.png"),
+                "-c:v",
+                "libx264",
+                "-pix_fmt",
+                "yuv420p",
+                "-crf",
+                "21",
+                "-preset",
+                "slow",
+                "-movflags",
+                "+faststart",
+                str(args.out),
+            ],
             check=True,
-        )  # fmt: skip
+        )
     print(args.out)
 
 
