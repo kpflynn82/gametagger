@@ -386,7 +386,8 @@ a playable prototype in days). Branch `claude/trailer-prototype`. No paid calls.
   * Pitch: spot, play, learn, build. "Find out if a feature is fun before you staff a team."
 * The footage (`experiments/trailer/footage/prototype.mp4`, 3.6 MB, and `prototype.json`) was
   recorded by Fold & Fly's new `scripts/trailer-clips.mjs` (Fold & Fly commit `9f705b5`), which
-  runs the game on a virtual clock so every frame is exactly 1/30 s apart.
+  runs the game on a virtual clock so every frame is exactly 1/30 s apart. The Mac copy
+  of Fold & Fly is now at that commit.
 * Cost figure shown: model calls for the AI player's whole run were $6.95 paid plus $76.69 of
   subscription calls at API prices, so the video says "about $84 at API prices".
 * The site's film blurb now says 82 seconds and lists the new parts. New poster from the Build
