@@ -392,6 +392,16 @@ a playable prototype in days). Branch `claude/trailer-prototype`. No paid calls.
   subscription calls at API prices, so the video says "about $84 at API prices".
 * The site's film blurb now says 82 seconds and lists the new parts. New poster from the Build
   scene.
+* Site (owner: "add it to the website ... verbiage about the ability to play games"): a new
+  "Play-testing" section after "Where the evidence runs out", linked from the header, footer and
+  the pipeline's "Play" step. It shows the plane game's store-page tags next to what 13 hours of
+  play measured, six measured figures, three of the AI player's notes, what play-testing adds
+  (pacing, economy, why it works) and the step to a playable prototype, with a button that
+  starts the film at 0:31. It says plainly that this is one game, played as a pilot, and that
+  the top 100 are not play-tested yet. The same edits are in
+  `experiments/jev-vs-legacy/site/dashboard-template.html`, so a rebuild keeps them. Checked at
+  1280 px (light) and 390 px (dark); the film button was checked with a WebM copy of the film,
+  because the headless browser here cannot play H.264.
 
 Left for the owner:
 * Whether to name the original game in the video (it is named in the repository docs).
