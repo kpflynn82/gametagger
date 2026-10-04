@@ -327,9 +327,11 @@ def store_gaps() -> dict:
 def highlight() -> dict:
     """The 30-second cut for LinkedIn: the discovery problem, then play and build.
 
-    Sources: Dream Games' 2023 UK accounts as reported by the Financial Times (via MenaBytes,
-    May 2025: $1.5bn revenue, $1bn on marketing and other distribution costs, $130m pre-tax
-    loss); Moloco's 2026 report via PocketGamer.biz (190,000 mobile games released in 2025,
+    Sources: Dream Games' 2023 P&L from its UK (Companies House) filings, as charted in Matthew
+    Ball's "The State of Video Gaming in 2026" (page 125 of the April 2026 edition): gross
+    revenue $1.52bn, platform fees $0.45bn, net revenue $1.07bn, user acquisition $1.06bn, an
+    operating loss of $0.13bn ("Royal Match ... had $1.1B in net revenue in 2023 and spent
+    $1.1B on UA"); Moloco's 2026 report via PocketGamer.biz (190,000 mobile games released in 2025,
     2,500 passed 500,000 downloads in their first year); Google Play Console Help (one category
     of 17 for games, up to five tags, chosen by the developer); GameTagger's own top-100 data.
     """
@@ -340,11 +342,12 @@ def highlight() -> dict:
         "money": {
             "kicker": "ONE OF MOBILE'S BIGGEST HITS, IN 2023",
             "rows": [
-                ["$1.5B", "earned by Dream Games, maker of Royal Match", False],
-                ["$1.0B", "spent on marketing and distribution", True],
+                ["$1.1B", "net revenue for Royal Match, after app store fees", False],
+                ["$1.1B", "spent on user acquisition", True],
             ],
             "punch": "Even the hits <em>pay to be found.</em>",
-            "source": "Dream Games' 2023 UK accounts, as reported by the Financial Times.",
+            "source": "Dream Games' 2023 UK filings, via Matthew Ball's The State of Video "
+            "Gaming in 2026.",
         },
         "flood": {
             "kicker": "NEW MOBILE GAMES IN 2025",

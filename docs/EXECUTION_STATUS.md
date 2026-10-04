@@ -418,13 +418,17 @@ No paid calls.
 
 * `build.py --cut highlight` renders `web/linkedin/trailer-30s.mp4` (2.6 MB) and the thumbnail
   is a frame at 4.6 s. The full film is unchanged.
-* Figures researched for the post and the cut: Dream Games' 2023 revenue (about $1.5bn) and
-  marketing and distribution spend (about $1bn), from its UK accounts as reported by the
-  Financial Times; 190,000 mobile games released in 2025, of which 2,500 passed 500,000
+* Figures researched for the post and the cut: Royal Match's 2023 net revenue ($1.07bn, after
+  $0.45bn of platform fees on $1.52bn gross) and user acquisition ($1.06bn), from Dream Games'
+  UK filings as charted on page 125 of Matthew Ball's "The State of Video Gaming in 2026"
+  (the Financial Times reported the same filing as $1.5bn revenue and $1bn of marketing and
+  other distribution costs); the same report says mobile UA spend has exceeded app store fees
+  since 2020 (page 123); 190,000 mobile games released in 2025, of which 2,500 passed 500,000
   downloads in year one (Moloco); about 20,000 Steam releases in 2025, about half with fewer
   than 10 reviews by December (SteamDB); Google Play's one category and five developer-chosen
   tags; Netflix's "about 80% of hours streamed" from recommendations (Gomez-Uribe and Hunt,
-  2015). The owner remembered the Royal Match figure as $1.2bn; the reported figure is $1.5bn.
+  2015). The owner pointed to Ball's report as the source; it was read in the owner's
+  Chrome, because the PDF host is not reachable from the workspace.
 * From the site's own data: store evidence could not settle ads for 28 and energy timers for 47
   of the Google Play top 50 grossing.
 * The post text was given to the owner in chat, not committed.

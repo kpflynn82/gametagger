@@ -38,9 +38,10 @@ loop: play a game, learn what makes it work, and build a playable prototype.
 game discovery: `build.py --cut highlight`. Four new cards, then parts of the Play and Build
 scenes, then an end card:
 
-1. Royal Match's studio, Dream Games: about $1.5bn of revenue in 2023 and about $1bn spent on
-   marketing and distribution (its 2023 UK accounts as reported by the Financial Times, via
-   MenaBytes).
+1. Royal Match in 2023: $1.1bn of net revenue after app store fees, and $1.1bn spent on user
+   acquisition (Dream Games' 2023 P&L from its UK filings, as charted on page 125 of Matthew
+   Ball's "The State of Video Gaming in 2026": gross $1.52bn, platform fees $0.45bn, net
+   $1.07bn, user acquisition $1.06bn, other costs $0.13bn, an operating loss of $0.13bn).
 2. About 190,000 new mobile games released in 2025; 2,500 passed 500,000 downloads in their
    first year (Moloco, via PocketGamer.biz, August 2026).
 3. A Google Play listing gets one category and up to five tags, picked by the developer
