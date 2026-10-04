@@ -404,10 +404,27 @@ a playable prototype in days). Branch `claude/trailer-prototype`. No paid calls.
   because the headless browser here cannot play H.264.
 
 Left for the owner:
-* Merge PR #14 to put the film and the Play-testing section on gametagger.vercel.app (CI and
-  the Vercel preview passed; the session's merge was blocked pending the owner's review).
 * Whether to name the original game in the video (it is named in the repository docs).
 * The end-card line ("Learn why hit games work. Prototype the next one in days.") and the
   length; a 30-second cut for social could reuse the Play, Learn and Build scenes.
 * The first new plane "in 25 minutes" and "1 in 9 flights" are bot simulations, labelled as
   such on screen; nobody has played Fold & Fly on a phone for pacing yet.
+
+### A 30-second cut for LinkedIn (October 3, 2026)
+
+The owner merged PR #14 (the 82-second film and the Play-testing section are live) and asked
+for a LinkedIn post on game discovery with a 30-second highlight. Branch `claude/trailer-30s`.
+No paid calls.
+
+* `build.py --cut highlight` renders `web/linkedin/trailer-30s.mp4` (2.6 MB) and the thumbnail
+  is a frame at 4.6 s. The full film is unchanged.
+* Figures researched for the post and the cut: Dream Games' 2023 revenue (about $1.5bn) and
+  marketing and distribution spend (about $1bn), from its UK accounts as reported by the
+  Financial Times; 190,000 mobile games released in 2025, of which 2,500 passed 500,000
+  downloads in year one (Moloco); about 20,000 Steam releases in 2025, about half with fewer
+  than 10 reviews by December (SteamDB); Google Play's one category and five developer-chosen
+  tags; Netflix's "about 80% of hours streamed" from recommendations (Gomez-Uribe and Hunt,
+  2015). The owner remembered the Royal Match figure as $1.2bn; the reported figure is $1.5bn.
+* From the site's own data: store evidence could not settle ads for 28 and energy timers for 47
+  of the Google Play top 50 grossing.
+* The post text was given to the owner in chat, not committed.

@@ -32,6 +32,22 @@ loop: play a game, learn what makes it work, and build a playable prototype.
    prototype. "Find out if a feature is fun before you staff a team."
 10. End card.
 
+## The 30-second cut
+
+`web/linkedin/trailer-30s.mp4` (thumbnail `trailer-30s-thumbnail.jpg`), for a LinkedIn post on
+game discovery: `build.py --cut highlight`. Four new cards, then parts of the Play and Build
+scenes, then an end card:
+
+1. Royal Match's studio, Dream Games: about $1.5bn of revenue in 2023 and about $1bn spent on
+   marketing and distribution (its 2023 UK accounts as reported by the Financial Times, via
+   MenaBytes).
+2. About 190,000 new mobile games released in 2025; 2,500 passed 500,000 downloads in their
+   first year (Moloco, via PocketGamer.biz, August 2026).
+3. A Google Play listing gets one category and up to five tags, picked by the developer
+   (Google Play Console Help), against 189 gameplay questions per game here.
+4. From store pages and trailers, GameTagger could not settle ads for 28 and energy timers for
+   47 of the Google Play top 50 grossing (computed from `web/index.html` at build time).
+
 ## Sources and honesty rules
 
 * The original game's screens (part 6) are invented illustrations drawn in code (`games.js`

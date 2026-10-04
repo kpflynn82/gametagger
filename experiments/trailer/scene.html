@@ -262,6 +262,24 @@ text-align:center;font-weight:800;font-size:25px;line-height:1.1;letter-spacing:
 .qstep.on b{color:var(--red)}
 .qstamp{left:56px;right:56px;top:810px;font-weight:900;font-size:54px;line-height:1.08;letter-spacing:-.03em}
 .qstamp em{font-style:normal;color:var(--red)}
+/* 30-second highlight cut */
+.hrows{left:56px;right:56px;top:190px;display:grid;gap:34px}
+.hrow{opacity:0}
+.hrow b{display:block;font-weight:900;font-size:168px;line-height:.86;letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.hrow span{display:block;font-weight:800;font-size:40px;line-height:1.1;letter-spacing:-.02em;margin-top:10px}
+.hrow.hot b{color:var(--red)}
+.hpunch{left:56px;right:56px;top:700px;font-weight:900;font-size:60px;line-height:1.05;letter-spacing:-.035em}
+.hpunch em{font-style:normal;color:var(--red)}
+.hsrc{left:56px;right:56px;bottom:40px;font:500 17px/1.45 "Chivo Mono",monospace;color:var(--mute)}
+.hcols{left:56px;right:56px;top:340px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.hcol{background:var(--bg2);border:2px solid var(--line);border-radius:12px;padding:26px 28px 30px;opacity:0}
+.hcol small{display:block;font:600 18px "Chivo Mono",monospace;letter-spacing:.12em;color:var(--mute);margin-bottom:14px}
+.hcol b{display:block;font-weight:900;font-size:112px;line-height:.95;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.hcol span{display:block;font-weight:700;font-size:28px;line-height:1.22;margin-top:16px;color:var(--ink2)}
+.hcol.us{border-color:var(--red)}.hcol.us b{color:var(--red)}
+.hline{left:56px;width:500px;top:380px;font-weight:800;font-size:38px;line-height:1.15;letter-spacing:-.02em}
+.hline em{font-style:normal;color:var(--red)}
+.endu{left:60px;top:860px;font:700 30px "Chivo Mono",monospace;color:#16150f}
 /* end */
 .endbg{position:absolute;inset:0;background:var(--red);transform-origin:bottom}
 .endt{left:56px;top:340px;font-weight:900;font-size:158px;line-height:.9;letter-spacing:-.055em;
@@ -436,6 +454,7 @@ color:#16150f}
   <div class="a kicker" id="sbk" style="left:56px;top:112px">BUILD</div>
   <div class="a btitle" id="sbt">Then it builds a playable prototype.</div>
   <div class="a bstats" id="bstats"></div>
+  <div class="a hline" id="hbline"></div>
   <div class="a flabel" id="flabel">REAL PROTOTYPE FOOTAGE</div>
   <div class="phone a bphone" id="sbp"><div class="screen"><img id="foot" alt=""><div class="ripple" id="rip2"></div></div></div>
   <div class="a foot" id="bfoot" style="right:540px"></div>
@@ -446,6 +465,36 @@ color:#16150f}
   <div class="a qtitle" id="sqt">From the charts to a playable prototype, in days.</div>
   <div class="a qsteps" id="qsteps"></div>
   <div class="a qstamp" id="qstamp">Find out if a feature is <em>fun</em> before you staff a team.</div>
+</div>
+
+<!-- highlight cut only -->
+<div class="scene" id="h1">
+  <div class="a kicker" id="h1k" style="left:56px;top:112px"></div>
+  <div class="a hrows" id="h1r"></div>
+  <div class="a hpunch" id="h1p"></div>
+  <div class="a hsrc" id="h1s"></div>
+</div>
+<div class="scene" id="h2">
+  <div class="a kicker" id="h2k" style="left:56px;top:112px"></div>
+  <div class="a hrows" id="h2r"></div>
+  <div class="a hpunch" id="h2p"></div>
+  <div class="a hsrc" id="h2s"></div>
+</div>
+<div class="scene" id="h3">
+  <div class="a title" id="h3t"></div>
+  <div class="a hcols" id="h3c"></div>
+  <div class="a hsrc" id="h3s"></div>
+</div>
+<div class="scene" id="h4">
+  <div class="a title" id="h4t"></div>
+  <div class="a hcols" id="h4c"></div>
+  <div class="a hsrc" id="h4s"></div>
+</div>
+<div class="scene" id="he">
+  <div class="endbg" id="hebg"></div>
+  <div class="a endt" id="he1">GameTagger</div>
+  <div class="a endp" id="he2"></div>
+  <div class="a endu" id="he3"></div>
 </div>
 
 <!-- 10: end -->
@@ -597,12 +646,31 @@ $('e2').innerHTML = D.endtitle;
 $('e3').innerHTML = D.endline;
 $('defh').textContent = D.def[0]; $('defp').textContent = D.def[1]; $('defe').textContent = D.def[2];
 
+// build: the 30-second highlight cut's own scenes
+const CUT = D.cut ? D.cut.name : 'full';
+if (D.cut) {
+  const H = D.cut;
+  const rows = (id, items) => { $(id).innerHTML = items.map(([v, label, hot]) => `<div class="hrow${hot ? ' hot' : ''}"><b>${v}</b><span>${label}</span></div>`).join(''); };
+  const cols = (id, items) => { $(id).innerHTML = items.map(([head, v, label, us]) => `<div class="hcol${us ? ' us' : ''}"><small>${head}</small><b>${v}</b><span>${label}</span></div>`).join(''); };
+  $('h1k').textContent = H.money.kicker; rows('h1r', H.money.rows); $('h1p').innerHTML = H.money.punch; $('h1s').textContent = H.money.source;
+  $('h2k').textContent = H.flood.kicker; rows('h2r', H.flood.rows); $('h2p').innerHTML = H.flood.punch; $('h2s').textContent = H.flood.source;
+  $('h3t').textContent = H.cats.title; cols('h3c', H.cats.cols); $('h3s').textContent = H.cats.source;
+  $('h4t').textContent = H.gaps.title; cols('h4c', H.gaps.cols); $('h4s').textContent = H.gaps.source;
+  $('hbline').innerHTML = H.build; $('he2').innerHTML = H.end; $('he3').textContent = H.url;
+}
+
 // The timeline. The first five scenes keep their original timings (OLD) and play a little
 // faster to make room for the four new ones; the new scenes are drawn in their own local time.
 const SCENES = [['s1', 0, 5], ['s2', 5, 11.6], ['s3', 11.6, 16.8], ['sj', 16.8, 25.2], ['s5', 25.2, 30.6],
   ['sp', 30.6, 40.8], ['su', 40.8, 52.6], ['sb', 52.6, 69.2], ['sq', 69.2, 76.6], ['s6', 76.6, 81.6]];
 const OLD = { s1: [0, 8], s2: [8, 16.4], s3: [16.4, 22.6], sj: [22.6, 32.4], s5: [37.2, 44.0] };
-window.DURATION = 81.6;
+// The highlight cut: its own opening scenes, then parts of the play and build scenes, played
+// over [from, to] of their own local time.
+const HIGHLIGHT = [['h1', 0, 5.2], ['h2', 5.2, 9.4], ['h3', 9.4, 13.8], ['h4', 13.8, 18], ['sp', 18, 23.4, [0.2, 9.4]],
+  ['sb', 23.4, 26.8, [9.9, 13.3]], ['he', 26.8, 30]];
+const TIMELINE = CUT === 'highlight' ? HIGHLIGHT : SCENES;
+const LAST = TIMELINE[TIMELINE.length - 1][0];
+window.DURATION = CUT === 'highlight' ? 30 : 81.6;
 
 const DRAW = {
   // 1 · 40,000 hours
@@ -758,6 +826,8 @@ const DRAW = {
   // 8 · builds a playable prototype (real footage)
   sb(u) {
     rise($('sbk'), u, .2, .5, 20); rise($('sbt'), u, .35);
+    $('bstats').hidden = $('bfoot').hidden = CUT === 'highlight'; $('hbline').hidden = CUT !== 'highlight';
+    if (CUT === 'highlight') rise($('hbline'), u, 10.0, .5, 20);
     const kp = eo(p(u, .25, .85)); set($('sbp'), kp, (1 - kp) * 120, 0);
     rise($('flabel'), u, .9, .4, 10);
     $('bstats').style.opacity = 1; $('bstats').style.transform = 'none';
@@ -786,19 +856,52 @@ const DRAW = {
     $('endbg').style.transform = `scaleY(${eio(p(u, 0, .6))})`;
     rise($('e1'), u, .5, .6, 50); rise($('e2'), u, 1.1); rise($('e3'), u, 1.7);
   },
+  // highlight cut: the money, the flood, the categories, the gaps, and the end card
+  h1(u) { hRows('h1', u); },
+  h2(u) { hRows('h2', u); },
+  h3(u) { hCols('h3', u); },
+  h4(u) { hCols('h4', u); },
+  he(u) {
+    $('hebg').style.transform = `scaleY(${eio(p(u, 0, .5))})`;
+    rise($('he1'), u, .35, .5, 40); rise($('he2'), u, .8); rise($('he3'), u, 1.3, .5, 20);
+  },
 };
+function countUp(b, u, a, d) {
+  if (!b.dataset.v) b.dataset.v = b.textContent;
+  const m = /^([^0-9]*)([0-9][0-9,.]*)(.*)$/.exec(b.dataset.v);
+  if (!m) return;
+  const target = Number(m[2].replace(/,/g, '')), dec = (m[2].split('.')[1] || '').length, k = eio(p(u, a, a + d));
+  const v = target * k;
+  b.textContent = m[1] + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US')) + m[3];
+}
+function hRows(id, u) {
+  rise($(id + 'k'), u, id === 'h1' ? -1 : .2, .5, 20);
+  $(id + 'r').style.opacity = 1; $(id + 'r').style.transform = 'none';
+  [...$(id + 'r').children].forEach((r, i) => { const a = .35 + i * 1.0; rise(r, u, a, .5, 30); countUp(r.querySelector('b'), u, a, .9); });
+  rise($(id + 'p'), u, 2.6, .5, 24); rise($(id + 's'), u, .6, .5, 8);
+}
+function hCols(id, u) {
+  rise($(id + 't'), u, .2);
+  $(id + 'c').style.opacity = 1; $(id + 'c').style.transform = 'none';
+  [...$(id + 'c').children].forEach((c, i) => rise(c, u, .7 + i * .7, .5, 30));
+  rise($(id + 's'), u, 1.2, .5, 8);
+}
 
 window.render = function (T) {
   $('prog').style.width = `${100 * T / window.DURATION}%`;
-  const idx = Math.max(0, SCENES.findIndex(([, a, b]) => T >= a && T < b));
-  $('count').textContent = `${String(idx + 1).padStart(2, '0')} / ${SCENES.length}`;
-  $('count').parentElement.style.opacity = T > 76.8 ? 0 : 1;
+  const idx = Math.max(0, TIMELINE.findIndex(([, a, b]) => T >= a && T < b));
+  $('count').textContent = `${String(idx + 1).padStart(2, '0')} / ${TIMELINE.length}`;
+  $('count').style.visibility = CUT === 'highlight' ? 'hidden' : 'visible';
+  $('count').parentElement.style.opacity = T > TIMELINE[TIMELINE.length - 1][1] + .2 ? 0 : 1;
   let wait = null;
-  for (const [id, a, b] of SCENES) {
-    const el = $(id); const o = id === 's6' ? (T >= a ? 1 : 0) : Math.min(p(T, a - .01, a + .35), 1 - p(T, b - .45, b));
+  for (const [id, a, b, span] of TIMELINE) {
+    // The last scene holds; the highlight cut's first scene is there from frame 0 (the feed's thumbnail).
+    const first = CUT === 'highlight' && a === 0;
+    const el = $(id); const o = id === LAST ? (T >= a ? 1 : 0) : Math.min(first ? 1 : p(T, a - .01, a + .35), 1 - p(T, b - .45, b));
     el.style.opacity = o; el.style.display = o > 0 ? 'block' : 'none';
     if (o <= 0 && !(T >= a && T < b)) continue;
     if (OLD[id]) { const [oa, ob] = OLD[id]; DRAW[id](oa + (T - a) * (ob - oa) / (b - a)); }
+    else if (span) wait = DRAW[id](span[0] + (T - a) * (span[1] - span[0]) / (b - a)) || wait;
     else wait = DRAW[id](T - a) || wait;
   }
   return wait;

@@ -1,6 +1,7 @@
 """Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 82 seconds).
 
     uv run python experiments/trailer/build.py [--fonts fonts.css] [--still SECONDS]
+    uv run python experiments/trailer/build.py --cut highlight [--fonts fonts.css]   # 30 s
 
 The scenes live in ``scene.html``; ``render(t)`` draws the frame at time ``t``. Every number
 comes from the repository:
@@ -307,6 +308,93 @@ def build() -> dict:
     }
 
 
+def store_gaps() -> dict:
+    """How many Google Play top-50 grossing games store evidence could not settle."""
+    page = (ROOT / "web/index.html").read_text()
+    site = json.loads(re.search(r"const DATA = (\{.*?\});\n", page, re.S).group(1))
+    mobile = [g for g in site["games"] if g["list"] == "mobile"]
+
+    def unknown(tag: str) -> int:
+        return sum(1 for g in mobile if not (g.get("detail") or {}).get("jev", {}).get(tag))
+
+    return {
+        "games": len(mobile),
+        "ads": unknown("monetization_ads"),
+        "energy": unknown("engagement_energy_system"),
+    }
+
+
+def highlight() -> dict:
+    """The 30-second cut for LinkedIn: the discovery problem, then play and build.
+
+    Sources: Dream Games' 2023 UK accounts as reported by the Financial Times (via MenaBytes,
+    May 2025: $1.5bn revenue, $1bn on marketing and other distribution costs, $130m pre-tax
+    loss); Moloco's 2026 report via PocketGamer.biz (190,000 mobile games released in 2025,
+    2,500 passed 500,000 downloads in their first year); Google Play Console Help (one category
+    of 17 for games, up to five tags, chosen by the developer); GameTagger's own top-100 data.
+    """
+    gaps = store_gaps()
+    n = gaps["games"]
+    return {
+        "name": "highlight",
+        "money": {
+            "kicker": "ONE OF MOBILE'S BIGGEST HITS, IN 2023",
+            "rows": [
+                ["$1.5B", "earned by Dream Games, maker of Royal Match", False],
+                ["$1.0B", "spent on marketing and distribution", True],
+            ],
+            "punch": "Even the hits <em>pay to be found.</em>",
+            "source": "Dream Games' 2023 UK accounts, as reported by the Financial Times.",
+        },
+        "flood": {
+            "kicker": "NEW MOBILE GAMES IN 2025",
+            "rows": [
+                ["190,000", "new mobile games released", False],
+                ["2,500", "passed 500,000 downloads in their first year", True],
+            ],
+            "punch": f"That's about <em>1 in {round(190000 / 2500)}.</em>",
+            "source": "Moloco, via PocketGamer.biz, August 2026.",
+        },
+        "cats": {
+            "title": "Recommendations are only as good as what the store knows.",
+            "cols": [
+                [
+                    "A GOOGLE PLAY LISTING",
+                    "1 + 5",
+                    "one category and up to five tags, picked by the developer",
+                    False,
+                ],
+                [
+                    "GAMETAGGER",
+                    "189",
+                    "gameplay questions answered for every game, each from evidence",
+                    True,
+                ],
+            ],
+            "source": "Google Play Console Help (categories and tags). GameTagger: 189 tags, "
+            "100 genres.",
+        },
+        "gaps": {
+            "title": "But a store page can't show how a game plays.",
+            "cols": [
+                [
+                    "SHOWS ADS?",
+                    f"{gaps['ads']} of {n}",
+                    "top-grossing mobile games couldn't be settled from store pages",
+                    True,
+                ],
+                ["ENERGY TIMERS?", f"{gaps['energy']} of {n}", "couldn't be settled either", True],
+            ],
+            "source": f"Google Play top {n} grossing (US), September 2026, tagged by GameTagger "
+            "from store pages, screenshots and trailers.",
+        },
+        "build": "A playable prototype in days, <em>ready to test with real players</em> before "
+        "you staff a team.",
+        "end": "Better categories.<br>Better recommendations.",
+        "url": "gametagger.vercel.app",
+    }
+
+
 def data() -> dict:
     tags = yaml.safe_load((ROOT / "taxonomy/genome_tags_v1.yaml").read_text())
     genres = yaml.safe_load((ROOT / "taxonomy/vgms_v4.yaml").read_text())
@@ -374,12 +462,21 @@ def data() -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--fonts", type=Path)
-    parser.add_argument("--out", type=Path, default=ROOT / "web" / "trailer.mp4")
+    parser.add_argument("--out", type=Path)
+    parser.add_argument("--cut", choices=["full", "highlight"], default="full")
     parser.add_argument("--still", help="comma-separated times: render stills to PNGs instead")
     args = parser.parse_args()
     fonts = args.fonts.read_text() if args.fonts and args.fonts.exists() else ""
     page = (HERE / "scene.html").read_text()
-    page = page.replace("/*FONTS*/", fonts).replace("/*DATA*/", json.dumps(data()))
+    payload = data()
+    seconds = SECONDS
+    if args.cut == "highlight":
+        payload["cut"] = highlight()
+        seconds = 30
+    args.out = args.out or ROOT / "web" / (
+        "trailer.mp4" if args.cut == "full" else "linkedin/trailer-30s.mp4"
+    )
+    page = page.replace("/*FONTS*/", fonts).replace("/*DATA*/", json.dumps(payload))
     page = page.replace("/*GAMES*/", (HERE / "games.js").read_text())
     node_root = subprocess.run(["npm", "root", "-g"], capture_output=True, text=True).stdout
     with tempfile.TemporaryDirectory() as tmp:
@@ -411,7 +508,7 @@ def main() -> None:
                 (work / "scene.html").as_uri(),
                 str(frames),
                 str(FPS),
-                str(SECONDS),
+                str(seconds),
                 args.still or "",
             ],
             check=True,
