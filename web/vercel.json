@@ -3,7 +3,18 @@
   "headers": [
     {
       "source": "/(.*)\\.png",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(dashboard|games|tags|play-testing|how-it-works)",
+      "destination": "/"
     }
   ]
 }
