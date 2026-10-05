@@ -1,17 +1,18 @@
 # Vocabulary v2 draft: mobile meta, live ops and ads
 
-Status: **draft for owner review** (Improvement 7, step 1). The pipeline does not use these tags
-until you approve them. The machine-readable draft is
+Status: **approved by the owner on October 5, 2026**, with all 51 tags kept (Improvement 7,
+step 1). The pipeline does not use these tags yet: the loader and conditional questions come
+next (see "After approval"). The machine-readable draft is
 [`taxonomy/drafts/genome_tags_v2_additions.draft.yaml`](../taxonomy/drafts/genome_tags_v2_additions.draft.yaml).
 `tests/test_vocabulary_v2_draft.py` checks that it stays well formed and never collides with
 v1.
 
 ## What changes
 
-* **52 new tags in 4 new categories.** v1's 189 tags are unchanged, so v1 results stay
+* **51 new tags in 4 new categories.** v1's 189 tags are unchanged, so v1 results stay
   comparable. The new version will be `genome-tags-v2` (189 + the approved additions).
 * **Meta layers (13):** the systems wrapped around the core loop.
-* **Live operations & offers (22):** events, schedules, currencies and offers.
+* **Live operations & offers (21):** events, schedules, currencies and offers.
 * **Advertising (5):** how ads are shown and what players can do about them.
 * **Implementation details (12):** follow-up questions asked **only when the parent tag is
   present**. For example, "the battle pass has a free track" is asked only if a battle pass was
@@ -34,24 +35,21 @@ From store pages alone they would mostly come back "not enough evidence". The pl
 ships v2 together with the 5-game recording pilot, which the automated Android player
 (`gametagger-play`) or your own recordings can now provide.
 
-## Decisions for you
+## Owner's decisions (October 5, 2026)
 
-1. **Keep, cut or rename.** Mark any tag below. 40–60 is the target, so a few cuts are fine.
-2. **Keep the v1 umbrella tags?** "Daily rewards or quests", "Auto-play or idle progress" and
-   "Ad-supported" stay, next to the more specific v2 tags. Recommended: keep them, so results
-   stay comparable with earlier runs.
-3. **What "present" means for follow-ups.** Should a parent decided as "likely" (not only
-   "strong") unlock its follow-up questions? Recommended: yes, both count as present.
-4. **Google Play's ads notice.** Should a missing "Contains ads" notice count as evidence of
-   **no** ads? This is the open policy question from Improvement 2. If yes, it would apply to
-   all five ad tags. Recommended: no, until the pilot shows how reliable the notice is.
-5. **Event cadence** ("Weekly or faster event cadence") needs evidence dated across weeks, such
-   as update notes or an event calendar. Keep it and expect "not enough evidence" at first, or
-   cut it?
-6. **Crosswalks.**
-   * Steam's player tags barely cover mobile monetization, so the Steam crosswalk will be thin.
-   * A mapping to commercial feature lists (for example GameRefinery's) is not drafted: we do
-     not have their list and should not copy it.
+1. **Keep, cut or rename:** keep all 51 as drafted.
+2. **The v1 umbrella tags** ("Daily rewards or quests", "Auto-play or idle progress",
+   "Ad-supported"): **undecided for mobile.** The owner wants to retag the Google Play top 50
+   with the v2 tags as the test, and doubts the broad tags are needed for mobile. They stay in
+   the vocabulary until that retag shows whether the specific tags cover them; v1 results and
+   the PC games keep using them either way.
+3. **"Likely" unlocks follow-ups:** yes. A parent decided "strong" or "likely" counts as present
+   for its follow-up questions.
+4. **A missing Google Play "Contains ads" notice:** not evidence of no ads.
+5. **Weekly event cadence:** keep. The owner plans to play-test the top-performing games about
+   once a week, so cadence is decided from those dated sessions, and only for those games.
+6. **Crosswalks:** no Steam crosswalk for the v2 tags (the owner does not rate Steam's player
+   tags), and no mapping to commercial feature lists such as GameRefinery's.
 
 ## Meta layers (13)
 

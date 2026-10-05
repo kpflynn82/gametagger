@@ -183,7 +183,7 @@ a feature is done, not only whether it exists.
 
 **Design.**
 
-1. **Vocabulary v2 draft (new tags).** *Drafted September 27, awaiting owner review:* 52 tags
+1. **Vocabulary v2 draft (new tags).** *Approved by the owner October 5, all kept:* 51 tags
    in [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md). About 40–60 new tags in three groups, each with a plain
    definition, allowed evidence and a note on what must be visible:
    * **Meta layers:** base building, collection albums, character roster, idle rewards, merge
@@ -199,9 +199,8 @@ a feature is done, not only whether it exists.
 3. **Versioning.** The new tags ship as vocabulary `genome-tags-v2`. Results record the
    version, the site's dictionary shows it, and v1 results stay comparable because v1 tags are
    unchanged.
-4. **Crosswalks.** Map the new tags to Steam tags where they exist, and draft a mapping to
-   GameRefinery-style feature names so buyers can compare. Both stay drafts until the owner
-   approves them.
+4. **Crosswalks.** *Owner, October 5: none for v2.* No Steam crosswalk (the owner does not
+   rate Steam's player tags) and no mapping to commercial feature lists.
 5. **Dependence on Improvement 3.** Most new tags need shop, event and ad screens to decide.
    Without recorded gameplay they will mostly come back unknown. Ship the vocabulary with the
    recording pilot, not before.
@@ -231,8 +230,10 @@ Total live spend for the plan is under $10, well inside the remaining $17 of the
 ## Decisions for the owner
 
 1. Budget authorization for the 100-game Haiku confirmation run (about $2.60).
-2. Whether a missing Google Play "Contains ads" notice may count as evidence of no ads.
+2. ~~Whether a missing Google Play "Contains ads" notice may count as evidence of no ads.~~
+   *Answered October 5: no.*
 3. Who records the pilot games, and which 5 (suggestion: 2 puzzle, 1 casino, 1 4X strategy,
    1 RPG from the mobile chart).
-4. Approval of the vocabulary v2 draft before it is built.
+4. ~~Approval of the vocabulary v2 draft before it is built.~~ *Approved October 5 (all 51
+   tags); whether mobile keeps the v1 umbrella tags is decided after the top-50 mobile retag.*
 5. The blind human review sheet, which is still the only way to measure wrong "yes" answers.

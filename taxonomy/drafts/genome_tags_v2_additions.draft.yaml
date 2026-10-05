@@ -1,4 +1,5 @@
-# DRAFT: genome-tags-v2 additions (Improvement 7). Not loaded by the code until the owner approves.
+# genome-tags-v2 additions (Improvement 7). Approved by the owner on October 5, 2026 (all 51
+# kept); not loaded until the loader accepts `requires`. Decisions: docs/VOCABULARY_V2_DRAFT.md.
 #
 # v1 tags stay exactly as they are, so v1 results remain comparable. v2 adds four categories:
 #   meta     - systems wrapped around the core loop

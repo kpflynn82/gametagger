@@ -305,7 +305,7 @@ Not done:
 ### Vocabulary v2 draft (September 27, 2026)
 
 Improvement 7, step 1:
-* Drafted 52 mobile tags for owner review: 13 meta layers, 22 live operations and offers,
+* Drafted 51 mobile tags for owner review: 13 meta layers, 21 live operations and offers,
   5 advertising, and 12 follow-ups asked only when their parent tag is present.
 * Files: [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md) and
   `taxonomy/drafts/genome_tags_v2_additions.draft.yaml`.
@@ -318,3 +318,152 @@ Next:
 * The owner's decisions listed in the draft.
 * Then the loader's `requires` field and conditional asking.
 * Then a run on the 5-game recording pilot.
+
+### Fold & Fly prototype and the Epic Plane teardown (September 29, 2026)
+
+A separate project, kept outside this repository: a fairer version of Epic Plane Evolution,
+built overnight in three.js from the teardown player's measurements. No GameTagger code
+changed and no paid run came from this repository; the game itself makes no model calls.
+
+* Where it lives: the owner's Mac at `~/Claude Workspace/fold-and-fly` (a git clone, with
+  `fold-and-fly.bundle` beside it); the playable "Fold & Fly" artifact on claude.ai; the
+  "Fold & Fly: morning report" doc.
+* The original, measured by the teardown player (first 8 hours, one free player): 0.97 forced
+  ads per flight, 19.4 per play-hour, 27 s median each (Pangle and AppLovin). After 13 hours
+  of play it was still on its first plane, and an energy limit (5 flights, refilled on a timer)
+  appeared at about 11 hours. From about 8 hours in, two copies of the teardown player wrote
+  into the same run, so only per-flight ratios are used after that point.
+* Paid spend: none here. The teardown player (separate project) shows $6.95 in its own ledger
+  for that run.
+* Fold & Fly, simulated (8 bot players, 6 hours): 0.11 forced ads per flight for a good player
+  (11% of the original) and 0.05 for a casual one; 4.1 per hour (21%) and 6.6 per hour (34%).
+  A 12-minute gap brings the casual player to 23%.
+* Left for the owner: name and theme, pacing, the ad gap, the remove-ads price, feel on a real
+  phone, and permission to install the teardown player's optional-ad guard (commit `375c332`
+  in the teardown-player repository).
+* Update, same day (owner feedback: "fairly basic, geometric shapes"; "planes start almost fully
+  upgraded"): each plane now starts as a bare fuselage and gains wings and propeller, tail,
+  cockpit and paint, boosters and gold trim every five levels, as in the original. Trees, bushes,
+  flowers, rocks and ruin pieces are now real models from CC0 packs (Quaternius Stylized Nature
+  MegaKit, Kenney kits), with the owner's approval. Still no paid runs.
+* Update, September 29-30 (owner feedback: the bare fuselage "looks like a rotating turd"; put it
+  in the slingshot as in the original; wings before the propeller; one-time rocket jets; real
+  ground effect; a UI like the original's, including its shaking gift chest):
+  * The first plane is a card tube on wheels with an open nose and cockpit, resting in the
+    slingshot's rope in the hangar, shot from the front right as in the original. Stages are now
+    bare fuselage, wings, propeller (the engine), tail and rudder, cockpit and paint, big
+    propeller and gold trim.
+  * Ground effect follows the FAA handbook's figures (about 25% less induced drag at a quarter
+    span, 50% at a tenth), measured against a 15 m "span" so it can be used in play.
+  * Rocket jets: unlocked with wings (3 free), bought with coins or found in the chest, one pair
+    per flight. The chest opens every 2 hours (first after 3 flights), with no ad.
+  * Hangar, launch and flight report restyled after the original.
+  * Simulated again (6 bots): a good player sees 0.107 forced ads per flight (11% of the
+    original) and 5.1 per hour (26%, up from 21% because the glider stage has shorter flights);
+    a casual player 0.047 per flight (5%) and 6.7 per hour (34%). First new plane at 23 minutes
+    (was 22). Bots don't use rocket jets.
+  * Tests: 22 rule tests and 10 browser checks pass. The Mac copy is at commit `bae3613`.
+    Still no paid runs.
+* Update, September 30 (owner: upgrade prices should rise with a new chassis; give course 2 an
+  interesting theme, such as a town or a beach):
+  * Prices now step up when the wings (x1.3) and the propeller (x1.65) are fitted, and each new
+    plane's prices and coin values scale up together. Before, the propeller stage's upgrades cost
+    about a third of a flight each, and the old course's winnings bought 15-21 of a new plane's
+    upgrades at once (its whole bare-fuselage stage); now 8-12. `sim/pace.mjs` measures this.
+  * Course 2 is a harbour town built from Kenney's CC0 building blocks (mirrored in the public
+    repository Paumen/Taalei): a beach and promenade, main streets, a square with a fountain and
+    clock tower, the harbour with docks, boats and a lighthouse, a winding alley with bridges.
+    It draws in 156-233 calls and 229-344k triangles, about as much as course 1.
+  * Simulated (6 bots): good players 0.107 forced ads per flight (11% of the original), 5.3 per
+    hour (27%), all six planes in 4 hours; casual players 0.048 per flight (5%), 6.7 per hour
+    (34%).
+  * Tests: 24 rule tests and 10 browser checks pass. The Mac copy is at commit `4d8b078`. Still
+    no paid runs.
+
+### Trailer: play, learn, build (October 2, 2026)
+
+The owner asked to extend the trailer: keep how the tag database was built and how tags are
+assigned, and lean into the newer loop (play a game for hours, learn what makes it work, build
+a playable prototype in days). Branch `claude/trailer-prototype`. No paid calls.
+
+* `web/trailer.mp4` is now 82 seconds in ten parts (was 54 s in six). The first five (NitroGen,
+  vocabulary, Observer, Jev, top-100 site) keep their animation and play a little faster. The
+  invented "Cloud Hopper" shop and guild scene is replaced by four new ones:
+  * Play: the AI player's run on the plane game (13.2 hours; in the first 8 hours, 159 flights
+    and 154 forced ads), with four of its own notes, trimmed. The phone screens are invented and
+    labelled; the original game is not named and none of its screenshots are used.
+  * Learn: the store-page tags from `experiments/single-games/epic-plane-evolution/tags.json`
+    (Ad-supported, Energy or stamina timers and Pay-to-progress were "not enough evidence")
+    next to what playing measured; the core loop; keep / drop / replace from the Fold & Fly
+    design.
+  * Build: 16 seconds of real Fold & Fly footage (hangar upgrade, slingshot launch, valley
+    arches, a finish line, the harbour town with rocket jets, all six planes) beside four
+    figures: first playable overnight, 1 forced ad in 9 flights and the first new plane in 25
+    minutes (both simulated), six planes and six courses.
+  * Pitch: spot, play, learn, build. "Find out if a feature is fun before you staff a team."
+* The footage (`experiments/trailer/footage/prototype.mp4`, 3.6 MB, and `prototype.json`) was
+  recorded by Fold & Fly's new `scripts/trailer-clips.mjs` (Fold & Fly commit `9f705b5`), which
+  runs the game on a virtual clock so every frame is exactly 1/30 s apart. The Mac copy
+  of Fold & Fly is now at that commit.
+* Cost figure shown: model calls for the AI player's whole run were $6.95 paid plus $76.69 of
+  subscription calls at API prices, so the video says "about $84 at API prices".
+* The site's film blurb now says 82 seconds and lists the new parts. New poster from the Build
+  scene.
+* Site (owner: "add it to the website ... verbiage about the ability to play games"): a new
+  "Play-testing" section after "Where the evidence runs out", linked from the header, footer and
+  the pipeline's "Play" step. It shows the plane game's store-page tags next to what 13 hours of
+  play measured, six measured figures, three of the AI player's notes, what play-testing adds
+  (pacing, economy, why it works) and the step to a playable prototype, with a button that
+  starts the film at 0:31. It says plainly that this is one game, played as a pilot, and that
+  the top 100 are not play-tested yet. The same edits are in
+  `experiments/jev-vs-legacy/site/dashboard-template.html`, so a rebuild keeps them. Checked at
+  1280 px (light) and 390 px (dark); the film button was checked with a WebM copy of the film,
+  because the headless browser here cannot play H.264.
+
+Left for the owner:
+* Merge PR #14 to put the film and the Play-testing section on gametagger.vercel.app (CI and
+  the Vercel preview passed; the session's merge was blocked pending the owner's review).
+* Whether to name the original game in the video (it is named in the repository docs).
+* The end-card line ("Learn why hit games work. Prototype the next one in days.") and the
+  length; a 30-second cut for social could reuse the Play, Learn and Build scenes.
+* The first new plane "in 25 minutes" and "1 in 9 flights" are bot simulations, labelled as
+  such on screen; nobody has played Fold & Fly on a phone for pacing yet.
+
+### Site split into pages (October 5, 2026)
+
+The owner: on a phone the site was one very long page. Branch `claude/site-pages`. No paid
+calls.
+
+* The home page is now six views of one file: Home (headline, example profile, how it works in
+  four steps, key numbers, and cards to each page), Dashboard (the charts, with a row of links
+  to each chart), Games, Tags, Play-testing and How it works. Each has its own address
+  (`/dashboard`, `/games`, `/tags`, `/play-testing`, `/how-it-works`) through rewrites in
+  `web/vercel.json`, the browser's back button works, and switching pages does not reload.
+* Old links still work: `/#library`, `/#game-...`, `/#tag-...` open the right page. Tag and game
+  links in the charts jump to the Tags and Games pages. A tag link now opens the dictionary on
+  that tag's category instead of all 189 tags.
+* On a phone the page links are a sideways-scrolling tab row under the logo, with the current
+  page underlined; every page ends with Previous and Next links and the request box.
+* Height on a 390-px-wide phone: 26,149 px before; now Home 3,269, Dashboard 11,476, Games
+  3,426, Tags 6,867, Play-testing 3,122, How it works 2,767.
+* `experiments/jev-vs-legacy/site/refresh_web.py` rebuilds `web/index.html` from the template
+  with the published data (`--check` confirms they match). Checked in headless Chromium at
+  390 px and 1280 px, light and dark, with no page errors.
+
+### Vocabulary v2 approved (October 5, 2026)
+
+The owner answered the six questions in [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md) (PR #13).
+No paid calls.
+
+* All 51 tags kept. (The draft said 52 and 22 live-ops tags; the file has always held 51 and 21.
+  The counts are corrected.)
+* A "likely" parent unlocks its follow-up questions; a missing "Contains ads" notice is not
+  evidence of no ads; the weekly event-cadence tag stays, decided from weekly play-tests of the
+  top-performing games; no Steam or commercial crosswalks for v2.
+* Open: whether mobile keeps the three v1 umbrella tags. The owner wants to retag the Google
+  Play top 50 with the v2 tags first. The September run's descriptions were not kept, so the
+  retag re-describes each game: about $1.80 for 50 games with Haiku describing or about $7.70
+  with Sonnet (from the September costs), plus under $0.25 of Jev. Needs a budget number.
+* Next: promote the tags into `taxonomy/genome_tags_v2.yaml`, teach the loader `requires` (asked
+  only when the parent is strong or likely, otherwise "not evaluated"), show the new categories
+  in the site's dictionary, then the retag.
