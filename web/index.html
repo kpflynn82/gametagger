@@ -221,36 +221,106 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
 @media (max-width:560px){.pipeline{grid-template-columns:1fr}.pipeline li+li{border-left:0;border-top:1px solid var(--line)}.example{box-shadow:5px 5px 0 var(--ink)}nav{gap:12px}}
 @media (max-width:860px){.hero{grid-template-columns:1fr;gap:24px}.grid2,.how{grid-template-columns:1fr}.cmp{grid-template-columns:repeat(2,minmax(0,1fr))}.cmp>div:nth-child(3){border-left:0}.cmp>div:nth-child(n+3){border-top:1px solid var(--line)}}
 @media (max-width:560px){.r .name{font-size:13.5px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi:nth-child(3){border-left:0;padding-left:0}.kpi:nth-child(n+3){border-top:1px solid var(--line)}.r{grid-template-columns:minmax(0,1fr)}.gcat{grid-template-columns:1fr}}
+/* pages */
+html[data-view="home"] [data-view]:not([data-view~="home"]),
+html[data-view="dashboard"] [data-view]:not([data-view~="dashboard"]),
+html[data-view="games"] [data-view]:not([data-view~="games"]),
+html[data-view="tags"] [data-view]:not([data-view~="tags"]),
+html[data-view="play-testing"] [data-view]:not([data-view~="play-testing"]),
+html[data-view="how-it-works"] [data-view]:not([data-view~="how-it-works"]){display:none!important}
+nav a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--brand);text-decoration-thickness:2px;text-underline-offset:6px}
+.pagehead{padding-block:34px 4px}
+.pagehead h1{font-size:clamp(30px,4.6vw,50px)}
+.pagehead .dek{margin-top:12px}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
+.jump a{font:600 13px var(--mono);border:1px solid var(--line);background:var(--panel);color:var(--ink-2);padding:6px 10px;text-decoration:none}
+.jump a:hover,.jump a:focus-visible{border-color:var(--ink);color:var(--ink)}
+section{scroll-margin-top:84px}
+.xgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.xcard{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start;background:var(--panel);border:1px solid var(--line);padding:16px 18px;text-decoration:none;color:var(--ink)}
+.xcard b{font-size:19px;letter-spacing:-.01em}.xcard span{grid-column:1;font-size:14.5px;color:var(--ink-2)}
+.xcard i{grid-row:1/3;grid-column:2;align-self:center;font:700 20px var(--mono);font-style:normal;color:var(--brand)}
+.xcard:hover,.xcard:focus-visible{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.pager{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);margin-top:40px;padding-top:16px}
+.pager a{display:grid;gap:2px;text-decoration:none;font:700 16px var(--sans);color:var(--ink);max-width:48%}
+.pager a small{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover span{text-decoration:underline;text-decoration-color:var(--brand)}
+@media (max-width:700px){
+  header.top{gap:10px;padding-block:14px 0;border-bottom:0}
+  header.top nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:0;border-bottom:2px solid var(--ink);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  header.top nav::-webkit-scrollbar{display:none}
+  header.top nav a{flex:none;padding:10px 10px 9px;white-space:nowrap}
+  header.top nav a[aria-current="page"]{text-decoration:none;color:var(--ink);box-shadow:inset 0 -3px 0 var(--brand)}
+  header.top nav .nav-cta{display:none}
+  header.top nav .theme{position:absolute;right:20px;top:16px}
+  header.top{position:relative}
+  .jump{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.jump a{flex:none}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
+<script>
+// Pages: one view of the site at a time. /dashboard, /games, /tags, /play-testing and
+// /how-it-works all serve this file (web/vercel.json); old links like /#library still work.
+(function () {
+  var PATHS = { home: "/", dashboard: "/dashboard", games: "/games", tags: "/tags", "play-testing": "/play-testing", "how-it-works": "/how-it-works" };
+  var BY_PATH = { "": "home", index: "home", dashboard: "dashboard", games: "games", tags: "tags", "play-testing": "play-testing", "how-it-works": "how-it-works" };
+  var BY_HASH = { dashboard: "dashboard", library: "games", dictionary: "tags", play: "play-testing", method: "how-it-works", trailer: "how-it-works" };
+  var seg = location.pathname.replace(/^\/+|\/+$/g, "").replace(/\.html$/, "");
+  var routed = Object.prototype.hasOwnProperty.call(BY_PATH, seg);
+  var h = decodeURIComponent(location.hash.slice(1));
+  var fromHash = BY_HASH[h] || (h.indexOf("game-") === 0 ? "games" : h.indexOf("tag-") === 0 || h.indexOf("genre-") === 0 ? "tags" : null);
+  var view = fromHash || (routed ? BY_PATH[seg] : "home");
+  window.GT_NAV = { PATHS: PATHS, BY_PATH: BY_PATH, BY_HASH: BY_HASH, routed: routed, view: view };
+  document.documentElement.dataset.view = view;
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
-  <a class="brand" href="#top" id="top" aria-label="GameTagger, back to top"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--brand)"/><path d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="#fff"/><circle cx="44" cy="20" r="5.4" fill="var(--brand)"/></svg><span>GameTagger</span></a>
-  <nav aria-label="Sections"><a href="#dashboard">Dashboard</a><a href="#library">Games</a><a href="#dictionary">Tags</a><a href="#play">Play-testing</a><a href="#method">How it works</a><a class="nav-cta" href="#request">Request a game</a><button type="button" class="theme" id="theme" aria-label="Switch colour theme">Dark</button></nav>
+  <a class="brand" href="/" id="top" aria-label="GameTagger home"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--brand)"/><path d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="#fff"/><circle cx="44" cy="20" r="5.4" fill="var(--brand)"/></svg><span>GameTagger</span></a>
+  <nav aria-label="Pages"><a href="/dashboard" data-to="dashboard">Dashboard</a><a href="/games" data-to="games">Games</a><a href="/tags" data-to="tags">Tags</a><a href="/play-testing" data-to="play-testing">Play-testing</a><a href="/how-it-works" data-to="how-it-works">How it works</a><a class="nav-cta" href="#request">Request a game</a><button type="button" class="theme" id="theme" aria-label="Switch colour theme">Dark</button></nav>
 </header>
 
-<div class="hero">
+<div class="hero" data-view="home">
   <div>
     <div class="kicker"><span class="dot"></span><span id="snap">Snapshot</span></div>
     <h1>What's inside the <mark>top 100</mark> games</h1>
     <p class="dek" id="dek"></p>
-    <div class="ctas"><a class="btn primary" href="#library">Browse the 100 games →</a><a class="btn" href="#trailer">▶ Watch the 82-second film</a></div>
+    <div class="ctas"><a class="btn primary" href="/games">Browse the 100 games →</a><a class="btn" href="/how-it-works#trailer">▶ Watch the 82-second film</a></div>
     <p class="trust">189 gameplay tags · 100 genres · every tag traced to its evidence · decisions by Jev from TypeSafe</p>
   </div>
   <aside class="example" id="example" aria-label="An example game profile"></aside>
 </div>
-<ol class="pipeline" aria-label="How each game is tagged">
+<ol class="pipeline" aria-label="How each game is tagged" data-view="home">
   <li><b>Gather</b><span>Store pages, Wikipedia, screenshots and trailers, fetched by exact store ID.</span></li>
   <li><b>Describe</b><span>Claude writes down only what it can see. It never names a genre or tag.</span></li>
   <li><b>Decide</b><span>Jev answers 189 tag questions and the genre, each on its own, without the game's name.</span></li>
-  <li><em class="soon">Next</em><b>Play</b><span>When evidence runs out, an AI player plays the game for hours and measures the ads, timers and paywalls store pages hide. <a href="#play">See a case study</a></span></li>
+  <li><em class="soon">Next</em><b>Play</b><span>When evidence runs out, an AI player plays the game for hours and measures the ads, timers and paywalls store pages hide. <a href="/play-testing">See a case study</a></span></li>
 </ol>
-<div class="kpis" id="kpis"></div>
+<div class="kpis" id="kpis" data-view="home"></div>
 
-<div class="bar-filter" role="group" aria-label="Which chart">
+<section class="explore" aria-labelledby="x-h" data-view="home">
+  <div class="eyebrow">Explore</div>
+  <h2 id="x-h">Pick a place to start</h2>
+  <div class="xgrid">
+    <a class="xcard" href="/dashboard"><b>Dashboard</b><span>Genres, the most common tags, PC versus mobile, and what the biggest hits share.</span><i>→</i></a>
+    <a class="xcard" href="/games"><b>Games</b><span>All 100 games, each with its genre and every tag Jev decided.</span><i>→</i></a>
+    <a class="xcard" href="/tags"><b>Tags</b><span>What each of the 189 tags and 100 genres means, and the evidence allowed to prove it.</span><i>→</i></a>
+    <a class="xcard" href="/play-testing"><b>Play-testing</b><span>What 13 hours of AI play found that the store page couldn't show.</span><i>→</i></a>
+    <a class="xcard" href="/how-it-works"><b>How it works</b><span>The 82-second film, the method, and how it compares with one big prompt.</span><i>→</i></a>
+  </div>
+</section>
+
+<div class="pagehead" data-view="dashboard">
+  <div class="eyebrow">Dashboard</div>
+  <h1>What the top 100 games are made of</h1>
+  <p class="dek">Steam's 50 most-played games and Google Play's 50 top-grossing games, tagged from their store pages, screenshots and trailers. Switch between PC and mobile below.</p>
+  <nav class="jump" aria-label="On this page"><a href="#dashboard">Genres</a><a href="#top-tags">Top tags</a><a href="#pc-vs-mobile">PC vs mobile</a><a href="#hits">Biggest hits</a><a href="#evidence">Evidence gaps</a><a href="#movers">Chart movers</a></nav>
+</div>
+<div class="bar-filter" role="group" aria-label="Which chart" data-view="dashboard">
   <span class="lab">Showing</span>
   <div class="seg" id="seg">
     <button type="button" data-l="all" aria-pressed="true">All 100</button>
@@ -259,7 +329,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   </div>
 </div>
 
-<section id="dashboard" aria-labelledby="g-h">
+<section id="dashboard" aria-labelledby="g-h" data-view="dashboard">
   <div class="eyebrow">Genres</div>
   <h2 id="g-h">What people are playing and paying for</h2>
   <p class="lede" id="g-lede"></p>
@@ -267,7 +337,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
     <div class="legend" id="g-legend"></div><div class="rows" id="genres"></div></div>
 </section>
 
-<section aria-labelledby="t-h">
+<section id="top-tags" aria-labelledby="t-h" data-view="dashboard">
   <div class="eyebrow">Tags</div>
   <h2 id="t-h">The most common tags</h2>
   <p class="lede">Share of games where Jev found the tag present. Pick a category to narrow it down, and click a tag to see its definition and every game that has it.</p>
@@ -275,7 +345,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
     <div class="rows" id="toptags"></div></div>
 </section>
 
-<section aria-labelledby="d-h">
+<section id="pc-vs-mobile" aria-labelledby="d-h" data-view="dashboard">
   <div class="eyebrow">PC vs mobile</div>
   <h2 id="d-h">Where PC and mobile hits differ most</h2>
   <p class="lede">The biggest gaps in how often a tag appears in Steam's 50 most-played games versus Google Play's 50 top-grossing games.</p>
@@ -286,7 +356,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   </div>
 </section>
 
-<section aria-labelledby="p-h">
+<section id="hits" aria-labelledby="p-h" data-view="dashboard">
   <div class="eyebrow">Players and ranks</div>
   <h2 id="p-h">What the biggest hits have in common</h2>
   <p class="lede" id="p-lede"></p>
@@ -299,7 +369,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   </div>
 </section>
 
-<section aria-labelledby="c-h">
+<section id="evidence" aria-labelledby="c-h" data-view="dashboard">
   <div class="eyebrow">Certainty</div>
   <h2 id="c-h">Where the evidence runs out</h2>
   <p class="lede" id="c-lede"></p>
@@ -310,7 +380,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   </div>
 </section>
 
-<section id="play" aria-labelledby="pl-h">
+<section id="play" aria-labelledby="pl-h" data-view="play-testing">
   <div class="eyebrow">Next · Play-testing</div>
   <h2 id="pl-h">When the store page runs out, it plays the game</h2>
   <p class="lede">Store pages show what a game wants you to see. The questions product and monetization teams ask most only show up after hours of play: how often ads interrupt, when an energy timer stops a session, what it costs to keep progressing. So an AI player plays the game on an Android emulator. It taps and swipes like a person, writes notes on every screen, and measures what the store page couldn't show.</p>
@@ -328,7 +398,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
           <tr><td><a href="#tag-monetization_in_app_purchases">In-game purchases</a></td><td><span class="pchip unk">Not enough evidence</span></td><td><span class="m">Measured</span>A gem shop and a paid "No ads" option</td></tr>
         </tbody>
       </table></div>
-      <p class="note">Store-page decisions are Jev's, from the App Store listing and 6 screenshots. Per-flight figures use the first 8 hours of play. This is one game, played as a pilot; the top 100 above are not play-tested yet.</p>
+      <p class="note">Store-page decisions are Jev's, from the App Store listing and 6 screenshots. Per-flight figures use the first 8 hours of play. This is one game, played as a pilot; the top 100 games in the dashboard are not play-tested yet.</p>
     </div>
     <div class="panel">
       <h3>What 13 hours of play measured</h3>
@@ -355,11 +425,11 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   </div>
   <div class="empty proto">
     <p><b>From play-test to playable prototype.</b> The notes from this game became the brief for Fold &amp; Fly, a playable prototype of the genre: first playable overnight, in a web browser, with bot players testing its pacing (a forced ad after 1 in 9 flights in simulated play, against about 1 in 1 in the original). Teams can find out whether a feature is fun in days, before they staff it.</p>
-    <a class="btn" href="#trailer" id="play-film">▶ Watch it play, learn and build</a>
+    <a class="btn" href="/how-it-works#trailer" id="play-film">▶ Watch it play, learn and build</a>
   </div>
 </section>
 
-<section aria-labelledby="m-h">
+<section id="movers" aria-labelledby="m-h" data-view="dashboard">
   <div class="eyebrow">This week</div>
   <h2 id="m-h">Steam chart movers</h2>
   <p class="lede" id="m-lede"></p>
@@ -370,7 +440,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   <p class="empty" style="margin-top:16px"><b>Tag trends start with the next snapshot.</b> This page is one snapshot (charts from September 23 and 24, 2026). Once the charts are re-tagged each week, this section will show which tags are gaining or losing ground in the top 100, not just which games moved.</p>
 </section>
 
-<section id="library" aria-labelledby="l-h">
+<section id="library" aria-labelledby="l-h" data-view="games">
   <div class="eyebrow">Games</div>
   <h2 id="l-h">Browse all 100 games</h2>
   <p class="lede">Open any game to see its genre call and every tag Jev decided, grouped by category. Each tag links to its definition.</p>
@@ -380,7 +450,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   <button type="button" class="chip" id="lib-more" style="margin-top:12px" hidden></button>
 </section>
 
-<section id="dictionary" aria-labelledby="dict-h">
+<section id="dictionary" aria-labelledby="dict-h" data-view="tags">
   <div class="eyebrow">Tags</div>
   <h2 id="dict-h">What every tag means</h2>
   <p class="lede" id="dict-intro"></p>
@@ -390,7 +460,7 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   <div id="dict"></div>
 </section>
 
-<section id="method" aria-labelledby="h-h">
+<section id="method" aria-labelledby="h-h" data-view="how-it-works">
   <div class="eyebrow">How it works</div>
   <h2 id="h-h">Describe first, then decide</h2>
   <div class="film" id="trailer">
@@ -415,13 +485,15 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
   <a class="more" id="bench-link" href="/benchmark" target="_blank" rel="noopener">Full benchmark: accuracy, cost, speed and method →</a>
 </section>
 
+<nav class="pager" id="pager" aria-label="Previous and next page"></nav>
+
 <section id="request" aria-labelledby="r-h">
   <div class="cta"><div><h2 id="r-h" style="margin:0 0 4px">Want a game tagged?</h2><p style="margin:0;color:var(--ink-2)">Request any game. Requests are reviewed, then tagged in batches.</p></div>
   <a href="https://claude.ai/artifact/3MLmYUfDTkFgC9RFfkNiPU" target="_blank" rel="noopener">Request a game</a></div>
 </section>
 
-<footer><div class="foot-top"><a class="brand" href="#top"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--brand)"/><path d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="#fff"/><circle cx="44" cy="20" r="5.4" fill="var(--brand)"/></svg><span>GameTagger</span></a>
-  <nav aria-label="Footer"><a href="#library">Games</a><a href="#dictionary">Tags</a><a href="#play">Play-testing</a><a href="#method">How it works</a><a href="/benchmark" target="_blank" rel="noopener">Full benchmark</a><a href="#request">Request a game</a></nav></div>
+<footer><div class="foot-top"><a class="brand" href="/"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--brand)"/><path d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="#fff"/><circle cx="44" cy="20" r="5.4" fill="var(--brand)"/></svg><span>GameTagger</span></a>
+  <nav aria-label="Footer"><a href="/dashboard">Dashboard</a><a href="/games">Games</a><a href="/tags">Tags</a><a href="/play-testing">Play-testing</a><a href="/how-it-works">How it works</a><a href="/benchmark" target="_blank" rel="noopener">Full benchmark</a><a href="#request">Request a game</a></nav></div>
   <p id="foot" style="margin:0"></p></footer>
 </div>
 <div id="tip" role="tooltip"></div>
@@ -672,7 +744,9 @@ function showGame(id) {
   renderLibrary(); box.scrollIntoView({block: "start"});
 }
 function openDefinition(kind, id) {
-  dView = kind; dCat = "all"; dQuery = ""; $("d-search").value = "";
+  // Open on the term's own category, not all 189 at once (a long scroll on a phone).
+  const term = kind === "tags" ? G.tags.find((t) => t.id === id) : G.genres.find((g) => g.id === id);
+  dView = kind; dCat = (kind === "tags" ? term?.category : term?.family) || "all"; dQuery = ""; $("d-search").value = "";
   $("d-tags").setAttribute("aria-pressed", String(kind === "tags")); $("d-genres").setAttribute("aria-pressed", String(kind === "genres"));
   dictChips(); renderDict();
   const el = document.getElementById((kind === "tags" ? "tag-" : "genre-") + id); if (!el) return;
@@ -680,6 +754,7 @@ function openDefinition(kind, id) {
 }
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
+  window.GT_SHOW?.(h);
   if (h.startsWith("game-")) showGame(h.slice(5));
   else if (h.startsWith("tag-")) openDefinition("tags", h.slice(4));
   else if (h.startsWith("genre-")) openDefinition("genres", h.slice(6));
@@ -729,12 +804,80 @@ document.getElementById("play-film")?.addEventListener("click", (e) => {
   const v = document.querySelector("#trailer video");
   if (!v) return;
   e.preventDefault();
+  window.GT_GO?.("how-it-works", "#trailer");
   v.scrollIntoView({ behavior: "smooth", block: "center" });
   v.muted = true; // the film is silent; muted playback is allowed to start on its own
   const go = () => { v.currentTime = 30.6; v.play().catch(() => {}); };
   if (v.readyState >= 1) go();
   else { v.preload = "metadata"; v.addEventListener("loadedmetadata", go, { once: true }); v.load(); }
 });
+</script>
+<script>
+// Page switching without reloading: page links and hash links that belong to another page.
+{
+  const N = window.GT_NAV;
+  const ORDER = ["home", "dashboard", "games", "tags", "play-testing", "how-it-works"];
+  const LABEL = { home: "Home", dashboard: "Dashboard", games: "Games", tags: "Tags", "play-testing": "Play-testing", "how-it-works": "How it works" };
+  const BASE = "GameTagger · What's inside the top 100 games";
+  const viewOfHash = (h) => N.BY_HASH[h] || (h.startsWith("game-") ? "games" : h.startsWith("tag-") || h.startsWith("genre-") ? "tags" : null);
+  const viewOfLink = (a) => {
+    const href = a.getAttribute("href") || "";
+    if (href.startsWith("#")) return [viewOfHash(decodeURIComponent(href.slice(1))), href];
+    if (!href.startsWith("/") || href.startsWith("//") || a.target === "_blank") return [null, ""];
+    const u = new URL(href, location.origin);
+    const seg = u.pathname.replace(/^\/+|\/+$/g, "").replace(/\.html$/, "");
+    return Object.prototype.hasOwnProperty.call(N.BY_PATH, seg) ? [N.BY_PATH[seg], u.hash] : [null, ""];
+  };
+  function show(view) {
+    N.view = view;
+    document.documentElement.dataset.view = view;
+    document.title = view === "home" ? BASE : `${LABEL[view]} · GameTagger`;
+    document.querySelectorAll("header nav a[data-to]").forEach((a) => {
+      if (a.dataset.to !== view) { a.removeAttribute("aria-current"); return; }
+      a.setAttribute("aria-current", "page");
+      const row = a.parentElement; // on phones the links scroll sideways: keep this one in sight
+      if (row.scrollWidth > row.clientWidth) row.scrollLeft = a.offsetLeft - row.offsetLeft - (row.clientWidth - a.offsetWidth) / 2;
+    });
+    const i = ORDER.indexOf(view), prev = ORDER[i - 1], next = ORDER[i + 1];
+    const link = (v, cls, word) => v ? `<a class="${cls}" href="${N.PATHS[v]}"><small>${word}</small><span>${cls === "prev" ? "← " : ""}${LABEL[v]}${cls === "next" ? " →" : ""}</span></a>` : "";
+    document.getElementById("pager").innerHTML = link(prev, "prev", "Previous") + link(next, "next", "Next");
+  }
+  // Go to a page (and optionally an anchor on it), adding a history entry.
+  function go(view, hash = "", push = true) {
+    const changed = view !== N.view;
+    if (push) history.pushState({ view }, "", N.routed ? N.PATHS[view] + hash : hash || location.pathname + location.search);
+    show(view);
+    const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (hash && (hash.startsWith("#game-") || hash.startsWith("#tag-") || hash.startsWith("#genre-"))) route();
+    else if (target) target.scrollIntoView({ block: "start" });
+    else if (changed || !hash) window.scrollTo(0, 0);
+  }
+  window.GT_GO = (view, hash = "") => go(view, hash);
+  window.GT_SHOW = (h) => { const v = viewOfHash(h); if (v && v !== N.view) show(v); };
+  document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const [view, hash] = viewOfLink(a);
+    if (!view) return;
+    const isHashLink = (a.getAttribute("href") || "").startsWith("#");
+    if (isHashLink && view === N.view) return; // same page: the browser and route() handle it
+    e.preventDefault();
+    go(view, hash);
+  });
+  window.addEventListener("popstate", () => {
+    const seg = location.pathname.replace(/^\/+|\/+$/g, "").replace(/\.html$/, "");
+    const h = decodeURIComponent(location.hash.slice(1));
+    show(viewOfHash(h) || (N.routed ? N.BY_PATH[seg] || "home" : N.view));
+    route();
+  });
+  // An old link such as /#library opens its page at its own address.
+  if (N.routed) {
+    const seg = location.pathname.replace(/^\/+|\/+$/g, "").replace(/\.html$/, "");
+    if (N.BY_PATH[seg] !== N.view) history.replaceState(null, "", N.PATHS[N.view] + location.hash);
+  }
+  show(N.view);
+}
 </script>
 
 </body>

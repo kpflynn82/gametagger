@@ -141,6 +141,9 @@ Outputs:
 * `web/`: a static copy of the results page for Vercel (import the repository, set Root
   Directory to `web`, framework "Other", no build command). Rebuild it with `assemble.py ...
   --standalone` and copy `results/` into `web/`.
+  The home page is one file with six views (home, dashboard, games, tags, play-testing,
+  how-it-works); `web/vercel.json` serves it at each view's path. After editing
+  `dashboard-template.html` without new data, `refresh_web.py` rebuilds `web/index.html`.
 
 `report` adds an "Illustrative / UI test data" watermark unless the ledger shows successful
 provider calls. Fixture numbers therefore cannot be mistaken for measurements.

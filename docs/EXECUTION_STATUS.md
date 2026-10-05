@@ -411,3 +411,24 @@ Left for the owner:
   length; a 30-second cut for social could reuse the Play, Learn and Build scenes.
 * The first new plane "in 25 minutes" and "1 in 9 flights" are bot simulations, labelled as
   such on screen; nobody has played Fold & Fly on a phone for pacing yet.
+
+### Site split into pages (October 5, 2026)
+
+The owner: on a phone the site was one very long page. Branch `claude/site-pages`. No paid
+calls.
+
+* The home page is now six views of one file: Home (headline, example profile, how it works in
+  four steps, key numbers, and cards to each page), Dashboard (the charts, with a row of links
+  to each chart), Games, Tags, Play-testing and How it works. Each has its own address
+  (`/dashboard`, `/games`, `/tags`, `/play-testing`, `/how-it-works`) through rewrites in
+  `web/vercel.json`, the browser's back button works, and switching pages does not reload.
+* Old links still work: `/#library`, `/#game-...`, `/#tag-...` open the right page. Tag and game
+  links in the charts jump to the Tags and Games pages. A tag link now opens the dictionary on
+  that tag's category instead of all 189 tags.
+* On a phone the page links are a sideways-scrolling tab row under the logo, with the current
+  page underlined; every page ends with Previous and Next links and the request box.
+* Height on a 390-px-wide phone: 26,149 px before; now Home 3,269, Dashboard 11,476, Games
+  3,426, Tags 6,867, Play-testing 3,122, How it works 2,767.
+* `experiments/jev-vs-legacy/site/refresh_web.py` rebuilds `web/index.html` from the template
+  with the published data (`--check` confirms they match). Checked in headless Chromium at
+  390 px and 1280 px, light and dark, with no page errors.
