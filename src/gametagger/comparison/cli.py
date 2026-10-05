@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from pathlib import Path
 
 EXPERIMENT_DIR = Path("experiments/jev-vs-legacy")
@@ -51,6 +52,8 @@ def _selected(args, cohort: dict) -> list[dict]:
     from gametagger.comparison.runner import interleaved
 
     games = interleaved(cohort)
+    if getattr(args, "list", None):
+        games = [g for g in games if g["list"] == args.list]
     if args.games:
         wanted = set(args.games.split(","))
         games = [g for g in games if g["game_id"] in wanted]
@@ -93,11 +96,19 @@ def cmd_run(args) -> None:
     arms = args.arms.split(",") if args.arms else list(ARMS)
     if unknown := set(arms) - set(ALL_ARMS):
         raise SystemExit(f"Unknown arms: {sorted(unknown)}")
+    if args.use_max_plan and (args.batch or args.resume_batch):
+        raise SystemExit("--batch uses the API's batch service; it cannot run on the plan.")
+    if args.use_max_plan and set(arms) - {"rich", "rich-haiku", "rich-lean"}:
+        raise SystemExit("--use-max-plan covers the image-describing arms (rich, rich-haiku).")
     runner = make_runner(
         args.workdir,
         args.budget_usd,
         observer_model=args.observer_model,
         jev_model=args.jev_model,
+        vocabulary=args.vocabulary,
+        use_max_plan=args.use_max_plan,
+        max_5h_share=args.max_5h_use / 100,
+        max_week_share=args.max_week_use / 100,
     )
     games = _selected(args, _read(args.experiment / "cohort.json"))
     print(
@@ -116,11 +127,38 @@ def cmd_run(args) -> None:
         except BudgetExceeded as exc:
             raise SystemExit(str(exc)) from exc
         print(json.dumps({"batch_describe": described}, indent=2), file=sys.stderr)
-    summary = runner.run(
-        games, arms, workers=args.workers, force=args.force, retry_failed=args.retry_failed
-    )
+    if args.use_max_plan:
+        print(
+            "Describing images on your Claude plan (no API charge); Jev on TypeSafe under the "
+            f"${runner.ledger.cap:.2f} cap.",
+            file=sys.stderr,
+        )
+    waited = 0.0
+    while True:
+        summary = runner.run(
+            games, arms, workers=args.workers, force=args.force, retry_failed=args.retry_failed
+        )
+        wait = getattr(runner.last_stop, "wait_seconds", None)
+        if not wait or waited + wait > args.max_plan_wait_hours * 3600:
+            break
+        # The plan's 5-hour window is full: wait for it to reset, then carry on. Finished games
+        # are kept and skipped.
+        print(
+            f"{runner.last_stop}. Waiting {wait / 60:.0f} minutes, then continuing.",
+            file=sys.stderr,
+        )
+        time.sleep(wait)
+        waited += wait
     print(json.dumps(summary, indent=2))
     if summary["stopped_by_budget"]:
+        raise SystemExit(1)
+
+
+def cmd_check_plan(args) -> None:
+    from gametagger.claude_code import ClaudeCodeClient, check_plan
+
+    client = ClaudeCodeClient(log_path=args.workdir / "claude-code.jsonl")
+    if not check_plan(client, model=args.model):
         raise SystemExit(1)
 
 
@@ -230,6 +268,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_identity)
 
     def selection(p):
+        p.add_argument("--list", choices=("steam", "mobile"), help="Only this chart's games")
         p.add_argument("--limit", type=int, help="First N games, alternating Steam and mobile")
         p.add_argument("--games", help="Comma-separated game IDs")
         p.add_argument("--force", action="store_true", help="Redo finished items")
@@ -285,7 +324,43 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("--observer-model", default="claude-sonnet-5")
     p.add_argument("--jev-model", default="jev-latest")
+    p.add_argument(
+        "--vocabulary",
+        choices=("v1", "v2"),
+        default="v1",
+        help="Tags to ask: v1 (189) or v2 (v1 plus 51 mobile tags, with follow-up questions)",
+    )
+    p.add_argument(
+        "--use-max-plan",
+        action="store_true",
+        help="Describe images through Claude Code on your Claude subscription instead of the "
+        "API (personal testing). Jev still runs on TypeSafe under --budget-usd.",
+    )
+    p.add_argument(
+        "--max-5h-use",
+        type=float,
+        default=90,
+        help="With --use-max-plan: pause when the plan's 5-hour window passes this percent",
+    )
+    p.add_argument(
+        "--max-week-use",
+        type=float,
+        default=70,
+        help="With --use-max-plan: stop when the plan's weekly use passes this percent",
+    )
+    p.add_argument(
+        "--max-plan-wait-hours",
+        type=float,
+        default=6,
+        help="With --use-max-plan: longest total wait for the 5-hour window to reset",
+    )
     p.set_defaults(func=cmd_run)
+
+    p = sub.add_parser(
+        "check-plan", help="Check Claude Code is logged in to your plan (one tiny call, no charge)"
+    )
+    p.add_argument("--model", default="claude-haiku-4-5")
+    p.set_defaults(func=cmd_check_plan)
 
     p = sub.add_parser("review-sheet", help="Blinded spreadsheet for the owner's check (free)")
     p.add_argument("--review-games", type=int, default=30)

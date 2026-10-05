@@ -1,17 +1,18 @@
-# genome-tags-v2 additions (Improvement 7). Approved by the owner on October 5, 2026 (all 51
-# kept); not loaded until the loader accepts `requires`. Decisions: docs/VOCABULARY_V2_DRAFT.md.
+# genome-tags-v2 (Improvement 7): v1's tags plus 51 mobile tags, approved by the owner on
+# October 5, 2026 (all kept). Decisions: docs/VOCABULARY_V2.md.
 #
-# v1 tags stay exactly as they are, so v1 results remain comparable. v2 adds four categories:
+# `extends` loads every v1 category and tag first, unchanged, so v1 results stay comparable.
+# This file adds four categories:
 #   meta     - systems wrapped around the core loop
 #   liveops  - live operations and offers
 #   ads      - how advertising is used
 #   depth    - follow-up questions asked only when a parent tag is present ("requires")
 #
-# New fields in this draft (the loader needs a small change to accept them):
-#   requires: a tag ID. The question is asked only when that tag is decided present, and it is
-#             otherwise reported as not evaluated (never absent).
+#   requires: a tag ID. The question is asked only when that tag is decided present ("strong" or
+#             "likely"); otherwise it is reported as not evaluated, never absent.
 # `instructions` says what must be visible or documented before the tag can be present.
-version: genome-tags-v2-draft
+version: genome-tags-v2
+extends: genome_tags_v1.yaml
 categories:
   meta:
     label: Meta layers

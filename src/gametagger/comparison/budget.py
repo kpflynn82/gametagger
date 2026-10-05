@@ -158,18 +158,28 @@ class Meter:
     calls: list[dict[str, Any]]
 
 
+def plan_details(response) -> dict[str, Any] | None:
+    """The plan record a Claude Code (subscription) reply carries, or None for an API reply."""
+    details = getattr(response, "claude_code", None)
+    return details if isinstance(details, dict) and details.get("plan") else None
+
+
 class _MeteredMessages:
-    def __init__(self, inner, meter: Meter):
-        self._inner, self._meter = inner, meter
+    def __init__(self, inner, meter: Meter, plan: str = "api"):
+        self._inner, self._meter, self._plan = inner, meter, plan
 
     def create(self, **kwargs):
-        reserved = self._meter.ledger.reserve(worst_case_claude(kwargs))
+        # A subscription call costs no API money, so nothing is reserved against the cap; it is
+        # still booked, with what it would have cost on the API, for comparison.
+        subscription = self._plan == "subscription"
+        reserved = self._meter.ledger.reserve(0.0 if subscription else worst_case_claude(kwargs))
         start = perf_counter()
         entry: dict[str, Any] = {
             "arm": self._meter.arm,
             "game_id": self._meter.game_id,
             "provider": "anthropic",
             "requested_model": kwargs.get("model"),
+            **({"plan": "subscription"} if subscription else {}),
             "images": sum(
                 1
                 for m in kwargs.get("messages") or []
@@ -211,6 +221,13 @@ class _MeteredMessages:
             cost_usd=cost_usd(model, counts),
             latency_ms=(perf_counter() - start) * 1000,
         )
+        if subscription:
+            details = plan_details(response) or {}
+            entry.update(
+                cost_usd=0.0,
+                api_equivalent_usd=details.get("api_equivalent_usd", entry["cost_usd"]),
+                **{k: details[k] for k in ("plan_5h_used", "plan_week_used") if k in details},
+            )
         self._meter.ledger.settle(reserved, entry)
         self._meter.calls.append(entry)
         return response
@@ -221,7 +238,9 @@ class MeteredAnthropic:
 
     def __init__(self, client, meter: Meter):
         self._client, self._meter = client, meter
-        self.messages = _MeteredMessages(client.messages, meter)
+        # "subscription" for Claude Code on the owner's plan (no per-token charge), else "api".
+        self.plan = getattr(client, "plan", "api")
+        self.messages = _MeteredMessages(client.messages, meter, self.plan)
 
     def with_options(self, **options):
         return MeteredAnthropic(self._client.with_options(**options), self._meter)

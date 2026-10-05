@@ -152,8 +152,9 @@ class Runner:
         workspace_id: str | None = None,
         max_questions_per_request: int = 60,
         store=None,
+        vocabulary: str = "v1",
     ):
-        from gametagger.genome.vocabulary import load_vocabulary
+        from gametagger.genome.vocabulary import default_vocabulary_path, load_vocabulary
         from gametagger.taxonomy import load_taxonomy
 
         self.workdir, self.ledger = workdir, ledger
@@ -163,7 +164,8 @@ class Runner:
         self.max_questions = max_questions_per_request
         self.store = store  # DescriptionStore: saved image descriptions, reused when identical
         self.taxonomy = load_taxonomy()
-        self.vocabulary = load_vocabulary(self.taxonomy)
+        self.vocabulary = load_vocabulary(self.taxonomy, default_vocabulary_path(vocabulary))
+        self.last_stop: BaseException | None = None  # what stopped the last run, if anything
 
     def result_path(self, game_id: str, arm: str) -> Path:
         return self.workdir / "results" / safe_id(game_id) / f"{arm}.json"
@@ -250,6 +252,8 @@ class Runner:
                 "total": provenance["latency_ms"]["total"],
             },
             "questions_asked": provenance["questions_asked"],
+            "vocabulary_version": provenance["vocabulary_version"],
+            "followups_asked": provenance.get("followups_asked", 0),
             "returned_decision_model": provenance["returned_decision_model"],
             "observer_model": observer_model,
             "deduped_images": deduped,
@@ -340,11 +344,30 @@ class Runner:
                 "anthropic": _cost(meter.calls, "anthropic"),
                 "typesafe": _cost(meter.calls, "typesafe"),
                 "total": _cost(meter.calls),
+                **(
+                    {
+                        "anthropic_on_subscription_api_equivalent": sum(
+                            c.get("api_equivalent_usd") or 0.0 for c in meter.calls
+                        )
+                    }
+                    if any(c.get("plan") == "subscription" for c in meter.calls)
+                    else {}
+                ),
             },
             requests=[
                 {
                     k: c.get(k)
-                    for k in ("provider", "status", "error", "latency_ms", "usage", "cost_usd")
+                    for k in (
+                        "provider",
+                        "status",
+                        "error",
+                        "latency_ms",
+                        "usage",
+                        "cost_usd",
+                        "plan",
+                        "api_equivalent_usd",
+                    )
+                    if k in c or k not in ("plan", "api_equivalent_usd")
                 }
                 for c in meter.calls
             ],
@@ -415,6 +438,7 @@ class Runner:
     ) -> dict[str, Any]:
         jobs = [(g, a) for g in games for a in arms]
         done, failed, stopped = 0, 0, None
+        self.last_stop = None
 
         def one(job):
             game, arm = job
@@ -428,7 +452,8 @@ class Runner:
                 try:
                     game, arm, record = future.result()
                 except BudgetExceeded as exc:
-                    stopped = str(exc)
+                    if stopped is None:
+                        stopped, self.last_stop = str(exc), exc
                     for f in futures:
                         f.cancel()
                     continue
@@ -450,7 +475,37 @@ class Runner:
         }
 
 
-def make_runner(workdir: Path, cap_usd: float, **kwargs) -> Runner:
+def make_runner(
+    workdir: Path,
+    cap_usd: float,
+    *,
+    use_max_plan: bool = False,
+    max_5h_share: float = 0.9,
+    max_week_share: float = 0.7,
+    **kwargs,
+) -> Runner:
+    """A runner with live clients. ``use_max_plan`` describes images through Claude Code on the
+    owner's subscription; Jev still runs on TypeSafe and the cap then covers Jev alone."""
+    from gametagger.comparison.describe_cache import DescriptionStore
+
+    if not os.environ.get("TYPESAFE_API_KEY"):
+        raise SystemExit("No TypeSafe key: set TYPESAFE_API_KEY")
+    ledger = Ledger(workdir / "ledger.jsonl", cap_usd)
+    if use_max_plan:
+        from gametagger.claude_code import ClaudeCodeClient
+
+        client = ClaudeCodeClient(
+            log_path=workdir / "claude-code.jsonl",
+            max_5h_share=max_5h_share,
+            max_week_share=max_week_share,
+        )
+        return Runner(
+            workdir,
+            ledger,
+            anthropic_client=client,
+            store=DescriptionStore(workdir / "descriptions"),
+            **kwargs,
+        )
     from anthropic import Anthropic
 
     from gametagger.config import anthropic_api_key
@@ -458,11 +513,7 @@ def make_runner(workdir: Path, cap_usd: float, **kwargs) -> Runner:
     key = anthropic_api_key()
     if not key:
         raise SystemExit("No Anthropic key: set ANTHROPIC_API_KEY or GAMETAGGER_ANTHROPIC_API_KEY")
-    if not os.environ.get("TYPESAFE_API_KEY"):
-        raise SystemExit("No TypeSafe key: set TYPESAFE_API_KEY")
     # The old site used the SDK defaults (two automatic retries); keep them for every arm.
-    from gametagger.comparison.describe_cache import DescriptionStore
-
     workspace = os.environ.get("ANTHROPIC_WORKSPACE_ID")
     # Set on the client as well, so SDK calls that make their own internal requests (batch
     # results first re-read the batch) also carry the header a non-workspace key needs.
@@ -472,7 +523,6 @@ def make_runner(workdir: Path, cap_usd: float, **kwargs) -> Runner:
         max_retries=2,
         default_headers={"anthropic-workspace-id": workspace} if workspace else None,
     )
-    ledger = Ledger(workdir / "ledger.jsonl", cap_usd)
     return Runner(
         workdir,
         ledger,

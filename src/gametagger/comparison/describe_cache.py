@@ -23,7 +23,13 @@ import time
 from pathlib import Path
 from typing import Any
 
-from gametagger.comparison.budget import Ledger, Meter, cost_usd, worst_case_claude
+from gametagger.comparison.budget import (
+    Ledger,
+    Meter,
+    cost_usd,
+    plan_details,
+    worst_case_claude,
+)
 
 BATCH_DISCOUNT = 0.5  # Message Batches API: 50% of standard prices on all token usage
 _TRANSPORT = {"extra_headers", "timeout", "extra_query", "extra_body"}
@@ -109,6 +115,7 @@ class CachedAnthropic:
                         "latency_ms": 0.0,
                         "usage": hit.get("usage"),
                         "cost_usd": hit.get("cost_usd") or 0.0,
+                        **{k: hit[k] for k in ("plan", "api_equivalent_usd") if k in hit},
                     }
                 )
             return _message(hit["message"])
@@ -122,15 +129,19 @@ class CachedAnthropic:
         # Keep only complete answers from the real SDK (test doubles without model_dump are not
         # stored).
         if getattr(response, "stop_reason", None) == "tool_use" and hasattr(response, "model_dump"):
-            self._store.put(
-                key,
-                {
-                    "message": response.model_dump(mode="json"),
-                    "usage": counts,
-                    "cost_usd": cost_usd(getattr(response, "model", None), counts),
-                    "batch": False,
-                },
-            )
+            entry = {
+                "message": response.model_dump(mode="json"),
+                "usage": counts,
+                "cost_usd": cost_usd(getattr(response, "model", None), counts),
+                "batch": False,
+            }
+            if details := plan_details(response):  # described on the owner's subscription
+                entry.update(
+                    cost_usd=0.0,
+                    plan=details["plan"],
+                    api_equivalent_usd=details.get("api_equivalent_usd", entry["cost_usd"]),
+                )
+            self._store.put(key, entry)
         return response
 
 

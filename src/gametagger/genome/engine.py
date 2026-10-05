@@ -159,6 +159,9 @@ class GenomePlan:
     contexts: dict[str, list[str]]
     batches: list[list[str]]
     skipped: dict[str, str] = field(default_factory=dict)
+    # Follow-up questions (tag -> parent tag), held back from ``batches``. Each is asked in a
+    # second round only when its parent was decided present; otherwise it is not evaluated.
+    followups: dict[str, str] = field(default_factory=dict)
 
     def estimate(self, genre_branch_chars: int = 0) -> dict[str, Any]:
         """Rough input-token estimate (characters / 4); excludes retries and screenshots."""
@@ -171,6 +174,15 @@ class GenomePlan:
         if GENRE_QUESTION in self.specs and genre_branch_chars:
             chars = len(self.states[GENRE_QUESTION]) + genre_branch_chars
             requests.append({"questions": "genre branches", "approx_input_tokens": chars // 4})
+        held = [k for k in self.followups if k in self.specs]
+        if held:
+            # Worst case: every parent present, each follow-up sent with its own state.
+            chars = sum(
+                len(self.states[k]) + len(k) + len(json.dumps(vars(self.specs[k]))) for k in held
+            )
+            requests.append(
+                {"questions": f"{len(held)} follow-ups at most", "approx_input_tokens": chars // 4}
+            )
         return {
             "method": "characters/4 heuristic; excludes retries and screenshot observation",
             "requests": requests,
@@ -221,18 +233,59 @@ class GenomeEngine:
             self.jev.compiler.build_specs()[GENRE_QUESTION],
             {e.type.value for e in evidence},
         )
+        followups = {}
         for tag in self.tags:
             allowed = set(rich_allowed_evidence(tag, self.vocabulary))
             add(tag.id, tag_spec(tag, labels[tag.category]), allowed)
+            if tag.id in self.vocabulary.requires:
+                followups[tag.id] = self.vocabulary.requires[tag.id]
+        batches = self._batches([k for k in specs if k not in followups], states)
+        return GenomePlan(specs, states, contexts, batches, skipped, followups)
+
+    def _batches(self, keys: list[str], states: dict[str, str]) -> list[list[str]]:
+        """Questions sharing one evidence state go together, at most ``max_questions`` each."""
         groups: dict[str, list[str]] = {}
-        for key in specs:
+        for key in keys:
             groups.setdefault(states[key], []).append(key)
-        batches = [
-            keys[i : i + self.max_questions]
-            for keys in groups.values()
-            for i in range(0, len(keys), self.max_questions)
+        return [
+            group[i : i + self.max_questions]
+            for group in groups.values()
+            for i in range(0, len(group), self.max_questions)
         ]
-        return GenomePlan(specs, states, contexts, batches, skipped)
+
+    @staticmethod
+    def parent_present(outcome: QuestionExecution | None) -> bool:
+        """A parent counts as present when Jev chose "present" (shown as strong or likely)."""
+        return (
+            outcome is not None
+            and outcome.status == "valid"
+            and (outcome.answer or {}).get("choice") == TagState.PRESENT.value
+        )
+
+    def _followups(self, plan: GenomePlan, outcomes: dict[str, QuestionExecution]):
+        """Split held-back follow-ups into those to ask now and those not evaluated (why)."""
+        labels = self.vocabulary.tags_by_id
+        ask, unasked = [], {}
+        for child, parent in plan.followups.items():
+            if child not in plan.specs:
+                continue  # no eligible evidence: already recorded as skipped
+            if self.parent_present(outcomes.get(parent)):
+                ask.append(child)
+                continue
+            outcome = outcomes.get(parent)
+            if outcome is None:
+                found = "not asked in this run"
+            elif outcome.status != "valid":
+                found = "not decided"
+            else:
+                found = f"decided {outcome.answer['choice'].replace('_', ' ')}"
+            unasked[child] = ExecutionError(
+                code="parent_not_present",
+                message=(
+                    f"Asked only when '{labels[parent].label}' is present; that tag was {found}"
+                ),
+            )
+        return ask, unasked
 
     def genre_branch_chars(self, branches: int = 3) -> int:
         """Average size of a few conditional genre questions, for the estimate only."""
@@ -243,15 +296,24 @@ class GenomeEngine:
     def run(self, plan: GenomePlan):
         executor = QuestionExecutor(self.gateway, max_attempts=self.max_attempts)
         outcomes: dict[str, QuestionExecution] = {}
-        for batch in plan.batches:
-            outcomes.update(
-                executor.execute(
-                    {k: plan.specs[k] for k in batch},
-                    plan.states,
-                    stage="genome_tags",
-                    evidence_ids=plan.contexts,
+
+        def ask(batches: list[list[str]], stage: str) -> None:
+            for batch in batches:
+                outcomes.update(
+                    executor.execute(
+                        {k: plan.specs[k] for k in batch},
+                        plan.states,
+                        stage=stage,
+                        evidence_ids=plan.contexts,
+                    )
                 )
-            )
+
+        ask(plan.batches, "genome_tags")
+        if plan.followups:
+            ready, unasked = self._followups(plan, outcomes)
+            ask(self._batches(ready, plan.states), "genome_followups")
+            for key, error in unasked.items():
+                outcomes[key] = QuestionExecution(status="not_evaluated", error=error)
         for key, reason in plan.skipped.items():
             outcomes[key] = QuestionExecution(
                 status="not_evaluated",
@@ -593,7 +655,11 @@ class GenomePipeline:
         counts = {tier: 0 for tier in get_args(Tier)}
         for tag in tags:
             counts[tag.tier] += 1
-        asked = [k for k in plan.specs] + [k for k in outcomes if k.startswith("genre:")]
+        asked = [
+            k
+            for k in plan.specs
+            if k not in plan.followups or outcomes[k].status != "not_evaluated"
+        ] + [k for k in outcomes if k.startswith("genre:")]
         valid = sum(outcomes[k].status == "valid" for k in asked)
         status = (
             "complete"
@@ -644,6 +710,12 @@ class GenomePipeline:
                 "burst_strategy": "; ".join(p.burst_strategies) or None,
                 "observer_requests": p.observer_requests,
                 "questions_asked": len(asked),
+                "followups_held": len(plan.followups),
+                "followups_asked": sum(
+                    1
+                    for k in plan.followups
+                    if k in outcomes and outcomes[k].status != "not_evaluated"
+                ),
                 "requests": len(executor.attempts),
                 "usage": executor.usage_total(),
                 "latency_ms": {

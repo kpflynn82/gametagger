@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +13,8 @@ from gametagger.domain import EvidenceType
 from gametagger.taxonomy import TagDefinition, Taxonomy
 
 VOCABULARY_FILE = "genome_tags_v1.yaml"
+# Named vocabularies. v2 extends v1 (every v1 tag unchanged) with the mobile tags of Improvement 7.
+VOCABULARIES = {"v1": "genome_tags_v1.yaml", "v2": "genome_tags_v2.yaml"}
 EVIDENCE_POLICY_VERSION = "rich-evidence-v1"
 TEXT_EVIDENCE = ("store_metadata", "developer_documentation", "wikipedia")
 EVIDENCE_CLASSES = {"visual", "temporal", "system", "documentary"}
@@ -31,6 +33,8 @@ class GenomeVocabulary:
     categories: tuple[Category, ...]
     pilot_tags: tuple[TagDefinition, ...]
     extended_tags: tuple[TagDefinition, ...]
+    # Follow-up questions: tag ID -> the parent tag ID that must be present before it is asked.
+    requires: dict[str, str] = field(default_factory=dict)
 
     @property
     def tags(self) -> tuple[TagDefinition, ...]:
@@ -54,11 +58,36 @@ class GenomeVocabulary:
         return tuple(t for cid in wanted for t in self.tags if t.category == cid)
 
 
-def default_vocabulary_path() -> Path:
-    bundled = Path(__file__).resolve().parents[1] / "data" / VOCABULARY_FILE
+def default_vocabulary_path(name: str = "v1") -> Path:
+    """The file of a named vocabulary (``v1`` or ``v2``), bundled or in the source tree."""
+    if name not in VOCABULARIES:
+        raise ValueError(f"Unknown vocabulary {name!r}; choose from {', '.join(VOCABULARIES)}")
+    filename = VOCABULARIES[name]
+    bundled = Path(__file__).resolve().parents[1] / "data" / filename
     if bundled.exists():
         return bundled
-    return Path(__file__).resolve().parents[3] / "taxonomy" / VOCABULARY_FILE
+    return Path(__file__).resolve().parents[3] / "taxonomy" / filename
+
+
+def _raw(path: Path, seen: tuple[Path, ...] = ()) -> dict[str, Any]:
+    """A vocabulary file, with the categories and tags of any file it ``extends`` first."""
+    path = path.resolve()
+    if path in seen:
+        raise ValueError("Genome vocabulary files extend each other in a loop")
+    raw = yaml.safe_load(path.read_text())
+    base_name = raw.get("extends")
+    if base_name is None:
+        return raw
+    if not isinstance(base_name, str) or "/" in base_name or "\\" in base_name:
+        raise ValueError("'extends' must name a vocabulary file in the same folder")
+    base = _raw(path.parent / base_name, (*seen, path))
+    if clash := set(raw.get("categories") or {}) & set(base["categories"]):
+        raise ValueError(f"Extending vocabulary redefines categories: {sorted(clash)}")
+    return {
+        **raw,
+        "categories": {**base["categories"], **(raw.get("categories") or {})},
+        "tags": [*base["tags"], *(raw.get("tags") or [])],
+    }
 
 
 def _text(item: dict[str, Any], key: str) -> str:
@@ -76,7 +105,7 @@ def _evidence(values: Any) -> tuple[str, ...]:
 
 
 def load_vocabulary(taxonomy: Taxonomy, path: str | Path | None = None) -> GenomeVocabulary:
-    raw = yaml.safe_load(Path(path or default_vocabulary_path()).read_text())
+    raw = _raw(Path(path or default_vocabulary_path()))
     categories, defaults = [], {}
     for cid, item in raw["categories"].items():
         if not re.fullmatch(r"[a-z][a-z0-9_]*", cid):
@@ -91,7 +120,7 @@ def load_vocabulary(taxonomy: Taxonomy, path: str | Path | None = None) -> Genom
 
     seen_ids = {t.id for t in taxonomy.tags}
     seen_labels = {t.label.casefold() for t in taxonomy.tags}
-    extended = []
+    extended, requires = [], {}
     for item in raw["tags"]:
         if set(item) - {
             "id",
@@ -102,6 +131,7 @@ def load_vocabulary(taxonomy: Taxonomy, path: str | Path | None = None) -> Genom
             "evidence_class",
             "allowed_evidence",
             "preferred_evidence",
+            "requires",
         }:
             raise ValueError("Genome tag has unexpected fields")
         tid = _text(item, "id")
@@ -120,6 +150,8 @@ def load_vocabulary(taxonomy: Taxonomy, path: str | Path | None = None) -> Genom
         if evidence_class not in EVIDENCE_CLASSES:
             raise ValueError(f"Genome tag {tid} has an unknown evidence class")
         allowed = _evidence(item.get("allowed_evidence", base["allowed_evidence"]))
+        if "requires" in item:
+            requires[tid] = _text(item, "requires")
         extended.append(
             TagDefinition(
                 id=tid,
@@ -132,11 +164,18 @@ def load_vocabulary(taxonomy: Taxonomy, path: str | Path | None = None) -> Genom
                 instructions=str(item.get("instructions", "")).strip(),
             )
         )
+    for child, parent in requires.items():
+        # One level only: a follow-up's parent is an ordinary question, asked in the first round.
+        if parent not in seen_ids or parent == child or parent in requires:
+            raise ValueError(
+                f"Genome tag {child} requires {parent}, which is not a first-round tag"
+            )
     return GenomeVocabulary(
         version=_text(raw, "version"),
         categories=tuple(categories),
         pilot_tags=taxonomy.tags,
         extended_tags=tuple(extended),
+        requires=requires,
     )
 
 

@@ -96,6 +96,29 @@ Press Ctrl+C to stop a session early; what was recorded so far is still saved. R
 * `session.json`: the summary: goals reached, safety events and cost.
 * `result.json`: the tags.
 
+**Retag the Google Play top 50 on your Claude plan** (vocabulary v2, store pages only):
+
+```
+scripts/mac/retag.sh --limit 2    # try two games first
+scripts/mac/retag.sh              # all 50
+```
+
+Screenshots and trailers are described through Claude Code logged in to your Claude
+subscription, so they count against the plan's usage limits instead of costing API money.
+Only Jev is paid, under its own **$1.00 cap** (`GAMETAGGER_JEV_CAP_USD` changes it), booked in
+`benchmark-runs/mobile-retag-v2/ledger.jsonl`. The script:
+
+1. checks Claude Code is logged in to your plan (one tiny test call);
+2. gathers the 50 store pages, screenshots and trailers (free);
+3. tags every game, keeping room on your plan: it pauses when the 5-hour window passes 90%
+   and stops when the week passes 70% (run it again later; finished games are kept);
+4. writes `experiments/mobile-retag-v2/summary.json`.
+
+Claude Code must be installed and logged in once with `claude auth login`. The script hides
+your Anthropic API key from Claude Code, because Claude Code bills an API key instead of the
+plan whenever one is set. This is for your own testing; a shared or paid service would use the
+API with its own key.
+
 ## What it costs
 
 These are estimates from list prices. The real figures are recorded per run.
