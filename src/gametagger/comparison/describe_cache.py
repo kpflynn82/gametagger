@@ -96,13 +96,18 @@ class CachedAnthropic:
 
     def __init__(self, inner, store: DescriptionStore, meter: Meter | None = None):
         self._inner, self._store, self._meter = inner, store, meter
+        self.plan = getattr(inner, "plan", "api")
         self.messages = _Messages(self)
 
     def with_options(self, **options):
         return CachedAnthropic(self._inner.with_options(**options), self._store, self._meter)
 
     def _create(self, kwargs):
-        key = request_key(kwargs)
+        # Descriptions made on the plan saw a slightly different prompt (Claude Code's
+        # StructuredOutput instruction), so they are kept apart from API descriptions.
+        key = request_key(
+            kwargs if self.plan == "api" else {**kwargs, "_transport": f"claude-code-{self.plan}"}
+        )
         hit = self._store.get(key)
         if hit is not None:
             if self._meter is not None:

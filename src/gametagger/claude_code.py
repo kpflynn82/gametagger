@@ -40,7 +40,9 @@ from typing import Any
 
 from gametagger.comparison.budget import BudgetExceeded, cost_usd
 
-# Set any of these and Claude Code bills the API instead of the subscription.
+# Set any of these and Claude Code bills the API instead of the subscription. Every other
+# ANTHROPIC_* and CLAUDE_CODE_USE_* variable (other providers, gateways, base URLs) is removed
+# too, and so is anything that looks like a key, token or secret (the keys file is exported).
 API_CREDENTIALS = (
     "ANTHROPIC_API_KEY",
     "ANTHROPIC_AUTH_TOKEN",
@@ -48,7 +50,15 @@ API_CREDENTIALS = (
     "CLAUDE_CODE_USE_BEDROCK",
     "CLAUDE_CODE_USE_VERTEX",
     "CLAUDE_CODE_USE_FOUNDRY",
+    "AWS_BEARER_TOKEN_BEDROCK",
 )
+DROPPED_PREFIXES = ("ANTHROPIC_", "CLAUDE_CODE_USE_", "GAMETAGGER_", "TYPESAFE_", "YOUTUBE_")
+SECRET_WORDS = ("KEY", "TOKEN", "SECRET", "PASSWORD", "CREDENTIAL")
+# The subscription's own login token (from `claude setup-token`) is what the plan runs on.
+KEPT = ("CLAUDE_CODE_OAUTH_TOKEN",)
+# What Claude Code reports when a call runs on the subscription login, not on a key.
+PLAN_KEY_SOURCES = (None, "none")
+PLAN_LOGINS = ("claude.ai", "oauth_token")
 # Flags that trim Claude Code down to a bare model call, used when this version has them.
 OPTIONAL_FLAGS = (
     "--safe-mode",  # no CLAUDE.md, skills, plugins, hooks or MCP servers
@@ -79,17 +89,49 @@ class SubscriptionStop(BudgetExceeded):
 
 
 class ClaudeCodeError(ValueError):
-    """One call failed (timeout, crash, unreadable reply). The caller loses that image only."""
+    """The model's reply for one call was unusable. The caller loses that image only."""
+
+
+class ClaudeCodeUnavailable(RuntimeError):
+    """Claude Code itself failed (crash, timeout, refused model). Not a ValueError, so the game
+    fails before Jev is paid, as an API outage would, and ``--retry-failed`` redoes it."""
+
+
+# After this many Claude Code failures in a row the run stops instead of failing every game.
+MAX_FAILURES_IN_A_ROW = 5
 
 
 def clean_env(env: dict[str, str] | None = None) -> dict[str, str]:
-    """The environment for ``claude``: no API credentials, and not marked as nested."""
+    """The environment for ``claude``: no API credentials or other secrets, not nested."""
     env = dict(os.environ if env is None else env)
-    for name in (*API_CREDENTIALS, "CLAUDECODE"):
-        env.pop(name, None)
+    for name in list(env):
+        upper = name.upper()
+        if name in KEPT:
+            continue
+        if (
+            name in (*API_CREDENTIALS, "CLAUDECODE")
+            or upper.startswith(DROPPED_PREFIXES)
+            or any(word in upper for word in SECRET_WORDS)
+        ):
+            env.pop(name)
     # Describing images needs no extended thinking; keep calls quick and light on usage.
     env.setdefault("MAX_THINKING_TOKENS", "0")
     return env
+
+
+def on_plan(status: dict[str, Any]) -> str | None:
+    """Why ``claude auth status`` is not a subscription login, or None when it is."""
+    if not status.get("loggedIn"):
+        return "Claude Code is not logged in. Run 'claude auth login' with your Claude plan."
+    provider = status.get("apiProvider")
+    if provider not in (None, "firstParty"):
+        return f"Claude Code is set up for {provider}, which bills by the token, not your plan."
+    if status.get("authMethod") not in PLAN_LOGINS:
+        return (
+            f"Claude Code is logged in with {status.get('authMethod') or 'an unknown method'}, "
+            "not a Claude subscription, so calls would be billed. Run 'claude auth login'."
+        )
+    return None
 
 
 def inline_refs(schema: Any, defs: dict[str, Any] | None = None) -> Any:
@@ -220,6 +262,8 @@ class ClaudeCodeClient:
         self.setup: dict[str, Any] | None = None  # what Claude Code loaded, from its first call
         self._lock = threading.Lock()
         self._debug_left = DEBUG_RECORDS
+        self._failures_in_a_row = 0
+        self._stopped: SubscriptionStop | None = None  # once off the plan, every call refuses
         self.workdir = Path(tempfile.mkdtemp(prefix="gametagger-claude-"))  # nothing to discover
         self.messages = _Messages(self)
         self._flags: list[str] | None = None
@@ -293,8 +337,21 @@ class ClaudeCodeClient:
             return "later"
         return "at " + datetime.fromtimestamp(epoch).strftime("%a %H:%M")
 
+    def verify_login(self) -> None:
+        """Stop before any call unless ``claude auth status`` shows a subscription login."""
+        problem = on_plan(self.auth_status())
+        if problem:
+            raise SubscriptionStop(problem, "not_on_plan")
+
     def check_limits(self) -> None:
         """Refuse a call that would eat into the headroom kept for the owner."""
+        if self._stopped is not None:
+            raise self._stopped
+        if (self.limits or {}).get("isUsingOverage"):
+            raise SubscriptionStop(
+                "your plan is into paid extra usage; GameTagger stops rather than pay for it",
+                "extra_usage",
+            )
         now = self._now()
         used7, reset7 = self.window("seven_day")
         if used7 is not None and used7 >= self.max_week_share and (reset7 or now + 1) > now:
@@ -313,6 +370,8 @@ class ClaudeCodeClient:
             )
 
     def _stop_for(self, text: str, turn_limits: dict[str, Any]) -> SubscriptionStop | None:
+        """A stop for a refused call. ``text`` is Claude Code's own error output, never the
+        model's reply: a screenshot may well say "Daily limit reached"."""
         low = text.lower()
         if turn_limits.get("status") == "rejected" or any(w in low for w in LIMIT_WORDS):
             info = turn_limits or self.limits or {}
@@ -389,11 +448,25 @@ class ClaudeCodeClient:
             }
         )
         start = perf_counter()
-        turn = self._turn(
-            self.argv(model=model, system=system, schema=schema),
-            line,
-            want_answer=tool is not None,
-        )
+        try:
+            turn = self._turn(
+                self.argv(model=model, system=system, schema=schema),
+                line,
+                want_answer=tool is not None,
+            )
+        except ClaudeCodeUnavailable as exc:
+            with self._lock:
+                self._failures_in_a_row += 1
+                broken = self._failures_in_a_row >= MAX_FAILURES_IN_A_ROW
+            if broken:
+                raise SubscriptionStop(
+                    f"Claude Code failed {MAX_FAILURES_IN_A_ROW} times in a row; the last "
+                    f"error: {exc}",
+                    "claude_code_failing",
+                ) from exc
+            raise
+        with self._lock:
+            self._failures_in_a_row = 0
         raw = turn["usage"]
         result = turn["result"] or {}
         usage = {
@@ -405,6 +478,7 @@ class ClaudeCodeClient:
         returned = turn["model"] or model
         plan = {
             "plan": PLAN,
+            "transport": "claude-code-v1",  # the prompt gains a StructuredOutput instruction
             "cost_usd": 0.0,
             "api_equivalent_usd": result.get("total_cost_usd") or cost_usd(model, usage),
             "plan_5h_used": self.window("five_hour")[0],
@@ -459,6 +533,16 @@ class ClaudeCodeClient:
                 "flags": self.flags(),
             }
         self._debug(self.setup)
+        source = message.get("apiKeySource")
+        if source not in PLAN_KEY_SOURCES:
+            stop = SubscriptionStop(
+                f"Claude Code is using an API key ({source}), which would be billed, not your "
+                "plan. Remove it (or its apiKeyHelper in Claude Code's settings) and run again.",
+                "not_on_plan",
+            )
+            with self._lock:
+                self._stopped = stop
+            raise stop
 
     def _turn(self, argv: list[str], line: str, *, want_answer: bool) -> dict[str, Any]:
         """Run one ``claude -p`` and read its stream as it comes.
@@ -477,8 +561,9 @@ class ClaudeCodeClient:
                 cwd=self.workdir,
             )
         except OSError as exc:
-            raise ClaudeCodeError(f"Claude Code could not start: {exc}") from None
+            raise ClaudeCodeUnavailable(f"Claude Code could not start: {exc}") from None
         lines: queue.Queue[str | None] = queue.Queue()
+        errors: list[str] = []
 
         def pump() -> None:
             try:
@@ -487,13 +572,24 @@ class ClaudeCodeClient:
             finally:
                 lines.put(None)
 
-        threading.Thread(target=pump, daemon=True).start()
-        try:
-            proc.stdin.write(line + "\n")
-            proc.stdin.close()
-        except OSError:
-            pass  # it already quit; its output says why
+        def feed() -> None:
+            # In its own thread, so a Claude Code that never reads its input still times out.
+            try:
+                proc.stdin.write(line + "\n")
+                proc.stdin.close()
+            except (OSError, ValueError):
+                pass  # it already quit; its output says why
+
+        def drain() -> None:
+            try:
+                errors.append(proc.stderr.read() or "")
+            except (OSError, ValueError):
+                pass
+
         deadline = time.monotonic() + self.timeout
+        threads = [threading.Thread(target=t, daemon=True) for t in (pump, feed, drain)]
+        for thread in threads:
+            thread.start()
         grace: float | None = None  # after the answer: a moment for the closing messages
         answer: dict[str, Any] | None = None
         result: dict[str, Any] | None = None
@@ -524,7 +620,11 @@ class ClaudeCodeClient:
                 continue
             kind = message.get("type")
             if kind == "system" and message.get("subtype") == "init" and self.setup is None:
-                self._setup_from(message)
+                try:
+                    self._setup_from(message)
+                except SubscriptionStop:
+                    proc.terminate()
+                    raise
             elif kind == "rate_limit_event":
                 info = message.get("rate_limit_info") or {}
                 with self._lock:
@@ -566,10 +666,8 @@ class ClaudeCodeClient:
             except subprocess.TimeoutExpired:
                 proc.kill()
                 proc.wait()
-        try:
-            stderr = proc.stderr.read() or ""
-        except (OSError, ValueError):
-            stderr = ""
+        threads[2].join(timeout=2)  # the stderr reader ends once the process has
+        stderr = "".join(errors)
         done = result or {}
         failed = answer is None and (result is None or done.get("is_error"))
         if failed or cut_short or (done.get("num_turns") or 0) > 2:
@@ -583,24 +681,26 @@ class ClaudeCodeClient:
                 }
             )
         if answer is None and result is None:
-            detail = " ".join([stderr, *texts]).strip()
-            stop = self._stop_for(detail, turn_limits)
+            stop = self._stop_for(stderr, turn_limits)
             if stop:
                 raise stop
             if timed_out:
-                raise ClaudeCodeError(f"Claude Code took longer than {self.timeout:g} s")
-            raise ClaudeCodeError(
-                f"Claude Code exited ({proc.returncode}) without a reply: {detail[:200]}"
+                raise ClaudeCodeUnavailable(f"Claude Code took longer than {self.timeout:g} s")
+            raise ClaudeCodeUnavailable(
+                f"Claude Code exited ({proc.returncode}) without a reply: {stderr.strip()[:200]}"
             )
         if answer is None and (done.get("is_error") or done.get("subtype") != "success"):
             parts = (done.get("result"), *(done.get("errors") or []), done.get("subtype"))
-            detail = " ".join(str(x) for x in parts if x)
-            stop = self._stop_for(detail, turn_limits) or (
-                self._stop_for(" ".join(texts), turn_limits) if done.get("is_error") else None
-            )
+            detail = " ".join(str(x) for x in parts if isinstance(x, str) and x)
+            if done.get("subtype") == "error_max_turns":
+                # The model kept answering off the schema: a bad reply for this image only.
+                if turn_limits.get("status") == "rejected":
+                    raise self._stop_for("", turn_limits)
+                raise ClaudeCodeError(f"No valid structured answer in {self.max_turns} turns")
+            stop = self._stop_for(f"{detail} {stderr}", turn_limits)
             if stop:
                 raise stop
-            raise ClaudeCodeError(f"Claude Code call failed: {detail[:200]}")
+            raise ClaudeCodeUnavailable(f"Claude Code call failed: {detail[:200]}")
         usage = dict(done.get("usage") or {})
         if not usage:  # stopped before the closing summary: add up what each reply reported
             for part in usage_by_message.values():
@@ -630,41 +730,63 @@ class ClaudeCodeClient:
                 f.write(json.dumps(record) + "\n")
 
 
+def _test_image() -> dict[str, Any]:
+    """A small solid red PNG, so the check also proves images reach the model."""
+    import base64
+    import io
+
+    from PIL import Image
+
+    buffer = io.BytesIO()
+    Image.new("RGB", (64, 64), (220, 30, 30)).save(buffer, format="PNG")
+    data = base64.b64encode(buffer.getvalue()).decode("ascii")
+    return {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": data}}
+
+
 def check_plan(client: ClaudeCodeClient, *, model: str, out=print) -> bool:
-    """Check Claude Code is installed, logged in to a subscription, and answers one tiny call."""
+    """Check Claude Code is installed, logged in to a subscription, and answers one tiny call
+    with an image, on the model the run will use."""
     out(f"Claude Code: {client.executable} ({client.version() or 'version unknown'})")
     status = client.auth_status()
-    if not status.get("loggedIn"):
-        out("Not logged in. Run 'claude' once and log in with your Claude subscription.")
+    problem = on_plan(status)
+    if problem:
+        out(problem)
         return False
-    method = status.get("authMethod") or "unknown login"
     plan = status.get("subscriptionType")
-    out(f"Logged in ({method}{', ' + str(plan) + ' plan' if plan else ''}).")
-    if method not in ("claude.ai", "oauth_token") and not plan:
-        out("This login is not a Claude subscription, so calls would not count against a plan.")
-        return False
+    out(f"Logged in ({status.get('authMethod')}{', ' + str(plan) + ' plan' if plan else ''}).")
     try:
         reply = client.messages.create(
             model=model,
-            max_tokens=50,
-            system="Answer the arithmetic question.",
-            messages=[{"role": "user", "content": "What is 2 + 2?"}],
+            max_tokens=100,
+            system="Answer about the image.",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        _test_image(),
+                        {"type": "text", "text": "Name the colour of this square, and add 2 + 2."},
+                    ],
+                }
+            ],
             tools=[
                 {
                     "name": "answer",
-                    "description": "Give the number.",
+                    "description": "Give the colour and the sum.",
                     "input_schema": {
                         "type": "object",
-                        "properties": {"value": {"type": "integer"}},
-                        "required": ["value"],
+                        "properties": {"colour": {"type": "string"}, "sum": {"type": "integer"}},
+                        "required": ["colour", "sum"],
                     },
                 }
             ],
             tool_choice={"type": "tool", "name": "answer"},
         )
-    except (ClaudeCodeError, SubscriptionStop) as exc:
+    except (ClaudeCodeError, ClaudeCodeUnavailable, SubscriptionStop) as exc:
         out(f"The test call failed: {exc}")
         return False
-    value = reply.content[0].input.get("value")
-    out(f"Test call on {model}: answered {value}. {client.usage_line()}")
-    return value == 4
+    answer = reply.content[0].input
+    out(
+        f"Test call on {model}: saw a {answer.get('colour')} square, 2 + 2 = {answer.get('sum')}. "
+        f"{client.usage_line()}"
+    )
+    return answer.get("sum") == 4 and "red" in str(answer.get("colour")).lower()

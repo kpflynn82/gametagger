@@ -53,6 +53,7 @@ TRANSIENT = (
     "TypeSafeAPIConnectionError",
     "TypeSafeTimeoutError",
     "TypeSafeAPIError",
+    "ClaudeCodeUnavailable",  # Claude Code on the owner's plan crashed, timed out or refused
 )
 
 
@@ -70,6 +71,10 @@ def transient_failure(record: dict) -> bool:
 
 
 DEFAULT_OBSERVER_MODEL = "claude-sonnet-5"
+
+
+class VocabularyMismatch(ValueError):
+    """Finished results in the work directory were made with another vocabulary."""
 
 
 def load_dossier(path: Path) -> Dossier:
@@ -426,6 +431,24 @@ class Runner:
         )
         return {k: v for k, v in out.items() if k != "seen"} | {"batch_id": batch_id}
 
+    def check_vocabulary(self, jobs: list[tuple[dict, str]]) -> None:
+        """Refuse to mix vocabularies: finished results are skipped, so a v2 run in a folder of
+        v1 results would quietly keep the v1 answers."""
+        mixed = []
+        for game, arm in jobs:
+            path = self.result_path(game["game_id"], arm)
+            if arm not in RICH_VARIANTS or not path.exists():
+                continue
+            found = json.loads(path.read_text()).get("vocabulary_version", "genome-tags-v1")
+            if found != self.vocabulary.version:
+                mixed.append(f"{game['game_id']} [{arm}] has {found}")
+        if mixed:
+            raise VocabularyMismatch(
+                f"{len(mixed)} finished result(s) use another vocabulary than "
+                f"{self.vocabulary.version} (e.g. {mixed[0]}). Use a new --workdir, or --force "
+                "to redo them."
+            )
+
     def run(
         self,
         games: list[dict],
@@ -437,6 +460,8 @@ class Runner:
         log=lambda m: print(m, file=sys.stderr),
     ) -> dict[str, Any]:
         jobs = [(g, a) for g in games for a in arms]
+        if not force:
+            self.check_vocabulary(jobs)
         done, failed, stopped = 0, 0, None
         self.last_stop = None
 
@@ -492,13 +517,15 @@ def make_runner(
         raise SystemExit("No TypeSafe key: set TYPESAFE_API_KEY")
     ledger = Ledger(workdir / "ledger.jsonl", cap_usd)
     if use_max_plan:
-        from gametagger.claude_code import ClaudeCodeClient
+        from gametagger.claude_code import ClaudeCodeClient, on_plan
 
         client = ClaudeCodeClient(
             log_path=workdir / "claude-code.jsonl",
             max_5h_share=max_5h_share,
             max_week_share=max_week_share,
         )
+        if problem := on_plan(client.auth_status()):
+            raise SystemExit(problem)
         return Runner(
             workdir,
             ledger,

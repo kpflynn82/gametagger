@@ -133,13 +133,19 @@ def cmd_run(args) -> None:
             f"${runner.ledger.cap:.2f} cap.",
             file=sys.stderr,
         )
+    from gametagger.comparison.runner import VocabularyMismatch
+
     waited = 0.0
     while True:
-        summary = runner.run(
-            games, arms, workers=args.workers, force=args.force, retry_failed=args.retry_failed
-        )
+        try:
+            summary = runner.run(
+                games, arms, workers=args.workers, force=args.force, retry_failed=args.retry_failed
+            )
+        except VocabularyMismatch as exc:
+            raise SystemExit(str(exc)) from exc
         wait = getattr(runner.last_stop, "wait_seconds", None)
-        if not wait or waited + wait > args.max_plan_wait_hours * 3600:
+        jev_left = runner.ledger.cap - runner.ledger.spent
+        if not wait or waited + wait > args.max_plan_wait_hours * 3600 or jev_left < 0.01:
             break
         # The plan's 5-hour window is full: wait for it to reset, then carry on. Finished games
         # are kept and skipped.
@@ -152,6 +158,13 @@ def cmd_run(args) -> None:
     print(json.dumps(summary, indent=2))
     if summary["stopped_by_budget"]:
         raise SystemExit(1)
+
+
+def _percent(value: str) -> float:
+    number = float(value)
+    if not 0 < number <= 100:
+        raise argparse.ArgumentTypeError("a percentage above 0 and at most 100")
+    return number
 
 
 def cmd_check_plan(args) -> None:
@@ -338,13 +351,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument(
         "--max-5h-use",
-        type=float,
+        type=_percent,
         default=90,
         help="With --use-max-plan: pause when the plan's 5-hour window passes this percent",
     )
     p.add_argument(
         "--max-week-use",
-        type=float,
+        type=_percent,
         default=70,
         help="With --use-max-plan: stop when the plan's weekly use passes this percent",
     )
@@ -359,7 +372,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser(
         "check-plan", help="Check Claude Code is logged in to your plan (one tiny call, no charge)"
     )
-    p.add_argument("--model", default="claude-haiku-4-5")
+    p.add_argument("--model", default="claude-sonnet-5", help="Test the model the run will use")
     p.set_defaults(func=cmd_check_plan)
 
     p = sub.add_parser("review-sheet", help="Blinded spreadsheet for the owner's check (free)")

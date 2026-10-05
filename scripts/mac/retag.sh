@@ -6,12 +6,24 @@
 #   scripts/mac/retag.sh              # check the plan, gather store pages, tag, summarize
 #   scripts/mac/retag.sh --limit 2    # try the first two games only
 #
+# --limit N and --games ID,ID choose games; any other option goes to the tagging step only.
+#
 # Safe to run again: finished games are kept and skipped. Keep the Mac awake while it runs.
 source "$(dirname "$0")/common.sh"
 
 WORKDIR="benchmark-runs/mobile-retag-v2"
 JEV_CAP="${GAMETAGGER_JEV_CAP_USD:-1.00}"
+MODEL="${OBSERVER_MODEL:-claude-sonnet-5}"
 mkdir -p "$WORKDIR"
+
+SELECT=()
+RUN_ONLY=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --limit|--games) SELECT+=("$1" "$2"); shift 2 ;;
+    *) RUN_ONLY+=("$1"); shift ;;
+  esac
+done
 
 NO_VIDEO=()
 if ! command -v ffmpeg >/dev/null; then
@@ -25,18 +37,19 @@ if command -v caffeinate >/dev/null; then
 fi
 
 echo "1/4 Checking that Claude Code is logged in to your Claude plan..."
-uv run gametagger-compare --workdir "$WORKDIR" check-plan
+uv run gametagger-compare --workdir "$WORKDIR" check-plan --model "$MODEL"
 
 echo
 echo "2/4 Gathering store pages, screenshots and trailers (free)..."
 uv run gametagger-compare --workdir "$WORKDIR" dossiers --list mobile \
-  ${NO_VIDEO[@]+"${NO_VIDEO[@]}"} "$@"
+  ${NO_VIDEO[@]+"${NO_VIDEO[@]}"} ${SELECT[@]+"${SELECT[@]}"}
 
 echo
 echo "3/4 Tagging: images described on your plan, Jev capped at \$$JEV_CAP..."
 ${AWAKE[@]+"${AWAKE[@]}"} uv run gametagger-compare --workdir "$WORKDIR" run --live \
   --use-max-plan --vocabulary v2 --arms rich --list mobile --budget-usd "$JEV_CAP" \
-  --retry-failed "$@" | tee "$WORKDIR/run-summary.json" \
+  --observer-model "$MODEL" --retry-failed \
+  ${SELECT[@]+"${SELECT[@]}"} ${RUN_ONLY[@]+"${RUN_ONLY[@]}"} | tee "$WORKDIR/run-summary.json" \
   || echo "The run stopped early (see above). Finished games are kept; run this again to go on."
 
 echo

@@ -17,6 +17,7 @@ from test_comparison import FakeTypeSafe, sample_dossier
 from gametagger.claude_code import (
     ClaudeCodeClient,
     ClaudeCodeError,
+    ClaudeCodeUnavailable,
     SubscriptionStop,
     check_plan,
     clean_env,
@@ -273,26 +274,86 @@ def test_limits_logins_and_crashes_are_told_apart(taxonomy, evidence):
         observe(client(FakeClaude(out)), taxonomy, evidence)
     assert stop.value.reason == "not_logged_in"
 
+    # Claude Code itself failing is not a bad reply: it is not a ValueError, so the game fails
+    # before Jev is paid (as an API outage would) instead of losing images one by one.
     crash = subprocess.CompletedProcess([], 1, "", "Error: something broke")
-    with pytest.raises(ClaudeCodeError):
+    with pytest.raises(ClaudeCodeUnavailable):
         observe(client(FakeClaude(crash)), taxonomy, evidence)
-    with pytest.raises(ClaudeCodeError, match="longer than"):
+    with pytest.raises(ClaudeCodeUnavailable, match="longer than"):
         observe(client(FakeClaude(HANG), timeout=0.2), taxonomy, evidence)
-    with pytest.raises(ClaudeCodeError, match="could not start"):
+    with pytest.raises(ClaudeCodeUnavailable, match="could not start"):
         observe(client(FakeClaude(FileNotFoundError("claude"))), taxonomy, evidence)
+    overloaded = [result(error="API Error: 529 overloaded")]
+    with pytest.raises(ClaudeCodeUnavailable):
+        observe(client(FakeClaude(overloaded)), taxonomy, evidence)
+    assert not issubclass(ClaudeCodeUnavailable, ValueError)
 
 
-def test_clean_env_drops_every_api_credential():
+def test_text_in_a_screenshot_never_stops_the_run(taxonomy, evidence):
+    """A game screen saying "Daily limit reached" is the model's reply, not a plan limit."""
+    banner = {"type": "text", "text": "Daily limit reached, says the banner."}
+    said = {"type": "assistant", "message": {"content": [banner]}}
+    gave_up = result(error="") | {"subtype": "error_max_turns", "result": None}
+    fake = FakeClaude([limits(five=0.3), said, gave_up])
+    with pytest.raises(ClaudeCodeError):  # this image is lost; the run goes on
+        observe(client(fake), taxonomy, evidence)
+
+
+def test_repeated_failures_stop_the_run(taxonomy, evidence):
+    crash = subprocess.CompletedProcess([], 1, "", "Error: model not available")
+    c = client(FakeClaude(*[crash] * 5))
+    for _ in range(4):
+        with pytest.raises(ClaudeCodeUnavailable):
+            observe(c, taxonomy, evidence)
+    with pytest.raises(SubscriptionStop) as stop:
+        observe(c, taxonomy, evidence)
+    assert stop.value.reason == "claude_code_failing"
+
+
+def test_an_api_key_source_or_extra_usage_stops_before_anything_is_billed(taxonomy, evidence):
+    init = {"type": "system", "subtype": "init", "apiKeySource": "apiKeyHelper"}
+    fake = FakeClaude([init, result({"observations": []})], [result({"observations": []})])
+    c = client(fake)
+    with pytest.raises(SubscriptionStop) as stop:
+        observe(c, taxonomy, evidence)
+    assert stop.value.reason == "not_on_plan"
+    with pytest.raises(SubscriptionStop):
+        observe(c, taxonomy, evidence)  # every later call refuses too
+    assert len(fake.turns()) == 1
+
+    overage = limits()
+    overage["rate_limit_info"]["isUsingOverage"] = True
+    c = client(FakeClaude([overage, result({"observations": []})]))
+    observe(c, taxonomy, evidence)
+    with pytest.raises(SubscriptionStop) as stop:
+        observe(c, taxonomy, evidence)
+    assert stop.value.reason == "extra_usage"
+
+
+def test_clean_env_drops_every_api_credential_and_secret():
     env = clean_env(
         {
             "PATH": "/bin",
+            "HOME": "/Users/me",
             "ANTHROPIC_API_KEY": "x",
             "ANTHROPIC_AUTH_TOKEN": "y",
+            "ANTHROPIC_BASE_URL": "https://gateway.example",
+            "ANTHROPIC_FOUNDRY_API_KEY": "f",
+            "CLAUDE_CODE_USE_GATEWAY": "1",
             "GAMETAGGER_ANTHROPIC_API_KEY": "z",
+            "TYPESAFE_API_KEY": "t",
+            "YOUTUBE_API_KEY": "yt",
+            "GITHUB_TOKEN": "g",
             "CLAUDECODE": "1",
+            "CLAUDE_CODE_OAUTH_TOKEN": "the plan's own login",
         }
     )
-    assert env == {"PATH": "/bin", "MAX_THINKING_TOKENS": "0"}
+    assert env == {
+        "PATH": "/bin",
+        "HOME": "/Users/me",
+        "CLAUDE_CODE_OAUTH_TOKEN": "the plan's own login",
+        "MAX_THINKING_TOKENS": "0",
+    }
 
 
 def test_schemas_are_inlined_for_claude_code():
@@ -308,17 +369,25 @@ def test_schemas_are_inlined_for_claude_code():
     assert "$ref" not in json.dumps(flat)
 
 
-def test_check_plan_reports_the_login_and_a_test_call():
+def test_check_plan_reports_the_login_and_a_test_call_with_an_image():
     lines = []
-    fake = FakeClaude([limits(five=0.4, week=0.2), result({"value": 4})])
-    assert check_plan(client(fake), model="claude-haiku-4-5", out=lines.append)
+    fake = FakeClaude([limits(five=0.4, week=0.2), result({"colour": "Red", "sum": 4})])
+    assert check_plan(client(fake), model="claude-sonnet-5", out=lines.append)
     assert "Logged in (claude.ai, max plan)." in lines
-    assert "answered 4" in lines[-1] and "5-hour window 40% used" in lines[-1]
+    assert "saw a Red square, 2 + 2 = 4" in lines[-1] and "5-hour window 40% used" in lines[-1]
+    argv, kw = fake.turns()[0]
+    sent = json.loads(kw["input"])["message"]["content"]
+    assert sent[0]["type"] == "image" and argv[argv.index("--model") + 1] == "claude-sonnet-5"
 
-    lines = []
-    fake = FakeClaude(auth={"loggedIn": True, "authMethod": "console"})
-    assert not check_plan(client(fake), model="claude-haiku-4-5", out=lines.append)
-    assert "not a Claude subscription" in lines[-1] and not fake.turns()
+    for auth, words in (
+        ({"loggedIn": True, "authMethod": "api_key", "apiProvider": "firstParty"}, "billed"),
+        ({"loggedIn": True, "authMethod": "claude.ai", "apiProvider": "bedrock"}, "bedrock"),
+        ({"loggedIn": False}, "not logged in"),
+    ):
+        lines = []
+        fake = FakeClaude(auth=auth)
+        assert not check_plan(client(fake), model="claude-sonnet-5", out=lines.append)
+        assert words in lines[-1] and not fake.turns()
 
 
 def test_a_mobile_retag_runs_on_the_plan_with_jev_under_the_cap(tmp_path, monkeypatch):
@@ -374,3 +443,76 @@ def test_a_mobile_retag_runs_on_the_plan_with_jev_under_the_cap(tmp_path, monkey
     assert summary["per_tag"]["depth_guild_chat"]["requires"] == "engagement_guilds"
     assert summary["umbrella_tags"]["monetization_ads"]["specific_tags"][0] == "ads_rewarded_video"
     assert summary["cost_usd"]["claude_api"] == 0.0
+
+
+def _one_game(tmp_path, monkeypatch):
+    import gametagger.comparison.runner as runner_module
+
+    original = runner_module.metered_jev_gateway
+
+    def with_fake_client(meter, model):
+        gateway = original(meter, model)
+        gateway._client = FakeTypeSafe()
+        return gateway
+
+    monkeypatch.setattr(runner_module, "metered_jev_gateway", with_fake_client)
+    game = {"game_id": "gp-com.y", "list": "mobile", "title": "Orchard Match", "ids": {}}
+    path = dossier_path(tmp_path, game["game_id"])
+    path.parent.mkdir(parents=True)
+    save_dossier(sample_dossier(path.parent, game["game_id"], game["title"]), path)
+    path.with_name("gather.json").write_text(json.dumps({"gather_timings": {"total_ms": 1}}))
+    return game
+
+
+def test_when_claude_code_fails_the_game_fails_before_jev_is_paid(tmp_path, monkeypatch):
+    from gametagger.comparison.runner import transient_failure
+
+    game = _one_game(tmp_path, monkeypatch)
+    crash = subprocess.CompletedProcess([], 1, "", "Error: model not available on your plan")
+    runner = Runner(
+        tmp_path,
+        Ledger(tmp_path / "ledger.jsonl", 1.0),
+        anthropic_client=client(FakeClaude(crash), tmp_path),
+        vocabulary="v2",
+    )
+    summary = runner.run([game], ["rich"], workers=1, log=lambda m: None)
+    record = json.loads(runner.result_path(game["game_id"], "rich").read_text())
+    assert record["status"] == "failed" and "ClaudeCodeUnavailable" in record["error"]
+    assert record["cost_usd"]["typesafe"] == 0 and runner.ledger.spent == 0
+    assert summary["failed"] == 1 and transient_failure(record)  # --retry-failed redoes it
+
+
+def test_a_v2_run_refuses_to_keep_v1_results(tmp_path, monkeypatch):
+    from gametagger.comparison.runner import VocabularyMismatch
+
+    game = _one_game(tmp_path, monkeypatch)
+    out = tmp_path / "results" / "gp-com.y" / "rich.json"
+    out.parent.mkdir(parents=True)
+    out.write_text(json.dumps({"status": "complete", "tags": {}}))  # an older v1 record
+    runner = Runner(
+        tmp_path,
+        Ledger(tmp_path / "ledger.jsonl", 1.0),
+        anthropic_client=client(FakeClaude()),
+        vocabulary="v2",
+    )
+    with pytest.raises(VocabularyMismatch, match="genome-tags-v1"):
+        runner.run([game], ["rich"], workers=1, log=lambda m: None)
+
+
+def test_plan_and_api_descriptions_are_kept_apart(tmp_path, taxonomy, evidence):
+    store = DescriptionStore(tmp_path / "descriptions")
+    fake = FakeClaude([result({"observations": [FACT]})])
+    observe(CachedAnthropic(client(fake), store), taxonomy, evidence)
+
+    class Api:
+        def __init__(self):
+            self.messages, self.calls = self, 0
+
+        def create(self, **kwargs):
+            self.calls += 1
+            raise RuntimeError("would call the API")
+
+    api = Api()
+    with pytest.raises(RuntimeError):
+        observe(CachedAnthropic(api, store), taxonomy, evidence)
+    assert api.calls == 1  # not answered from the plan's saved description

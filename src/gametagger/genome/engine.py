@@ -273,7 +273,9 @@ class GenomeEngine:
                 ask.append(child)
                 continue
             outcome = outcomes.get(parent)
-            if outcome is None:
+            if parent in plan.skipped:
+                found = "not asked: no source of an allowed evidence type"
+            elif outcome is None:
                 found = "not asked in this run"
             elif outcome.status != "valid":
                 found = "not decided"

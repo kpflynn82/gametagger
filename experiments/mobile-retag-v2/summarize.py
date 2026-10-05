@@ -170,9 +170,10 @@ def main() -> None:
         "".join(json.dumps(r, sort_keys=True) + "\n" for r in compact)
     )
     new = summary["new_tags"]
+    share = new["decided_share_of_asked"]
     print(
         f"{summary['games_with_tags']} of {summary['games']} games tagged. New tags: "
-        f"{new['decided_share_of_asked']:.0%} of questions asked were decided; median "
+        f"{'no' if share is None else f'{share:.0%} of'} questions asked were decided; median "
         f"{new['present_per_game_median']} present per game. "
         f"Jev ${summary['cost_usd']['jev_typesafe']:.2f}; "
         f"Claude on the plan (API equivalent) "

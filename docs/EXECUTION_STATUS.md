@@ -490,7 +490,19 @@ Branch `claude/mobile-retag-v2` (on top of PR #13). No paid calls while building
   v2, Observer on the plan, Jev capped at $1.00 in its own ledger,
   `benchmark-runs/mobile-retag-v2/`), and `experiments/mobile-retag-v2/summarize.py`, which
   writes tag states and counts only. The owner authorized $1 of Jev for this run.
+* Safety from an independent review: Claude Code gets no API keys or other secrets (every
+  `ANTHROPIC_*`, `CLAUDE_CODE_USE_*`, key, token and secret variable is removed, except the
+  plan's own `CLAUDE_CODE_OAUTH_TOKEN`); a run refuses to start unless `claude auth status`
+  shows a subscription login on Anthropic's own service, and stops if Claude Code reports an API
+  key source or paid extra usage. Claude Code failures (crash, timeout, refused model) fail the
+  game before Jev is paid and count as retryable; five in a row stop the run. Text in a
+  screenshot ("Daily limit reached") can no longer be mistaken for a plan limit. Plan and API
+  descriptions are saved apart. A v2 run refuses to keep v1 results in the same folder.
+* Checked against the real Claude Code (2.1.289, in the cloud container): `check-plan` sent a
+  64-pixel image and a schema and got "red, 4" back; the setup record showed no API key source
+  and all five trimming flags. That one call used the plan; nothing was paid.
 * The plan's `claude` cannot run in the Cowork VM that the desktop bridge's shell uses (it only
-  takes a text prompt), so the run happens in the Mac's own Terminal.
+  takes a text prompt), and the cloud container cannot reach the stores or TypeSafe, so the run
+  happens in the Mac's own Terminal.
 * Tests: `tests/test_vocabulary_v2.py`, `tests/test_claude_code.py` (a fake `claude`; one
-  end-to-end retag of a fake game). 439 passed, 1 skipped.
+  end-to-end retag of a fake game). 445 passed, 1 skipped.
