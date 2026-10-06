@@ -211,6 +211,9 @@ a feature is done, not only whether it exists.
 follow-up tags are only asked when the parent is present, and the site's dictionary renders the
 new categories.
 
+**Store-only baseline (October 5).** The Google Play top 50 retagged with v2 decided 9% of the
+new-tag questions (see `experiments/mobile-retag-v2/`); recorded play is still needed.
+
 **Done when.** On the recorded pilot games, at least half the new tags are decided, and the
 blind review agrees with 90% or more of the present calls.
 

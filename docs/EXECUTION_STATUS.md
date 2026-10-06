@@ -506,3 +506,28 @@ Branch `claude/mobile-retag-v2` (on top of PR #13). No paid calls while building
   happens in the Mac's own Terminal.
 * Tests: `tests/test_vocabulary_v2.py`, `tests/test_claude_code.py` (a fake `claude`; one
   end-to-end retag of a fake game). 445 passed, 1 skipped.
+
+### Google Play top 50 retagged with v2, on the owner's plan (October 5, 2026)
+
+Run on the owner's Mac with `scripts/mac/retag.sh` (started from a Finder launcher, `Start
+GameTagger retag.command`, beside the code in `~/Claude Workspace/gametagger/`). Results:
+[`experiments/mobile-retag-v2/`](../experiments/mobile-retag-v2/README.md).
+
+* **Paid: $0.19 of Jev** (480 requests) under the owner's $1.00 cap, in its own ledger
+  (`benchmark-runs/mobile-retag-v2/ledger.jsonl` on the Mac). Claude: 523 calls on the plan,
+  $0 in API money, $8.16 at API prices. Plan use ended at 75% of the 5-hour window and 23% of
+  the week. A first attempt stopped at `check-plan` because the 5-hour window was full; nothing
+  was spent.
+* 50 of 50 games tagged (45 complete, 5 partial), about 100 s each, 45 minutes in all.
+* New tags from store pages: 9% of 2,087 questions decided (185 present, 4 absent, 2
+  conflicting); median 4 present per game; ads almost never decided; 20 of 51 tags never
+  present. Follow-ups: 137 asked, 3 present.
+* v1 answers match the September run on 98% of game-tag pairs.
+* Umbrella tags: the broad ones often fire alone ("Ad-supported" in 19 games with no specific ad
+  tag), so they stay until recordings or play-tests can test the specific tags.
+
+Left:
+* The site's tag dictionary does not show the new categories yet, and the site still shows v1.
+* Recorded gameplay (the 5-game pilot or the owner's weekly play-tests) is what can decide most
+  new tags; Improvement 7's bar (half decided, 90% review agreement) is not met from stores.
+* PR: this branch (on top of PR #13).
