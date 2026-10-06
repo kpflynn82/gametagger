@@ -1,11 +1,11 @@
-# Vocabulary v2 draft: mobile meta, live ops and ads
+# Vocabulary v2: mobile meta, live ops and ads
 
 Status: **approved by the owner on October 5, 2026**, with all 51 tags kept (Improvement 7,
-step 1). The pipeline does not use these tags yet: the loader and conditional questions come
-next (see "After approval"). The machine-readable draft is
-[`taxonomy/drafts/genome_tags_v2_additions.draft.yaml`](../taxonomy/drafts/genome_tags_v2_additions.draft.yaml).
-`tests/test_vocabulary_v2_draft.py` checks that it stays well formed and never collides with
-v1.
+step 1), and **built** the same day: the file is
+[`taxonomy/genome_tags_v2.yaml`](../taxonomy/genome_tags_v2.yaml). It `extends` v1, so every v1
+tag loads first, unchanged. Use it with `gametagger-compare run --vocabulary v2` (v1 stays the
+default until the retag results are reviewed). `tests/test_vocabulary_v2.py` checks the file,
+the loader and the follow-up questions.
 
 ## What changes
 
@@ -132,9 +132,13 @@ How a feature is done. Asked only when its parent feature is present.
 
 ## After approval
 
-1. Promote the approved tags into `taxonomy/genome_tags_v2.yaml`.
-2. Teach the loader the `requires` field.
-3. Ask follow-up questions only after their parent is decided.
+1. ~~Promote the approved tags into `taxonomy/genome_tags_v2.yaml`.~~ Done October 5.
+2. ~~Teach the loader the `requires` field.~~ Done: a follow-up must name a first-round tag.
+3. ~~Ask follow-up questions only after their parent is decided.~~ Done: follow-ups wait for a
+   second round, asked only when the parent came back present (strong or likely); otherwise
+   they are "not evaluated" with the reason, never "absent". Results record
+   `vocabulary_version` and how many follow-ups were asked.
 4. Show the new categories on the site's tag dictionary.
-5. Run them on the 5 pilot recordings. v2 is done when at least half the new tags are decided
+5. Retag the Google Play top 50 from store pages (the owner's test; see
+   `experiments/mobile-retag-v2/`), then run them on the 5 pilot recordings. v2 is done when at least half the new tags are decided
    on the pilot games and the blind review agrees with at least 90% of the "present" calls.

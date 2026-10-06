@@ -307,7 +307,7 @@ Not done:
 Improvement 7, step 1:
 * Drafted 51 mobile tags for owner review: 13 meta layers, 21 live operations and offers,
   5 advertising, and 12 follow-ups asked only when their parent tag is present.
-* Files: [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md) and
+* Files: [VOCABULARY_V2](VOCABULARY_V2.md) and
   `taxonomy/drafts/genome_tags_v2_additions.draft.yaml`.
 * Not loaded by the pipeline. v1 is unchanged.
 * `tests/test_vocabulary_v2_draft.py` checks the draft is well formed, collides with no v1 or
@@ -452,7 +452,7 @@ calls.
 
 ### Vocabulary v2 approved (October 5, 2026)
 
-The owner answered the six questions in [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md) (PR #13).
+The owner answered the six questions in [VOCABULARY_V2](VOCABULARY_V2.md) (PR #13).
 No paid calls.
 
 * All 51 tags kept. (The draft said 52 and 22 live-ops tags; the file has always held 51 and 21.
@@ -467,3 +467,80 @@ No paid calls.
 * Next: promote the tags into `taxonomy/genome_tags_v2.yaml`, teach the loader `requires` (asked
   only when the parent is strong or likely, otherwise "not evaluated"), show the new categories
   in the site's dictionary, then the retag.
+
+### Vocabulary v2 built, and describing on the owner's Claude plan (October 5, 2026)
+
+Branch `claude/mobile-retag-v2` (on top of PR #13). No paid calls while building.
+
+* **v2 in the pipeline.** `taxonomy/genome_tags_v2.yaml` (moved from `taxonomy/drafts/`)
+  `extends` v1, so all 189 v1 tags load first, unchanged, then the 51 new ones: 240 in all.
+  `--vocabulary v2` on `gametagger-compare run` (v1 stays the default). The 12 follow-ups
+  (`requires`) are held back and asked in a second round only when their parent came back
+  present, strong or likely; otherwise they are "not evaluated" with the reason, never absent.
+  Results record `vocabulary_version` and `followups_asked`. Not done: the site's dictionary.
+* **`--use-max-plan`.** Ported from the owner's teardown player
+  (`src/gametagger/claude_code.py`): the Observer's calls run through `claude -p` (Claude
+  Code logged in to the owner's subscription), with API keys hidden from Claude Code. Replies
+  come back as ordinary API messages, so the Observers, saved descriptions and meter are
+  unchanged. Plan calls book $0 in the ledger with `plan: subscription` and the API-equivalent
+  price; they reserve nothing against the cap, so `--budget-usd` caps Jev alone. It pauses at
+  90% of the 5-hour window (waits up to 6 hours for the reset) and stops at 70% of the week.
+  `gametagger-compare check-plan` checks the login with one tiny call.
+* **Retag kit.** `scripts/mac/retag.sh` (Google Play top 50 of the site's list, store pages,
+  v2, Observer on the plan, Jev capped at $1.00 in its own ledger,
+  `benchmark-runs/mobile-retag-v2/`), and `experiments/mobile-retag-v2/summarize.py`, which
+  writes tag states and counts only. The owner authorized $1 of Jev for this run.
+* Safety from an independent review: Claude Code gets no API keys or other secrets (every
+  `ANTHROPIC_*`, `CLAUDE_CODE_USE_*`, key, token and secret variable is removed, except the
+  plan's own `CLAUDE_CODE_OAUTH_TOKEN`); a run refuses to start unless `claude auth status`
+  shows a subscription login on Anthropic's own service, and stops if Claude Code reports an API
+  key source or paid extra usage. Claude Code failures (crash, timeout, refused model) fail the
+  game before Jev is paid and count as retryable; five in a row stop the run. Text in a
+  screenshot ("Daily limit reached") can no longer be mistaken for a plan limit. Plan and API
+  descriptions are saved apart. A v2 run refuses to keep v1 results in the same folder.
+* Checked against the real Claude Code (2.1.289, in the cloud container): `check-plan` sent a
+  64-pixel image and a schema and got "red, 4" back; the setup record showed no API key source
+  and all five trimming flags. That one call used the plan; nothing was paid.
+* The plan's `claude` cannot run in the Cowork VM that the desktop bridge's shell uses (it only
+  takes a text prompt), and the cloud container cannot reach the stores or TypeSafe, so the run
+  happens in the Mac's own Terminal.
+* Tests: `tests/test_vocabulary_v2.py`, `tests/test_claude_code.py` (a fake `claude`; one
+  end-to-end retag of a fake game). 445 passed, 1 skipped.
+
+### Google Play top 50 retagged with v2, on the owner's plan (October 5, 2026)
+
+Run on the owner's Mac with `scripts/mac/retag.sh` (started from a Finder launcher, `Start
+GameTagger retag.command`, beside the code in `~/Claude Workspace/gametagger/`). Results:
+[`experiments/mobile-retag-v2/`](../experiments/mobile-retag-v2/README.md).
+
+* **Paid: $0.19 of Jev** (480 requests) under the owner's $1.00 cap, in its own ledger
+  (`benchmark-runs/mobile-retag-v2/ledger.jsonl` on the Mac). Claude: 523 calls on the plan,
+  $0 in API money, $8.16 at API prices. Plan use ended at 75% of the 5-hour window and 23% of
+  the week. A first attempt stopped at `check-plan` because the 5-hour window was full; nothing
+  was spent.
+* 50 of 50 games tagged (45 complete, 5 partial), about 100 s each, 45 minutes in all.
+* New tags from store pages: 9% of 2,087 questions decided (185 present, 4 absent, 2
+  conflicting); median 4 present per game; ads almost never decided; 20 of 51 tags never
+  present. Follow-ups: 137 asked, 3 present.
+* v1 answers match the September run on 98% of game-tag pairs.
+* Umbrella tags: the broad ones often fire alone ("Ad-supported" in 19 games with no specific ad
+  tag), so they stay until recordings or play-tests can test the specific tags.
+
+Left:
+* The site's tag dictionary does not show the new categories yet, and the site still shows v1.
+* Recorded gameplay (the 5-game pilot or the owner's weekly play-tests) is what can decide most
+  new tags; Improvement 7's bar (half decided, 90% review agreement) is not met from stores.
+* PR: this branch (on top of PR #13).
+
+### YouTube gameplay pilot for the v2 tags (October 5, 2026)
+
+5 games (Royal Match, Monopoly Go, Last War, Coin Master, Candy Crush Saga), store pages plus up
+to 2 YouTube gameplay videos each, 12 bursts with the scene-change sampler
+(`scripts/mac/retag-youtube.sh`; `run` now takes `--bursts` and `--burst-strategy`).
+* Paid: **$0.03 of Jev** under a $0.25 cap. Claude: 60 calls on the plan, $1.19 at API prices.
+  The run waited about three hours for the plan's 5-hour window, as designed.
+* New-tag answers decided 13% to 15% on the same games; present 24 to 29. No ad tag decided.
+  Details: `experiments/mobile-retag-v2/README.md`.
+* Not worth scaling: play-tests are what can decide shop, offer and ad tags.
+* The Mac copy (`~/Claude Workspace/gametagger/repo`) has two stale git lock files
+  (`.git/HEAD.lock`, `.git/objects/maintenance.lock`) that this session could not delete.

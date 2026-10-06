@@ -184,7 +184,7 @@ a feature is done, not only whether it exists.
 **Design.**
 
 1. **Vocabulary v2 draft (new tags).** *Approved by the owner October 5, all kept:* 51 tags
-   in [VOCABULARY_V2_DRAFT](VOCABULARY_V2_DRAFT.md). About 40–60 new tags in three groups, each with a plain
+   in [VOCABULARY_V2](VOCABULARY_V2.md). About 40–60 new tags in three groups, each with a plain
    definition, allowed evidence and a note on what must be visible:
    * **Meta layers:** base building, collection albums, character roster, idle rewards, merge
      board, decorating or renovation, story chapters as progression.
@@ -192,12 +192,14 @@ a feature is done, not only whether it exists.
      lucky wheel or spin, piggy bank, first-purchase offer, tiered offers, starter pack, VIP
      levels.
    * **Ads:** rewarded video, interstitials, banners, ad removal purchase.
-2. **Implementation depth.** For a small set of high-value features (battle pass, gacha,
+2. **Implementation depth.** *Built October 5: `requires` in `taxonomy/genome_tags_v2.yaml`,
+   asked in a second round.* For a small set of high-value features (battle pass, gacha,
    energy, ads, live events), add follow-up questions that Jev answers only when the feature is
    present. For example: "battle pass has a free and a premium track" and "gacha shows its
    drop rates". These are separate tags, so "not observed" still never becomes "absent".
-3. **Versioning.** The new tags ship as vocabulary `genome-tags-v2`. Results record the
-   version, the site's dictionary shows it, and v1 results stay comparable because v1 tags are
+3. **Versioning.** *Built October 5, except the site's dictionary.* The new tags ship as
+   vocabulary `genome-tags-v2` (`--vocabulary v2`). Results record the version, the site's
+   dictionary shows it, and v1 results stay comparable because v1 tags are
    unchanged.
 4. **Crosswalks.** *Owner, October 5: none for v2.* No Steam crosswalk (the owner does not
    rate Steam's player tags) and no mapping to commercial feature lists.
@@ -208,6 +210,9 @@ a feature is done, not only whether it exists.
 **Tests.** Vocabulary loads and validates, every new tag has allowed evidence and a definition,
 follow-up tags are only asked when the parent is present, and the site's dictionary renders the
 new categories.
+
+**Store-only baseline (October 5).** The Google Play top 50 retagged with v2 decided 9% of the
+new-tag questions (see `experiments/mobile-retag-v2/`); recorded play is still needed.
 
 **Done when.** On the recorded pilot games, at least half the new tags are decided, and the
 blind review agrees with 90% or more of the present calls.

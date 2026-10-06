@@ -37,6 +37,7 @@ packages = ["src/gametagger"]
 [tool.hatch.build.targets.wheel.force-include]
 "taxonomy/vgms_v4.yaml" = "gametagger/data/vgms_v4.yaml"
 "taxonomy/genome_tags_v1.yaml" = "gametagger/data/genome_tags_v1.yaml"
+"taxonomy/genome_tags_v2.yaml" = "gametagger/data/genome_tags_v2.yaml"
 "taxonomy/crosswalks" = "gametagger/data/crosswalks"
 
 [tool.pytest.ini_options]
