@@ -158,6 +158,8 @@ class Runner:
         max_questions_per_request: int = 60,
         store=None,
         vocabulary: str = "v1",
+        bursts: int = 6,
+        burst_strategy: str = "even",
     ):
         from gametagger.genome.vocabulary import default_vocabulary_path, load_vocabulary
         from gametagger.taxonomy import load_taxonomy
@@ -171,6 +173,9 @@ class Runner:
         self.taxonomy = load_taxonomy()
         self.vocabulary = load_vocabulary(self.taxonomy, default_vocabulary_path(vocabulary))
         self.last_stop: BaseException | None = None  # what stopped the last run, if anything
+        # Video sampling: bursts per game (shared by its videos) and how they are placed.
+        # "auto" uses the scene-change sampler for gameplay footage, even bursts for trailers.
+        self.bursts, self.burst_strategy = bursts, burst_strategy
 
     def result_path(self, game_id: str, arm: str) -> Path:
         return self.workdir / "results" / safe_id(game_id) / f"{arm}.json"
@@ -211,7 +216,10 @@ class Runner:
             enforce_boundary=False,
             brief=variant.get("brief", False),
         )
-        return GenomePipeline(engine, observer, ordered), model
+        pipeline = GenomePipeline(
+            engine, observer, ordered, bursts=self.bursts, burst_strategy=self.burst_strategy
+        )
+        return pipeline, model
 
     def _variant_dossier(self, arm: str, dossier: Dossier) -> tuple[Dossier, int]:
         return dedupe_images(dossier) if RICH_VARIANTS[arm].get("dedupe") else (dossier, 0)

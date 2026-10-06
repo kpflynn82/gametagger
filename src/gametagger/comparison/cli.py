@@ -106,6 +106,8 @@ def cmd_run(args) -> None:
         observer_model=args.observer_model,
         jev_model=args.jev_model,
         vocabulary=args.vocabulary,
+        bursts=args.bursts,
+        burst_strategy=args.burst_strategy,
         use_max_plan=args.use_max_plan,
         max_5h_share=args.max_5h_use / 100,
         max_week_share=args.max_week_use / 100,
@@ -342,6 +344,18 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("v1", "v2"),
         default="v1",
         help="Tags to ask: v1 (189) or v2 (v1 plus 51 mobile tags, with follow-up questions)",
+    )
+    p.add_argument(
+        "--bursts",
+        type=int,
+        default=6,
+        help="Video bursts per game, shared by its videos (default 6, as in the benchmark)",
+    )
+    p.add_argument(
+        "--burst-strategy",
+        choices=("even", "systems", "auto"),
+        default="even",
+        help="even: spread over each video; auto: scene changes for gameplay footage",
     )
     p.add_argument(
         "--use-max-plan",
