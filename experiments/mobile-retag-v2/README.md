@@ -55,3 +55,29 @@ they should stay. Recordings or play-tests should decide the question; this run 
 
 A first attempt the same afternoon stopped at the start because the plan's 5-hour window was
 full; nothing was spent.
+
+## YouTube gameplay pilot (5 games, October 5, 2026)
+
+Does adding YouTube gameplay video decide more of the new tags? Royal Match, Monopoly Go, Last
+War, Coin Master and Candy Crush Saga were retagged with the same store pages plus up to two of
+each game's most-watched YouTube gameplay videos (and, with the download tool now available,
+the Google Play trailer). 12 frame bursts per game, the scene-change sampler for gameplay
+footage. `scripts/mac/retag-youtube.sh`; results in `youtube-pilot/`.
+
+* **A small gain.** On the same 5 games, new-tag answers decided went from 13% to 15% (28 to 33
+  of about 215 asked), and new tags present from 24 to 29 (median 5 to 7 per game).
+* What video added: things that are on screen during play. "Level path map" was found in 4 more
+  games (rightly for Candy Crush Saga and Royal Match), Monopoly Go gained decorating or
+  renovation, and Royal Match gained pop-up and timed offers. Two tags present before were not
+  found this time (Royal Match's event modes, Last War's premium currency): run-to-run noise.
+* What it did not add: any ad tag. Popular YouTube gameplay is edited creator content (overlays,
+  cinematics, highlights) more than shop and offer screens.
+* Cost: $0.03 of Jev (cap $0.25); 60 new Claude calls on the plan, $1.19 at API prices
+  (the screenshot descriptions from the store-only run were reused). The plan's 5-hour window
+  passed 90% after the first game, so the run waited about three hours for it to reset, as
+  designed.
+* Downloads: 4 of 5 games got two YouTube videos; Royal Match got one. YouTube downloads are
+  against YouTube's terms (owner-approved proof of concept).
+
+Conclusion: YouTube video is not worth scaling to all 50 for these tags. Play (the teardown
+player, or the owner's weekly play-tests) is what reaches shops, offers and ads.

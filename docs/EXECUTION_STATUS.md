@@ -531,3 +531,16 @@ Left:
 * Recorded gameplay (the 5-game pilot or the owner's weekly play-tests) is what can decide most
   new tags; Improvement 7's bar (half decided, 90% review agreement) is not met from stores.
 * PR: this branch (on top of PR #13).
+
+### YouTube gameplay pilot for the v2 tags (October 5, 2026)
+
+5 games (Royal Match, Monopoly Go, Last War, Coin Master, Candy Crush Saga), store pages plus up
+to 2 YouTube gameplay videos each, 12 bursts with the scene-change sampler
+(`scripts/mac/retag-youtube.sh`; `run` now takes `--bursts` and `--burst-strategy`).
+* Paid: **$0.03 of Jev** under a $0.25 cap. Claude: 60 calls on the plan, $1.19 at API prices.
+  The run waited about three hours for the plan's 5-hour window, as designed.
+* New-tag answers decided 13% to 15% on the same games; present 24 to 29. No ad tag decided.
+  Details: `experiments/mobile-retag-v2/README.md`.
+* Not worth scaling: play-tests are what can decide shop, offer and ad tags.
+* The Mac copy (`~/Claude Workspace/gametagger/repo`) has two stale git lock files
+  (`.git/HEAD.lock`, `.git/objects/maintenance.lock`) that this session could not delete.
