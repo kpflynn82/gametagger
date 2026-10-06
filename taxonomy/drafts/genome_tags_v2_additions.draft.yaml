@@ -1,0 +1,265 @@
+# genome-tags-v2 additions (Improvement 7). Approved by the owner on October 5, 2026 (all 51
+# kept); not loaded until the loader accepts `requires`. Decisions: docs/VOCABULARY_V2_DRAFT.md.
+#
+# v1 tags stay exactly as they are, so v1 results remain comparable. v2 adds four categories:
+#   meta     - systems wrapped around the core loop
+#   liveops  - live operations and offers
+#   ads      - how advertising is used
+#   depth    - follow-up questions asked only when a parent tag is present ("requires")
+#
+# New fields in this draft (the loader needs a small change to accept them):
+#   requires: a tag ID. The question is asked only when that tag is decided present, and it is
+#             otherwise reported as not evaluated (never absent).
+# `instructions` says what must be visible or documented before the tag can be present.
+version: genome-tags-v2-draft
+categories:
+  meta:
+    label: Meta layers
+    description: Systems wrapped around the core loop that drive long-term progression.
+    evidence_class: system
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation, wikipedia]
+  liveops:
+    label: Live operations & offers
+    description: Time-limited content, schedules, currencies and offers that keep players returning and paying.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation]
+  ads:
+    label: Advertising
+    description: How the game shows advertisements, and what players can do about them.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation]
+  depth:
+    label: Implementation details
+    description: How a feature is done. Asked only when its parent feature is present.
+    evidence_class: documentary
+    allowed_evidence: [gameplay_image, gameplay_clip, store_metadata, developer_documentation]
+tags:
+  # ------------------------------------------------------------------ meta layers
+  - id: meta_merge_board
+    label: Merge board
+    category: meta
+    definition: Players combine identical items on a board to create higher-tier items.
+    instructions: Present only when a grid of items and a merge (two alike becoming one higher item) is shown or described.
+  - id: meta_renovation
+    label: Decorating or renovation meta
+    category: meta
+    definition: Progress earned in the core game is spent to restore, build or decorate rooms or areas.
+    instructions: Needs an area being restored or decorated with a cost paid in a progress currency (for example stars).
+  - id: meta_story_chapters
+    label: Story chapters as progression
+    category: meta
+    definition: Finishing levels unlocks chapters or episodes of an ongoing story.
+  - id: meta_collection_album
+    label: Collection albums
+    category: meta
+    definition: Sets of collectible cards, stickers or items that give rewards when a set is complete.
+    instructions: Needs an album or set screen, or a store claim about completing sets or card collections.
+  - id: meta_character_roster
+    label: Character roster
+    category: meta
+    definition: Players collect many distinct characters or heroes, level them and choose which to field.
+  - id: meta_duplicate_star_up
+    label: Star-up from duplicates
+    category: meta
+    definition: Duplicate copies or shards of a character or item raise its rank, stars or tier.
+  - id: meta_offline_earnings
+    label: Offline earnings
+    category: meta
+    definition: Resources build up while the player is away and are claimed on return.
+    instructions: Distinct from auto-battle. Needs a claim screen for time away or a store claim about earning offline.
+  - id: meta_build_timers
+    label: Build or upgrade timers
+    category: meta
+    definition: Building or upgrading takes real time to finish, and can be sped up.
+    instructions: Needs a visible countdown on a build or upgrade, or a documented build queue.
+  - id: meta_world_map
+    label: Shared world map
+    category: meta
+    definition: A map shared with other players' bases or cities, used to gather, rally or attack.
+  - id: meta_base_raids
+    label: Raiding other players
+    category: meta
+    definition: Players attack or steal from other players' bases, often while those players are offline.
+  - id: meta_roll_loop
+    label: Roll or spin progression loop
+    category: meta
+    definition: Players spend a limited, refilling resource (dice rolls, spins) whose random result moves them or pays out.
+  - id: meta_level_map
+    label: Level path map
+    category: meta
+    definition: Levels are laid out along a map or path that the player advances through in order.
+  - id: meta_pre_level_boosters
+    label: Pre-level boosters
+    category: meta
+    definition: Consumable power-ups chosen before starting a level.
+  # ------------------------------------------------------------------ live operations and offers
+  - id: liveops_login_calendar
+    label: Login calendar
+    category: liveops
+    definition: A calendar or streak of rewards for logging in on consecutive or set days.
+  - id: liveops_daily_missions
+    label: Daily or weekly missions
+    category: liveops
+    definition: Tasks that reset daily or weekly and give rewards for completion.
+  - id: liveops_event_modes
+    label: Limited-time event modes
+    category: liveops
+    definition: Time-limited events with their own levels, mode or rules, not only extra rewards.
+  - id: liveops_event_leaderboards
+    label: Event leaderboards or tournaments
+    category: liveops
+    definition: Time-limited competitions where players are ranked and paid out by position.
+  - id: liveops_team_events
+    label: Team or guild events
+    category: liveops
+    definition: Events where players work toward shared goals as a team or guild.
+  - id: liveops_seasons
+    label: Seasons
+    category: liveops
+    definition: Themed, time-boxed seasons that change content or reset progress on a schedule.
+  - id: liveops_event_pass
+    label: Event pass
+    category: liveops
+    definition: A short reward track tied to a single event, separate from any season-long pass.
+  - id: liveops_collaborations
+    label: Brand or IP collaborations
+    category: liveops
+    definition: Crossover events featuring characters or brands from outside the game.
+  - id: liveops_spin_wheel
+    label: Lucky wheel or spin
+    category: liveops
+    definition: A wheel or spinner that awards a random prize, often free once a day or for currency.
+  - id: liveops_premium_currency
+    label: Premium currency
+    category: liveops
+    definition: A scarce currency, mainly bought with money, separate from the everyday soft currency.
+    instructions: Needs two distinct currencies with one clearly sold for money, shown or documented.
+  - id: liveops_piggy_bank
+    label: Piggy bank
+    category: liveops
+    definition: Currency builds up in a bank from play and can only be collected by paying to open it.
+  - id: liveops_starter_pack
+    label: Starter pack
+    category: liveops
+    definition: A discounted bundle aimed at new players.
+  - id: liveops_first_purchase_bonus
+    label: First-purchase bonus
+    category: liveops
+    definition: An extra reward for a player's first purchase of any kind.
+  - id: liveops_timed_offers
+    label: Time-limited offers
+    category: liveops
+    definition: Purchase offers shown with a countdown or expiry.
+  - id: liveops_offer_chains
+    label: Tiered or chained offers
+    category: liveops
+    definition: Offers in a sequence or ladder, where buying one unlocks the next or better tiers.
+  - id: liveops_popup_offers
+    label: Pop-up offers
+    category: liveops
+    definition: Purchase offers pushed as pop-ups, for example at session start or after failing.
+  - id: liveops_pay_to_continue
+    label: Pay to continue
+    category: liveops
+    definition: After failing, the player can pay (currency, money or an ad) for extra moves, time or a revive.
+  - id: liveops_membership
+    label: Membership or monthly card
+    category: liveops
+    definition: A recurring purchase that grants daily rewards or perks for its duration.
+    instructions: Distinct from a subscription needed to play at all.
+  - id: liveops_vip_levels
+    label: VIP levels
+    category: liveops
+    definition: Tiers of perks unlocked by total spending.
+  - id: liveops_friend_gifting
+    label: Gifting to friends
+    category: liveops
+    definition: Players send lives, currency or items to friends.
+  - id: liveops_referral_rewards
+    label: Invite rewards
+    category: liveops
+    definition: Rewards for inviting friends to install or play the game.
+  # ------------------------------------------------------------------ advertising
+  - id: ads_rewarded_video
+    label: Rewarded video ads
+    category: ads
+    definition: Players can choose to watch a video ad in exchange for a reward.
+    instructions: Needs an offer to watch an ad for a reward. A store "Contains ads" notice alone is not enough.
+  - id: ads_interstitials
+    label: Interstitial ads
+    category: ads
+    definition: Full-screen ads shown between levels or screens without the player choosing to watch.
+  - id: ads_banners
+    label: Banner ads
+    category: ads
+    definition: Ads that stay on screen in a strip during play or menus.
+  - id: ads_removal_purchase
+    label: Ad-removal purchase
+    category: ads
+    definition: A purchase that removes some or all ads.
+  - id: ads_offerwall
+    label: Offerwall
+    category: ads
+    definition: Rewards for completing third-party offers, such as installing other apps.
+  # ------------------------------------------------------------------ implementation depth (asked only when the parent is present)
+  - id: depth_pass_free_track
+    label: Pass has a free track
+    category: depth
+    requires: engagement_battle_pass
+    definition: The battle pass has a free reward track alongside the paid one.
+  - id: depth_pass_upper_tier
+    label: Pass has an upper paid tier
+    category: depth
+    requires: engagement_battle_pass
+    definition: A second, more expensive paid tier or level skips are sold on top of the standard pass.
+  - id: depth_gacha_rates_shown
+    label: Gacha shows drop rates
+    category: depth
+    requires: engagement_gacha
+    definition: The game displays the odds of each reward from its random draws.
+  - id: depth_gacha_pity
+    label: Gacha pity guarantee
+    category: depth
+    requires: engagement_gacha
+    definition: A guaranteed top reward after a set number of draws without one.
+  - id: depth_gacha_duplicates_convert
+    label: Gacha duplicates convert
+    category: depth
+    requires: engagement_gacha
+    definition: Duplicate draws turn into shards, upgrades or another currency.
+  - id: depth_energy_as_lives
+    label: Energy works as lives
+    category: depth
+    requires: engagement_energy_system
+    definition: The play-limiting resource is a set of lives lost on failure.
+  - id: depth_energy_refill_purchase
+    label: Energy can be bought
+    category: depth
+    requires: engagement_energy_system
+    definition: Energy or lives can be refilled with premium currency or money.
+  - id: depth_rewarded_ads_progress
+    label: Rewarded ads give progress
+    category: depth
+    requires: ads_rewarded_video
+    definition: Rewarded ads grant progress resources such as energy, continues or speed-ups, not only soft currency.
+  - id: depth_paid_speedups
+    label: Paid speed-ups
+    category: depth
+    requires: meta_build_timers
+    definition: Waiting times can be skipped with premium currency or money.
+  - id: depth_guild_chat
+    label: Guild chat
+    category: depth
+    requires: engagement_guilds
+    definition: Guild members can message each other in the game.
+  - id: depth_guild_help
+    label: Guild help requests
+    category: depth
+    requires: engagement_guilds
+    definition: Guild members can speed up each other's timers or send requested items.
+  - id: depth_live_events_weekly
+    label: Weekly or faster event cadence
+    category: depth
+    requires: engagement_live_events
+    definition: New live events start at least once a week.
+    instructions: Needs dated evidence across time, such as update notes or an event calendar. One session cannot show cadence.
