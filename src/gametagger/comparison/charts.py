@@ -233,3 +233,136 @@ def build_cohort(
         "games": games + mobile,
         "skipped": skipped,
     }
+
+
+# --- Mobile-first cohort: a deeper top-grossing list plus rising games -------------------------
+
+APPBRAIN_RANKING = "https://www.appbrain.com/stats/google-play-rankings/{kind}/game/us"
+# AppBrain's pages may hold fewer rows than asked for. These are tried, in order, for more rows;
+# a page that ignores the parameter returns rows already seen, which are dropped.
+APPBRAIN_MORE_PAGES = ("?page=2", "?o=100")
+RISING_SOURCES = (
+    ("top_new_free", "AppBrain Google Play ranking: top new free games, United States"),
+    ("top_free", "AppBrain Google Play ranking: top free games, United States"),
+)
+
+
+def appbrain_ranking(
+    kind: str, want: int, *, fetch_page: Callable[[str], str] = fetch_text
+) -> tuple[str | None, list[dict[str, Any]], str]:
+    """Up to ``want`` rows of one AppBrain games ranking (US), in rank order."""
+    url = APPBRAIN_RANKING.format(kind=kind)
+    date, rows = parse_appbrain(fetch_page(url))
+    seen = {r["package"] for r in rows}
+    for suffix in APPBRAIN_MORE_PAGES:
+        if len(rows) >= want:
+            break
+        try:
+            _, more = parse_appbrain(fetch_page(url + suffix))
+        except SourceError:
+            continue
+        fresh = [r for r in more if r["package"] not in seen and r["rank"] > rows[-1]["rank"]]
+        rows += fresh
+        seen.update(r["package"] for r in fresh)
+    return date, rows[:want], url
+
+
+def build_mobile_cohort(
+    *,
+    grossing_count: int = 100,
+    rising_count: int = 30,
+    previous: dict[str, Any] | None = None,
+    fetch_page: Callable[[str], str] = fetch_text,
+) -> dict[str, Any]:
+    """Today's Google Play top-grossing games plus rising games from a new-games chart.
+
+    Every game has ``list`` "mobile" (so the runner treats it as a Google Play game) and a
+    ``segment``: "grossing" or "rising". Rising games are the highest-ranked games on AppBrain's
+    top-new-free chart (top-free if that chart cannot be read) that are not already in the
+    top-grossing list. ``previous`` (an earlier cohort) adds each grossing game's earlier rank,
+    for chart movers.
+    """
+    g_date, g_rows, g_url = appbrain_ranking("top_grossing", grossing_count, fetch_page=fetch_page)
+    before = {}
+    if previous:
+        for g in previous.get("games") or []:
+            if g.get("list") == "mobile" and (g.get("ids") or {}).get("google_play"):
+                before[g["ids"]["google_play"]] = g["rank"]
+    games = [
+        {
+            "game_id": f"gp-{row['package']}",
+            "list": "mobile",
+            "segment": "grossing",
+            "rank": row["rank"],
+            "title": row["title"],
+            "developers": [row["developer"]] if row["developer"] else [],
+            "ids": {"google_play": row["package"]},
+            "chart": {"previous_rank": before.get(row["package"])},
+        }
+        for row in g_rows
+    ]
+    charts: dict[str, Any] = {
+        "mobile": {
+            "source": "AppBrain Google Play ranking: top grossing games, United States",
+            "url": g_url,
+            "chart_date": g_date,
+            "ranked_by": "grossing (AppBrain's Google Play top-grossing list)",
+            "region": "US",
+            "platform": "Android (Google Play)",
+            "rows": len(g_rows),
+        }
+    }
+    if previous:
+        charts["mobile"]["previous_chart_date"] = (
+            (previous.get("charts") or {}).get("mobile") or {}
+        ).get("chart_date")
+    taken = {g["ids"]["google_play"] for g in games}
+    rising_errors = []
+    for kind, label in RISING_SOURCES:
+        if rising_count <= 0:
+            break
+        try:
+            r_date, r_rows, r_url = appbrain_ranking(
+                kind, rising_count + len(taken), fetch_page=fetch_page
+            )
+        except SourceError as exc:
+            rising_errors.append(f"{kind}: {exc}")
+            continue
+        picked = [r for r in r_rows if r["package"] not in taken][:rising_count]
+        games += [
+            {
+                "game_id": f"gp-{row['package']}",
+                "list": "mobile",
+                "segment": "rising",
+                "rank": row["rank"],
+                "title": row["title"],
+                "developers": [row["developer"]] if row["developer"] else [],
+                "ids": {"google_play": row["package"]},
+                "chart": {"chart": kind},
+            }
+            for row in picked
+        ]
+        charts["rising"] = {
+            "source": label,
+            "url": r_url,
+            "chart_date": r_date,
+            "ranked_by": f"rank on AppBrain's {kind.replace('_', ' ')} games chart, excluding "
+            "games already in the top-grossing list",
+            "region": "US",
+            "platform": "Android (Google Play)",
+            "rows": len(picked),
+        }
+        break
+    return {
+        "schema_version": COHORT_SCHEMA,
+        "created_at": _now(),
+        "charts": charts,
+        "rules": [
+            "Mobile only: Google Play top-grossing games (segment 'grossing') and rising games "
+            "from a new-games chart (segment 'rising').",
+            "A rising game already in the top-grossing list is kept once, as grossing.",
+            "Store IDs are exact; titles are for display only.",
+        ],
+        "games": games,
+        "skipped": [{"list": "rising", "reason": e} for e in rising_errors],
+    }
