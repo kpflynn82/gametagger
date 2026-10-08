@@ -200,6 +200,12 @@ h1 mark{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--brand
 .play-how{margin-top:22px}
 .proto{margin-top:22px;display:flex;justify-content:space-between;gap:14px 24px;align-items:center;flex-wrap:wrap}
 .proto p{margin:0;max-width:72ch}
+.case2{margin-top:22px}
+.case-p{margin:0 0 10px;color:var(--ink-2);font-size:15px;line-height:1.55}
+.case-cta{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;margin-top:14px}
+.case-cta span{font-size:13px;color:var(--mute)}
+.build-steps{margin:12px 0 0;padding-left:22px;display:grid;gap:8px;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.build-steps b{color:var(--ink)}
 @media (max-width:560px){.pt thead{display:none}.pt tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;padding:11px 0;border-bottom:1px solid var(--line)}.pt td{border:0;padding:0}.pt td:nth-child(3){grid-column:1/-1}}
 @media (max-width:860px){.pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}.pipeline li:nth-child(3){border-left:0}.pipeline li:nth-child(n+3){border-top:1px solid var(--line)}.film{grid-template-columns:1fr}}
 @media (max-width:560px){.pipeline{grid-template-columns:1fr}.pipeline li+li{border-left:0;border-top:1px solid var(--line)}.example{box-shadow:5px 5px 0 var(--ink)}nav{gap:12px}}
@@ -291,7 +297,7 @@ section{scroll-margin-top:84px}
     <a class="xcard" href="/dashboard"><b>Dashboard</b><span>Genres, the most common tags, PC versus mobile, and what the biggest hits share.</span><i>→</i></a>
     <a class="xcard" href="/games"><b>Games</b><span>All 100 games, each with its genre and every tag Jev decided.</span><i>→</i></a>
     <a class="xcard" href="/tags"><b>Tags</b><span>What each of the 189 tags and 100 genres means, and the evidence allowed to prove it.</span><i>→</i></a>
-    <a class="xcard" href="/play-testing"><b>Play-testing</b><span>What 13 hours of AI play found that the store page couldn't show.</span><i>→</i></a>
+    <a class="xcard" href="/play-testing"><b>Play-testing</b><span>What hours of AI play found that store pages can't show, and a prototype you can play.</span><i>→</i></a>
     <a class="xcard" href="/how-it-works"><b>How it works</b><span>The 82-second film, the method, and how it compares with one big prompt.</span><i>→</i></a>
   </div>
 </section>
@@ -408,6 +414,28 @@ section{scroll-margin-top:84px}
   <div class="empty proto">
     <p><b>From play-test to playable prototype.</b> The notes from this game became the brief for Fold &amp; Fly, a playable prototype of the genre: first playable overnight, in a web browser, with bot players testing its pacing (a forced ad after 1 in 9 flights in simulated play, against about 1 in 1 in the original). Teams can find out whether a feature is fun in days, before they staff it.</p>
     <a class="btn" href="/how-it-works#trailer" id="play-film">▶ Watch it play, learn and build</a>
+  </div>
+  <div class="grid2 case2">
+    <div class="panel">
+      <h3>Case study: a dice-board game, rebuilt as Hoard &amp; Hatch</h3>
+      <p class="sub">From an AI play-test to a game you can play in your browser</p>
+      <p class="case-p">The AI player played a top-grossing dice-board game as a guest, logging every tutorial screen and where the coins came from. One finding shaped the prototype: after the first city, most of the money came from lump-sum events, not from landing on spaces. In one later city, the run logs show about 26,000 coins from landings and about 584,000 from lump sums (rough figures).</p>
+      <p class="case-p">That play-test became the brief for <b>Hoard &amp; Hatch</b>: the same roll, earn and build loop with its own theme. You raise a dragon that grows up as you rebuild two realms, put houses on board spaces, and raid rival dragons' towns.</p>
+      <div class="case-cta"><a class="btn primary" href="/hoard-and-hatch" target="_blank" rel="noopener">▶ Play Hoard &amp; Hatch</a><span>Works on a phone or a desktop browser</span></div>
+    </div>
+    <div class="panel">
+      <h3>How it was built in about a day</h3>
+      <p class="sub">Two AI coding agents, one person directing and merging their work</p>
+      <ol class="build-steps">
+        <li><b>Play.</b> The AI player records the new-player flow screen by screen and measures the economy.</li>
+        <li><b>Brief.</b> Claude turns the notes into a design brief: keep the core loop, change the theme, list what to test.</li>
+        <li><b>First playable.</b> Claude builds the 3D board, dice, economy, tutorial and a tuning panel, with a simulator that estimates rolls per realm.</li>
+        <li><b>Art and phone UI.</b> Codex generates the illustrated art and reworks the screens for phones.</li>
+        <li><b>Mechanics.</b> Claude adds houses on spaces, raids on rival towns and the dragon's growth. The person directing picks between design options.</li>
+        <li><b>Polish.</b> Codex draws the older dragon forms and names the streets.</li>
+      </ol>
+      <p class="note">About a day from the first commit to this build. Each agent works on its own branch, and automated checks play the tutorial at phone sizes after every change. One game, built as a pilot; not yet tested with players.</p>
+    </div>
   </div>
 </section>
 

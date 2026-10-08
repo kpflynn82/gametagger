@@ -544,3 +544,24 @@ to 2 YouTube gameplay videos each, 12 bursts with the scene-change sampler
 * Not worth scaling: play-tests are what can decide shop, offer and ad tags.
 * The Mac copy (`~/Claude Workspace/gametagger/repo`) has two stale git lock files
   (`.git/HEAD.lock`, `.git/objects/maintenance.lock`) that this session could not delete.
+
+### Hoard & Hatch on the site (October 8, 2026)
+
+The owner asked to host the dice-board prototype on gametagger.vercel.app, because interviewers
+were curious how it was built so fast. Branch `claude/host-hoard-hatch`. No paid calls.
+
+* `web/hoard-and-hatch.html` is the single-file game from `kpflynn82/dragongo` (main at
+  `8687146`, PR #4), served at `/hoard-and-hatch` through the existing `cleanUrls`. One code
+  comment naming the original game was reworded in this copy. To update it, run
+  `npm run build` in dragongo and copy its `index.html` here.
+* The Play-testing page has a second case study. It does not name the original game, matching
+  the plane case study. The teardown finding is in rough figures from the run logs (about 26,000
+  coins from landings against about 584,000 from lump sums in one later city). It has a Play
+  button and a six-step "How it was built in about a day" list: two AI agents on separate
+  branches, one person directing. The home page card for Play-testing mentions the prototype.
+  The edits are in `dashboard-template.html`; `refresh_web.py --check` passes.
+* Checked in headless Chromium: the section at 390 px (dark) and 1280 px (light) with no page
+  errors or sideways scroll, and the game boots to its title screen when served over HTTP.
+
+Left for the owner: whether to name the original game on the site, and whether the "about a
+day" claim should be dated (first dragongo commit October 7, 22:02 UTC; current build October 8).
