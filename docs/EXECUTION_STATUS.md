@@ -620,25 +620,28 @@ The owner opened the Play Store's Top grossing chart on the Android Studio emula
 Claude to check whether it gives fresh top-grossing data. Branch `claude/play-chart`. Free: no
 paid calls.
 
-* **Method.** `scripts/mac/play-chart.sh` (new) scrolls the chart with `adb` and saves a
-  screenshot and Android's accessibility dump per screenful; it never taps. A `--check` mode opens
-  given games' store pages and saves what they say. `experiments/play-chart/parse_dump.py` (new)
-  turns the dumps into rank, title, Play's genre labels, star rating and badges.
-* **Measured** (2026-10-09 12:05 PT, US chart, en-US, Play Store 53.4.34): 165 ranked games, ranks
-  1 to 165 with no gaps. Against AppBrain's September 24 top 50: 45 still listed, 9 of the top 10
-  the same games, median move 2 places. Saved as
-  `experiments/play-chart/2026-10-09-top-grossing.json`.
-* **Gap found.** The emulator runs a 16 KB page-size Android 17 image (`sdk_gphone16k_arm64`).
-  The Play Store hides games that cannot run on the device: the five September top-50 games
-  missing from the list (Township #8, NIKKE #33, All in Hole #42, Mystery Town #45, Magic Sort
-  #46) each say "Your device isn't compatible with this version" on this emulator; Gardenscapes
-  (listed) says Install. Other hidden games cannot be seen, so the chart is incomplete and ranks
-  below a hidden game are too high.
-* **IDs.** Package IDs are not on screen. 58 of the top 100 titles match games already in our
-  cohorts; 42 need their store IDs looked up.
+* **Method.** `scripts/mac/play-chart.sh` (new) opens the Play Store, declines welcome and
+  location prompts, taps Games > Top charts > Top grossing, scrolls the list with `adb` and saves a
+  screenshot and Android's accessibility dump per screenful. It never taps a game or Install.
+  `--check PKG...` opens store pages and saves what they say. `experiments/play-chart/parse_dump.py`
+  (new) turns the dumps into rank, title, Play's genre labels, star rating and badges.
+* **Measured.** Two readings, both US (en-US): Android 17 / 16 KB page size at 12:05 PT, 165
+  games; Android 15 / 4 KB at 12:35 PT, 171 games (end of list). Same 100 games in both top 100s,
+  no game more than 5 places apart. Appfigures' public hourly grossing page has 28 of its top 30 in
+  the emulator's top 30; counting Township, 25 of 29 shared games are within 1 place.
+* **Gap.** The Play Store hides games the device cannot run, and some games refuse emulators. On
+  both emulators Township (#9 on Appfigures), NIKKE, All in Hole, Mystery Town and Magic Sort say
+  "Your device isn't compatible with this version"; the Android 15 one also hides Genshin Impact
+  and Honkai: Star Rail. The first guess (the 16 KB page size) was wrong. Each game below a hidden
+  one ranks one place too high.
+* **IDs.** All 100 of the Android 15 top 100 have store IDs: 57 from earlier cohorts, 43 from
+  exact-title searches of Google Play's website. 43 of the top 100 have no tags yet.
+* **Mac session notes.** A brand-new emulator updated the Play Store mid-read and closed it; the
+  launcher now stops when the Play Store leaves the screen. Editing a launcher with `sed -i`
+  dropped its run permission; `chmod +x` fixed it.
 
 Left:
-* Read the chart again on a standard 4 KB-page Google Play image (Android 15 or 16) and check the
-  five games appear. The owner downloads the system image in Android Studio.
-* If they do: look up the missing package IDs, build the cohort from the Play chart instead of the
-  AppBrain fallback, tag the new games (owner sets the budget), and rebuild the site.
+* Owner decision: build the cohort from the Play chart (top 100 plus Township from Appfigures)
+  and tag the 43 untagged games under the $1.00 cap (about $0.12 of Jev at October 8's rate),
+  then rebuild the site.
+* A second reading on another day gives Google Play chart movers.

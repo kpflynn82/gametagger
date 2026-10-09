@@ -6,37 +6,46 @@ itself, running on the Android Studio emulator.
 
 ## How it works
 
-1. Open the Play Store on the emulator: Games > Top charts > Top grossing.
-2. Run `scripts/mac/play-chart.sh` on the Mac. It scrolls the list and saves a screenshot and
-   Android's screen text (an accessibility dump) for each screenful. It never taps anything.
+1. Start an emulator with a Google Play system image and sign in (once, by hand).
+2. Run `scripts/mac/play-chart.sh` on the Mac. It opens the Play Store, declines any welcome or
+   location prompt, taps Games > Top charts > Top grossing, then scrolls the list and saves a
+   screenshot and Android's screen text (an accessibility dump) for each screenful. It never taps
+   a game, Install or a purchase.
 3. Run `uv run python experiments/play-chart/parse_dump.py benchmark-runs/play-chart/<folder>`
    to turn the screens into `chart.json`: rank, title, Play's own genre labels, star rating and
    badges (Event, Editors' Choice, and so on).
 
 Screenshots and dumps stay in `benchmark-runs/` (third-party content, never committed). Only the
-parsed ranks and titles are kept here, like `cohort.json`.
+parsed ranks, titles and store IDs are kept here, like `cohort.json`.
 
-## First reading: October 9, 2026
+## Readings on October 9, 2026
 
-[2026-10-09-top-grossing.json](2026-10-09-top-grossing.json) holds 165 ranked games with no gaps
-in the numbering. It is the US chart (en-US, US SIM, prices in dollars). It agrees closely with
-AppBrain's September 24 list: 45 of that top 50 are still in it, 9 of the top 10 are the same
-games, and the median game moved 2 places.
+| File | Emulator | Read at (PT) | Ranked games |
+|---|---|---|---|
+| [2026-10-09-android17.json](2026-10-09-android17.json) | Android 17, 16 KB page size | 12:05 | 165 (stopped at the page limit) |
+| [2026-10-09-android15.json](2026-10-09-android15.json) | Android 15, 4 KB page size | 12:35 | 171 (end of the list) |
 
-**It is not complete.** The Play Store only lists games that can run on the device. This
-emulator uses a 16 KB page-size Android 17 image (`sdk_gphone16k_arm64`), and the 5 September
-top-50 games missing from today's list (Township, NIKKE, All in Hole, Mystery Town, Magic Sort)
-each show "Your device isn't compatible with this version" on this emulator. Gardenscapes, which
-is in the list, shows Install. Other hidden games cannot be detected, and every game below a
-hidden one is ranked too high.
+Both are the US chart (en-US, US SIM, prices in dollars), with no gaps in the numbering. Their
+top 100 are the same 100 games, and no game is more than 5 places apart.
 
-Package IDs are not on screen. 58 of the top 100 titles match games already in our cohorts; the
-other 42 need their store IDs looked up before they can be tagged.
+**The chart is real.** Appfigures' public Google Play grossing page (updated hourly, top 30
+shown) has 28 of its top 30 in the emulator's top 30. The one it has that the emulator hides is
+Township (#9). Counting Township, 25 of the 29 shared games are within 1 place.
 
-## Next
+**But it has gaps.** The Play Store only lists games the device can run, and some games refuse
+emulators. On both emulators, the store pages of Township, NIKKE, All in Hole, Mystery Town and
+Magic Sort say "Your device isn't compatible with this version"; Gardenscapes says Install. The
+Android 15 emulator also hides Genshin Impact and Honkai: Star Rail, which the Android 17 one
+lists at #101 and #125. So the page size was not the cause; every emulator hides some games. A
+hidden game is simply absent, and each game below it ranks one place too high. Township is the
+only hidden game in the top 30; in September, NIKKE and the other three ranked between #33 and #46.
 
-- Read the chart again on a standard 4 KB-page Google Play system image (for example Android 15
-  or 16, "Google Play" arm64). If the five games appear, use that emulator for charts.
-- Then match titles to package IDs and build a cohort from it in place of the AppBrain fallback.
-- The same screen also has "Top free" in its chart menu and a "New" filter, which could replace
-  the top-free stand-in for rising games.
+**Store IDs.** Package IDs are not on screen. For the Android 15 top 100, 57 come from our earlier
+cohorts and 43 were found by searching Google Play's website for the exact title (42 exact
+matches; Bingo Voyage's web title differs slightly).
+
+## Using it
+
+To build a top-grossing cohort: take the emulator's top 100, add Township at #9 from Appfigures,
+and list the other hidden games as unranked. Reading the chart a second time a day apart gives
+Google Play chart movers.
