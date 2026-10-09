@@ -46,6 +46,7 @@ matches; Bingo Voyage's web title differs slightly).
 
 ## Using it
 
-To build a top-grossing cohort: take the emulator's top 100, add Township at #9 from Appfigures,
-and list the other hidden games as unranked. Reading the chart a second time a day apart gives
-Google Play chart movers.
+`experiments/mobile-top100/play_cohort.py` builds the site's top-grossing cohort from the Android 15
+reading: the emulator's top 100 with Township added at #9 (Appfigures) and the rest of the hidden
+games listed as unranked. The site has used it since October 9. Reading the chart again on
+another day gives Google Play chart movers from one source.

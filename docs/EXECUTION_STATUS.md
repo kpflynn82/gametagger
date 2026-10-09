@@ -640,8 +640,26 @@ paid calls.
   launcher now stops when the Play Store leaves the screen. Editing a launcher with `sed -i`
   dropped its run permission; `chmod +x` fixed it.
 
+* **Site switched to the Play chart** (owner: "Yes"). `experiments/mobile-top100/play_cohort.py`
+  (new) builds `cohort.json` from the Android 15 reading: top 100, with Township inserted at #9
+  from Appfigures, so the emulator's #100 drops out; NIKKE, All in Hole, Mystery Town, Magic Sort,
+  Genshin Impact and Honkai: Star Rail listed as hidden. The 71 October 8 top-free games not in
+  the top 100 stay. The old cohort is kept as `cohort-2026-10-08.json`. Developer names for the
+  43 looked-up games come from their Google Play pages.
+* **Run** (owner's Mac, Finder launcher): `scripts/mac/mobile-top100.sh` now also skips games
+  tagged on October 8. 42 new games, all with dossiers; 36 complete, 6 partial (Clash of Clans,
+  Clash Royale, Dragon Ball Legends, Piggy Kingdom, Hunting Sniper, WSOP). **Paid: $0.13 of Jev**
+  (TypeSafe); the ledger is at $0.37 of the $1.00 cap. Claude on the owner's plan: $0 in API money,
+  $6.41 at API prices. Median 95 s per game. The 83 October 8 records are unchanged.
+* **Site** (`site_data.py`, template): 100 top-grossing games (chart of October 9) and 71 top-free
+  games. Chart movers compare only the 46 games ranked on both September 24 (AppBrain) and
+  October 9 (Play Store app), because a game missing from one source may not be new; the hidden
+  games are named in the lede and not counted as having left the chart. Snapshot line shows both
+  Google Play dates; the footer names the chart sources. `site_data.py` now takes earlier ranks from
+  the September cohort, so a rerun gives the same page. Checked at 390 px (dark) and 1280 px
+  (light): no page errors, no sideways scroll. Tests: 450 passed, 1 skipped; ruff clean.
+
 Left:
-* Owner decision: build the cohort from the Play chart (top 100 plus Township from Appfigures)
-  and tag the 43 untagged games under the $1.00 cap (about $0.12 of Jev at October 8's rate),
-  then rebuild the site.
-* A second reading on another day gives Google Play chart movers.
+* Merge the PR to publish.
+* Read the chart again on another day (Play launcher on the Android 15 emulator) for movers from
+  one source.

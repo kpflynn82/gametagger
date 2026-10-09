@@ -723,13 +723,19 @@ function renderMovers() {
     return;
   }
   const gs = inList("mobile");
-  const fresh = gs.filter((g) => g.prev == null && g.rank <= 50);
+  // Across two chart sources a game missing from one may not be new, so only games ranked in both are shown.
+  const fresh = M.cross_source ? [] : gs.filter((g) => g.prev == null && g.rank <= 50);
   const moved = gs.filter((g) => g.prev != null).map((g) => [g, g.prev - g.rank, g.prev]);
   const out = (M.dropped || []).map((g) => [g, -999, g.prev]);
   $("climb").innerHTML = table([...fresh.sort((a, b) => a.rank - b.rank).map((g) => [g, 999, null]), ...moved.filter(([, d]) => d > 0).sort((a, b) => b[1] - a[1])].slice(0, 8));
   $("slip").innerHTML = table([...moved.filter(([, d]) => d < 0).sort((a, b) => a[1] - b[1]), ...out].slice(0, 8));
-  $("climb-h").textContent = "Climbing or new to the top 50"; $("slip-h").textContent = "Slipping or out of the top 100"; $("m-h").textContent = "Chart movers";
-  $("m-lede").textContent = `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)} against ${fmt(M.previous_chart_date)}, when the top 50 were first tagged. ${fresh.length} game${fresh.length === 1 ? " is" : "s are"} new to the top 50, and ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top 100.`;
+  $("climb-h").textContent = M.cross_source ? "Climbing" : "Climbing or new to the top 50";
+  $("slip-h").textContent = out.length ? "Slipping or out of the top 100" : "Slipping";
+  $("m-h").textContent = "Chart movers";
+  const hidden = M.hidden || [];
+  $("m-lede").textContent = M.cross_source
+    ? `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)}, read in the Play Store app, against ${fmt(M.previous_chart_date)} (AppBrain's list), when the top 50 were first tagged. Only the ${moved.length} games ranked on both are compared, because the two lists come from different sources.${out.length ? ` ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top 100.` : ""}${hidden.length ? ` ${hidden.join(", ")} could not be ranked: they don't run on the emulator used to read the chart.` : ""}`
+    : `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)} against ${fmt(M.previous_chart_date)}, when the top 50 were first tagged. ${fresh.length} game${fresh.length === 1 ? " is" : "s are"} new to the top 50, and ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top 100.`;
   $("m-empty").hidden = true;
 }
 
@@ -918,8 +924,8 @@ renderGlance();
 // ---- hero: snapshot line and an example profile
 {
   const fmt = (d) => d ? new Date(d + "T12:00:00Z").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"}) : "";
-  $("snap").textContent = M.grossing_fallback && M.rising_chart_date
-    ? `Snapshot · Google Play top free ${fmt(M.rising_chart_date)} · top grossing ${fmt(M.chart_date)} · Steam ${fmt(S.chart_dates?.steam)}`
+  $("snap").textContent = M.rising_chart_date && M.rising_chart_date !== M.chart_date
+    ? `Snapshot · Google Play top grossing ${fmt(M.chart_date)} · top free ${fmt(M.rising_chart_date)} · Steam ${fmt(S.chart_dates?.steam)}`
     : `Snapshot · Google Play ${fmt(M.chart_date || S.chart_dates?.mobile)} · Steam ${fmt(S.chart_dates?.steam)}`;
   const first = (l) => GAMES.filter((g) => g.list === l).sort((a, b) => a.rank - b.rank)[0];
   const pick = {mobile: first("mobile"), rising: first("rising"), steam: first("steam")};
@@ -949,7 +955,7 @@ renderGlance();
   btn.onclick = () => { root.dataset.theme = current() === "dark" ? "light" : "dark"; try { localStorage.setItem("gt-theme", root.dataset.theme); } catch (e) {} paint(); };
   paint();
 }
-$("foot").textContent = `GameTagger · charts: AppBrain's Google Play top-grossing games (US, ${M.chart_date || S.chart_dates?.mobile})${M.rising_chart_date ? ` and top ${FREE ? "" : "new "}free games (US, ${M.rising_chart_date})` : ""}, Steam most-played (global, ${S.chart_dates?.steam}) · tags by Claude Sonnet 5 (describing) and Jev jev-1.13.0 (deciding) · crosswalks to Steam tags are drafts pending review`;
+$("foot").textContent = `GameTagger · charts: ${M.grossing_source === "app" ? `Google Play's top-grossing games as the Play Store app shows them (US, ${M.chart_date}${(M.inserted || []).map((i) => `; ${i.title}'s rank from ${i.source}`).join("")}; games that don't run on an emulator are left out)` : `AppBrain's Google Play top-grossing games (US, ${M.chart_date || S.chart_dates?.mobile})`}${M.rising_chart_date ? `, AppBrain's top ${FREE ? "" : "new "}free games (US, ${M.rising_chart_date})` : ""}, Steam most-played (global, ${S.chart_dates?.steam}) · tags by Claude Sonnet 5 (describing) and Jev jev-1.13.0 (deciding) · crosswalks to Steam tags are drafts pending review`;
 </script>
 <script>
 // "Watch it play, learn and build": jump to the film's play-testing part (from 0:31).

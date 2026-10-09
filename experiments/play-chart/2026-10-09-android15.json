@@ -12,13 +12,34 @@
  },
  "incomplete": "The Play Store only lists games this emulator can run, so games that refuse emulators are missing and the games below them rank one place too high. Store pages on this emulator say \"Your device isn't compatible with this version\" for Township, NIKKE, All in Hole, Mystery Town, Magic Sort, Genshin Impact and Honkai: Star Rail (checked 12:47). Township is #9 on Appfigures' hourly chart.",
  "hidden_as_incompatible": [
-  "com.playrix.township",
-  "com.proximabeta.nikke",
-  "com.homagames.studio.allinhole",
-  "com.cedargames.mysterytown",
-  "com.grandgames.magicsort",
-  "com.miHoYo.GenshinImpact",
-  "com.HoYoverse.hkrpgoversea"
+  {
+   "google_play": "com.playrix.township",
+   "title": "Township"
+  },
+  {
+   "google_play": "com.proximabeta.nikke",
+   "title": "GODDESS OF VICTORY: NIKKE"
+  },
+  {
+   "google_play": "com.homagames.studio.allinhole",
+   "title": "All in Hole: Black Hole Games"
+  },
+  {
+   "google_play": "com.cedargames.mysterytown",
+   "title": "Mystery Town: Merge Games"
+  },
+  {
+   "google_play": "com.grandgames.magicsort",
+   "title": "Magic Sort!"
+  },
+  {
+   "google_play": "com.miHoYo.GenshinImpact",
+   "title": "Genshin Impact"
+  },
+  {
+   "google_play": "com.HoYoverse.hkrpgoversea",
+   "title": "Honkai: Star Rail"
+  }
  ],
  "cross_check": {
   "source": "Appfigures, Top Games, Google Play, United States, Grossing (public page, updated hourly, top 30 shown)",
@@ -446,7 +467,8 @@
    ],
    "rating": 4.6,
    "google_play": "com.plarium.raidlegends",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Plarium Global Ltd"
   },
   {
    "rank": 25,
@@ -576,7 +598,8 @@
    ],
    "rating": 4.3,
    "google_play": "com.activision.callofduty.shooter",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Activision Publishing, Inc."
   },
   {
    "rank": 33,
@@ -621,7 +644,8 @@
    ],
    "rating": 4.5,
    "google_play": "com.supercell.clashofclans",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Supercell"
   },
   {
    "rank": 36,
@@ -703,7 +727,8 @@
    ],
    "rating": 4.4,
    "google_play": "com.supercell.clashroyale",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Supercell"
   },
   {
    "rank": 41,
@@ -785,7 +810,8 @@
    ],
    "rating": 4.7,
    "google_play": "com.productmadness.hovmobile",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Product Madness"
   },
   {
    "rank": 46,
@@ -879,7 +905,8 @@
    ],
    "rating": 4.7,
    "google_play": "com.hollywood.merge",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "VoyagerOne IE"
   },
   {
    "rank": 52,
@@ -924,7 +951,8 @@
    ],
    "rating": 4.8,
    "google_play": "com.bingo.cruise.free.best.top.game",
-   "id_source": "Play web search; web title is 'Bingo Voyage - Live Bingo Game'"
+   "id_source": "Play web search; web title is 'Bingo Voyage - Live Bingo Game'",
+   "developer": "VERTEX GAMES PTE. LTD."
   },
   {
    "rank": 55,
@@ -969,7 +997,8 @@
    ],
    "rating": 4.2,
    "google_play": "com.wizards.mtga",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Wizards of the Coast LLC"
   },
   {
    "rank": 58,
@@ -985,7 +1014,8 @@
    ],
    "rating": 4.4,
    "google_play": "net.wooga.junes_journey_hidden_object_mystery_game",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Wooga"
   },
   {
    "rank": 59,
@@ -1002,7 +1032,8 @@
    ],
    "rating": 4.4,
    "google_play": "com.supercell.hayday",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Supercell"
   },
   {
    "rank": 60,
@@ -1018,7 +1049,8 @@
    ],
    "rating": 4.1,
    "google_play": "com.farlightgames.pgame.gp",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "FARLIGHT"
   },
   {
    "rank": 61,
@@ -1032,7 +1064,8 @@
    "badges": [],
    "rating": 4.4,
    "google_play": "air.com.playtika.slotomania",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Playtika"
   },
   {
    "rank": 62,
@@ -1064,7 +1097,8 @@
    ],
    "rating": 4.1,
    "google_play": "jp.konami.pesam",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "KONAMI"
   },
   {
    "rank": 64,
@@ -1111,7 +1145,8 @@
    ],
    "rating": 4.9,
    "google_play": "com.cooking.bingo.ldkwh",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "VERTEX GAMES PTE. LTD."
   },
   {
    "rank": 67,
@@ -1128,7 +1163,8 @@
    ],
    "rating": 4.3,
    "google_play": "com.mojang.minecraftpe",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Mojang"
   },
   {
    "rank": 68,
@@ -1142,7 +1178,8 @@
    "badges": [],
    "rating": 4.8,
    "google_play": "com.playstudios.popslots",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "PLAYSTUDIOS US, LLC"
   },
   {
    "rank": 69,
@@ -1159,7 +1196,8 @@
    ],
    "rating": 4.3,
    "google_play": "com.bandainamcoent.dblegends_ww",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Bandai Namco Entertainment Inc."
   },
   {
    "rank": 70,
@@ -1189,7 +1227,8 @@
    ],
    "rating": 4.3,
    "google_play": "com.playdemic.golf.android",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "ELECTRONIC ARTS"
   },
   {
    "rank": 72,
@@ -1205,7 +1244,8 @@
    ],
    "rating": 4.3,
    "google_play": "com.online.huntingsniper",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Sparks Info"
   },
   {
    "rank": 73,
@@ -1221,7 +1261,8 @@
    ],
    "rating": 4.7,
    "google_play": "net.peakgames.amy",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Peak"
   },
   {
    "rank": 74,
@@ -1237,7 +1278,8 @@
    ],
    "rating": 4.7,
    "google_play": "com.screenshake.dominodreams",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "SuperPlay."
   },
   {
    "rank": 75,
@@ -1287,7 +1329,8 @@
    ],
    "rating": 4.5,
    "google_play": "com.nexters.herowars",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "NEXTERS GLOBAL LTD"
   },
   {
    "rank": 78,
@@ -1301,7 +1344,8 @@
    "badges": [],
    "rating": 4.8,
    "google_play": "com.olleyo.piggy.king.free",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "olleyo"
   },
   {
    "rank": 79,
@@ -1314,7 +1358,8 @@
    "badges": [],
    "rating": 4.2,
    "google_play": "jp.co.goodroid.hyper.busflow",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "GOODROID,Inc."
   },
   {
    "rank": 80,
@@ -1331,7 +1376,8 @@
    ],
    "rating": 4.7,
    "google_play": "com.grandegames.slots.dafu.casino",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "SpinX Games Limited"
   },
   {
    "rank": 81,
@@ -1348,7 +1394,8 @@
    ],
    "rating": 4.7,
    "google_play": "com.slg.policewar",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "VoyagerOne IE"
   },
   {
    "rank": 82,
@@ -1362,7 +1409,8 @@
    "badges": [],
    "rating": 4.3,
    "google_play": "com.foxnextgames.m3",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Scopely"
   },
   {
    "rank": 83,
@@ -1376,7 +1424,8 @@
    "badges": [],
    "rating": 4.5,
    "google_play": "com.scopely.yux",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Scopely"
   },
   {
    "rank": 84,
@@ -1389,7 +1438,8 @@
    "badges": [],
    "rating": 4.5,
    "google_play": "com.lilithgame.roc.gp",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "LilithGames"
   },
   {
    "rank": 85,
@@ -1406,7 +1456,8 @@
    ],
    "rating": 4.5,
    "google_play": "com.everywear.game5",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Metacore Games Oy"
   },
   {
    "rank": 86,
@@ -1437,7 +1488,8 @@
    "badges": [],
    "rating": 4.2,
    "google_play": "com.playtika.wsop.gp",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Playtika"
   },
   {
    "rank": 88,
@@ -1450,7 +1502,8 @@
    "badges": [],
    "rating": 4.4,
    "google_play": "com.hitappsgames.wordsolitaire",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Hitapps Games"
   },
   {
    "rank": 89,
@@ -1467,7 +1520,8 @@
    ],
    "rating": 4.7,
    "google_play": "com.unicornstudio.cashparty.slots.casino.vegas.free",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "SpinX Games Limited"
   },
   {
    "rank": 90,
@@ -1484,7 +1538,8 @@
    ],
    "rating": 4.5,
    "google_play": "com.smallgiantgames.empires",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Small Giant Games"
   },
   {
    "rank": 91,
@@ -1501,7 +1556,8 @@
    ],
    "rating": 4.3,
    "google_play": "com.tencent.ig",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Level Infinite"
   },
   {
    "rank": 92,
@@ -1515,7 +1571,8 @@
    "badges": [],
    "rating": 4.5,
    "google_play": "com.project.idle.cd",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Century Games Innovation Pte. Ltd."
   },
   {
    "rank": 93,
@@ -1529,7 +1586,8 @@
    "badges": [],
    "rating": 4.5,
    "google_play": "com.gamedots.seasideescape",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Microfun Limited"
   },
   {
    "rank": 94,
@@ -1543,7 +1601,8 @@
    "badges": [],
    "rating": 4.7,
    "google_play": "com.gamespark.topking.gp",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "GAME SPARK"
   },
   {
    "rank": 95,
@@ -1558,7 +1617,8 @@
    ],
    "rating": 4.6,
    "google_play": "com.huuuge.casino.slots",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Huuuge Games - Play Together"
   },
   {
    "rank": 96,
@@ -1592,7 +1652,8 @@
    ],
    "rating": 4.5,
    "google_play": "com.bgg.jump",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Magic Tavern, Inc."
   },
   {
    "rank": 98,
@@ -1609,7 +1670,8 @@
    ],
    "rating": 4.8,
    "google_play": "com.funtomic.matchmasters",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Candivore"
   },
   {
    "rank": 99,
@@ -1623,7 +1685,8 @@
    "badges": [],
    "rating": 4.8,
    "google_play": "com.jmsgame.jackpotmastercasino",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "Zeroo Gravity Games"
   },
   {
    "rank": 100,
@@ -1640,7 +1703,8 @@
    ],
    "rating": 4.8,
    "google_play": "com.williamsinteractive.goldfish",
-   "id_source": "Play web search, exact title"
+   "id_source": "Play web search, exact title",
+   "developer": "SciPlay"
   },
   {
    "rank": 101,
