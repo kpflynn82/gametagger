@@ -280,7 +280,7 @@ section{scroll-margin-top:84px}
     <h1>What's inside today's top <mark>mobile</mark> games</h1>
     <p class="dek" id="dek"></p>
     <div class="ctas"><a class="btn primary" href="/dashboard#rising" id="cta-rise">See what's rising →</a><a class="btn" href="/games">Browse every game</a><a class="btn" href="/how-it-works#trailer">▶ Watch the 82-second film</a></div>
-    <p class="trust">Google Play top grossing and rising games, plus Steam for comparison · 189 gameplay tags · 100 genres · every tag traced to its evidence · decisions by Jev from TypeSafe</p>
+    <p class="trust" id="trust">Google Play top grossing and rising games, plus Steam for comparison · 189 gameplay tags · 100 genres · every tag traced to its evidence · decisions by Jev from TypeSafe</p>
   </div>
   <aside class="example" id="example" aria-label="An example game profile"></aside>
 </div>
@@ -541,6 +541,11 @@ const FREE = M.rising_label === "Top free";
 const LISTNAME = {all: `all ${COUNT.all} games`, steam: `Steam's ${COUNT.steam} most-played`, mobile: `Google Play's ${COUNT.mobile} top-grossing`, rising: FREE ? `${COUNT.rising} top free Google Play games` : `${COUNT.rising} rising Google Play games`};
 const SHORT = {steam: "PC", mobile: "Top grossing", rising: FREE ? "Top free" : "Rising"};
 document.querySelectorAll('[data-label="rising"]').forEach((el) => { el.textContent = SHORT.rising; });
+if (FREE) {
+  const cta = document.getElementById("cta-rise"); if (cta) cta.textContent = "Downloads versus earnings →";
+  const xr = document.getElementById("x-rise"); if (xr) { xr.querySelector("b").textContent = "Downloads versus earnings"; xr.querySelector("span").textContent = "Today's most-downloaded free games on Google Play, and the tags they share that the top earners don't."; }
+  const tr = document.getElementById("trust"); if (tr) tr.textContent = tr.textContent.replace("top grossing and rising games", "top grossing and top free games");
+}
 const STORE = (l) => l === "steam" ? "Steam" : "Google Play";
 document.querySelectorAll("[data-n]").forEach((el) => { el.textContent = COUNT[el.dataset.n] || ""; });
 if (!COUNT.rising) { const b = document.querySelector('[data-l="rising"]'); if (b) b.hidden = true; }
@@ -594,7 +599,7 @@ function renderGenres() {
   const [pf, pn] = top("steam"), [mf, mn] = top("mobile");
   const none = GAMES.filter((g) => !g.family).length;
   const rf = COUNT.rising ? top("rising") : null;
-  $("g-lede").textContent = `${mf} leads Google Play's top grossing (${mn} of ${COUNT.mobile} games)${rf ? `; ${rf[0]} leads the rising games (${rf[1]} of ${COUNT.rising})` : ""}. On PC, ${pf} leads (${pn} of ${COUNT.steam}). For ${none} games Jev did not settle on a primary genre; it says so instead of forcing one.`;
+  $("g-lede").textContent = `${mf} leads Google Play's top grossing (${mn} of ${COUNT.mobile} games)${rf ? `; ${rf[0]} leads the ${SHORT.rising.toLowerCase()} games (${rf[1]} of ${COUNT.rising})` : ""}. On PC, ${pf} leads (${pn} of ${COUNT.steam}). For ${none} games Jev did not settle on a primary genre; it says so instead of forcing one.`;
 }
 
 // ---- top tags
@@ -688,7 +693,8 @@ function renderMovers() {
     $("climb").innerHTML = table([...fresh.map((g) => [g, 999, null]), ...moved.filter(([, d]) => d > 0).sort((a, b) => b[1] - a[1])].slice(0, 6));
     $("slip").innerHTML = table(moved.filter(([, d]) => d < 0).sort((a, b) => a[1] - b[1]).slice(0, 6));
     $("climb-h").textContent = "Climbing"; $("slip-h").textContent = "Slipping";
-    $("m-lede").textContent = `Rank on Steam's most-played chart on ${S.chart_dates?.steam || "chart day"} against the week before, as Steam reports it. ${fresh.length ? `${fresh.map((g) => g.title).join(", ")} entered the top 50 this week.` : ""}`;
+    $("m-h").textContent = LIST === "steam" ? "Chart movers" : "Steam chart movers";
+    $("m-lede").textContent = `${LIST !== "steam" && M.grossing_fallback ? `Google Play movers need two top-grossing charts to compare, and AppBrain's was empty on ${fmt(M.rising_chart_date)}, so this shows Steam for now. ` : ""}Rank on Steam's most-played chart on ${S.chart_dates?.steam || "chart day"} against the week before, as Steam reports it. ${fresh.length ? `${fresh.map((g) => g.title).join(", ")} entered the top 50 this week.` : ""}`;
     $("m-empty").hidden = false;
     return;
   }
@@ -698,7 +704,7 @@ function renderMovers() {
   const out = (M.dropped || []).map((g) => [g, -999, g.prev]);
   $("climb").innerHTML = table([...fresh.sort((a, b) => a.rank - b.rank).map((g) => [g, 999, null]), ...moved.filter(([, d]) => d > 0).sort((a, b) => b[1] - a[1])].slice(0, 8));
   $("slip").innerHTML = table([...moved.filter(([, d]) => d < 0).sort((a, b) => a[1] - b[1]), ...out].slice(0, 8));
-  $("climb-h").textContent = "Climbing or new to the top 50"; $("slip-h").textContent = "Slipping or out of the top 100";
+  $("climb-h").textContent = "Climbing or new to the top 50"; $("slip-h").textContent = "Slipping or out of the top 100"; $("m-h").textContent = "Chart movers";
   $("m-lede").textContent = `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)} against ${fmt(M.previous_chart_date)}, when the top 50 were first tagged. ${fresh.length} game${fresh.length === 1 ? " is" : "s are"} new to the top 50, and ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top 100.`;
   $("m-empty").hidden = true;
 }

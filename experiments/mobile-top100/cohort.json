@@ -1,0 +1,2170 @@
+{
+  "schema_version": "jev-vs-legacy-cohort-v1",
+  "created_at": "2026-10-09T01:08:01+00:00",
+  "charts": {
+    "mobile": {
+      "source": "AppBrain Google Play ranking: top grossing games, United States",
+      "url": "https://www.appbrain.com/stats/google-play-rankings/top_grossing/game/us",
+      "chart_date": "2026-09-24",
+      "ranked_by": "grossing (AppBrain's Google Play top-grossing list)",
+      "region": "US",
+      "platform": "Android (Google Play)",
+      "rows": 50,
+      "fallback": "Today's top-grossing chart could not be read (AppBrain's page loaded, but its ranking table is empty: AppBrain is not publishing this chart right now (it is not a block or a layout change)). The top-grossing games from 2026-09-24 are used instead."
+    },
+    "rising": {
+      "source": "AppBrain Google Play ranking: top free games, United States",
+      "url": "https://www.appbrain.com/stats/google-play-rankings/top_free/game/us",
+      "chart_date": "2026-10-08",
+      "ranked_by": "rank on AppBrain's top free games chart, excluding games already in the top-grossing list",
+      "region": "US",
+      "platform": "Android (Google Play)",
+      "rows": 83
+    }
+  },
+  "rules": [
+    "Mobile only: Google Play top-grossing games (segment 'grossing') and rising games from a new-games chart (segment 'rising').",
+    "A rising game already in the top-grossing list is kept once, as grossing.",
+    "Store IDs are exact; titles are for display only."
+  ],
+  "games": [
+    {
+      "game_id": "gp-com.scopely.monopolygo",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 1,
+      "title": "MONOPOLY GO!",
+      "developers": [
+        "Scopely"
+      ],
+      "ids": {
+        "google_play": "com.scopely.monopolygo"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.roblox.client",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 2,
+      "title": "Roblox",
+      "developers": [
+        "Roblox Corporation"
+      ],
+      "ids": {
+        "google_play": "com.roblox.client"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.king.candycrushsaga",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 3,
+      "title": "Candy Crush Saga",
+      "developers": [
+        "King"
+      ],
+      "ids": {
+        "google_play": "com.king.candycrushsaga"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.mergegames.gossipharbor",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 4,
+      "title": "Gossip Harbor: Merge & Story",
+      "developers": [
+        "Microfun Limited"
+      ],
+      "ids": {
+        "google_play": "com.mergegames.gossipharbor"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.dreamgames.royalmatch",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 5,
+      "title": "Royal Match",
+      "developers": [
+        "Dream Games, Ltd."
+      ],
+      "ids": {
+        "google_play": "com.dreamgames.royalmatch"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.run.tower.defense",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 6,
+      "title": "Kingshot",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.run.tower.defense"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.gof.global",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 7,
+      "title": "Whiteout Survival",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.gof.global"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.township",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 8,
+      "title": "Township",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.township"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.coinmaster",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 9,
+      "title": "Coin Master",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.coinmaster"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.dreamgames.royalkingdom",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 10,
+      "title": "Royal Kingdom",
+      "developers": [
+        "Dream Games, Ltd."
+      ],
+      "ids": {
+        "google_play": "com.dreamgames.royalkingdom"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.nianticlabs.pokemongo",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 11,
+      "title": "Pokémon GO",
+      "developers": [
+        "Scopely Explore, Inc."
+      ],
+      "ids": {
+        "google_play": "com.nianticlabs.pokemongo"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.fun.lastwar.gp",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 12,
+      "title": "Last War:Survival Game",
+      "developers": [
+        "FUNFLY PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.fun.lastwar.gp"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-net.peakgames.toonblast",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 13,
+      "title": "Toon Blast",
+      "developers": [
+        "Peak"
+      ],
+      "ids": {
+        "google_play": "net.peakgames.toonblast"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.readygo.barrel.gp",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 14,
+      "title": "Last Z: Survival Shooter",
+      "developers": [
+        "Omnilojo Pte Ltd"
+      ],
+      "ids": {
+        "google_play": "com.readygo.barrel.gp"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.topgamesinc.evony",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 15,
+      "title": "Evony: The King's Return",
+      "developers": [
+        "TG Inc."
+      ],
+      "ids": {
+        "google_play": "com.topgamesinc.evony"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.phs.global",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 16,
+      "title": "Last Asylum: Plague",
+      "developers": [
+        "37GAMES GLOBAL"
+      ],
+      "ids": {
+        "google_play": "com.phs.global"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.dts.freefireth",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 17,
+      "title": "Free Fire x NARUTO SHIPPUDEN",
+      "developers": [
+        "GARENA INTERNATIONAL I"
+      ],
+      "ids": {
+        "google_play": "com.dts.freefireth"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.totalbattle",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 18,
+      "title": "Total Battle: War Strategy",
+      "developers": [
+        "Scorewarrior"
+      ],
+      "ids": {
+        "google_play": "com.totalbattle"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.williamsinteractive.jackpotparty",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 19,
+      "title": "Jackpot Party Casino Slots",
+      "developers": [
+        "SciPlay"
+      ],
+      "ids": {
+        "google_play": "com.williamsinteractive.jackpotparty"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.gardenscapes",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 20,
+      "title": "Gardenscapes",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.gardenscapes"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.productmadness.cashmancasino",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 22,
+      "title": "Cashman Casino Slots Games",
+      "developers": [
+        "Product Madness"
+      ],
+      "ids": {
+        "google_play": "com.productmadness.cashmancasino"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.productmadness.lightninglink",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 23,
+      "title": "Lightning Link Casino Slots",
+      "developers": [
+        "Product Madness"
+      ],
+      "ids": {
+        "google_play": "com.productmadness.lightninglink"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-air.com.buffalo_studios.newflashbingo",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 24,
+      "title": "Bingo Blitz™️ - Bingo Games",
+      "developers": [
+        "Playtika Santa Monica"
+      ],
+      "ids": {
+        "google_play": "air.com.buffalo_studios.newflashbingo"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.fishdomdd.gplay",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 25,
+      "title": "Fishdom",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.fishdomdd.gplay"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-net.peakgames.match",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 26,
+      "title": "Match Factory!",
+      "developers": [
+        "Peak"
+      ],
+      "ids": {
+        "google_play": "net.peakgames.match"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.king.candycrushsodasaga",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 27,
+      "title": "Candy Crush Soda Saga",
+      "developers": [
+        "King"
+      ],
+      "ids": {
+        "google_play": "com.king.candycrushsodasaga"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.fatmerge.global",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 28,
+      "title": "Tasty Travels: Merge Game",
+      "developers": [
+        "Century Games PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.fatmerge.global"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.playrix.homescapes",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 29,
+      "title": "Homescapes",
+      "developers": [
+        "Playrix"
+      ],
+      "ids": {
+        "google_play": "com.playrix.homescapes"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.superplaystudios.dicedreams",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 30,
+      "title": "Dice Dreams™️",
+      "developers": [
+        "SuperPlay."
+      ],
+      "ids": {
+        "google_play": "com.superplaystudios.dicedreams"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.zjcs.android.us",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 31,
+      "title": "Sword x Staff",
+      "developers": [
+        "BOLTRAY GAMES"
+      ],
+      "ids": {
+        "google_play": "com.zjcs.android.us"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.diamondlife.slots.vegas.free",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 32,
+      "title": "Lotsa Slots - Casino Games",
+      "developers": [
+        "SpinX Games Limited"
+      ],
+      "ids": {
+        "google_play": "com.diamondlife.slots.vegas.free"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.proximabeta.nikke",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 33,
+      "title": "GODDESS OF VICTORY: NIKKE",
+      "developers": [
+        "Level Infinite"
+      ],
+      "ids": {
+        "google_play": "com.proximabeta.nikke"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.loomgames.pixelflow",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 34,
+      "title": "Pixel Flow!",
+      "developers": [
+        "Loom Games A.Ş."
+      ],
+      "ids": {
+        "google_play": "com.loomgames.pixelflow"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.superplaystudios.disneysolitairedreams",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 35,
+      "title": "Disney Solitaire",
+      "developers": [
+        "SuperPlay."
+      ],
+      "ids": {
+        "google_play": "com.superplaystudios.disneysolitairedreams"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.combo.yarnflow",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 36,
+      "title": "Yarn Loop",
+      "developers": [
+        "Combo Game"
+      ],
+      "ids": {
+        "google_play": "com.combo.yarnflow"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.readygo.dark.gp",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 37,
+      "title": "Dark War Survival",
+      "developers": [
+        "Omnilojo Pte Ltd"
+      ],
+      "ids": {
+        "google_play": "com.readygo.dark.gp"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-net.supertreat.solitaire",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 38,
+      "title": "Solitaire Grand Harvest",
+      "developers": [
+        "Supertreat - A Playtika Studio"
+      ],
+      "ids": {
+        "google_play": "net.supertreat.solitaire"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.ea.game.starwarscapital_row",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 39,
+      "title": "Star Wars™: Galaxy of Heroes",
+      "developers": [
+        "ELECTRONIC ARTS"
+      ],
+      "ids": {
+        "google_play": "com.ea.game.starwarscapital_row"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.global.ztmslg",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 40,
+      "title": "Puzzles & Survival",
+      "developers": [
+        "37GAMES"
+      ],
+      "ids": {
+        "google_play": "com.global.ztmslg"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-slots.pcg.casino.games.free.android",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 41,
+      "title": "Cash Frenzy™ - Casino Slots",
+      "developers": [
+        "SpinX Games Limited"
+      ],
+      "ids": {
+        "google_play": "slots.pcg.casino.games.free.android"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.homagames.studio.allinhole",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 42,
+      "title": "All in Hole: Black Hole Games",
+      "developers": [
+        "Homa"
+      ],
+      "ids": {
+        "google_play": "com.homagames.studio.allinhole"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.cola.game",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 43,
+      "title": "Flambé®: Merge & Cook",
+      "developers": [
+        "Microfun Limited"
+      ],
+      "ids": {
+        "google_play": "com.cola.game"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.cedargames.mysterytown",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 45,
+      "title": "Mystery Town: Merge Games",
+      "developers": [
+        "Cedar Games Studio"
+      ],
+      "ids": {
+        "google_play": "com.cedargames.mysterytown"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.grandgames.magicsort",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 46,
+      "title": "Magic Sort!",
+      "developers": [
+        "Grand Games A.Ş."
+      ],
+      "ids": {
+        "google_play": "com.grandgames.magicsort"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.ballytechnologies.quickhitslots",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 47,
+      "title": "Quick Hit Casino Slots Games",
+      "developers": [
+        "SciPlay"
+      ],
+      "ids": {
+        "google_play": "com.ballytechnologies.quickhitslots"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.joycastle.mergematch",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 48,
+      "title": "Matching Story - Puzzle Games",
+      "developers": [
+        "VERTEX GAMES PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.joycastle.mergematch"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.merge.cooking.theme.restaurant.food",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 49,
+      "title": "Merge Cooking®",
+      "developers": [
+        "Happibits Game"
+      ],
+      "ids": {
+        "google_play": "com.merge.cooking.theme.restaurant.food"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.cmboard",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 50,
+      "title": "Coin Master - Board Adventure",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.cmboard"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.global.pnck",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 51,
+      "title": "Puzzles & Chaos: Frozen Castle",
+      "developers": [
+        "37GAMES"
+      ],
+      "ids": {
+        "google_play": "com.global.pnck"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.bandainamcogames.dbzdokkanww",
+      "list": "mobile",
+      "segment": "grossing",
+      "rank": 52,
+      "title": "DRAGON BALL Z DOKKAN BATTLE",
+      "developers": [
+        "Bandai Namco Entertainment Inc."
+      ],
+      "ids": {
+        "google_play": "com.bandainamcogames.dbzdokkanww"
+      },
+      "chart": {
+        "previous_rank": null
+      }
+    },
+    {
+      "game_id": "gp-com.nebula.rotaterings",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 1,
+      "title": "Rotate Rings",
+      "developers": [
+        "Nebula  Studio"
+      ],
+      "ids": {
+        "google_play": "com.nebula.rotaterings"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.oakever.meowdoku",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 2,
+      "title": "Meowdoku: Brain Puzzle Games",
+      "developers": [
+        "Oakever Games"
+      ],
+      "ids": {
+        "google_play": "com.oakever.meowdoku"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.vitastudio.mahjong",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 4,
+      "title": "Vita Mahjong",
+      "developers": [
+        "Vita Studio."
+      ],
+      "ids": {
+        "google_play": "com.vitastudio.mahjong"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.block.juggle",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 5,
+      "title": "Block Blast!",
+      "developers": [
+        "HungryStudio"
+      ],
+      "ids": {
+        "google_play": "com.block.juggle"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.cyphergames.royalsmash",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 7,
+      "title": "Royal Smash! - Physics Puzzle",
+      "developers": [
+        "Cypher Games"
+      ],
+      "ids": {
+        "google_play": "com.cyphergames.royalsmash"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-gridplus.busjam.carpuzzle",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 8,
+      "title": "Bus Fever Party!",
+      "developers": [
+        "Lumi Games"
+      ],
+      "ids": {
+        "google_play": "gridplus.busjam.carpuzzle"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.oakever.arrows",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 9,
+      "title": "Amaze GO!",
+      "developers": [
+        "Oakever Games"
+      ],
+      "ids": {
+        "google_play": "com.oakever.arrows"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.flow.smashparty",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 10,
+      "title": "Smash Land!",
+      "developers": [
+        "Flow Games A.S."
+      ],
+      "ids": {
+        "google_play": "com.flow.smashparty"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.brain.crazy.joygame",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 11,
+      "title": "Brain Puzzle 3: Crazy Mind",
+      "developers": [
+        "JoyGame Studio"
+      ],
+      "ids": {
+        "google_play": "com.brain.crazy.joygame"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.fungames.blockcraft",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 12,
+      "title": "Block Craft 3D：Building Game",
+      "developers": [
+        "Wildlife Studios"
+      ],
+      "ids": {
+        "google_play": "com.fungames.blockcraft"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.rovio.baba",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 13,
+      "title": "Angry Birds 2",
+      "developers": [
+        "Rovio Entertainment Oy"
+      ],
+      "ids": {
+        "google_play": "com.rovio.baba"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-triple.sorting.bubble.fish.match",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 14,
+      "title": "Fish Sort Puzzle",
+      "developers": [
+        "Shycheese"
+      ],
+      "ids": {
+        "google_play": "triple.sorting.bubble.fish.match"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.mimik.challenge.fun",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 15,
+      "title": "MemeMix Challenge: Funny Party",
+      "developers": [
+        "Amobear VN Game Global"
+      ],
+      "ids": {
+        "google_play": "com.mimik.challenge.fun"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.abi.colony.flow",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 16,
+      "title": "Colony Flow!",
+      "developers": [
+        "ABI GAMES PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.abi.colony.flow"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-in.playsimple.wordsearch",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 18,
+      "title": "Word Search Explorer",
+      "developers": [
+        "PlaySimple Games"
+      ],
+      "ids": {
+        "google_play": "in.playsimple.wordsearch"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.nebula.mahjongtile",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 20,
+      "title": "Mahjong Blast",
+      "developers": [
+        "Nebula  Studio"
+      ],
+      "ids": {
+        "google_play": "com.nebula.mahjongtile"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.Garawell.LoopSort",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 21,
+      "title": "Loop Sort",
+      "developers": [
+        "VOODOO"
+      ],
+      "ids": {
+        "google_play": "com.Garawell.LoopSort"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.GybeGames.ColorBlockJam",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 24,
+      "title": "Color Block Jam",
+      "developers": [
+        "Rollic Games"
+      ],
+      "ids": {
+        "google_play": "com.GybeGames.ColorBlockJam"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.blast.puzzlegame.bear",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 25,
+      "title": "CarLoop",
+      "developers": [
+        "UUTEAM Technology Limited"
+      ],
+      "ids": {
+        "google_play": "com.blast.puzzlegame.bear"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.pocket.sort.coin.puzzle.game",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 26,
+      "title": "Pocket Sort: Coin Merge Puzzle",
+      "developers": [
+        "SayGames Ltd"
+      ],
+      "ids": {
+        "google_play": "com.pocket.sort.coin.puzzle.game"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.tripledot.blockbash",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 27,
+      "title": "Woodoku Blast",
+      "developers": [
+        "Tripledot Studios Limited"
+      ],
+      "ids": {
+        "google_play": "com.tripledot.blockbash"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.epicgames.fortnite",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 29,
+      "title": "Fortnite",
+      "developers": [
+        "Epic Games, Inc"
+      ],
+      "ids": {
+        "google_play": "com.epicgames.fortnite"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.ecffri.arrows",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 30,
+      "title": "Arrows – Puzzle Escape",
+      "developers": [
+        "Lessmore GmbH"
+      ],
+      "ids": {
+        "google_play": "com.ecffri.arrows"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-io.voodoo.paper2",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 31,
+      "title": "Paper.io 2",
+      "developers": [
+        "VOODOO"
+      ],
+      "ids": {
+        "google_play": "io.voodoo.paper2"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.agavegames.wordtiles",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 32,
+      "title": "Word Tiles - Relaxing Puzzle",
+      "developers": [
+        "Agave Games"
+      ],
+      "ids": {
+        "google_play": "com.agavegames.wordtiles"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.vincentb.MobControl",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 33,
+      "title": "Mob Control",
+      "developers": [
+        "VOODOO"
+      ],
+      "ids": {
+        "google_play": "com.vincentb.MobControl"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.metagame.annoying.trick.brainypuzzle",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 34,
+      "title": "Brainy Escape Quest",
+      "developers": [
+        "Metagame.Ltd"
+      ],
+      "ids": {
+        "google_play": "com.metagame.annoying.trick.brainypuzzle"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-io.supercent.bulldozermasters",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 35,
+      "title": "Bulldozer Master: Crush & Mine",
+      "developers": [
+        "Supercent, Inc."
+      ],
+      "ids": {
+        "google_play": "io.supercent.bulldozermasters"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.easybrain.arrow.puzzle.game",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 36,
+      "title": "Arrow Puzzle: Tap Puzzle Games",
+      "developers": [
+        "Easybrain"
+      ],
+      "ids": {
+        "google_play": "com.easybrain.arrow.puzzle.game"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-wool.match.color.sort.jam.puzzle",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 37,
+      "title": "Wool Crush™",
+      "developers": [
+        "Astrasen Global"
+      ],
+      "ids": {
+        "google_play": "wool.match.color.sort.jam.puzzle"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.youmusic.magictiles",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 38,
+      "title": "Magic Tiles 3™ - Piano Game",
+      "developers": [
+        "AMANOTES PTE. LTD."
+      ],
+      "ids": {
+        "google_play": "com.youmusic.magictiles"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.miniclip.eightballpool",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 41,
+      "title": "8 Ball Pool",
+      "developers": [
+        "Miniclip.com"
+      ],
+      "ids": {
+        "google_play": "com.miniclip.eightballpool"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.kiloo.subwaysurf",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 42,
+      "title": "Subway Surfers",
+      "developers": [
+        "SYBO Games"
+      ],
+      "ids": {
+        "google_play": "com.kiloo.subwaysurf"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.epicoro.castleclashers",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 43,
+      "title": "Castle Busters",
+      "developers": [
+        "VOODOO"
+      ],
+      "ids": {
+        "google_play": "com.epicoro.castleclashers"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.rotatelab.cubeblast",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 44,
+      "title": "Cube Land Puzzle Game",
+      "developers": [
+        "Rotatelab Yazilim ve Bilisim A.S."
+      ],
+      "ids": {
+        "google_play": "com.rotatelab.cubeblast"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-jp.co.goodroid.hyper.puzzle.arrows3dcubepuzzle",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 45,
+      "title": "CubeAway - 3DPuzzle",
+      "developers": [
+        "GOODROID,Inc."
+      ],
+      "ids": {
+        "google_play": "jp.co.goodroid.hyper.puzzle.arrows3dcubepuzzle"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.sled.surfers.game",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 46,
+      "title": "Sled Surfers",
+      "developers": [
+        "CrazyLabs LTD"
+      ],
+      "ids": {
+        "google_play": "com.sled.surfers.game"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.puzzlegames.puzzlebrickslegend",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 47,
+      "title": "Color Block: Combo Blast",
+      "developers": [
+        "Ivy"
+      ],
+      "ids": {
+        "google_play": "com.puzzlegames.puzzlebrickslegend"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.oakever.jigsawcard",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 48,
+      "title": "Jigsawcard Solitaire Puzzle",
+      "developers": [
+        "Oakever Games"
+      ],
+      "ids": {
+        "google_play": "com.oakever.jigsawcard"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.kayac.slow_mo_strike",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 49,
+      "title": "Slow Mo Strike: Knives in Time",
+      "developers": [
+        "KAYAC Inc."
+      ],
+      "ids": {
+        "google_play": "com.kayac.slow_mo_strike"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.greatplay.farklecash",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 51,
+      "title": "Fast Cash Farkle",
+      "developers": [
+        "GreatPlay App"
+      ],
+      "ids": {
+        "google_play": "com.greatplay.farklecash"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-solitaire.patience.card.games.klondike.free",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 54,
+      "title": "Solitaire - Classic Card Games",
+      "developers": [
+        "Guru Puzzle Game"
+      ],
+      "ids": {
+        "google_play": "solitaire.patience.card.games.klondike.free"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.tfgco.apps.coloring.free.color.by.number",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 55,
+      "title": "Color by Number：Coloring Games",
+      "developers": [
+        "Wildlife Studios"
+      ],
+      "ids": {
+        "google_play": "com.tfgco.apps.coloring.free.color.by.number"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.mahjong.master.solitaire.match.puzzle",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 56,
+      "title": "Mahjong Master: Daily Match",
+      "developers": [
+        "Mindful Daily Puzzles"
+      ],
+      "ids": {
+        "google_play": "com.mahjong.master.solitaire.match.puzzle"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.tocaboca.tocalifeworld",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 57,
+      "title": "Toca Boca World",
+      "developers": [
+        "Toca Boca"
+      ],
+      "ids": {
+        "google_play": "com.tocaboca.tocalifeworld"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.animal.hunter.shooting.apex",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 58,
+      "title": "Apex Sniper: Animal Hunt",
+      "developers": [
+        "CozyCraft"
+      ],
+      "ids": {
+        "google_play": "com.animal.hunter.shooting.apex"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-ball.sort.puzzle.color.sorting.bubble.games",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 59,
+      "title": "Ball Sort Puzzle - Color Game",
+      "developers": [
+        "Guru Puzzle Game"
+      ],
+      "ids": {
+        "google_play": "ball.sort.puzzle.color.sorting.bubble.games"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.farlightgames.warline.gp.global",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 60,
+      "title": "Warline: Sniper Strike",
+      "developers": [
+        "Powerfantasy HK Limited"
+      ],
+      "ids": {
+        "google_play": "com.farlightgames.warline.gp.global"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.robtopx.geometryjumplite",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 61,
+      "title": "Geometry Dash Lite",
+      "developers": [
+        "RobTop Games"
+      ],
+      "ids": {
+        "google_play": "com.robtopx.geometryjumplite"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-in.playsimple.wordtrip.association",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 62,
+      "title": "Word Connect Association",
+      "developers": [
+        "PlaySimple Games"
+      ],
+      "ids": {
+        "google_play": "in.playsimple.wordtrip.association"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.Chodun.CatGunner",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 64,
+      "title": "Idle Cat Gunner: Shooter RPG",
+      "developers": [
+        "NEPTUNE(TREEPLLA)"
+      ],
+      "ids": {
+        "google_play": "com.Chodun.CatGunner"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.pixel.art.coloring.color.number",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 65,
+      "title": "Happy Color®: Color by Number",
+      "developers": [
+        "X-FLOW"
+      ],
+      "ids": {
+        "google_play": "com.pixel.art.coloring.color.number"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-jp.pokemon.pokemontcgp",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 66,
+      "title": "Pokémon TCG Pocket",
+      "developers": [
+        "The Pokémon Company"
+      ],
+      "ids": {
+        "google_play": "jp.pokemon.pokemontcgp"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.paradyme.solarsmash",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 68,
+      "title": "Solar Smash",
+      "developers": [
+        "Paradyme Games"
+      ],
+      "ids": {
+        "google_play": "com.paradyme.solarsmash"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-net.happywit.screw.out.jam",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 69,
+      "title": "Screw Out 3D: Nut Sort Jam",
+      "developers": [
+        "Unico Studio"
+      ],
+      "ids": {
+        "google_play": "net.happywit.screw.out.jam"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.thrivegames.bashbest",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 70,
+      "title": "Tiki Smash!",
+      "developers": [
+        "PeopleFun"
+      ],
+      "ids": {
+        "google_play": "com.thrivegames.bashbest"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.brain.logic.joygame",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 71,
+      "title": "Brain Puzzle 2: Logic Twist",
+      "developers": [
+        "JoyGame Studio"
+      ],
+      "ids": {
+        "google_play": "com.brain.logic.joygame"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-io.voodoo.holeio",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 72,
+      "title": "Hole.io",
+      "developers": [
+        "VOODOO"
+      ],
+      "ids": {
+        "google_play": "io.voodoo.holeio"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.studio27.MelonPlayground",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 73,
+      "title": "Melon Sandbox",
+      "developers": [
+        "playducky.com"
+      ],
+      "ids": {
+        "google_play": "com.studio27.MelonPlayground"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.innersloth.spacemafia",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 74,
+      "title": "Among Us",
+      "developers": [
+        "Innersloth LLC"
+      ],
+      "ids": {
+        "google_play": "com.innersloth.spacemafia"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.tripledot.angrysmash",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 75,
+      "title": "Angry Smash",
+      "developers": [
+        "Tripledot Studios Limited"
+      ],
+      "ids": {
+        "google_play": "com.tripledot.angrysmash"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.gimica.treasuremaster",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 76,
+      "title": "Treasure Master",
+      "developers": [
+        "Gimica GmbH"
+      ],
+      "ids": {
+        "google_play": "com.gimica.treasuremaster"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-io.heseri.car",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 77,
+      "title": "Car Evolve",
+      "developers": [
+        "Heseri Games"
+      ],
+      "ids": {
+        "google_play": "io.heseri.car"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-hidden.object.find.seek.search.mystery.puzzle.games.free",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 79,
+      "title": "Hidden Object Games: Seek It",
+      "developers": [
+        "NimbleMind Network Inc."
+      ],
+      "ids": {
+        "google_play": "hidden.object.find.seek.search.mystery.puzzle.games.free"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.bisongold.goldpg",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 80,
+      "title": "Bison Gold",
+      "developers": [
+        "Yousuf Rahman"
+      ],
+      "ids": {
+        "google_play": "com.bisongold.goldpg"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.smilerlee.klondike",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 81,
+      "title": "Solitaire",
+      "developers": [
+        "Mouse Games"
+      ],
+      "ids": {
+        "google_play": "com.smilerlee.klondike"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.nebula.arrows",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 82,
+      "title": "GOGO! Blast",
+      "developers": [
+        "Nebula  Studio"
+      ],
+      "ids": {
+        "google_play": "com.nebula.arrows"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.bravestars.draw.bridge.drawgame",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 83,
+      "title": "Draw Bridge Puzzle: Brain Game",
+      "developers": [
+        "Brave Labs"
+      ],
+      "ids": {
+        "google_play": "com.bravestars.draw.bridge.drawgame"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.zroute.global",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 84,
+      "title": "Z Route: Redemption",
+      "developers": [
+        "37GAMES GLOBAL"
+      ],
+      "ids": {
+        "google_play": "com.zroute.global"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.hnhs.endlesssea.gp",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 85,
+      "title": "Last Beacon: Survival",
+      "developers": [
+        "YG Technology FZ-LLC"
+      ],
+      "ids": {
+        "google_play": "com.hnhs.endlesssea.gp"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.leap.searchit",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 86,
+      "title": "Search It - Hidden Objects",
+      "developers": [
+        "Leap Game Studios"
+      ],
+      "ids": {
+        "google_play": "com.leap.searchit"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.gtsy.annoying.punch.game",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 87,
+      "title": "Annoying Uncle Punch Game®",
+      "developers": [
+        "Game District LLC"
+      ],
+      "ids": {
+        "google_play": "com.gtsy.annoying.punch.game"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.lavalabs.autodrill",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 88,
+      "title": "Auto Drill: Galaxy",
+      "developers": [
+        "LAVA LABS OYUN YAZILIM VE PAZARLAMA ANONİM ŞİRKETİ"
+      ],
+      "ids": {
+        "google_play": "com.lavalabs.autodrill"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.s01.global",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 89,
+      "title": "Lordrush",
+      "developers": [
+        "Century Games Innovation Pte. Ltd."
+      ],
+      "ids": {
+        "google_play": "com.s01.global"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.liteorange.hometopia",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 90,
+      "title": "Frost Valley™: Merge & Story",
+      "developers": [
+        "Tuyoo Games (HK) Limited"
+      ],
+      "ids": {
+        "google_play": "com.liteorange.hometopia"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.pic.blast.solitaire",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 91,
+      "title": "Picture Blast Solitaire",
+      "developers": [
+        "Gismart"
+      ],
+      "ids": {
+        "google_play": "com.pic.blast.solitaire"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.godlike.vigormahjong",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 92,
+      "title": "Vigor Mahjong",
+      "developers": [
+        "CanaryDroid"
+      ],
+      "ids": {
+        "google_play": "com.godlike.vigormahjong"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.ea.gp.fifamobile",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 93,
+      "title": "EA SPORTS FC Soccer Mobile 27",
+      "developers": [
+        "ELECTRONIC ARTS"
+      ],
+      "ids": {
+        "google_play": "com.ea.gp.fifamobile"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.loop.clear.cube.free.card.puzzle.sort.match",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 94,
+      "title": "Loop Master™: Color Jam Sort",
+      "developers": [
+        "Pleasure City"
+      ],
+      "ids": {
+        "google_play": "com.loop.clear.cube.free.card.puzzle.sort.match"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.moonactive.holestars",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 95,
+      "title": "Hole Stars: Puzzle Game",
+      "developers": [
+        "Moon Active"
+      ],
+      "ids": {
+        "google_play": "com.moonactive.holestars"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.hungrystudio.mahjong",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 97,
+      "title": "Double Tile!",
+      "developers": [
+        "HungryStudio"
+      ],
+      "ids": {
+        "google_play": "com.hungrystudio.mahjong"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-com.nebula.splashbuster",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 98,
+      "title": "Splash Buster: Smash Fest 3D",
+      "developers": [
+        "Nebula  Studio"
+      ],
+      "ids": {
+        "google_play": "com.nebula.splashbuster"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    },
+    {
+      "game_id": "gp-in.playsimple.crossword.go",
+      "list": "mobile",
+      "segment": "rising",
+      "rank": 99,
+      "title": "Crossword Go!",
+      "developers": [
+        "PlaySimple Games"
+      ],
+      "ids": {
+        "google_play": "in.playsimple.crossword.go"
+      },
+      "chart": {
+        "chart": "top_free"
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "list": "rising",
+      "reason": "top_new_free: AppBrain's page loaded, but its ranking table is empty: AppBrain is not publishing this chart right now (it is not a block or a layout change)"
+    },
+    {
+      "list": "mobile",
+      "reason": "Today's top-grossing chart could not be read (AppBrain's page loaded, but its ranking table is empty: AppBrain is not publishing this chart right now (it is not a block or a layout change)). The top-grossing games from 2026-09-24 are used instead."
+    }
+  ]
+}

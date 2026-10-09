@@ -565,3 +565,42 @@ were curious how it was built so fast. Branch `claude/host-hoard-hatch`. No paid
 
 Left for the owner: whether to name the original game on the site, and whether the "about a
 day" claim should be dated (first dragongo commit October 7, 22:02 UTC; current build October 8).
+
+### Mobile-first site and 83 more mobile games (October 8, 2026)
+
+The owner: most interviews are with mobile studios, so tag more mobile games and make the site
+more mobile-focused. Choices made with the owner: today's top 100 grossing plus about 30 rising
+games, Jev capped at $1.00, mobile first with Steam kept. Branch `claude/mobile-focus`.
+
+* **Chart.** `gametagger-compare mobile-cohort` (new) reads AppBrain's Google Play top-grossing
+  chart (with a second page if offered) and a rising list (top new free, else top free), and
+  records each game's September 24 rank for chart movers. On October 8 AppBrain's top-grossing
+  and top-new-free tables were empty: the pages loaded in the owner's own Chrome with no games,
+  for every country checked. The first run therefore stopped with "AppBrain returned no ranked
+  games". The parser now says the table is empty (not a block or a layout change), and the
+  cohort falls back to the September 24 top-grossing 50 plus up to 100 top-free games. Result:
+  50 + 83 games (`experiments/mobile-top100/cohort.json`).
+* **Run** (owner's Mac, `scripts/mac/mobile-top100.sh`, started from the Finder launcher):
+  83 new games tagged (77 complete, 6 partial), store pages only, vocabulary v2. Games tagged on
+  October 5 were not tagged again. **Paid: $0.24 of Jev** (TypeSafe) under the $1.00 cap, in its
+  own ledger (`benchmark-runs/mobile-top100/ledger.jsonl` on the Mac). Claude: on the owner's
+  plan, $0 in API money, $8.98 at API prices. Median 61 s per game. New v2 tags were rarely
+  decided from store pages (3% of questions), as in the October 5 run.
+* **Site** (`dashboard-template.html`, rebuilt with `experiments/mobile-top100/site_data.py` and
+  `refresh_web.py`): headline "What's inside today's top mobile games"; the example profile opens
+  on Google Play #1; the dashboard opens on Google Play top grossing, with Top free, PC and All
+  buttons; a new first section compares tags in the top-free games with the top grossers
+  ("What people download now versus what earns"; called "What's rising" when the list comes from
+  the new-games chart); chart movers show Google Play when two top-grossing charts exist and
+  Steam otherwise, with a note; "Mobile vs PC" lists mobile first; the Steam players panel shows
+  only for PC and All. The site shows the 189 v1 tags; v2-only tags are left out. Checked at
+  390 px (dark) and 1280 px (light): no page errors, no sideways scroll.
+* First finding on the page: the top-free games are far more often ad-supported (87% against 40%
+  of the top grossers), family friendly, story-light, minimalist and puzzle-led (48 of 83).
+* Tests: 450 passed, 1 skipped; ruff clean.
+
+Left for the owner:
+* Merge the PR to publish.
+* When AppBrain's top-grossing chart is back: delete `experiments/mobile-top100/cohort.json`
+  (here and on the Mac), run the launcher again, and rebuild the site for a fresh top 100 and
+  Google Play chart movers.
