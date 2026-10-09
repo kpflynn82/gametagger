@@ -613,3 +613,32 @@ Left for the owner:
 * When AppBrain's top-grossing chart is back: delete `experiments/mobile-top100/cohort.json`
   (here and on the Mac), run the launcher again, and rebuild the site for a fresh top 100 and
   Google Play chart movers.
+
+### Google Play Top grossing read from the Android emulator (October 9, 2026)
+
+The owner opened the Play Store's Top grossing chart on the Android Studio emulator and asked
+Claude to check whether it gives fresh top-grossing data. Branch `claude/play-chart`. Free: no
+paid calls.
+
+* **Method.** `scripts/mac/play-chart.sh` (new) scrolls the chart with `adb` and saves a
+  screenshot and Android's accessibility dump per screenful; it never taps. A `--check` mode opens
+  given games' store pages and saves what they say. `experiments/play-chart/parse_dump.py` (new)
+  turns the dumps into rank, title, Play's genre labels, star rating and badges.
+* **Measured** (2026-10-09 12:05 PT, US chart, en-US, Play Store 53.4.34): 165 ranked games, ranks
+  1 to 165 with no gaps. Against AppBrain's September 24 top 50: 45 still listed, 9 of the top 10
+  the same games, median move 2 places. Saved as
+  `experiments/play-chart/2026-10-09-top-grossing.json`.
+* **Gap found.** The emulator runs a 16 KB page-size Android 17 image (`sdk_gphone16k_arm64`).
+  The Play Store hides games that cannot run on the device: the five September top-50 games
+  missing from the list (Township #8, NIKKE #33, All in Hole #42, Mystery Town #45, Magic Sort
+  #46) each say "Your device isn't compatible with this version" on this emulator; Gardenscapes
+  (listed) says Install. Other hidden games cannot be seen, so the chart is incomplete and ranks
+  below a hidden game are too high.
+* **IDs.** Package IDs are not on screen. 58 of the top 100 titles match games already in our
+  cohorts; 42 need their store IDs looked up.
+
+Left:
+* Read the chart again on a standard 4 KB-page Google Play image (Android 15 or 16) and check the
+  five games appear. The owner downloads the system image in Android Studio.
+* If they do: look up the missing package IDs, build the cohort from the Play chart instead of the
+  AppBrain fallback, tag the new games (owner sets the budget), and rebuild the site.
