@@ -599,6 +599,15 @@ games, Jev capped at $1.00, mobile first with Steam kept. Branch `claude/mobile-
   of the top grossers), family friendly, story-light, minimalist and puzzle-led (48 of 83).
 * Tests: 450 passed, 1 skipped; ruff clean.
 
+* **Home-page dashboards** (owner: "we should have some dashboards on the main landing page"): an
+  "At a glance" section under the headline numbers with four small charts, each linking to the
+  full dashboard: the top grossers' primary genres, downloads versus earnings (tags far more
+  common in the top-free games), the mechanics and live features most top grossers share, and the
+  largest mobile-versus-PC gaps. The top-free colour was re-stepped after the palette checker
+  (`dataviz` skill) flagged it: #0f8a7a light and #2a9c84 dark now pass every check against
+  top-grossing orange and PC blue. Checked at 390 px (dark) and 1280 px (light and dark): no page
+  errors, no sideways scroll.
+
 Left for the owner:
 * Merge the PR to publish.
 * When AppBrain's top-grossing chart is back: delete `experiments/mobile-top100/cohort.json`

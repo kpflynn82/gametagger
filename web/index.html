@@ -23,16 +23,16 @@
 <style>
 :root{
   --bg:#f3efe7;--panel:#fbf9f4;--ink:#16150f;--ink-2:#55524a;--mute:#7d796f;--line:#dcd6c9;--track:#e6e0d4;
-  --pc:#2a78d6;--mob:#eb6834;--rise:#1a8f6a;--all:#16150f;--brand:#d3281f;--brand-ink:#fff;
+  --pc:#2a78d6;--mob:#eb6834;--rise:#0f8a7a;--all:#16150f;--brand:#d3281f;--brand-ink:#fff;
   --absent:#8c8779;--conf:#b88a00;--hatch:#cfc8b9;--hit:#fff1b8;
   --sans:Chivo,"Liberation Sans",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,"Liberation Mono",monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
   --bg:#171611;--panel:#201f19;--ink:#f2efe8;--ink-2:#c3bfb3;--mute:#948f83;--line:#35332b;--track:#2b2a23;
-  --pc:#3987e5;--mob:#d95926;--rise:#2fae84;--all:#e9e5dc;--brand:#e0463d;--absent:#8a8578;--conf:#d9a520;--hatch:#4a473d;--hit:#4a3f12}}
+  --pc:#3987e5;--mob:#d95926;--rise:#2a9c84;--all:#e9e5dc;--brand:#e0463d;--absent:#8a8578;--conf:#d9a520;--hatch:#4a473d;--hit:#4a3f12}}
 :root[data-theme="dark"]{color-scheme:dark;
   --bg:#171611;--panel:#201f19;--ink:#f2efe8;--ink-2:#c3bfb3;--mute:#948f83;--line:#35332b;--track:#2b2a23;
-  --pc:#3987e5;--mob:#d95926;--rise:#2fae84;--all:#e9e5dc;--brand:#e0463d;--absent:#8a8578;--conf:#d9a520;--hatch:#4a473d;--hit:#4a3f12}
+  --pc:#3987e5;--mob:#d95926;--rise:#2a9c84;--all:#e9e5dc;--brand:#e0463d;--absent:#8a8578;--conf:#d9a520;--hatch:#4a473d;--hit:#4a3f12}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;padding-inline:20px}
 a{color:inherit}
@@ -244,6 +244,12 @@ nav a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-decor
 .jump a{font:600 13px var(--mono);border:1px solid var(--line);background:var(--panel);color:var(--ink-2);padding:6px 10px;text-decoration:none}
 .jump a:hover,.jump a:focus-visible{border-color:var(--ink);color:var(--ink)}
 section{scroll-margin-top:84px}
+.glance{margin-top:8px}.glance .lede{margin-bottom:18px}
+.glance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.glance .r{grid-template-columns:minmax(110px,170px) minmax(0,1fr)}
+.glance .more{margin-top:12px}
+@media (max-width:860px){.glance-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.glance .r{grid-template-columns:minmax(0,1fr)}}
 .xgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .xcard{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start;background:var(--panel);border:1px solid var(--line);padding:16px 18px;text-decoration:none;color:var(--ink)}
 .xcard b{font-size:19px;letter-spacing:-.01em}.xcard span{grid-column:1;font-size:14.5px;color:var(--ink-2)}
@@ -309,6 +315,24 @@ section{scroll-margin-top:84px}
   <li><em class="soon">Next</em><b>Play</b><span>When evidence runs out, an AI player plays the game for hours and measures the ads, timers and paywalls store pages hide. <a href="/play-testing">See a case study</a></span></li>
 </ol>
 <div class="kpis" id="kpis" data-view="home"></div>
+
+<section class="glance" aria-labelledby="gl-h" data-view="home">
+  <div class="eyebrow">At a glance</div>
+  <h2 id="gl-h">Google Play's top games, in four charts</h2>
+  <p class="lede" id="gl-lede"></p>
+  <div class="glance-grid">
+    <div class="panel"><h3>What the top grossers are</h3><p class="sub" id="gl1-sub"></p>
+      <div class="rows" id="gl-genres"></div><p class="note" id="gl1-note"></p><a class="more" href="/dashboard#dashboard">All genres →</a></div>
+    <div class="panel"><h3 id="gl2-h">Downloads versus earnings</h3><p class="sub" id="gl2-sub"></p>
+      <div class="legend"><span><span class="swatch" style="background:var(--rise)"></span><span data-label="rising">Rising</span></span><span><span class="swatch" style="background:var(--mob)"></span>Top grossing</span></div>
+      <div class="rows" id="gl-free"></div><a class="more" href="/dashboard#rising">Full comparison →</a></div>
+    <div class="panel"><h3>What most top grossers have</h3><p class="sub" id="gl3-sub"></p>
+      <div class="rows" id="gl-tags"></div><a class="more" href="/dashboard#top-tags">Every tag →</a></div>
+    <div class="panel"><h3>Mobile versus PC</h3><p class="sub">Tags with the biggest gap between Google Play's top grossers and Steam's 50 most-played</p>
+      <div class="legend"><span><span class="swatch" style="background:var(--mob)"></span>Mobile · Google Play</span><span><span class="swatch" style="background:var(--pc)"></span>PC · Steam</span></div>
+      <div class="rows" id="gl-gap"></div><a class="more" href="/dashboard#pc-vs-mobile">More differences →</a></div>
+  </div>
+</section>
 
 <section class="explore" aria-labelledby="x-h" data-view="home">
   <div class="eyebrow">Explore</div>
@@ -875,6 +899,40 @@ const _renderAll = renderAll;
 renderAll = () => { _renderAll(); renderLibrary(); };
 window.addEventListener("hashchange", route);
 renderLibrary(); dictChips(); renderDict(); route();
+// ---- home: four small dashboards (fixed lists, independent of the dashboard's list switch)
+function renderGlance() {
+  const top = inList("mobile"), free = inList("rising"), pc = inList("steam");
+  if (!top.length) { $("gl-genres").closest("section").hidden = true; return; }
+  // 1. primary genres of the top grossers
+  const gc = {}; top.forEach((g) => { if (g.genre_id) gc[g.genre_id] = (gc[g.genre_id] || 0) + 1; });
+  const genres = Object.entries(gc).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  const undecided = top.filter((g) => !g.genre_id).length;
+  $("gl1-sub").textContent = `Google Play's ${top.length} top-grossing games by Jev's primary genre`;
+  $("gl-genres").innerHTML = genres.map(([id, n]) => `<div class="r"><div class="name"><a href="#genre-${esc(id)}">${esc(GENRES[id]?.name || id)}</a></div><div class="tr">${bar(n / top.length, "var(--mob)", `${n} · ${pct(n / top.length)}`, `${GENRES[id]?.name || id}: ${n} of ${top.length} top-grossing games`, genres[0][1] / top.length)}</div></div>`).join("");
+  $("gl1-note").textContent = undecided ? `${undecided} games had too little evidence for a primary genre; Jev says so instead of guessing.` : "";
+  // 2. downloads (or rising) versus earnings
+  const p2 = $("gl-free").closest(".panel");
+  if (free.length) {
+    const rows = G.tags.map((t) => [t.id, share(free, t.id), share(top, t.id), free.filter((g) => has(g, t.id)).length])
+      .filter(([, , , n]) => n >= 3).sort((a, b) => (b[1] - b[2]) - (a[1] - a[2])).slice(0, 5);
+    $("gl2-h").textContent = FREE ? "Downloads versus earnings" : "What's rising";
+    $("gl2-sub").textContent = `Tags far more common in the ${free.length} ${FREE ? "top free" : "rising"} games than in the ${top.length} top grossers`;
+    $("gl-free").innerHTML = rows.map(([t, a, b]) => `<div class="r"><div class="name">${tagA(t)}</div><div class="tr">${bar(a, "var(--rise)", pct(a), `${TAGS[t].label}: ${pct(a)} of ${FREE ? "top free" : "rising"} games`)}${bar(b, "var(--mob)", pct(b), `${TAGS[t].label}: ${pct(b)} of top-grossing games`)}</div></div>`).join("");
+  } else p2.hidden = true;
+  // 3. the mechanics and live features most top grossers share
+  const CATS3 = ["mechanic", "engagement", "gameplay"];
+  const common = G.tags.filter((t) => CATS3.includes(t.category)).map((t) => [t.id, share(top, t.id)]).sort((a, b) => b[1] - a[1]).slice(0, 7);
+  $("gl3-sub").textContent = "Share of the top grossers with each mechanic, live feature or kind of play";
+  $("gl-tags").innerHTML = common.map(([t, v]) => `<div class="r"><div class="name">${tagA(t)}</div><div class="tr">${bar(v, "var(--mob)", pct(v), `${TAGS[t].label}: ${pct(v)} of top-grossing games`)}</div></div>`).join("");
+  // 4. mobile versus PC: the largest gaps either way
+  const gaps = G.tags.map((t) => [t.id, share(top, t.id), share(pc, t.id)]).filter(([id]) => !["monetization_free_to_play", "monetization_in_app_purchases"].includes(id))
+    .sort((a, b) => Math.abs(b[1] - b[2]) - Math.abs(a[1] - a[2])).slice(0, 5);
+  $("gl-gap").innerHTML = gaps.map(([t, a, b]) => `<div class="r"><div class="name">${tagA(t)}</div><div class="tr">${bar(a, "var(--mob)", pct(a), `${TAGS[t].label}: ${pct(a)} of Google Play top grossers`)}${bar(b, "var(--pc)", pct(b), `${TAGS[t].label}: ${pct(b)} of Steam's most-played`)}</div></div>`).join("");
+  const [g1] = genres[0] || [];
+  $("gl-lede").textContent = `${g1 ? `${GENRES[g1]?.name || g1} is the most common genre among today's top earners. ` : ""}Tap a tag for its definition, or open the full dashboard for every chart.`;
+}
+renderGlance();
+
 // ---- hero: snapshot line and an example profile
 {
   const fmt = (d) => d ? new Date(d + "T12:00:00Z").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"}) : "";
