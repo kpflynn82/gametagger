@@ -1,0 +1,2679 @@
+{
+ "chart": "Google Play, US, Games > Top charts > Top grossing",
+ "read_at": "2026-10-09T12:35:34-07:00",
+ "how": "Read Play top grossing launcher (scripts/mac/play-chart.sh) on the Android emulator, parsed by experiments/play-chart/parse_dump.py",
+ "device": {
+  "model": "sdk_gphone64_arm64 (Pixel 8 profile)",
+  "android": "15",
+  "page_size": 4096,
+  "locale": "en-US",
+  "sim_country": "us",
+  "play_store": "53.4.35"
+ },
+ "incomplete": "The Play Store only lists games this emulator can run, so games that refuse emulators are missing and the games below them rank one place too high. Store pages on this emulator say \"Your device isn't compatible with this version\" for Township, NIKKE, All in Hole, Mystery Town, Magic Sort, Genshin Impact and Honkai: Star Rail (checked 12:47). Township is #9 on Appfigures' hourly chart.",
+ "hidden_as_incompatible": [
+  {
+   "google_play": "com.playrix.township",
+   "title": "Township"
+  },
+  {
+   "google_play": "com.proximabeta.nikke",
+   "title": "GODDESS OF VICTORY: NIKKE"
+  },
+  {
+   "google_play": "com.homagames.studio.allinhole",
+   "title": "All in Hole: Black Hole Games"
+  },
+  {
+   "google_play": "com.cedargames.mysterytown",
+   "title": "Mystery Town: Merge Games"
+  },
+  {
+   "google_play": "com.grandgames.magicsort",
+   "title": "Magic Sort!"
+  },
+  {
+   "google_play": "com.miHoYo.GenshinImpact",
+   "title": "Genshin Impact"
+  },
+  {
+   "google_play": "com.HoYoverse.hkrpgoversea",
+   "title": "Honkai: Star Rail"
+  }
+ ],
+ "cross_check": {
+  "source": "Appfigures, Top Games, Google Play, United States, Grossing (public page, updated hourly, top 30 shown)",
+  "read_at": "2026-10-09T12:50-07:00",
+  "top30": [
+   "MONOPOLY GO!",
+   "Candy Crush Saga",
+   "Roblox",
+   "Kingshot",
+   "Royal Match",
+   "Gossip Harbor: Merge & Story",
+   "Whiteout Survival",
+   "Coin Master",
+   "Township",
+   "Pokémon GO",
+   "Royal Kingdom",
+   "Last War:Survival Game",
+   "Toon Blast",
+   "Last Z: Survival Shooter",
+   "Total Battle: War Strategy",
+   "Evony: The King's Return",
+   "Dice Dreams™️",
+   "Candy Crush Soda Saga",
+   "Bingo Blitz™️ - Bingo Games",
+   "Jackpot Party Casino Slots",
+   "Gardenscapes",
+   "Match Factory!",
+   "Last Asylum: Plague",
+   "Tasty Travels: Merge Game",
+   "Cashman Casino Slots Games",
+   "RAID: Shadow Legends",
+   "Fishdom",
+   "Disney Solitaire",
+   "Call of Duty®: Mobile",
+   "Lightning Link Casino Slots"
+  ],
+  "agreement": "28 of Appfigures' top 30 are in the emulator's top 30; Township is the one the emulator hides. Counting Township, 25 of the 29 shared games are within 1 place; Candy Crush Soda Saga differs most (Appfigures #18, emulator #26). Appfigures' page was about an hour old, so some difference is expected."
+ },
+ "android17_reading": "2026-10-09-android17.json (12:05): the same 100 games in the top 100, no game more than 5 places apart.",
+ "missing_ranks": [],
+ "rows": [
+  {
+   "rank": 1,
+   "title": "MONOPOLY GO!",
+   "labels": [
+    "Board",
+    "Casual",
+    "Competitive",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.6,
+   "google_play": "com.scopely.monopolygo",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 2,
+   "title": "Roblox",
+   "labels": [
+    "Adventure",
+    "Simulation",
+    "Sandbox",
+    "Casual"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/28/26"
+   ],
+   "rating": 4.2,
+   "google_play": "com.roblox.client",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 3,
+   "title": "Candy Crush Saga",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Editors' Choice"
+   ],
+   "rating": 4.6,
+   "google_play": "com.king.candycrushsaga",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 4,
+   "title": "Kingshot",
+   "labels": [
+    "Strategy",
+    "Tower defense",
+    "Immersive",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.3,
+   "google_play": "com.run.tower.defense",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 5,
+   "title": "Royal Match",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.6,
+   "google_play": "com.dreamgames.royalmatch",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 6,
+   "title": "Gossip Harbor: Merge & Story",
+   "labels": [
+    "Puzzle",
+    "Simulation",
+    "Design",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.3,
+   "google_play": "com.mergegames.gossipharbor",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 7,
+   "title": "Coin Master",
+   "labels": [
+    "Casino",
+    "Casino-adventure",
+    "Casual",
+    "Renovation"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/25/26"
+   ],
+   "rating": 4.7,
+   "google_play": "com.moonactive.coinmaster",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 8,
+   "title": "Whiteout Survival",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Construct",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.1,
+   "google_play": "com.gof.global",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 9,
+   "title": "Pokémon GO",
+   "labels": [
+    "Adventure",
+    "Action",
+    "Casual",
+    "Immersive"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 3.5,
+   "google_play": "com.nianticlabs.pokemongo",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 10,
+   "title": "Royal Kingdom",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.dreamgames.royalkingdom",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 11,
+   "title": "Last War:Survival Game",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Zombie",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.6,
+   "google_play": "com.fun.lastwar.gp",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 12,
+   "title": "Toon Blast",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Puzzles",
+    "Offline"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.6,
+   "google_play": "net.peakgames.toonblast",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 13,
+   "title": "Last Z: Survival Shooter",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Zombie"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.readygo.barrel.gp",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 14,
+   "title": "Evony: The King's Return",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Puzzles"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.0,
+   "google_play": "com.topgamesinc.evony",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 15,
+   "title": "Total Battle: War Strategy",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Renovation"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/20/26"
+   ],
+   "rating": 4.1,
+   "google_play": "com.totalbattle",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 16,
+   "title": "Dice Dreams™️",
+   "labels": [
+    "Board",
+    "Dice",
+    "Casual",
+    "Construction"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.superplaystudios.dicedreams",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 17,
+   "title": "Bingo Blitz™️ - Bingo Games",
+   "labels": [
+    "Board",
+    "Casino",
+    "Bingo",
+    "Casual"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 4 days"
+   ],
+   "rating": 4.6,
+   "google_play": "air.com.buffalo_studios.newflashbingo",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 18,
+   "title": "Jackpot Party Casino Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.6,
+   "google_play": "com.williamsinteractive.jackpotparty",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 19,
+   "title": "Gardenscapes",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.8,
+   "google_play": "com.playrix.gardenscapes",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 20,
+   "title": "Match Factory!",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Casual",
+    "Factory"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7,
+   "google_play": "net.peakgames.match",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 21,
+   "title": "Last Asylum: Plague",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Immersive",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.phs.global",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 22,
+   "title": "Tasty Travels: Merge Game",
+   "labels": [
+    "Casual",
+    "Simulation",
+    "Design",
+    "Cooking"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.5,
+   "google_play": "com.fatmerge.global",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 23,
+   "title": "Cashman Casino Slots Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 11/3/26"
+   ],
+   "rating": 4.5,
+   "google_play": "com.productmadness.cashmancasino",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 24,
+   "title": "RAID: Shadow Legends",
+   "labels": [
+    "Role Playing",
+    "Turn-based RPG",
+    "Battling"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.6,
+   "google_play": "com.plarium.raidlegends",
+   "id_source": "Play web search, exact title",
+   "developer": "Plarium Global Ltd"
+  },
+  {
+   "rank": 25,
+   "title": "Fishdom",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.6,
+   "google_play": "com.playrix.fishdomdd.gplay",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 26,
+   "title": "Candy Crush Soda Saga",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.6,
+   "google_play": "com.king.candycrushsodasaga",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 27,
+   "title": "Lightning Link Casino Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.productmadness.lightninglink",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 28,
+   "title": "Free Fire x NARUTO SHIPPUDEN",
+   "labels": [
+    "Action",
+    "Tactical shooter",
+    "Gun"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.3,
+   "google_play": "com.dts.freefireth",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 29,
+   "title": "Disney Solitaire",
+   "labels": [
+    "Card",
+    "Simulation",
+    "Design",
+    "Offline"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.8,
+   "google_play": "com.superplaystudios.disneysolitairedreams",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 30,
+   "title": "Sword x Staff",
+   "labels": [
+    "Role Playing",
+    "Idle RPG",
+    "Isekai",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.6,
+   "google_play": "com.zjcs.android.us",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 31,
+   "title": "Homescapes",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.7,
+   "google_play": "com.playrix.homescapes",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 32,
+   "title": "Call of Duty®: Mobile",
+   "labels": [
+    "Action",
+    "Tactical shooter",
+    "Military",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Editors' Choice"
+   ],
+   "rating": 4.3,
+   "google_play": "com.activision.callofduty.shooter",
+   "id_source": "Play web search, exact title",
+   "developer": "Activision Publishing, Inc."
+  },
+  {
+   "rank": 33,
+   "title": "Yarn Loop",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.combo.yarnflow",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 34,
+   "title": "Pixel Flow!",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.loomgames.pixelflow",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 35,
+   "title": "Clash of Clans",
+   "labels": [
+    "Strategy",
+    "Build & battle",
+    "Casual",
+    "Medieval fantasy"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 4.5,
+   "google_play": "com.supercell.clashofclans",
+   "id_source": "Play web search, exact title",
+   "developer": "Supercell"
+  },
+  {
+   "rank": 36,
+   "title": "Lotsa Slots - Casino Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 4.8,
+   "google_play": "com.diamondlife.slots.vegas.free",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 37,
+   "title": "Dark War Survival",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Apocalyptic",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.4,
+   "google_play": "com.readygo.dark.gp",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 38,
+   "title": "Coin Master - Board Adventure",
+   "labels": [
+    "Casual",
+    "Board",
+    "Dice",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/25/26"
+   ],
+   "rating": 4.7,
+   "google_play": "com.moonactive.cmboard",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 39,
+   "title": "Solitaire Grand Harvest",
+   "labels": [
+    "Card",
+    "Tripeaks",
+    "Casual",
+    "Cards"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.7,
+   "google_play": "net.supertreat.solitaire",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 40,
+   "title": "Clash Royale",
+   "labels": [
+    "Strategy",
+    "Tower defense",
+    "Royalty",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 4.4,
+   "google_play": "com.supercell.clashroyale",
+   "id_source": "Play web search, exact title",
+   "developer": "Supercell"
+  },
+  {
+   "rank": 41,
+   "title": "Cash Frenzy™ - Casino Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 4 days"
+   ],
+   "rating": 4.7,
+   "google_play": "slots.pcg.casino.games.free.android",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 42,
+   "title": "DRAGON BALL Z DOKKAN BATTLE",
+   "labels": [
+    "Action",
+    "Role Playing",
+    "Puzzles",
+    "Single player"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 4.6,
+   "google_play": "com.bandainamcogames.dbzdokkanww",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 43,
+   "title": "Flambé®: Merge & Cook",
+   "labels": [
+    "Puzzle",
+    "Simulation",
+    "Management",
+    "Light-hearted"
+   ],
+   "badges": [],
+   "rating": 4.4,
+   "google_play": "com.cola.game",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 44,
+   "title": "Matching Story - Puzzle Games",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.9,
+   "google_play": "com.joycastle.mergematch",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 45,
+   "title": "Slots: Heart of Vegas Casino",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Modern"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.productmadness.hovmobile",
+   "id_source": "Play web search, exact title",
+   "developer": "Product Madness"
+  },
+  {
+   "rank": 46,
+   "title": "Merge Cooking®",
+   "labels": [
+    "Simulation",
+    "Design",
+    "Business empire",
+    "Offline"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.5,
+   "google_play": "com.merge.cooking.theme.restaurant.food",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 47,
+   "title": "Pokémon TCG Pocket",
+   "labels": [
+    "Card",
+    "Card battler",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.6,
+   "google_play": "jp.pokemon.pokemontcgp",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 48,
+   "title": "Quick Hit Casino Slots Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Fantasy"
+   ],
+   "badges": [],
+   "rating": 4.7,
+   "google_play": "com.ballytechnologies.quickhitslots",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 49,
+   "title": "Cube Land Puzzle Game",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.rotatelab.cubeblast",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 50,
+   "title": "Star Wars™: Galaxy of Heroes",
+   "labels": [
+    "Role Playing",
+    "Turn-based RPG",
+    "Casual",
+    "Battling"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.0,
+   "google_play": "com.ea.game.starwarscapital_row",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 51,
+   "title": "Hollywood Merge",
+   "labels": [
+    "Casual",
+    "Simulation",
+    "Dress-up",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.hollywood.merge",
+   "id_source": "Play web search, exact title",
+   "developer": "VoyagerOne IE"
+  },
+  {
+   "rank": 52,
+   "title": "Puzzles & Survival",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Zombie"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.global.ztmslg",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 53,
+   "title": "Z Route: Redemption",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Zombie"
+   ],
+   "badges": [
+    "New"
+   ],
+   "rating": 4.1,
+   "google_play": "com.zroute.global",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 54,
+   "title": "Bingo Voyage-Bingo Travel Game",
+   "labels": [
+    "Board",
+    "Casino",
+    "Bingo",
+    "Casual"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.8,
+   "google_play": "com.bingo.cruise.free.best.top.game",
+   "id_source": "Play web search; web title is 'Bingo Voyage - Live Bingo Game'",
+   "developer": "VERTEX GAMES PTE. LTD."
+  },
+  {
+   "rank": 55,
+   "title": "Colony Flow!",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.4,
+   "google_play": "com.abi.colony.flow",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 56,
+   "title": "Lordrush",
+   "labels": [
+    "Strategy",
+    "Tower defense",
+    "Immersive"
+   ],
+   "badges": [],
+   "rating": 4.3,
+   "google_play": "com.s01.global",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 57,
+   "title": "Magic: The Gathering Arena",
+   "labels": [
+    "Card",
+    "Card battler",
+    "Battling"
+   ],
+   "badges": [
+    "Editors' Choice"
+   ],
+   "rating": 4.2,
+   "google_play": "com.wizards.mtga",
+   "id_source": "Play web search, exact title",
+   "developer": "Wizards of the Coast LLC"
+  },
+  {
+   "rank": 58,
+   "title": "June's Journey: Hidden Objects",
+   "labels": [
+    "Adventure",
+    "Puzzle",
+    "Hidden object",
+    "Casual"
+   ],
+   "badges": [
+    "Editors' Choice"
+   ],
+   "rating": 4.4,
+   "google_play": "net.wooga.junes_journey_hidden_object_mystery_game",
+   "id_source": "Play web search, exact title",
+   "developer": "Wooga"
+  },
+  {
+   "rank": 59,
+   "title": "Hay Day",
+   "labels": [
+    "Simulation",
+    "Farming",
+    "Casual",
+    "Farming"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.4,
+   "google_play": "com.supercell.hayday",
+   "id_source": "Play web search, exact title",
+   "developer": "Supercell"
+  },
+  {
+   "rank": 60,
+   "title": "Clash of Critters",
+   "labels": [
+    "Casual",
+    "Strategy",
+    "Tower defense",
+    "Immersive"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.1,
+   "google_play": "com.farlightgames.pgame.gp",
+   "id_source": "Play web search, exact title",
+   "developer": "FARLIGHT"
+  },
+  {
+   "rank": 61,
+   "title": "Slotomania™ Slots Casino Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Modern"
+   ],
+   "badges": [],
+   "rating": 4.4,
+   "google_play": "air.com.playtika.slotomania",
+   "id_source": "Play web search, exact title",
+   "developer": "Playtika"
+  },
+  {
+   "rank": 62,
+   "title": "Puzzles & Chaos: Frozen Castle",
+   "labels": [
+    "Strategy",
+    "Role Playing",
+    "Match 3 RPG",
+    "Casual"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.1,
+   "google_play": "com.global.pnck",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 63,
+   "title": "eFootball™",
+   "labels": [
+    "Sports",
+    "Soccer",
+    "Athlete"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/21/26"
+   ],
+   "rating": 4.1,
+   "google_play": "jp.konami.pesam",
+   "id_source": "Play web search, exact title",
+   "developer": "KONAMI"
+  },
+  {
+   "rank": 64,
+   "title": "Royal Smash! - Physics Puzzle",
+   "labels": [
+    "Casual",
+    "Puzzle",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.6,
+   "google_play": "com.cyphergames.royalsmash",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 65,
+   "title": "Hole Stars: Puzzle Game",
+   "labels": [
+    "Puzzle",
+    "Action",
+    "IO game",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7,
+   "google_play": "com.moonactive.holestars",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 66,
+   "title": "Bingo Frenzy™-Live Bingo Games",
+   "labels": [
+    "Board",
+    "Casino",
+    "Bingo",
+    "Casual"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.9,
+   "google_play": "com.cooking.bingo.ldkwh",
+   "id_source": "Play web search, exact title",
+   "developer": "VERTEX GAMES PTE. LTD."
+  },
+  {
+   "rank": 67,
+   "title": "Minecraft: Dream it, Build it!",
+   "labels": [
+    "Arcade",
+    "Simulation",
+    "Sandbox",
+    "Casual"
+   ],
+   "badges": [
+    "$6.99",
+    "Editors' Choice"
+   ],
+   "rating": 4.3,
+   "google_play": "com.mojang.minecraftpe",
+   "id_source": "Play web search, exact title",
+   "developer": "Mojang"
+  },
+  {
+   "rank": 68,
+   "title": "POP! Slots™",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Multiplayer"
+   ],
+   "badges": [],
+   "rating": 4.8,
+   "google_play": "com.playstudios.popslots",
+   "id_source": "Play web search, exact title",
+   "developer": "PLAYSTUDIOS US, LLC"
+  },
+  {
+   "rank": 69,
+   "title": "DRAGON BALL LEGENDS",
+   "labels": [
+    "Action",
+    "Role Playing",
+    "Action-strategy",
+    "Isekai"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/21/26"
+   ],
+   "rating": 4.3,
+   "google_play": "com.bandainamcoent.dblegends_ww",
+   "id_source": "Play web search, exact title",
+   "developer": "Bandai Namco Entertainment Inc."
+  },
+  {
+   "rank": 70,
+   "title": "Color Block Jam",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.1,
+   "google_play": "com.GybeGames.ColorBlockJam",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 71,
+   "title": "Golf Clash - Golfing Simulator",
+   "labels": [
+    "Sports",
+    "Golf",
+    "Casual",
+    "Sports"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.3,
+   "google_play": "com.playdemic.golf.android",
+   "id_source": "Play web search, exact title",
+   "developer": "ELECTRONIC ARTS"
+  },
+  {
+   "rank": 72,
+   "title": "Hunting Sniper",
+   "labels": [
+    "Action",
+    "Hunting",
+    "Casual",
+    "Gun"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.3,
+   "google_play": "com.online.huntingsniper",
+   "id_source": "Play web search, exact title",
+   "developer": "Sparks Info"
+  },
+  {
+   "rank": 73,
+   "title": "Toy Blast",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Puzzles",
+    "Offline"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7,
+   "google_play": "net.peakgames.amy",
+   "id_source": "Play web search, exact title",
+   "developer": "Peak"
+  },
+  {
+   "rank": 74,
+   "title": "Domino Dreams™",
+   "labels": [
+    "Puzzle",
+    "Board",
+    "Arcade",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7,
+   "google_play": "com.screenshake.dominodreams",
+   "id_source": "Play web search, exact title",
+   "developer": "SuperPlay."
+  },
+  {
+   "rank": 75,
+   "title": "Angry Birds 2",
+   "labels": [
+    "Puzzle",
+    "Physics",
+    "Casual",
+    "Bird"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 4.1,
+   "google_play": "com.rovio.baba",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 76,
+   "title": "EA SPORTS FC Soccer Mobile 27",
+   "labels": [
+    "Sports",
+    "Soccer",
+    "Sports"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.6,
+   "google_play": "com.ea.gp.fifamobile",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 77,
+   "title": "Hero Wars: Alliance RPG Legend",
+   "labels": [
+    "Role Playing",
+    "Action-strategy",
+    "Battling",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/24/26"
+   ],
+   "rating": 4.5,
+   "google_play": "com.nexters.herowars",
+   "id_source": "Play web search, exact title",
+   "developer": "NEXTERS GLOBAL LTD"
+  },
+  {
+   "rank": 78,
+   "title": "Piggy Kingdom",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Pig"
+   ],
+   "badges": [],
+   "rating": 4.8,
+   "google_play": "com.olleyo.piggy.king.free",
+   "id_source": "Play web search, exact title",
+   "developer": "olleyo"
+  },
+  {
+   "rank": 79,
+   "title": "Bus Traffic Fever!",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.2,
+   "google_play": "jp.co.goodroid.hyper.busflow",
+   "id_source": "Play web search, exact title",
+   "developer": "GOODROID,Inc."
+  },
+  {
+   "rank": 80,
+   "title": "Jackpot World™ - Slots Casino",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 6 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.grandegames.slots.dafu.casino",
+   "id_source": "Play web search, exact title",
+   "developer": "SpinX Games Limited"
+  },
+  {
+   "rank": 81,
+   "title": "Police Chief",
+   "labels": [
+    "Strategy",
+    "Simulation",
+    "Tycoon",
+    "Police"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 4 hours"
+   ],
+   "rating": 4.7,
+   "google_play": "com.slg.policewar",
+   "id_source": "Play web search, exact title",
+   "developer": "VoyagerOne IE"
+  },
+  {
+   "rank": 82,
+   "title": "MARVEL Strike Force: Squad RPG",
+   "labels": [
+    "Role Playing",
+    "Turn-based RPG",
+    "Battling",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.3,
+   "google_play": "com.foxnextgames.m3",
+   "id_source": "Play web search, exact title",
+   "developer": "Scopely"
+  },
+  {
+   "rank": 83,
+   "title": "Yahtzee® With Buddies: Dice",
+   "labels": [
+    "Board",
+    "Dice",
+    "Casual",
+    "Board games"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.scopely.yux",
+   "id_source": "Play web search, exact title",
+   "developer": "Scopely"
+  },
+  {
+   "rank": 84,
+   "title": "Rise of Kingdoms: Lost Crusade",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Immersive"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.lilithgame.roc.gp",
+   "id_source": "Play web search, exact title",
+   "developer": "LilithGames"
+  },
+  {
+   "rank": 85,
+   "title": "Merge Mansion: Puzzles & Story",
+   "labels": [
+    "Puzzle",
+    "Simulation",
+    "Design",
+    "Puzzles"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/30/26"
+   ],
+   "rating": 4.5,
+   "google_play": "com.everywear.game5",
+   "id_source": "Play web search, exact title",
+   "developer": "Metacore Games Oy"
+  },
+  {
+   "rank": 86,
+   "title": "Loop Sort",
+   "labels": [
+    "Puzzle",
+    "Sort",
+    "Light-hearted",
+    "Offline"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/22/26"
+   ],
+   "rating": 4.6,
+   "google_play": "com.Garawell.LoopSort",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 87,
+   "title": "WSOP Poker: Texas Holdem Game",
+   "labels": [
+    "Card",
+    "Casino",
+    "Texas hold'em",
+    "Casual"
+   ],
+   "badges": [],
+   "rating": 4.2,
+   "google_play": "com.playtika.wsop.gp",
+   "id_source": "Play web search, exact title",
+   "developer": "Playtika"
+  },
+  {
+   "rank": 88,
+   "title": "Solitaire Associations Journey",
+   "labels": [
+    "Word",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.4,
+   "google_play": "com.hitappsgames.wordsolitaire",
+   "id_source": "Play web search, exact title",
+   "developer": "Hitapps Games"
+  },
+  {
+   "rank": 89,
+   "title": "Cash Club Casino - Vegas Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Miscellaneous"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 4 days"
+   ],
+   "rating": 4.7,
+   "google_play": "com.unicornstudio.cashparty.slots.casino.vegas.free",
+   "id_source": "Play web search, exact title",
+   "developer": "SpinX Games Limited"
+  },
+  {
+   "rank": 90,
+   "title": "Empires & Puzzles: Match-3 RPG",
+   "labels": [
+    "Puzzle",
+    "Role Playing",
+    "Match 3 RPG",
+    "Construction"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.5,
+   "google_play": "com.smallgiantgames.empires",
+   "id_source": "Play web search, exact title",
+   "developer": "Small Giant Games"
+  },
+  {
+   "rank": 91,
+   "title": "PUBG MOBILE",
+   "labels": [
+    "Action",
+    "Tactical shooter",
+    "Intense",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.3,
+   "google_play": "com.tencent.ig",
+   "id_source": "Play web search, exact title",
+   "developer": "Level Infinite"
+  },
+  {
+   "rank": 92,
+   "title": "Top Force",
+   "labels": [
+    "Strategy",
+    "Build & battle",
+    "Immersive",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.project.idle.cd",
+   "id_source": "Play web search, exact title",
+   "developer": "Century Games Innovation Pte. Ltd."
+  },
+  {
+   "rank": 93,
+   "title": "Seaside Escape®: Merge & Story",
+   "labels": [
+    "Puzzle",
+    "Merge",
+    "Casual",
+    "Light-hearted"
+   ],
+   "badges": [],
+   "rating": 4.5,
+   "google_play": "com.gamedots.seasideescape",
+   "id_source": "Play web search, exact title",
+   "developer": "Microfun Limited"
+  },
+  {
+   "rank": 94,
+   "title": "Top Lords",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Immersive",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.7,
+   "google_play": "com.gamespark.topking.gp",
+   "id_source": "Play web search, exact title",
+   "developer": "GAME SPARK"
+  },
+  {
+   "rank": 95,
+   "title": "Huuuge Casino 777 Slots Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.6,
+   "google_play": "com.huuuge.casino.slots",
+   "id_source": "Play web search, exact title",
+   "developer": "Huuuge Games - Play Together"
+  },
+  {
+   "rank": 96,
+   "title": "Mob Control",
+   "labels": [
+    "Arcade",
+    "Action",
+    "Casual",
+    "Hypercasual"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.3,
+   "google_play": "com.vincentb.MobControl",
+   "id_source": "earlier cohort"
+  },
+  {
+   "rank": 97,
+   "title": "Project Makeover",
+   "labels": [
+    "Puzzle",
+    "Match 3 adventure",
+    "Casual",
+    "Fashion"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.5,
+   "google_play": "com.bgg.jump",
+   "id_source": "Play web search, exact title",
+   "developer": "Magic Tavern, Inc."
+  },
+  {
+   "rank": 98,
+   "title": "Match Masters",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Casual",
+    "Competitive",
+    "Offer"
+   ],
+   "badges": [
+    "Ends in 1 day"
+   ],
+   "rating": 4.8,
+   "google_play": "com.funtomic.matchmasters",
+   "id_source": "Play web search, exact title",
+   "developer": "Candivore"
+  },
+  {
+   "rank": 99,
+   "title": "Jackpot Master™ Slots - Casino",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.8,
+   "google_play": "com.jmsgame.jackpotmastercasino",
+   "id_source": "Play web search, exact title",
+   "developer": "Zeroo Gravity Games"
+  },
+  {
+   "rank": 100,
+   "title": "Gold Fish Casino Slot Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Arcade"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 4.8,
+   "google_play": "com.williamsinteractive.goldfish",
+   "id_source": "Play web search, exact title",
+   "developer": "SciPlay"
+  },
+  {
+   "rank": 101,
+   "title": "Merge Dragons!",
+   "labels": [
+    "Puzzle",
+    "Merge",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.4
+  },
+  {
+   "rank": 102,
+   "title": "Tiles Survive!",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Immersive",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.4
+  },
+  {
+   "rank": 103,
+   "title": "Family Island™ — Farming game",
+   "labels": [
+    "Casual",
+    "Simulation",
+    "Management",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/25/26"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 104,
+   "title": "The Grand Mafia",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Battling"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 105,
+   "title": "Mighty Fu Casino Slots Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.6
+  },
+  {
+   "rank": 106,
+   "title": "Brawl Stars",
+   "labels": [
+    "Action",
+    "Tactical shooter",
+    "Gun",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.2
+  },
+  {
+   "rank": 107,
+   "title": "Big Fish Casino - Slots Games",
+   "labels": [
+    "Casino",
+    "Poker",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 3.9
+  },
+  {
+   "rank": 108,
+   "title": "Rise of Castles: Ice and Fire",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Evolution",
+    "Multiplayer"
+   ],
+   "badges": [],
+   "rating": 4.5
+  },
+  {
+   "rank": 109,
+   "title": "Idle Obelisk Miner",
+   "labels": [
+    "Simulation",
+    "Idle",
+    "Casual",
+    "Offline"
+   ],
+   "badges": [],
+   "rating": 4.8
+  },
+  {
+   "rank": 110,
+   "title": "Free Fire MAX x NARUTO",
+   "labels": [
+    "Action",
+    "Tactical shooter",
+    "Gun"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 4 days"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 111,
+   "title": "Palmon: Survival",
+   "labels": [
+    "Strategy",
+    "Build & battle",
+    "Monster",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.7
+  },
+  {
+   "rank": 112,
+   "title": "Wizard of Oz Slots Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Offline"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.8
+  },
+  {
+   "rank": 113,
+   "title": "Sunday City: Life RolePlay",
+   "labels": [
+    "Simulation",
+    "Casino",
+    "Casino-adventure",
+    "Immersive"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/23/26"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 114,
+   "title": "DoubleU Casino™ - Vegas Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Fantasy"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 115,
+   "title": "Foodstars: Merge & Cook",
+   "labels": [
+    "Puzzle",
+    "Simulation",
+    "Design",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.6
+  },
+  {
+   "rank": 116,
+   "title": "8 Ball Pool",
+   "labels": [
+    "Sports",
+    "Billiards",
+    "Casual",
+    "Billiards"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 4.8
+  },
+  {
+   "rank": 117,
+   "title": "Cash Tornado™ Slots - Casino",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Modern"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.8
+  },
+  {
+   "rank": 118,
+   "title": "Triple Match 3D",
+   "labels": [
+    "Puzzle",
+    "Pair matching",
+    "Toys",
+    "Offline"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.4
+  },
+  {
+   "rank": 119,
+   "title": "DoubleDown Casino Vegas Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.2
+  },
+  {
+   "rank": 120,
+   "title": "MONOPOLY Slots - Casino Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 121,
+   "title": "Design Home™: House Makeover",
+   "labels": [
+    "Simulation",
+    "Design",
+    "Renovation",
+    "Single player"
+   ],
+   "badges": [
+    "Editors' Choice"
+   ],
+   "rating": 4.3
+  },
+  {
+   "rank": 122,
+   "title": "Castle Busters",
+   "labels": [
+    "Action",
+    "Artillery shooter",
+    "Competitive",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 2 days"
+   ],
+   "rating": 4.1
+  },
+  {
+   "rank": 123,
+   "title": "Food Hunt: Pixel Puzzle",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 11/1/26"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 124,
+   "title": "Star Trek Fleet Command",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Battling",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.3
+  },
+  {
+   "rank": 125,
+   "title": "Top Girl",
+   "labels": [
+    "Strategy",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 126,
+   "title": "Guns of Glory: Lost Island",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Immersive",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/29/26"
+   ],
+   "rating": 4.3
+  },
+  {
+   "rank": 127,
+   "title": "Phase 10: Casual Card Game",
+   "labels": [
+    "Card",
+    "Last card",
+    "Casual",
+    "Cards"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 11/4/26"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 128,
+   "title": "Chess - Play and Learn Online",
+   "labels": [
+    "Board",
+    "Chess",
+    "Casual",
+    "Board games"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/29/26"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 129,
+   "title": "Warline: Sniper Strike",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Army",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.9
+  },
+  {
+   "rank": 130,
+   "title": "Golf Rival - Multiplayer Game",
+   "labels": [
+    "Sports",
+    "Golf",
+    "Casual",
+    "Sports"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.4
+  },
+  {
+   "rank": 131,
+   "title": "Marble Sort! - Color Puzzle",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 132,
+   "title": "Lands of Jail",
+   "labels": [
+    "Strategy",
+    "Simulation",
+    "Tycoon",
+    "Casual"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 133,
+   "title": "Narco Empire",
+   "labels": [
+    "Strategy",
+    "Crime",
+    "Single player"
+   ],
+   "badges": [],
+   "rating": 4.8
+  },
+  {
+   "rank": 134,
+   "title": "88 Fortunes™ Casino Slot Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 135,
+   "title": "War Robots Multiplayer Battles",
+   "labels": [
+    "Action",
+    "Vehicle combat",
+    "Robot",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Event"
+   ],
+   "rating": 4.3
+  },
+  {
+   "rank": 136,
+   "title": "House of Fun™ - Casino Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.6
+  },
+  {
+   "rank": 137,
+   "title": "Fate/Grand Order (English)",
+   "labels": [
+    "Role Playing",
+    "Turn-based RPG",
+    "Isekai",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 6 days"
+   ],
+   "rating": 4.0
+  },
+  {
+   "rank": 138,
+   "title": "Farm Heroes Saga",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Casual",
+    "Puzzles"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/28/26"
+   ],
+   "rating": 4.6
+  },
+  {
+   "rank": 139,
+   "title": "Screwdom 3D",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Offline",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/28/26"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 140,
+   "title": "Triple Match City",
+   "labels": [
+    "Puzzle",
+    "Match 3",
+    "Casual",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 6 days"
+   ],
+   "rating": 4.8
+  },
+  {
+   "rank": 141,
+   "title": "Just Desserts: Revenge & Merge",
+   "labels": [
+    "Casual",
+    "Simulation",
+    "Design",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/17/26"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 142,
+   "title": "Diablo Immortal",
+   "labels": [
+    "Role Playing",
+    "Assassin"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/29/26"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 143,
+   "title": "Panthia®: Magic & Merge Game",
+   "labels": [
+    "Puzzle",
+    "Merge",
+    "Casual",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 11/3/26"
+   ],
+   "rating": 4.6
+  },
+  {
+   "rank": 144,
+   "title": "Isekai:Slow Life",
+   "labels": [
+    "Role Playing",
+    "Simulation",
+    "City-building",
+    "Casual"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/20/26"
+   ],
+   "rating": 4.4
+  },
+  {
+   "rank": 145,
+   "title": "Summoners War",
+   "labels": [
+    "Role Playing",
+    "Turn-based RPG",
+    "Isekai"
+   ],
+   "badges": [],
+   "rating": 3.8
+  },
+  {
+   "rank": 146,
+   "title": "Glow Fashion Idol",
+   "labels": [
+    "Simulation",
+    "Dress-up",
+    "Casual",
+    "Offline"
+   ],
+   "badges": [],
+   "rating": 4.8
+  },
+  {
+   "rank": 147,
+   "title": "Jackpot Magic - Casino Slots",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.1
+  },
+  {
+   "rank": 148,
+   "title": "Caesars Slots: Casino Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 149,
+   "title": "Stormshot: Isle of Adventure",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Pirate"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/28/26"
+   ],
+   "rating": 4.1
+  },
+  {
+   "rank": 150,
+   "title": "Words With Friends Word Game",
+   "labels": [
+    "Word",
+    "Word jumble",
+    "Board games"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 4.1
+  },
+  {
+   "rank": 151,
+   "title": "Last Shelter: War Z",
+   "labels": [
+    "Strategy",
+    "4X"
+   ],
+   "badges": [],
+   "rating": 4.7
+  },
+  {
+   "rank": 152,
+   "title": "Duck Survival",
+   "labels": [
+    "Strategy",
+    "Tower defense",
+    "Zombie",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.6
+  },
+  {
+   "rank": 153,
+   "title": "The Battle Cats",
+   "labels": [
+    "Strategy",
+    "Tower defense",
+    "Casual",
+    "Cat"
+   ],
+   "badges": [],
+   "rating": 4.5
+  },
+  {
+   "rank": 154,
+   "title": "Lords Mobile x Transformers",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Battling"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 1 day"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 155,
+   "title": "Hotel Legacy: Merge Game",
+   "labels": [
+    "Casual",
+    "Simulation",
+    "Design",
+    "Light-hearted"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 156,
+   "title": "Club Vegas Casino Slots Games",
+   "labels": [
+    "Casino",
+    "Slots",
+    "Casual",
+    "Dice"
+   ],
+   "badges": [],
+   "rating": 4.8
+  },
+  {
+   "rank": 157,
+   "title": "Mobile Legends: Bang Bang.US",
+   "labels": [
+    "Action",
+    "Strategy",
+    "MOBA",
+    "Immersive"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 3.7
+  },
+  {
+   "rank": 158,
+   "title": "Invincible: Guarding the Globe",
+   "labels": [
+    "Role Playing",
+    "Action-strategy",
+    "Immersive"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.4
+  },
+  {
+   "rank": 159,
+   "title": "Infinity Kingdom",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Battling"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 160,
+   "title": "Jelly Busters: Puzzle Game",
+   "labels": [
+    "Puzzle",
+    "Logic",
+    "Single player"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 161,
+   "title": "The Tower - Idle Tower Defense",
+   "labels": [
+    "Simulation",
+    "Idle",
+    "Shoot",
+    "Single player"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 3 days"
+   ],
+   "rating": 4.0
+  },
+  {
+   "rank": 162,
+   "title": "Epic Seven",
+   "labels": [
+    "Role Playing",
+    "Turn-based RPG",
+    "Battling"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.2
+  },
+  {
+   "rank": 163,
+   "title": "MARVEL SNAP: Hero Strategy CCG",
+   "labels": [
+    "Strategy",
+    "Card",
+    "Card battler",
+    "Cards"
+   ],
+   "badges": [
+    "Editors' Choice",
+    "Major Update"
+   ],
+   "rating": 3.4
+  },
+  {
+   "rank": 164,
+   "title": "Yalla Ludo - Ludo&Jackaroo",
+   "labels": [
+    "Board",
+    "Dominos",
+    "Dice",
+    "Offline"
+   ],
+   "badges": [],
+   "rating": 4.3
+  },
+  {
+   "rank": 165,
+   "title": "Overgeared Hero: Merge RPG",
+   "labels": [
+    "Strategy",
+    "Role Playing",
+    "Immersive"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 10/26/26"
+   ],
+   "rating": 4.7
+  },
+  {
+   "rank": 166,
+   "title": "Frost & Flame: King of Avalon",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Immersive"
+   ],
+   "badges": [],
+   "rating": 4.3
+  },
+  {
+   "rank": 167,
+   "title": "War Machines：Tanks Battle Game",
+   "labels": [
+    "Action",
+    "Vehicle combat",
+    "Army",
+    "Multiplayer"
+   ],
+   "badges": [
+    "Event",
+    "Ends on 11/1/26"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 168,
+   "title": "GIRLS' FRONTLINE 2: EXILIUM",
+   "labels": [
+    "Strategy",
+    "Role Playing",
+    "Tactical",
+    "Gun"
+   ],
+   "badges": [
+    "Major Update"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 169,
+   "title": "Bingo Bash: Live Bingo Games",
+   "labels": [
+    "Board",
+    "Casino",
+    "Bingo",
+    "Competitive"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 4.5
+  },
+  {
+   "rank": 170,
+   "title": "Top War: Battle Game",
+   "labels": [
+    "Strategy",
+    "4X",
+    "Evolution"
+   ],
+   "badges": [],
+   "rating": 4.6
+  },
+  {
+   "rank": 171,
+   "title": "Klondike Adventures: Farm Game",
+   "labels": [
+    "Simulation",
+    "Farming",
+    "Casual",
+    "Restoration"
+   ],
+   "badges": [
+    "Event",
+    "Ends in 5 days"
+   ],
+   "rating": 4.6
+  }
+ ]
+}

@@ -4,9 +4,10 @@
 # Claude plan through Claude Code (no API charge); Jev runs on TypeSafe under a $1.00 cap in its
 # own ledger (benchmark-runs/mobile-top100/ledger.jsonl).
 #
-# Games already tagged on October 5 (experiments/mobile-retag-v2/per-game.jsonl) are not tagged
-# again; the site uses those results. Safe to run again: finished games are kept and skipped,
-# and the chart is only read once (delete experiments/mobile-top100/cohort.json to re-read it).
+# Games already tagged on October 5 or 8 (experiments/mobile-retag-v2/ and
+# experiments/mobile-top100/new-run/ per-game.jsonl) are not tagged again; the site uses those
+# results. Safe to run again: finished games are kept and skipped, and the chart is only read
+# once. cohort.json can also come from the Play Store app (experiments/mobile-top100/play_cohort.py).
 source "$(dirname "$0")/common.sh"
 
 EXPERIMENT="experiments/mobile-top100"
@@ -41,12 +42,14 @@ NEW_IDS="$(uv run python - "$EXPERIMENT/cohort.json" <<'PY'
 import json, sys
 cohort = json.load(open(sys.argv[1]))
 done = {json.loads(line)["game_id"]
-        for line in open("experiments/mobile-retag-v2/per-game.jsonl") if line.strip()}
+        for path in ("experiments/mobile-retag-v2/per-game.jsonl",
+                     "experiments/mobile-top100/new-run/per-game.jsonl")
+        for line in open(path) if line.strip()}
 print(",".join(g["game_id"] for g in cohort["games"] if g["game_id"] not in done))
 PY
 )"
 COUNT=$(echo "$NEW_IDS" | tr ',' '\n' | grep -c . || true)
-echo "   $COUNT games to tag (the rest were tagged on October 5)."
+echo "   $COUNT games to tag (the rest were tagged on October 5 or 8)."
 if [[ "$COUNT" -eq 0 ]]; then
   echo "Nothing new to tag."
 else
