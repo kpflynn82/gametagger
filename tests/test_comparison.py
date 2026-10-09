@@ -1021,3 +1021,65 @@ def test_mobile_cohort_falls_back_to_top_free_for_rising_games():
     assert [g["segment"] for g in cohort["games"]] == ["grossing", "rising"]
     assert "top free" in cohort["charts"]["rising"]["source"]
     assert "top_new_free" in cohort["skipped"][0]["reason"]
+
+
+EMPTY_RANKING = (
+    "<div>Last updated: <time>October 8, 2026</time></div>"
+    '<table id="rankings-table"><thead><tr><th>Rank</th></tr></thead><tbody>\n  </tbody></table>'
+)
+
+
+def test_appbrain_empty_table_says_the_chart_is_not_published():
+    with pytest.raises(SourceError, match="ranking table is empty"):
+        charts.parse_appbrain(EMPTY_RANKING)
+
+
+def test_mobile_cohort_falls_back_to_previous_grossing_when_today_is_empty():
+    def row(n, pkg):
+        return {"rank": n, "slug": "s", "package": pkg, "title": pkg.upper(), "dev": "D"}
+
+    free = appbrain_page([row(1, "com.a"), row(2, "com.x"), row(3, "com.y")])
+
+    def fetch(url):
+        if "top_grossing" in url or "top_new_free" in url:
+            return EMPTY_RANKING
+        return free
+
+    previous = {
+        "charts": {"mobile": {"chart_date": "2026-09-24"}},
+        "games": [
+            {
+                "list": "mobile",
+                "rank": 2,
+                "title": "B",
+                "developers": ["D"],
+                "ids": {"google_play": "com.b"},
+            },
+            {
+                "list": "mobile",
+                "rank": 1,
+                "title": "A",
+                "developers": [],
+                "ids": {"google_play": "com.a"},
+            },
+            {"list": "steam", "rank": 1, "title": "S", "ids": {"steam_app": "1"}},
+        ],
+    }
+    cohort = charts.build_mobile_cohort(
+        grossing_count=100,
+        rising_count=1,
+        previous=previous,
+        rising_if_no_grossing=5,
+        fetch_page=fetch,
+    )
+    assert [(g["game_id"], g["segment"]) for g in cohort["games"]] == [
+        ("gp-com.a", "grossing"),
+        ("gp-com.b", "grossing"),
+        ("gp-com.x", "rising"),
+        ("gp-com.y", "rising"),
+    ]
+    mobile = cohort["charts"]["mobile"]
+    assert mobile["chart_date"] == "2026-09-24" and "previous_chart_date" not in mobile
+    assert "ranking table is empty" in mobile["fallback"]
+    assert all(g["chart"]["previous_rank"] is None for g in cohort["games"][:2])
+    assert "top free" in cohort["charts"]["rising"]["source"]

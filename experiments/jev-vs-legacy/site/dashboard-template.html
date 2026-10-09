@@ -279,7 +279,7 @@ section{scroll-margin-top:84px}
     <div class="kicker"><span class="dot"></span><span id="snap">Snapshot</span></div>
     <h1>What's inside today's top <mark>mobile</mark> games</h1>
     <p class="dek" id="dek"></p>
-    <div class="ctas"><a class="btn primary" href="/dashboard#rising">See what's rising →</a><a class="btn" href="/games">Browse every game</a><a class="btn" href="/how-it-works#trailer">▶ Watch the 82-second film</a></div>
+    <div class="ctas"><a class="btn primary" href="/dashboard#rising" id="cta-rise">See what's rising →</a><a class="btn" href="/games">Browse every game</a><a class="btn" href="/how-it-works#trailer">▶ Watch the 82-second film</a></div>
     <p class="trust">Google Play top grossing and rising games, plus Steam for comparison · 189 gameplay tags · 100 genres · every tag traced to its evidence · decisions by Jev from TypeSafe</p>
   </div>
   <aside class="example" id="example" aria-label="An example game profile"></aside>
@@ -296,7 +296,7 @@ section{scroll-margin-top:84px}
   <div class="eyebrow">Explore</div>
   <h2 id="x-h">Pick a place to start</h2>
   <div class="xgrid">
-    <a class="xcard" href="/dashboard#rising"><b>What's rising</b><span>The newest climbers on Google Play, and the tags they share that today's top earners don't.</span><i>→</i></a>
+    <a class="xcard" href="/dashboard#rising" id="x-rise"><b>What's rising</b><span>Today's newest and most-downloaded Google Play games, and the tags they share that the top earners don't.</span><i>→</i></a>
     <a class="xcard" href="/dashboard"><b>Dashboard</b><span>Genres, the most common tags, chart movers, what the top grossers share, and mobile versus PC.</span><i>→</i></a>
     <a class="xcard" href="/games"><b>Games</b><span>Every game, each with its genre and every tag Jev decided.</span><i>→</i></a>
     <a class="xcard" href="/tags"><b>Tags</b><span>What each of the 189 tags and 100 genres means, and the evidence allowed to prove it.</span><i>→</i></a>
@@ -315,7 +315,7 @@ section{scroll-margin-top:84px}
   <span class="lab">Showing</span>
   <div class="seg" id="seg">
     <button type="button" data-l="mobile" aria-pressed="true"><span class="swatch" style="background:var(--mob)"></span>Top grossing <span class="n" data-n="mobile"></span></button>
-    <button type="button" data-l="rising" aria-pressed="false"><span class="swatch" style="background:var(--rise)"></span>Rising <span class="n" data-n="rising"></span></button>
+    <button type="button" data-l="rising" aria-pressed="false"><span class="swatch" style="background:var(--rise)"></span><span data-label="rising">Rising</span> <span class="n" data-n="rising"></span></button>
     <button type="button" data-l="steam" aria-pressed="false"><span class="swatch" style="background:var(--pc)"></span>PC · Steam <span class="n" data-n="steam"></span></button>
     <button type="button" data-l="all" aria-pressed="false">All <span class="n" data-n="all"></span></button>
   </div>
@@ -326,10 +326,10 @@ section{scroll-margin-top:84px}
   <h2 id="ri-h">What's rising on Google Play</h2>
   <p class="lede" id="ri-lede"></p>
   <div class="grid2">
-    <div class="panel"><h3>More common in rising games</h3><p class="sub" id="ri-sub"></p>
-      <div class="legend"><span><span class="swatch" style="background:var(--rise)"></span>Rising games</span><span><span class="swatch" style="background:var(--mob)"></span>Top grossing</span></div>
-      <div class="rows" id="ri-tags"></div><p class="note">Early signals to look into, not proof: rising games are new, so their store pages say less, and small groups swing.</p></div>
-    <div class="panel"><h3>The rising games</h3><p class="sub" id="ri-games-sub"></p><div class="tablewrap"><table id="ri-games"></table></div></div>
+    <div class="panel"><h3 id="ri-tags-h">More common in rising games</h3><p class="sub" id="ri-sub"></p>
+      <div class="legend"><span><span class="swatch" style="background:var(--rise)"></span><span data-label="rising">Rising</span> games</span><span><span class="swatch" style="background:var(--mob)"></span>Top grossing</span></div>
+      <div class="rows" id="ri-tags"></div><p class="note">Early signals to look into, not proof: newer games' store pages say less, and small groups swing.</p></div>
+    <div class="panel"><h3 id="ri-games-h">The rising games</h3><p class="sub" id="ri-games-sub"></p><div class="tablewrap"><table id="ri-games"></table></div></div>
   </div>
 </section>
 
@@ -537,8 +537,10 @@ const catLabel = Object.fromEntries(G.categories.map((c) => [c.id, c.label]));
 const COL = {all: "var(--all)", steam: "var(--pc)", mobile: "var(--mob)", rising: "var(--rise)"};
 const M = DATA.mobile || {};
 const COUNT = {steam: GAMES.filter((g) => g.list === "steam").length, mobile: GAMES.filter((g) => g.list === "mobile").length, rising: GAMES.filter((g) => g.list === "rising").length, all: GAMES.length};
-const LISTNAME = {all: `all ${COUNT.all} games`, steam: `Steam's ${COUNT.steam} most-played`, mobile: `Google Play's ${COUNT.mobile} top-grossing`, rising: `${COUNT.rising} rising Google Play games`};
-const SHORT = {steam: "PC", mobile: "Top grossing", rising: "Rising"};
+const FREE = M.rising_label === "Top free";
+const LISTNAME = {all: `all ${COUNT.all} games`, steam: `Steam's ${COUNT.steam} most-played`, mobile: `Google Play's ${COUNT.mobile} top-grossing`, rising: FREE ? `${COUNT.rising} top free Google Play games` : `${COUNT.rising} rising Google Play games`};
+const SHORT = {steam: "PC", mobile: "Top grossing", rising: FREE ? "Top free" : "Rising"};
+document.querySelectorAll('[data-label="rising"]').forEach((el) => { el.textContent = SHORT.rising; });
 const STORE = (l) => l === "steam" ? "Steam" : "Google Play";
 document.querySelectorAll("[data-n]").forEach((el) => { el.textContent = COUNT[el.dataset.n] || ""; });
 if (!COUNT.rising) { const b = document.querySelector('[data-l="rising"]'); if (b) b.hidden = true; }
@@ -567,7 +569,7 @@ const decided = GAMES.reduce((a, g) => a + Object.keys(g.detail?.jev || {}).leng
 const unknown = GAMES.length * G.tags.length - decided;
 const fmtDate = (d) => d ? new Date(d + "T12:00:00Z").toLocaleDateString("en-US", {month: "long", day: "numeric", year: "numeric"}) : "";
 $("dek").textContent = M.chart_date
-  ? `Google Play's ${COUNT.mobile} top-grossing games in the US on ${fmtDate(M.chart_date)}${COUNT.rising ? `, plus ${COUNT.rising} games rising fastest on its new-games chart` : ""}, with Steam's ${COUNT.steam} most-played games for comparison. Every game was tagged the same way, and every tag can be traced to the evidence behind it.`
+  ? `Google Play's ${COUNT.mobile} top-grossing games in the US (chart of ${fmtDate(M.chart_date)})${COUNT.rising ? `, plus ${COUNT.rising} games ${FREE ? `from its top free chart on ${fmtDate(M.rising_chart_date)}` : "rising fastest on its new-games chart"}` : ""}, with Steam's ${COUNT.steam} most-played games for comparison. Every game was tagged the same way, and every tag can be traced to the evidence behind it.`
   : `Steam's 50 most-played games and Google Play's 50 top-grossing games in the US, from the charts of September 23 and 24, 2026. Every game was tagged the same way, and every tag can be traced to the evidence behind it.`;
 $("kpis").innerHTML = [
   [COUNT.mobile + COUNT.rising, "mobile games tagged"],
@@ -707,11 +709,20 @@ function renderRising() {
   const rise = inList("rising"), top = inList("mobile");
   const rows = G.tags.map((t) => [t.id, share(rise, t.id), share(top, t.id), rise.filter((g) => has(g, t.id)).length])
     .filter(([, a, , n]) => n >= 3).map((r) => [...r, r[1] - r[2]]).filter((r) => r[4] > 0).sort((a, b) => b[4] - a[4]).slice(0, 10);
-  $("ri-sub").textContent = `Share of the ${COUNT.rising} rising games against the ${COUNT.mobile} top-grossing games, for tags in at least 3 rising games`;
-  $("ri-tags").innerHTML = rows.map(([t, a, b, n]) => `<div class="r"><div class="name">${tagA(t)}</div><div class="tr">${bar(a, "var(--rise)", pct(a), `${esc(TAGS[t].label)}: ${n} of ${rise.length} rising games`)}${bar(b, "var(--mob)", pct(b), `${esc(TAGS[t].label)}: ${pct(b)} of top-grossing games`)}</div></div>`).join("") || `<p class="count">No tag stands out yet.</p>`;
+  const word = FREE ? "top free" : "rising";
+  if (FREE) {
+    $("ri-h").textContent = "What people download now versus what earns";
+    $("ri-tags-h").textContent = "More common in top free games";
+    $("ri-games-h").textContent = "The top free games";
+  }
+  $("ri-sub").textContent = `Share of the ${COUNT.rising} ${word} games against the ${COUNT.mobile} top-grossing games, for tags in at least 3 ${word} games`;
+  $("ri-tags").innerHTML = rows.map(([t, a, b, n]) => `<div class="r"><div class="name">${tagA(t)}</div><div class="tr">${bar(a, "var(--rise)", pct(a), `${esc(TAGS[t].label)}: ${n} of ${rise.length} ${word} games`)}${bar(b, "var(--mob)", pct(b), `${esc(TAGS[t].label)}: ${pct(b)} of top-grossing games`)}</div></div>`).join("") || `<p class="count">No tag stands out yet.</p>`;
   const fam = {}; rise.forEach((g) => { if (g.family) fam[g.family] = (fam[g.family] || 0) + 1; });
   const [lf, ln] = Object.entries(fam).sort((a, b) => b[1] - a[1])[0] || [];
-  $("ri-lede").textContent = `${COUNT.rising} games climbing ${M.rising_source ? "Google Play's US top new free games chart" : "Google Play's charts"}${M.rising_chart_date ? ` on ${new Date(M.rising_chart_date + "T12:00:00Z").toLocaleDateString("en-US", {month: "long", day: "numeric"})}` : ""}, none of them in the top-grossing list yet. ${lf ? `${G.families[lf]} is the most common family among them (${ln} games). ` : ""}The tags they share more than today's top earners are where a studio might look for what comes next.`;
+  const when = M.rising_chart_date ? ` on ${new Date(M.rising_chart_date + "T12:00:00Z").toLocaleDateString("en-US", {month: "long", day: "numeric"})}` : "";
+  $("ri-lede").textContent = FREE
+    ? `The ${COUNT.rising} most-downloaded free games on Google Play in the US${when} that are not in the top-grossing list. ${lf ? `${G.families[lf]} is the most common family among them (${ln} games). ` : ""}Tags they share more than the top earners show what draws players in before it pays: where a studio might look for what comes next.`
+    : `${COUNT.rising} games climbing Google Play's US top new free games chart${when}, none of them in the top-grossing list yet. ${lf ? `${G.families[lf]} is the most common family among them (${ln} games). ` : ""}The tags they share more than today's top earners are where a studio might look for what comes next.`;
   const KEYCATS = ["gameplay", "mechanic", "engagement", "world", "setting"];
   const top3 = (g) => Object.entries(g.detail?.jev || {}).filter(([id, [t]]) => t === "strong" && KEYCATS.includes(TAGS[id]?.category)).sort((a, b) => (b[1][1] ?? 0) - (a[1][1] ?? 0)).slice(0, 3).map(([t]) => tagA(t)).join(", ");
   $("ri-games-sub").textContent = "In chart order; open a game for every tag";
@@ -796,7 +807,7 @@ function renderLibrary() {
   $("lib-more").textContent = `Show all ${rows.length} games`;
   $("lib").innerHTML = shown.map((g) => {
     const n = Object.values(g.detail?.jev || {}).filter(([t]) => t === "strong" || t === "likely").length;
-    return `<button class="gcard" type="button" data-id="${esc(g.id)}" aria-current="${current === g.id}"><span class="gt">${esc(g.title)}</span><span class="gm"><span class="pill">${g.list === "steam" ? "Steam" : g.list === "rising" ? "Rising" : "Play"} #${g.rank}</span>${esc(GENRES[g.genre_id]?.name || "Genre not decided")}</span><span class="gm">${n} tags present</span></button>`;
+    return `<button class="gcard" type="button" data-id="${esc(g.id)}" aria-current="${current === g.id}"><span class="gt">${esc(g.title)}</span><span class="gm"><span class="pill">${g.list === "steam" ? "Steam" : g.list === "rising" ? (FREE ? "Free" : "Rising") : "Play"} #${g.rank}</span>${esc(GENRES[g.genre_id]?.name || "Genre not decided")}</span><span class="gm">${n} tags present</span></button>`;
   }).join("") || `<p class="count">No game matches “${esc(libQ)}”.</p>`;
   $("lib").querySelectorAll(".gcard").forEach((b) => b.onclick = () => { location.hash = "game-" + b.dataset.id; });
 }
@@ -808,7 +819,7 @@ function showGame(id) {
   const byCat = CAT_ORDER.map((c) => [c, rows.filter((x) => TAGS[x[0]]?.category === c)]).filter(([, xs]) => xs.length);
   const unk = G.tags.length - rows.length;
   box.innerHTML = `<button class="close" id="g-close" type="button">Close</button>
-    <div><div class="eyebrow">${g.list === "steam" ? "Steam most-played" : g.list === "rising" ? "Google Play top new free" : "Google Play top-grossing"} #${g.rank}${g.tagged ? ` · tagged ${fmtDate(g.tagged)}` : ""}${g.peak ? ` · ${g.peak.toLocaleString()} peak players` : ""}</div><h3 class="gname">${esc(g.title)}</h3>
+    <div><div class="eyebrow">${g.list === "steam" ? "Steam most-played" : g.list === "rising" ? (FREE ? "Google Play top free" : "Google Play top new free") : "Google Play top-grossing"} #${g.rank}${g.tagged ? ` · tagged ${fmtDate(g.tagged)}` : ""}${g.peak ? ` · ${g.peak.toLocaleString()} peak players` : ""}</div><h3 class="gname">${esc(g.title)}</h3>
     <div class="gsub">${d.developers?.length ? `<span>${esc(d.developers.join(", "))}</span>` : ""}<span>${rows.filter((r) => r[1] === "strong" || r[1] === "likely").length} present · ${rows.filter((r) => r[1] === "absent").length} absent · ${unk} not enough evidence</span></div></div>
     <div class="gblock"><b>Genre</b><div class="tags">${(d.genres || []).map(([x, p]) => genreLink(x, p)).join("") || '<span class="count">No genre decided</span>'}</div></div>
     <div class="gblock"><b>Tags by category</b><div class="glegend"><span class="tag strong">Present</span><span class="tag likely">Likely</span><span class="tag conflicting">Conflicting</span><span class="tag absent">Absent</span><span>Percent: Jev's probability the tag is present. Tags not listed had too little evidence to decide.</span></div>
@@ -843,7 +854,9 @@ renderLibrary(); dictChips(); renderDict(); route();
 // ---- hero: snapshot line and an example profile
 {
   const fmt = (d) => d ? new Date(d + "T12:00:00Z").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"}) : "";
-  $("snap").textContent = `Snapshot · Google Play ${fmt(M.chart_date || S.chart_dates?.mobile)} · Steam ${fmt(S.chart_dates?.steam)}`;
+  $("snap").textContent = M.grossing_fallback && M.rising_chart_date
+    ? `Snapshot · Google Play top free ${fmt(M.rising_chart_date)} · top grossing ${fmt(M.chart_date)} · Steam ${fmt(S.chart_dates?.steam)}`
+    : `Snapshot · Google Play ${fmt(M.chart_date || S.chart_dates?.mobile)} · Steam ${fmt(S.chart_dates?.steam)}`;
   const first = (l) => GAMES.filter((g) => g.list === l).sort((a, b) => a.rank - b.rank)[0];
   const pick = {mobile: first("mobile"), rising: first("rising"), steam: first("steam")};
   const card = (which) => {
@@ -853,7 +866,7 @@ renderLibrary(); dictChips(); renderDict(); route();
     const no = jev.filter(([, [t]]) => t === "absent").length;
     const genre = (g.detail?.genres || [])[0];
     return `<div class="ex-top"><span class="ex-lab">Example profile</span><div class="seg" role="group" aria-label="Example game">
-        <button type="button" data-ex="mobile" aria-pressed="${which === "mobile"}">Google Play #1</button>${pick.rising ? `<button type="button" data-ex="rising" aria-pressed="${which === "rising"}">Rising #1</button>` : ""}<button type="button" data-ex="steam" aria-pressed="${which === "steam"}">Steam #1</button></div></div>
+        <button type="button" data-ex="mobile" aria-pressed="${which === "mobile"}">Google Play #1</button>${pick.rising ? `<button type="button" data-ex="rising" aria-pressed="${which === "rising"}">${FREE ? "Top free" : "Rising"} #1</button>` : ""}<button type="button" data-ex="steam" aria-pressed="${which === "steam"}">Steam #1</button></div></div>
       <h2 class="ex-name">${esc(g.title)}</h2>
       <div class="ex-genre">${genre ? `<b>${esc(GENRES[genre[0]]?.name || genre[0])}</b> · ${Math.round(100 * genre[1])}% sure` : "Genre not decided: evidence too thin"}</div>
       <div class="tags">${yes.slice(0, 9).map(([t, [tier, p]]) => tagLink(t, tier, p)).join("")}</div>
@@ -872,7 +885,7 @@ renderLibrary(); dictChips(); renderDict(); route();
   btn.onclick = () => { root.dataset.theme = current() === "dark" ? "light" : "dark"; try { localStorage.setItem("gt-theme", root.dataset.theme); } catch (e) {} paint(); };
   paint();
 }
-$("foot").textContent = `GameTagger · charts: AppBrain's Google Play top-grossing games (US, ${M.chart_date || S.chart_dates?.mobile})${M.rising_chart_date ? ` and top new free games (US, ${M.rising_chart_date})` : ""}, Steam most-played (global, ${S.chart_dates?.steam}) · tags by Claude Sonnet 5 (describing) and Jev jev-1.13.0 (deciding) · crosswalks to Steam tags are drafts pending review`;
+$("foot").textContent = `GameTagger · charts: AppBrain's Google Play top-grossing games (US, ${M.chart_date || S.chart_dates?.mobile})${M.rising_chart_date ? ` and top ${FREE ? "" : "new "}free games (US, ${M.rising_chart_date})` : ""}, Steam most-played (global, ${S.chart_dates?.steam}) · tags by Claude Sonnet 5 (describing) and Jev jev-1.13.0 (deciding) · crosswalks to Steam tags are drafts pending review`;
 </script>
 <script>
 // "Watch it play, learn and build": jump to the film's play-testing part (from 0:31).

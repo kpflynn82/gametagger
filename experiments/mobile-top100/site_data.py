@@ -115,6 +115,12 @@ def build(data: dict, cohort: dict, records: dict, taxonomy) -> dict:
         "grossing": sum(g["list"] == "mobile" for g in games),
         "rising": sum(g["list"] == "rising" for g in games),
         "rising_source": rising.get("source"),
+        # When AppBrain's new-games chart is empty the extra games come from its top-free chart;
+        # the site then calls them "Top free" rather than "Rising".
+        "rising_label": "Top free"
+        if "top free games" in (rising.get("source") or "")
+        else "Rising",
+        "grossing_fallback": bool(charts["mobile"].get("fallback")),
         "rising_chart_date": rising.get("chart_date"),
         "dropped": dropped,
         "missing": missing,

@@ -45,11 +45,16 @@ def cmd_mobile_cohort(args) -> None:
 
     previous = _read(args.previous) if args.previous and args.previous.exists() else None
     cohort = build_mobile_cohort(
-        grossing_count=args.grossing, rising_count=args.rising, previous=previous
+        grossing_count=args.grossing,
+        rising_count=args.rising,
+        previous=previous,
+        rising_if_no_grossing=args.rising_if_no_grossing,
     )
     _write(args.experiment / "cohort.json", cohort)
     segments = [g["segment"] for g in cohort["games"]]
     charts = cohort["charts"]
+    if charts["mobile"].get("fallback"):
+        print("Note:", charts["mobile"]["fallback"])
     print(
         f"{segments.count('grossing')} top-grossing games (chart of "
         f"{charts['mobile'].get('chart_date')}) and {segments.count('rising')} rising games"
@@ -57,7 +62,8 @@ def cmd_mobile_cohort(args) -> None:
         + "."
     )
     for skip in cohort["skipped"]:
-        print("Note:", skip["reason"])
+        if skip["list"] == "rising":
+            print("Note:", skip["reason"])
 
 
 def cmd_identity(args) -> None:
@@ -305,6 +311,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("--grossing", type=int, default=100)
     p.add_argument("--rising", type=int, default=30)
+    p.add_argument(
+        "--rising-if-no-grossing",
+        type=int,
+        default=100,
+        help="Games from the new-games or top-free chart when today's grossing chart is empty",
+    )
     p.add_argument(
         "--previous",
         type=Path,
