@@ -40,6 +40,32 @@ def cmd_cohort(args) -> None:
     )
 
 
+def cmd_mobile_cohort(args) -> None:
+    from gametagger.comparison.charts import build_mobile_cohort
+
+    previous = _read(args.previous) if args.previous and args.previous.exists() else None
+    cohort = build_mobile_cohort(
+        grossing_count=args.grossing,
+        rising_count=args.rising,
+        previous=previous,
+        rising_if_no_grossing=args.rising_if_no_grossing,
+    )
+    _write(args.experiment / "cohort.json", cohort)
+    segments = [g["segment"] for g in cohort["games"]]
+    charts = cohort["charts"]
+    if charts["mobile"].get("fallback"):
+        print("Note:", charts["mobile"]["fallback"])
+    print(
+        f"{segments.count('grossing')} top-grossing games (chart of "
+        f"{charts['mobile'].get('chart_date')}) and {segments.count('rising')} rising games"
+        + (f" from {charts['rising']['source']}" if "rising" in charts else "")
+        + "."
+    )
+    for skip in cohort["skipped"]:
+        if skip["list"] == "rising":
+            print("Note:", skip["reason"])
+
+
 def cmd_identity(args) -> None:
     from gametagger.comparison.identity import resolve_cohort
 
@@ -278,6 +304,26 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--steam", type=int, default=50)
     p.add_argument("--mobile", type=int, default=50)
     p.set_defaults(func=cmd_cohort)
+
+    p = sub.add_parser(
+        "mobile-cohort",
+        help="Freeze today's Google Play top-grossing and rising games, mobile only (free)",
+    )
+    p.add_argument("--grossing", type=int, default=100)
+    p.add_argument("--rising", type=int, default=30)
+    p.add_argument(
+        "--rising-if-no-grossing",
+        type=int,
+        default=100,
+        help="Games from the new-games or top-free chart when today's grossing chart is empty",
+    )
+    p.add_argument(
+        "--previous",
+        type=Path,
+        default=EXPERIMENT_DIR / "cohort.json",
+        help="An earlier cohort, for each game's previous rank (chart movers)",
+    )
+    p.set_defaults(func=cmd_mobile_cohort)
 
     p = sub.add_parser("identity", help="Link exact store IDs to Wikipedia and stores (free)")
     p.set_defaults(func=cmd_identity)

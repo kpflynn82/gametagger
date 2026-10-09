@@ -941,3 +941,145 @@ def test_batch_describing_saves_answers_and_the_run_reuses_them(tmp_path, monkey
     assert ledger.spent == pytest.approx(half + record["cost_usd"]["typesafe"])  # booked once
     again = runner.describe([game], ["rich-lean"], poll_seconds=0, log=lambda m: None)
     assert again["submitted"] == 0  # finished games and saved descriptions are not bought again
+
+
+def test_appbrain_ranking_reads_a_second_page_and_ignores_repeats():
+    first = appbrain_page(
+        [
+            {"rank": n, "slug": "s", "package": f"com.g{n}", "title": f"G{n}", "dev": "D"}
+            for n in (1, 2)
+        ]
+    )
+    second = appbrain_page(
+        [
+            {"rank": n, "slug": "s", "package": f"com.g{n}", "title": f"G{n}", "dev": "D"}
+            for n in (3, 4)
+        ]
+    )
+    pages = {"": first, "?page=2": second, "?o=100": first}
+
+    def fetch(url):
+        return pages[url.split("/us", 1)[1]]
+
+    date, rows, url = charts.appbrain_ranking("top_grossing", 3, fetch_page=fetch)
+    assert [r["package"] for r in rows] == ["com.g1", "com.g2", "com.g3"]
+    assert url.endswith("top_grossing/game/us") and date == "2026-09-24"
+    # A page that ignores the parameter adds nothing.
+    pages["?page=2"] = first
+    _, rows, _ = charts.appbrain_ranking("top_grossing", 3, fetch_page=fetch)
+    assert [r["package"] for r in rows] == ["com.g1", "com.g2"]
+
+
+def test_mobile_cohort_has_grossing_and_rising_segments_with_previous_ranks():
+    def row(n, pkg):
+        return {"rank": n, "slug": "s", "package": pkg, "title": pkg.upper(), "dev": "D"}
+
+    grossing = appbrain_page([row(1, "com.a"), row(2, "com.b")])
+    new_free = appbrain_page([row(1, "com.b"), row(2, "com.c"), row(3, "com.d")])
+
+    def fetch(url):
+        if "top_grossing" in url:
+            return grossing
+        if "top_new_free" in url:
+            return new_free
+        raise SourceError("not found")
+
+    previous = {
+        "charts": {"mobile": {"chart_date": "2026-09-24"}},
+        "games": [{"list": "mobile", "rank": 7, "ids": {"google_play": "com.a"}}],
+    }
+    cohort = charts.build_mobile_cohort(
+        grossing_count=2, rising_count=1, previous=previous, fetch_page=fetch
+    )
+    assert [(g["game_id"], g["segment"]) for g in cohort["games"]] == [
+        ("gp-com.a", "grossing"),
+        ("gp-com.b", "grossing"),
+        ("gp-com.c", "rising"),
+    ]
+    assert all(g["list"] == "mobile" for g in cohort["games"])
+    assert cohort["games"][0]["chart"]["previous_rank"] == 7
+    assert cohort["games"][1]["chart"]["previous_rank"] is None
+    assert cohort["charts"]["mobile"]["previous_chart_date"] == "2026-09-24"
+    assert "new free" in cohort["charts"]["rising"]["source"]
+
+
+def test_mobile_cohort_falls_back_to_top_free_for_rising_games():
+    page = appbrain_page([{"rank": 1, "slug": "s", "package": "com.z", "title": "Z", "dev": "D"}])
+
+    def fetch(url):
+        if "top_new_free" in url:
+            raise SourceError("gone")
+        return (
+            page
+            if "top_free" in url
+            else appbrain_page(
+                [{"rank": 1, "slug": "s", "package": "com.a", "title": "A", "dev": "D"}]
+            )
+        )
+
+    cohort = charts.build_mobile_cohort(grossing_count=1, rising_count=1, fetch_page=fetch)
+    assert [g["segment"] for g in cohort["games"]] == ["grossing", "rising"]
+    assert "top free" in cohort["charts"]["rising"]["source"]
+    assert "top_new_free" in cohort["skipped"][0]["reason"]
+
+
+EMPTY_RANKING = (
+    "<div>Last updated: <time>October 8, 2026</time></div>"
+    '<table id="rankings-table"><thead><tr><th>Rank</th></tr></thead><tbody>\n  </tbody></table>'
+)
+
+
+def test_appbrain_empty_table_says_the_chart_is_not_published():
+    with pytest.raises(SourceError, match="ranking table is empty"):
+        charts.parse_appbrain(EMPTY_RANKING)
+
+
+def test_mobile_cohort_falls_back_to_previous_grossing_when_today_is_empty():
+    def row(n, pkg):
+        return {"rank": n, "slug": "s", "package": pkg, "title": pkg.upper(), "dev": "D"}
+
+    free = appbrain_page([row(1, "com.a"), row(2, "com.x"), row(3, "com.y")])
+
+    def fetch(url):
+        if "top_grossing" in url or "top_new_free" in url:
+            return EMPTY_RANKING
+        return free
+
+    previous = {
+        "charts": {"mobile": {"chart_date": "2026-09-24"}},
+        "games": [
+            {
+                "list": "mobile",
+                "rank": 2,
+                "title": "B",
+                "developers": ["D"],
+                "ids": {"google_play": "com.b"},
+            },
+            {
+                "list": "mobile",
+                "rank": 1,
+                "title": "A",
+                "developers": [],
+                "ids": {"google_play": "com.a"},
+            },
+            {"list": "steam", "rank": 1, "title": "S", "ids": {"steam_app": "1"}},
+        ],
+    }
+    cohort = charts.build_mobile_cohort(
+        grossing_count=100,
+        rising_count=1,
+        previous=previous,
+        rising_if_no_grossing=5,
+        fetch_page=fetch,
+    )
+    assert [(g["game_id"], g["segment"]) for g in cohort["games"]] == [
+        ("gp-com.a", "grossing"),
+        ("gp-com.b", "grossing"),
+        ("gp-com.x", "rising"),
+        ("gp-com.y", "rising"),
+    ]
+    mobile = cohort["charts"]["mobile"]
+    assert mobile["chart_date"] == "2026-09-24" and "previous_chart_date" not in mobile
+    assert "ranking table is empty" in mobile["fallback"]
+    assert all(g["chart"]["previous_rank"] is None for g in cohort["games"][:2])
+    assert "top free" in cohort["charts"]["rising"]["source"]

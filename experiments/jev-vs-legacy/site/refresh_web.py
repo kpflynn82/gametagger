@@ -27,7 +27,7 @@ def main() -> None:
     home = (HERE / "dashboard-template.html").read_text()
     home = home.replace("/*DATA*/", data).replace("/*REQUEST_URL*/", REQUEST_URL)
     home = home.replace("/*BENCH_URL*/", "/benchmark")
-    title = "GameTagger: what's inside the top 100 games"
+    title = "GameTagger: what's inside today's top mobile games"
     page = standalone(home, title, DASHBOARD_DESCRIPTION, "social-card.png")
     if "--check" in sys.argv:
         same = page == published

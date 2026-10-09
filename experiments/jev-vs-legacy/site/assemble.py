@@ -28,8 +28,9 @@ EXP = HERE.parent
 
 
 DASHBOARD_DESCRIPTION = (
-    "What is inside the top 100 Steam and Google Play games: genres, the most common tags, PC "
-    "versus mobile, what the biggest hits share, and every game's tags with their evidence."
+    "What is inside today's top-grossing and rising Google Play games, with Steam's most-played "
+    "for comparison: what is rising, genres, the most common tags, chart movers, and every game's "
+    "tags with their evidence."
 )
 DESCRIPTION = (
     "Today's top 100 Steam and Google Play games tagged two ways on identical evidence: the "
