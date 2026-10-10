@@ -40,13 +40,14 @@ lists at #101 and #125. So the page size was not the cause; every emulator hides
 hidden game is simply absent, and each game below it ranks one place too high. Township is the
 only hidden game in the top 30; in September, NIKKE and the other three ranked between #33 and #46.
 
-**Store IDs.** Package IDs are not on screen. For the Android 15 top 100, 57 come from our earlier
-cohorts and 43 were found by searching Google Play's website for the exact title (42 exact
+**Store IDs.** Package IDs are not on screen. For the Android 15 top 149, 60 come from our earlier
+cohorts and 89 were found by searching Google Play's website for the exact title (88 exact
 matches; Bingo Voyage's web title differs slightly).
 
 ## Using it
 
 `experiments/mobile-top100/play_cohort.py` builds the site's top-grossing cohort from the Android 15
-reading: the emulator's top 100 with Township added at #9 (Appfigures) and the rest of the hidden
-games listed as unranked. The site has used it since October 9. Reading the chart again on
+reading: the emulator's top 149 with Township added at #9 (Appfigures), giving a top 150, and the
+rest of the hidden games listed as unranked. The site has used it since October 9 (top 100 at
+first, top 150 from the same evening). Reading the chart again on
 another day gives Google Play chart movers from one source.

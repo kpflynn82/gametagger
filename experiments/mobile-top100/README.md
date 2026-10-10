@@ -3,7 +3,7 @@
 The owner wanted the site to be mobile-first for interviews with mobile studios: more mobile
 games and a view of what is new.
 
-* `cohort.json` (October 9): Google Play's US top 100 grossing games plus 71 top-free games.
+* `cohort.json` (October 9): Google Play's US top 150 grossing games plus 68 top-free games.
   * Top grossing (segment `grossing`): read in the Play Store app on an Android emulator
     (`experiments/play-chart/2026-10-09-android15.json`), built by `play_cohort.py`. The emulator
     hides games that refuse emulators. Township is added at #9, its rank on Appfigures' hourly
@@ -11,13 +11,16 @@ games and a view of what is new.
     listed as hidden and unranked. Each game keeps its September 24 rank (from AppBrain) for chart
     movers.
   * Top free (segment `rising`, labelled "Top free" on the site): the October 8 top-free games
-    from AppBrain that are not in the top 100 grossing.
+    from AppBrain that are not in the top 150 grossing.
+* `cohort-2026-10-09-100.json`: the first October 9 cohort (top 100), before the owner asked for
+  ranks 101–150 the same evening.
 * `cohort-2026-10-08.json`: the October 8 cohort. AppBrain's top-grossing and top-new-free tables
   were empty that day, so it used the September 24 top-grossing 50 plus 83 top-free games.
 * `new-run/`: tag states and counts for the games tagged on the owner's Mac (vocabulary v2,
   store pages only, Observer on the owner's Claude plan, Jev capped at $1.00 in total): 83 games
-  on October 8 (listed in `new-run/tagged-2026-10-08.txt`) and 42 on October 9. The games tagged
-  on October 5 use `experiments/mobile-retag-v2/per-game.jsonl`.
+  on October 8 (listed in `new-run/tagged-2026-10-08.txt`), 42 on October 9 for the top 100 and
+  47 that evening for ranks 101–150. The games tagged on October 5 use
+  `experiments/mobile-retag-v2/per-game.jsonl`.
 * `site_data.py`: rewrites the game data inside `web/index.html` from these files (Steam's 50
   unchanged); then `experiments/jev-vs-legacy/site/refresh_web.py` applies the template.
 

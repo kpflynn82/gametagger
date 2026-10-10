@@ -663,3 +663,26 @@ Left:
 * Merge the PR to publish.
 * Read the chart again on another day (Play launcher on the Android 15 emulator) for movers from
   one source.
+
+### Google Play ranks 101–150 added (October 9, 2026, evening)
+
+The owner saw that the emulator's chart runs to #171 and asked for ranks 101–150 too. Branch
+`claude/play-top150`.
+
+* **Chart.** The Android 15 reading already held all 171 ranks (the list ended at #171; if
+  Google's full chart runs to 200, as believed but not checked, about 29 games are hidden below the
+  top 30). `play_cohort.py` now keeps 150: the emulator's top 149 plus Township at #9. Store IDs
+  for the 46 new titles came from exact-title searches of Google Play's website (all exact); the
+  other 4 were already known. 3 top-free games moved into the top-grossing list, leaving 68
+  top-free games. The top-100 cohort is kept as `cohort-2026-10-09-100.json`.
+* **Run** (owner's Mac, same launcher): 47 games, 44 complete and 3 partial (Merge Dragons,
+  Phase 10, Triple Match City). **Paid: $0.15 of Jev**; the ledger is at $0.52 of the $1.00 cap.
+  Claude on the owner's plan: $0 in API money, $7.57 at API prices. Median 96 s per game. The
+  125 earlier records are unchanged.
+* **Site.** 150 top-grossing and 68 top-free games, all tagged. Fixed "top 100" wording now follows
+  the list size; the browser title reads "What's inside today's top mobile games". Checked at
+  390 px (dark) and 1280 px (light): no page errors, no sideways scroll.
+
+Left:
+* Merge the PR to publish.
+* Ranks 151–171 are read but not tagged.
