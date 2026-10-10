@@ -1,4 +1,4 @@
-<title>GameTagger · What's inside the top 100 games</title>
+<title>GameTagger · What's inside today's top mobile games</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="14" fill="%23d3281f"/%3E%3Cpath d="M30 9h22a3 3 0 0 1 3 3v22L33 56a3.4 3.4 0 0 1-4.8 0L8 35.8a3.4 3.4 0 0 1 0-4.8Z" fill="%23fff"/%3E%3Ccircle cx="44" cy="20" r="5.4" fill="%23d3281f"/%3E%3C/svg%3E">
 <meta name="theme-color" content="#d3281f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -437,7 +437,7 @@ section{scroll-margin-top:84px}
           <tr><td><a href="#tag-monetization_in_app_purchases">In-game purchases</a></td><td><span class="pchip unk">Not enough evidence</span></td><td><span class="m">Measured</span>A gem shop and a paid "No ads" option</td></tr>
         </tbody>
       </table></div>
-      <p class="note">Store-page decisions are Jev's, from the App Store listing and 6 screenshots. Per-flight figures use the first 8 hours of play. This is one game, played as a pilot; the top 100 games in the dashboard are not play-tested yet.</p>
+      <p class="note">Store-page decisions are Jev's, from the App Store listing and 6 screenshots. Per-flight figures use the first 8 hours of play. This is one game, played as a pilot; the games in the dashboard are not play-tested yet.</p>
     </div>
     <div class="panel">
       <h3>What 13 hours of play measured</h3>
@@ -730,12 +730,12 @@ function renderMovers() {
   $("climb").innerHTML = table([...fresh.sort((a, b) => a.rank - b.rank).map((g) => [g, 999, null]), ...moved.filter(([, d]) => d > 0).sort((a, b) => b[1] - a[1])].slice(0, 8));
   $("slip").innerHTML = table([...moved.filter(([, d]) => d < 0).sort((a, b) => a[1] - b[1]), ...out].slice(0, 8));
   $("climb-h").textContent = M.cross_source ? "Climbing" : "Climbing or new to the top 50";
-  $("slip-h").textContent = out.length ? "Slipping or out of the top 100" : "Slipping";
+  $("slip-h").textContent = out.length ? `Slipping or out of the top ${COUNT.mobile}` : "Slipping";
   $("m-h").textContent = "Chart movers";
   const hidden = M.hidden || [];
   $("m-lede").textContent = M.cross_source
-    ? `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)}, read in the Play Store app, against ${fmt(M.previous_chart_date)} (AppBrain's list), when the top 50 were first tagged. Only the ${moved.length} games ranked on both are compared, because the two lists come from different sources.${out.length ? ` ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top 100.` : ""}${hidden.length ? ` ${hidden.join(", ")} could not be ranked: they don't run on the emulator used to read the chart.` : ""}`
-    : `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)} against ${fmt(M.previous_chart_date)}, when the top 50 were first tagged. ${fresh.length} game${fresh.length === 1 ? " is" : "s are"} new to the top 50, and ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top 100.`;
+    ? `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)}, read in the Play Store app, against ${fmt(M.previous_chart_date)} (AppBrain's list), when the top 50 were first tagged. Only the ${moved.length} games ranked on both are compared, because the two lists come from different sources.${out.length ? ` ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top ${COUNT.mobile}.` : ""}${hidden.length ? ` ${hidden.join(", ")} could not be ranked: they don't run on the emulator used to read the chart.` : ""}`
+    : `Rank on Google Play's US top-grossing chart on ${fmt(M.chart_date)} against ${fmt(M.previous_chart_date)}, when the top 50 were first tagged. ${fresh.length} game${fresh.length === 1 ? " is" : "s are"} new to the top 50, and ${out.length} of the earlier top 50 ${out.length === 1 ? "has" : "have"} left the top ${COUNT.mobile}.`;
   $("m-empty").hidden = true;
 }
 
@@ -977,7 +977,7 @@ document.getElementById("play-film")?.addEventListener("click", (e) => {
   const N = window.GT_NAV;
   const ORDER = ["home", "dashboard", "games", "tags", "play-testing", "how-it-works"];
   const LABEL = { home: "Home", dashboard: "Dashboard", games: "Games", tags: "Tags", "play-testing": "Play-testing", "how-it-works": "How it works" };
-  const BASE = "GameTagger · What's inside the top 100 games";
+  const BASE = "GameTagger · What's inside today's top mobile games";
   const viewOfHash = (h) => N.BY_HASH[h] || (h.startsWith("game-") ? "games" : h.startsWith("tag-") || h.startsWith("genre-") ? "tags" : null);
   const viewOfLink = (a) => {
     const href = a.getAttribute("href") || "";

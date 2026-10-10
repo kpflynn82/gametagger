@@ -175,7 +175,7 @@ def main() -> None:
     m = data["mobile"]
     print(
         f"{m['grossing']} top-grossing and {m['rising']} rising games on the site; "
-        f"{len(m['dropped'])} of September's top 50 left the top 100; "
+        f"{len(m['dropped'])} of September's top 50 left the top {m['grossing']}; "
         f"{len(m['hidden'])} hidden by the emulator; "
         f"{len(m['missing'])} games without tags yet"
         + (f": {', '.join(m['missing'])}" if m["missing"] else ".")

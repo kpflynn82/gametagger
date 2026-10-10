@@ -5,9 +5,10 @@
 Top-grossing games (segment ``grossing``) come from
 ``experiments/play-chart/<date>-android15.json``.
 Games the emulator cannot show are added at the rank another chart gives them (``INSERTED``),
-and the list is cut at 100. The top-free games from October 8 (``cohort-2026-10-08.json``, segment
-``rising``) are kept, except any that are now in the top-grossing list. Each top-grossing game
-gets its September 24 rank (``experiments/jev-vs-legacy/cohort.json``) for chart movers.
+and the list is cut at ``TOP`` (150). The top-free games from October 8
+(``cohort-2026-10-08.json``, segment ``rising``) are kept, except any that are now in the
+top-grossing list. Each top-grossing game gets its September 24 rank
+(``experiments/jev-vs-legacy/cohort.json``) for chart movers.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ ROOT = HERE.parents[1]
 CHART = ROOT / "experiments" / "play-chart" / "2026-10-09-android15.json"
 RISING_FROM = HERE / "cohort-2026-10-08.json"
 PREVIOUS = ROOT / "experiments" / "jev-vs-legacy" / "cohort.json"
-TOP = 100
+TOP = 150
 # Hidden on the emulator; rank from Appfigures' Google Play US grossing chart, 2026-10-09 12:50 PT.
 INSERTED = [{"rank": 9, "google_play": "com.playrix.township", "source": "Appfigures"}]
 
