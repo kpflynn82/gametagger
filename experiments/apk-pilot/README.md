@@ -49,7 +49,8 @@ Usercentrics), Google Play Billing everywhere, Facebook login in all five.
   components in its manifest. The code may serve tests, other markets or future plans. So kit
   evidence fits a separate capability tag ("ad SDK integrated") rather than "shows ads", and the
   store's own "Contains ads" declaration stays the better signal for "shows ads". Ad formats
-  (rewarded, interstitial, banner) are not settled by kits either.
+  (rewarded, interstitial, banner) are not settled by kits either. (For Monopoly GO, the
+  follow-up below found Unity Ads switched on by the server and an optional reward-ad offer.)
 * **REA works, with one rough edge.** It read all five games without installing anything on the
   Mac. For 4 of 5 games it refused the class list because an obfuscated build repeats 1–6 class
   names out of 22,000–41,000; REA keeps the engine's raw pages in its error, and `sdk_scan.py`
@@ -70,3 +71,71 @@ the first level each game mode, level tag, mechanic setting, board-element code 
 appears, and per level band the median move limit, mean colour count, share of levels labelled
 hard and number of new board elements. Board-element and order-item codes are King's numbers; the
 APK does not name them.
+
+## Follow-up: Monopoly GO's systems and how it gates them
+
+Monopoly GO keeps its rules on its servers, so its APK cannot give a level-by-level table like
+Candy Crush's. Three readable sources together give the list of systems, the gating rules and some
+live thresholds. None of them involved playing the game or changing anything on the emulator.
+
+**1. Code names (`unity_systems.py`, `results/com.scopely.monopolygo-systems.json`).** Unity games
+built with IL2CPP keep every class, method and field name in `global-metadata.dat`, which is
+unencrypted in Monopoly GO 1.78.2 (metadata version 39). The game's own code sits under `Tophat.*`
+in 316 named systems. The game-facing ones, grouped by hand:
+
+| Group | Systems (namespace names) |
+|---|---|
+| Roll and move | Roll, Rolling, DiceRoll, RollEV, RollRecharge, RechargeV2, LockedRollMultiplier, Board, TileMechanics, Chance, ChanceDeck, CommunityChestV2, Jail, InstantJail, RentDue, Pickups |
+| Build and progress | Building, BuildMenu, Landmarks, LandmarksV2, HousePlacement, NetWorth, Prestige, PlayerXp, Chapters, SeasonalBoards, Seasons, EndOfContent |
+| Attack and defend | BankHeist, Shield, Shields, ForceField, HostileTakeover, Revenge, PVP, BoardRaid |
+| Collections | Sticker, StickerPack, StickerShop, StickerBoom, WildStickers, Collections, AlbumTrading, AlbumPityCounter, CompleteSet, SetSwap, TimeLimitedSets, Vanity, VanityCollection, DiceSkins, Token, TokenChase, Emoji |
+| Events and minigames | Tournaments, Leagues, SpecialEvents, BoardRush, GoldenBlitz, CoopEvents, AdventureEvent, PinataParty, TradeFest, GoFriendsEvent, BuildersBash, Quests, QuestsV2, Minigames, MinigameDig, Plinko, ForeverGames, HarvestTile, TileRun, LuckyRolls, CashBoost, CashGrab, JackpotStash, JackpotSurprise, RewardWheels |
+| Daily habit and comeback | DailyCalendar, DailyTasks, FreeGift, QuickWinsAutoClaim, QuickWinsReactivation, RichReturns, NotificationReminder, Inbox, Newsfeed |
+| Social | Friends, FriendGift, SocialGift, Teams, GoChat, QuickMessages, SocialInvites, AddressBook, Facebook, FriendCode, SocialHub |
+| Offers and store | Store, Shop, Purchasing, Offers, OffersV2, ProgressiveOffer, EndlessOffer(s), DecoyOffers, OutOfRolls, OutOfRollsOffer, PiggyBank, PiggyBankOffer, PersonalisedOfferImpressions, EscrowPack, StoreCommodityMultiplier, WebPortal |
+| Tuning and targeting | Rubberbanding, ArcheSegments, FeatureEligibility, Prerequisites, DynamicCommodities, Weights, AutoConfig |
+
+The names also show **how a feature is gated**: 34 kinds of prerequisite, including And and Or to
+combine them. The progression ones are number of boards completed, board completed or not, being
+on a given board, net worth amount, player level, first-time tutorial finished, quest completed,
+owning an item, and "never connected to Facebook". Live-ops ones are an event, season, offer group
+or comeback ("rich returns") period being active, plus a random interval. Settings named
+`RequiredFriendCountToUnlock`, 
+`BoardUnlocks`, `CategoryFeatureUnlockMap`, `LeaguesUnlockedInNetWorth`, `FirstImpressionMinBoard`,
+`RewardChannelsByBoardLevel` and `StartupDynamicCommoditiesByBoardLevelConfig`, and a method
+`GetEconomyKeyAtBoardIndex`, say the economy and rewards are switched per board. 77 features have
+their own tutorial, a fair proxy for "mechanics the game introduces". Names show what exists, not
+how it behaves: what Rubberbanding or RollEV do is in compiled code this pilot does not read. The
+same name reader opens the other three Unity games in the pilot (metadata v31, unencrypted).
+
+**2. Saved data (`mac/copy-saved-data.command`, `saved_rules.py`,
+`results/monopoly-go-saved-rules.json`).** After the 11.8-hour teardown run, the game's
+shared-storage folder on the Android 17 emulator held 1,802 files (856 MB, almost all downloaded
+art). The launcher lists them all and copies the 29 small non-art files, each SHA-256 checked;
+Android does not let an unrooted device read the game's private folder, where its server settings
+would be. The useful parts:
+
+* **Live targeting rules** for 17 pop-ups. This week's Halloween album gifts and time-limited
+  sticker sets require `net_worth >= 15`; push-notification reminders wait for
+  `num_boards_completed > 2`; a Facebook fan-page link needs 2 boards, a Facebook trading-group
+  pop-up 5 boards (after closing the album, at most 3 a week); a friend-invite pop-up follows
+  declining the out-of-rolls offer. A community guide also gives net worth 15 for the sticker
+  album, 8 for auto-roll and 25 for daily treats
+  ([Shattered Vault](https://shatteredvault.com/monopoly-go/get-started/)).
+* **Remote settings**: Unity Ads is switched on (`unityads_enabled`, updated October 8). The
+  teardown player also logged one optional "Multiply & Collect" reward-ad offer (and three
+  undescribed ad offers) in 11.8 hours, and no forced ads. That is more than "kit in the code":
+  Monopoly GO offers at least an optional rewarded ad, although Google Play lists no ads.
+* **Downloaded content**: 770 bundles, including 45 feature bundles (tournaments, leagues, jail,
+  co-op events, Golden Blitz, minigames and more) and 5 board themes.
+
+**3. The teardown run** (on the owner's Mac, run 20261006-062259) logged when features first
+appeared for an automated free player: Gallery at 37 minutes of play, the Monster Mash album event
+at 153, the landmark build shop at 243, a Board Rush event at 317, the Sara's Bank heist minigame
+at 401, Quick Wins at 408 and the Net Worth gallery at 584. That player was slow (net worth about 2
+after 9 hours), so the order is useful and the times are not a human pace.
+
+**What is still missing** is the full unlock table (which board or net worth opens each feature).
+It is sent by the servers and not stored where it can be read. The clean way to get it is to
+observe it: have the teardown player read the board number and net worth from the screen at each
+"feature unlocked" moment, over a longer run or several accounts.

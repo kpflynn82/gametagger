@@ -1,0 +1,402 @@
+{
+ "game": "MONOPOLY GO!",
+ "source": "shared-storage app folder on the Android 17 emulator after the teardown run",
+ "in_app_messages": [
+  {
+   "name": "SpookyTimeLimitedSetsEpisode1",
+   "kind": "popuptrigger",
+   "shows_at": [
+    "APPOPEN"
+   ],
+   "rule": "User:time_limited_set_event_active = \"SpookyBonusSet1\" AND User:net_worth >= 15",
+   "cap": "1 ever and 1 per 480 min",
+   "runs": [
+    "2026-10-07",
+    "2026-10-12"
+   ],
+   "about": "timelimitedsets",
+   "gift": null
+  },
+  {
+   "name": "Notification_Reminder_LiveActivities",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"LiveActivities\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "LiveActivities",
+   "gift": null
+  },
+  {
+   "name": "Notification_Reminder_QW_Revamp",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"QuickWins\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "QuickWins",
+   "gift": null
+  },
+  {
+   "name": "Notification_Reminder_StickerOrTrade",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"StickerOrTrade\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "StickerOrTrade",
+   "gift": null
+  },
+  {
+   "name": "Notification_Reminder_AdventuresInvite",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"AdventuresInvite\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "AdventuresInvite",
+   "gift": null
+  },
+  {
+   "name": "Notification_Reminder_RacersInvite",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"RacersInvite\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "RacersInvite",
+   "gift": null
+  },
+  {
+   "name": "10072026_AdHoc_Free_Spooky_Bonus_Set_Pack",
+   "kind": "adhociam",
+   "shows_at": [
+    "APPOPEN"
+   ],
+   "rule": "User:time_limited_set_event_active = \"SpookyBonusSet1\" AND User:net_worth >= 15 AND \"10072026_AdHoc_Free_Spooky_Bonus_Set_Pack\" IN User:valid_iams",
+   "cap": "1 ever",
+   "runs": [
+    "2026-10-07",
+    "2026-10-15"
+   ],
+   "about": null,
+   "gift": "2StickerEpisodePack_Spooky_Fallback_30rolls:1"
+  },
+  {
+   "name": "Notification_Reminder_RebuildLandmark",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"RebuildLandmark\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "RebuildLandmark",
+   "gift": null
+  },
+  {
+   "name": "09242026_AdHoc_SocialGift_Spooky_WWL",
+   "kind": "adhociam",
+   "shows_at": [
+    "APPOPEN"
+   ],
+   "rule": "User:net_worth >= 15 AND \"09242026_AdHoc_SocialGift_Spooky_WWL\" IN User:valid_iams",
+   "cap": "1 ever",
+   "runs": [
+    "2026-09-25",
+    "2026-11-24"
+   ],
+   "about": null,
+   "gift": "dynamic_22:5(roll_ev:10)"
+  },
+  {
+   "name": "Notification_Reminder_CoopInvite",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"CoopInvite\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "CoopInvite",
+   "gift": null
+  },
+  {
+   "name": "IDFA",
+   "kind": "idfapopup",
+   "shows_at": [
+    "LOADING"
+   ],
+   "rule": null,
+   "cap": "1 ever",
+   "runs": [
+    "2022-03-22",
+    "2026-12-31"
+   ],
+   "about": null,
+   "gift": null
+  },
+  {
+   "name": "GDPR",
+   "kind": "gdpr",
+   "shows_at": [
+    "LOADING"
+   ],
+   "rule": null,
+   "cap": "3 ever and 1 per 1 day",
+   "runs": [
+    "2022-03-27",
+    "2040-01-25"
+   ],
+   "about": null,
+   "gift": null
+  },
+  {
+   "name": "SpookyTimeLimitedSetsEndEpisode1",
+   "kind": "popuptrigger",
+   "shows_at": [
+    "APPOPEN"
+   ],
+   "rule": "User:time_limited_set_event_active = \"SpookyBonusSet1\" AND User:net_worth >= 15",
+   "cap": "1 ever and 1 per 480 min",
+   "runs": [
+    "2026-10-12",
+    "2026-10-15"
+   ],
+   "about": "timelimitedsets",
+   "gift": null
+  },
+  {
+   "name": "Notification_Reminder_RichReturns",
+   "kind": "notificationreminder",
+   "shows_at": [
+    "NOTIFICATION_REMINDER"
+   ],
+   "rule": "User:num_boards_completed>2 AND User:notification_reminder_trigger = \"RichReturns\" AND User:is_push_active = false",
+   "cap": "1 per 1 session",
+   "runs": [
+    "2026-01-01",
+    "2035-01-01"
+   ],
+   "about": "RichReturns",
+   "gift": null
+  },
+  {
+   "name": "UrlLink_FacebookFanPage_0-7",
+   "kind": "urllink",
+   "shows_at": [
+    "APPOPEN"
+   ],
+   "rule": "User:num_boards_completed >= 2",
+   "cap": "3 per 1 week and 1 per 4320 min",
+   "runs": [
+    "2022-12-08",
+    "2032-12-08"
+   ],
+   "about": null,
+   "gift": null
+  },
+  {
+   "name": "FriendsInvite_Popup",
+   "kind": "popuptrigger",
+   "shows_at": [
+    "OUT_OF_ROLLS_DECLINED"
+   ],
+   "rule": null,
+   "cap": "1 per 1 min",
+   "runs": [
+    "2023-01-01",
+    "2033-01-01"
+   ],
+   "about": "custombehavior",
+   "gift": null
+  },
+  {
+   "name": "FacebookTradingGroupPopup_0-29",
+   "kind": "popuptrigger",
+   "shows_at": [
+    "COLLECTIONS_CLOSED"
+   ],
+   "rule": "User:num_boards_completed >= 5",
+   "cap": "3 per 1 week and 1 per 2880 min",
+   "runs": [
+    "2025-02-01",
+    "2035-01-31"
+   ],
+   "about": "interstitial",
+   "gift": null
+  }
+ ],
+ "remote_settings": {
+  "AdsConfig-android": {
+   "updated": "2026-09-16",
+   "adsgard_enabled": false,
+   "events_sampling_ratio": 0.1,
+   "init_delay_seconds": -1.0,
+   "unified_id_enabled": false
+  },
+  "AdsDemand-android": {
+   "updated": "2026-09-16",
+   "general_config": {
+    "enabled": false
+   }
+  },
+  "AnalyticsConfig": {
+   "updated": "2026-10-08",
+   "playtime_thresholds_in_minutes": [
+    30,
+    60,
+    72
+   ],
+   "explicit_context_sampling": 1.0
+  },
+  "AttributionConfigAdjust": {
+   "updated": "2026-10-08",
+   "test_property": true
+  },
+  "UnityAdsConfig": {
+   "updated": "2026-10-08",
+   "unityads_enabled": true
+  },
+  "UserCentricsConfig": {
+   "updated": "2026-09-16",
+   "consent_mediation_enabled": true,
+   "debug_enabled": false
+  }
+ },
+ "downloaded_content": {
+  "bundles": 770,
+  "megabytes": 818,
+  "by_family": {
+   "dlc": 671,
+   "features": 45,
+   "globals": 44,
+   "popups": 10
+  },
+  "dlc_by_kind": {
+   "emoji": 280,
+   "tokens": 122,
+   "diceskins": 94,
+   "shieldskins": 35,
+   "collections": 24,
+   "citizens": 20,
+   "modularrewards": 15,
+   "networthv2": 12,
+   "leagues": 8,
+   "minigames": 7,
+   "map": 6,
+   "boards": 5,
+   "chancecard": 4,
+   "fontassetresources": 4,
+   "milestoneevents": 3,
+   "compensation": 2,
+   "endlessoffers": 2,
+   "iams": 2,
+   "limitedtimeoffers": 2,
+   "timelimitedsets": 2,
+   "tournamentevents": 2,
+   "adventureevent": 1,
+   "boardraid": 1,
+   "choicelootcontainer": 1,
+   "crm": 1,
+   "dailycalendar": 1,
+   "emojipack": 1,
+   "freegift": 1,
+   "minigamedig": 1,
+   "pinataparty": 1,
+   "rollreplay": 1,
+   "shaders": 1,
+   "shop": 1,
+   "socialgift": 1,
+   "socialhub": 1,
+   "socialmediahub": 1,
+   "stickerpacks": 1,
+   "storepill": 1,
+   "tooltips": 1,
+   "tournamenteventsv2": 1,
+   "tradefest": 1
+  },
+  "feature_bundles": [
+   "adventureevent",
+   "cashboost-default",
+   "collections",
+   "completeset-default",
+   "coopevents",
+   "emailcollection",
+   "event",
+   "forevergame-coinflip",
+   "freeroll-default",
+   "globalmap",
+   "gofriends",
+   "goldenblitz",
+   "harvesttile",
+   "highroller-default",
+   "ingamevideo",
+   "jail",
+   "jailbreakbribe",
+   "leagues",
+   "luckyrolls",
+   "minigamedig",
+   "minigames-blocks",
+   "minigames-carnivalgames",
+   "minigames-fortuneteller",
+   "minigames-racecup",
+   "modularrewards",
+   "networthv2",
+   "quest-milestone",
+   "quest-tournaments",
+   "quests",
+   "quickwinsreactivation",
+   "richreturns",
+   "richreturnswelcomesequence",
+   "seasonalboards",
+   "setswap",
+   "shutdown",
+   "socialgift",
+   "socialsurfacing",
+   "splashscreen-spooky_splash_01",
+   "stickershop",
+   "timelimitedsets",
+   "tokenchase",
+   "tooltips",
+   "tournaments",
+   "vanitycollection",
+   "wildstickers"
+  ]
+ },
+ "notes": [
+  "Rules are the live targeting rules this player's copy held on 2026-10-10.",
+  "Remote settings keep switches and numbers only; strings, keys and IDs are left out."
+ ]
+}

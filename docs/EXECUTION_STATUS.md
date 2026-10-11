@@ -717,3 +717,35 @@ Left (owner decisions): whether to scale to the emulator-compatible top 150 (abo
 download per game, uninstalling after copying to save emulator space); whether kits become a
 GameTagger evidence source and a "tech stack" view on the site; reporting REA's duplicate-name
 refusal upstream.
+
+### What Candy Crush and Monopoly GO introduce when (October 10, 2026)
+
+The owner asked whether the APKs show mechanics and progression, "what mechanics are introduced
+when" (legal advice he obtained says a game's economy and progression are not protected by
+copyright). Details in `experiments/apk-pilot/README.md`. No paid calls; only derived facts are
+committed, never game files.
+
+* **Candy Crush Saga** (`candy_crush_levels.py`, merged in PR #21): the base APK ships all 23,645
+  levels. Measured: first level of each game mode (jelly 5, ingredients drop 21), mechanic (striped
+  candy 2, colour bomb 4, licorice 66, …), hard-level label (first at 55), and per level band the
+  median moves (25 falling to 16–18), hard share (0% for 1–50, about 60% after 10,000) and new
+  board elements.
+* **Monopoly GO** (branch `claude/mgo-feature-unlocks`): rules live on the servers.
+  `unity_systems.py` reads the unencrypted IL2CPP name file (metadata v39) in about 1 s: 316 game
+  systems, 34 prerequisite kinds (boards completed, net worth, player level, tutorial done, event
+  active, …), 77 feature tutorials and 58 per-board and unlock setting names. With the owner's
+  approval, `mac/copy-saved-data.command` copied the game's shared-storage folder from the Android
+  17 emulator (read-only; the game was not opened): 1,802 files listed, 29 small non-art files
+  copied, all SHA-256 matching. A first run copied only one file because `adb` read the loop's
+  file list from standard input; fixed with `</dev/null`. `saved_rules.py` keeps 17 live pop-up
+  targeting rules (net worth 15 for the Halloween album gifts, boards completed > 2 for push
+  reminders, 5 for a Facebook trading-group pop-up), ad and analytics switches (Unity Ads on,
+  updated October 8) and the names of 770 downloaded bundles. The game's private folder, where
+  server settings would be, is unreadable on an unrooted emulator; the localization file and the
+  asset-bundle manifest are encrypted or obfuscated and were not decoded.
+
+Left (owner decisions): the full Monopoly GO unlock table needs observation, for example the
+teardown player reading board number and net worth at each "feature unlocked" moment; whether to
+run `unity_systems.py` on the other Unity games (its name reader already opens Royal Match, Coin
+Master and Royal Smash: metadata v31, unencrypted, with game namespaces `Royal`, `MoonActive` and
+none clear for Royal Smash).
