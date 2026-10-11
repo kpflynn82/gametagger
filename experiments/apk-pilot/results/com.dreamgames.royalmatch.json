@@ -1,0 +1,225 @@
+{
+ "package": "com.dreamgames.royalmatch",
+ "version": "38911",
+ "target_sdk": "35",
+ "class_count": 28353,
+ "class_inventory_coverage": "from REA's raw pages: 28355 names listed, 2 repeated, engine total 28355",
+ "apk_files": [
+  "base.apk",
+  "split_config.arm64_v8a.apk"
+ ],
+ "engines_from_native_libraries": [
+  "Unity",
+  "Unity (IL2CPP)"
+ ],
+ "native_libraries": [
+  "libFirebaseCppAnalytics.so",
+  "libFirebaseCppApp-12_10_1.so",
+  "libFirebaseCppAppCheck.so",
+  "libFirebaseCppCrashlytics.so",
+  "libFirebaseCppMessaging.so",
+  "lib_burst_generated.so",
+  "libapplovin-native-crash-reporter.so",
+  "libcrashlytics-common.so",
+  "libcrashlytics-handler.so",
+  "libcrashlytics-trampoline.so",
+  "libcrashlytics.so",
+  "libdatastore_shared_counter.so",
+  "libil2cpp.so",
+  "libmain.so",
+  "libsqlite3.so",
+  "libunity.so"
+ ],
+ "kits": [
+  {
+   "kit": "AppLovin",
+   "category": "ads",
+   "classes": 681,
+   "example": "com.applovin.adview.AppLovinAdView"
+  },
+  {
+   "kit": "AppLovin MAX (mediation)",
+   "category": "ads",
+   "classes": 93,
+   "example": "com.applovin.mediation.MaxAd"
+  },
+  {
+   "kit": "Google AdMob",
+   "category": "ads",
+   "classes": 511,
+   "example": "com.google.android.gms.ads.AbstractAdRequestBuilder"
+  },
+  {
+   "kit": "Google AdMob mediation adapters",
+   "category": "ads",
+   "classes": 7,
+   "example": "com.google.ads.mediation.AbstractAdViewAdapter"
+  },
+  {
+   "kit": "Mintegral",
+   "category": "ads",
+   "classes": 1792,
+   "example": "com.mbridge.msdk.MBridgeConstans"
+  },
+  {
+   "kit": "Moloco",
+   "category": "ads",
+   "classes": 828,
+   "example": "com.moloco.sdk.BidRequest"
+  },
+  {
+   "kit": "Unity Ads",
+   "category": "ads",
+   "classes": 728,
+   "example": "com.unity3d.ads.AdExpiredListener"
+  },
+  {
+   "kit": "Firebase Analytics",
+   "category": "analytics",
+   "classes": 14,
+   "example": "com.google.firebase.analytics.FirebaseAnalytics"
+  },
+  {
+   "kit": "Meta app events",
+   "category": "analytics",
+   "classes": 85,
+   "example": "com.facebook.appevents.AccessTokenAppIdPair"
+  },
+  {
+   "kit": "AppsFlyer",
+   "category": "attribution",
+   "classes": 279,
+   "example": "com.appsflyer.AFAdRevenueData"
+  },
+  {
+   "kit": "Google consent (UMP)",
+   "category": "consent",
+   "classes": 8,
+   "example": "com.google.android.ump.ConsentDebugSettings"
+  },
+  {
+   "kit": "Firebase Crashlytics",
+   "category": "crash_reporting",
+   "classes": 119,
+   "example": "com.google.firebase.crashlytics.CrashlyticsRegistrar"
+  },
+  {
+   "kit": "Firebase Cloud Messaging",
+   "category": "crm_push",
+   "classes": 51,
+   "example": "com.google.firebase.messaging.Constants$ScionAnalytics$MessageType"
+  },
+  {
+   "kit": "Unity",
+   "category": "engine",
+   "classes": 132,
+   "example": "com.unity3d.player.A"
+  },
+  {
+   "kit": "Google advertising ID reader",
+   "category": "identifiers",
+   "classes": 4,
+   "example": "com.google.android.gms.ads.identifier.AdvertisingIdClient"
+  },
+  {
+   "kit": "Firebase Remote Config",
+   "category": "liveops",
+   "classes": 2,
+   "example": "com.google.firebase.remoteconfig.interop.FirebaseRemoteConfigInterop"
+  },
+  {
+   "kit": "Google Play Billing",
+   "category": "payments",
+   "classes": 105,
+   "example": "com.android.billingclient.api.AccountIdentifiers"
+  },
+  {
+   "kit": "Google Play Games Services",
+   "category": "platform",
+   "classes": 134,
+   "example": "com.google.android.gms.games.AchievementsClient"
+  },
+  {
+   "kit": "Facebook Gaming Services",
+   "category": "social",
+   "classes": 52,
+   "example": "com.facebook.gamingservices.BuildConfig"
+  },
+  {
+   "kit": "Facebook Login",
+   "category": "social",
+   "classes": 37,
+   "example": "com.facebook.login.BuildConfig"
+  },
+  {
+   "kit": "Facebook Share",
+   "category": "social",
+   "classes": 47,
+   "example": "com.facebook.share.BuildConfig"
+  },
+  {
+   "kit": "Google Sign-In",
+   "category": "social",
+   "classes": 42,
+   "example": "com.google.android.gms.auth.TokenData"
+  },
+  {
+   "kit": "Helpshift",
+   "category": "support",
+   "classes": 159,
+   "example": "com.helpshift.HSActivityEventHandler"
+  }
+ ],
+ "applovin_mediation_adapters": [
+  "AppLovin",
+  "Mintegral",
+  "Moloco",
+  "UnityAds"
+ ],
+ "ad_components_in_manifest": [
+  "com.applovin.adview.AppLovinFullscreenActivity",
+  "com.applovin.adview.AppLovinFullscreenImmersiveActivity",
+  "com.applovin.creative.MaxCreativeDebuggerActivity",
+  "com.applovin.creative.MaxCreativeDebuggerDisplayedAdActivity",
+  "com.applovin.impl.adview.activity.AppRestartDuringAdDetectionService",
+  "com.applovin.impl.adview.activity.FullscreenAdService",
+  "com.applovin.mediation.MaxDebuggerActivity",
+  "com.applovin.mediation.MaxDebuggerAdUnitDetailActivity",
+  "com.applovin.mediation.MaxDebuggerAdUnitWaterfallsListActivity",
+  "com.applovin.mediation.MaxDebuggerAdUnitsListActivity",
+  "com.applovin.mediation.MaxDebuggerAxonEventsListActivity",
+  "com.applovin.mediation.MaxDebuggerCmpNetworksListActivity",
+  "com.applovin.mediation.MaxDebuggerDetailActivity",
+  "com.applovin.mediation.MaxDebuggerMultiAdActivity",
+  "com.applovin.mediation.MaxDebuggerTcfConsentStatusesListActivity",
+  "com.applovin.mediation.MaxDebuggerTcfInfoListActivity",
+  "com.applovin.mediation.MaxDebuggerTcfStringActivity",
+  "com.applovin.mediation.MaxDebuggerTestLiveNetworkActivity",
+  "com.applovin.mediation.MaxDebuggerTestModeNetworkActivity",
+  "com.applovin.mediation.MaxDebuggerUnifiedFlowActivity",
+  "com.applovin.mediation.MaxDebuggerWaterfallSegmentsActivity",
+  "com.applovin.sdk.AppLovinInitProvider",
+  "com.applovin.sdk.AppLovinWebViewActivity",
+  "com.google.android.gms.ads.APPLICATION_ID",
+  "com.google.android.gms.ads.AdActivity",
+  "com.google.android.gms.ads.AdService",
+  "com.google.android.gms.ads.MobileAdsInitProvider",
+  "com.google.android.gms.ads.NotificationHandlerActivity",
+  "com.google.android.gms.ads.OutOfContextTestingActivity",
+  "com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING",
+  "com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION",
+  "com.unity3d.ads.adplayer.FullScreenWebViewDisplay"
+ ],
+ "advertising_id_permission": true,
+ "permission_count": 18,
+ "title": "Royal Match",
+ "store_declares_contains_ads": false,
+ "gametagger_tags_before": {
+  "monetization_ads": "absent",
+  "ads_rewarded_video": "absent",
+  "ads_interstitials": "absent",
+  "ads_banners": "absent",
+  "ads_offerwall": "unknown",
+  "ads_removal_purchase": "absent"
+ }
+}

@@ -28,6 +28,8 @@ KITS: list[tuple[str, str, str]] = [
     ("com.unity3d.mediation.", "Unity LevelPlay (mediation)", "ads"),
     ("com.unity3d.ads.", "Unity Ads", "ads"),
     ("com.unity3d.services.ads.", "Unity Ads", "ads"),
+    # The advertising-ID reader ships with attribution kits too; it is not an ad network.
+    ("com.google.android.gms.ads.identifier.", "Google advertising ID reader", "identifiers"),
     ("com.google.android.gms.ads.", "Google AdMob", "ads"),
     ("com.google.ads.mediation.", "Google AdMob mediation adapters", "ads"),
     ("com.facebook.ads.", "Meta Audience Network", "ads"),
@@ -123,10 +125,37 @@ NATIVE_ENGINES = {
 ADAPTER = re.compile(r"^com\.applovin\.mediation\.adapters\.(\w+?)MediationAdapter$")
 
 
+def class_names(result: dict) -> tuple[list[str], str]:
+    """Class names from REA's result, or from the raw pages REA keeps when it refuses one.
+
+    REA refuses a class inventory whose names repeat (an obfuscated build can list a name twice)
+    and keeps the engine's raw pages in ``details.partial_observation``. Those pages are still a
+    full listing, so the names are taken from them, de-duplicated, and the coverage says so.
+    """
+    if "normalized_result" in result:
+        found = result["normalized_result"]
+        return found["matches"], found["coverage"]
+    pages = [
+        c["response"]
+        for c in result["details"]["partial_observation"]["calls"]
+        if c["operation"] == "list_classes"
+    ]
+    names: list[str] = []
+    total = None
+    for page in pages:
+        body = json.loads("".join(x.get("text", "") for x in page.get("content", [])))
+        names += body["items"]
+        total = body.get("total", total)
+    unique = sorted(set(names))
+    return unique, (
+        f"from REA's raw pages: {len(names)} names listed, {len(names) - len(unique)} repeated, "
+        f"engine total {total}"
+    )
+
+
 def scan(folder: Path) -> dict:
     inspect = json.loads((folder / "rea-inspect.json").read_text())["normalized_result"]
-    classes = json.loads((folder / "rea-classes.json").read_text())["normalized_result"]
-    names: list[str] = classes["matches"]
+    names, coverage = class_names(json.loads((folder / "rea-classes.json").read_text()))
     found: dict[str, dict] = {}
     for name in names:
         for prefix, kit, category in KITS:
@@ -157,8 +186,8 @@ def scan(folder: Path) -> dict:
         "package": inspect["package_name"],
         "version": inspect["version_name"],
         "target_sdk": inspect["target_sdk"],
-        "class_count": classes["total_classes"],
-        "class_inventory_coverage": classes["coverage"],
+        "class_count": len(names),
+        "class_inventory_coverage": coverage,
         "apk_files": [p.name for p in sorted(folder.glob("*.apk"))],
         "engines_from_native_libraries": engines,
         "native_libraries": lib_names,

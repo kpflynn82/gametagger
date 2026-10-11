@@ -1,0 +1,147 @@
+{
+ "package": "com.scopely.monopolygo",
+ "version": "1.78.2",
+ "target_sdk": "36",
+ "class_count": 9431,
+ "class_inventory_coverage": "complete",
+ "apk_files": [
+  "base.apk",
+  "split_config.arm64_v8a.apk"
+ ],
+ "engines_from_native_libraries": [
+  "Unity",
+  "Unity (IL2CPP)"
+ ],
+ "native_libraries": [
+  "libFirebaseCppAnalytics.so",
+  "libFirebaseCppApp-12_10_1.so",
+  "lib_burst_generated.so",
+  "libanogs.so",
+  "libbugsnag-ndk.so",
+  "libbugsnag-plugin-android-anr.so",
+  "libbugsnag-root-detection.so",
+  "libdatadog-native-lib.so",
+  "libil2cpp.so",
+  "liblofelt_sdk.so",
+  "libmain.so",
+  "libsigner.so",
+  "libtoolChecker.so",
+  "libunity.so",
+  "libvkquality.so"
+ ],
+ "kits": [
+  {
+   "kit": "Unity Ads",
+   "category": "ads",
+   "classes": 697,
+   "example": "com.unity3d.ads.AdFormat"
+  },
+  {
+   "kit": "Firebase Analytics",
+   "category": "analytics",
+   "classes": 2,
+   "example": "com.google.firebase.analytics.FirebaseAnalytics"
+  },
+  {
+   "kit": "Meta app events",
+   "category": "analytics",
+   "classes": 120,
+   "example": "com.facebook.appevents.AccessTokenAppIdPair"
+  },
+  {
+   "kit": "Adjust",
+   "category": "attribution",
+   "classes": 187,
+   "example": "com.adjust.sdk.ActivityHandler"
+  },
+  {
+   "kit": "Bugsnag",
+   "category": "crash_reporting",
+   "classes": 202,
+   "example": "com.bugsnag.android.ActivityBreadcrumbCollector"
+  },
+  {
+   "kit": "Datadog",
+   "category": "crash_reporting",
+   "classes": 576,
+   "example": "com.datadog.android.BuildConfig"
+  },
+  {
+   "kit": "Firebase Cloud Messaging",
+   "category": "crm_push",
+   "classes": 33,
+   "example": "com.google.firebase.messaging.FirebaseMessaging"
+  },
+  {
+   "kit": "Unity",
+   "category": "engine",
+   "classes": 151,
+   "example": "com.unity3d.player.A"
+  },
+  {
+   "kit": "Google advertising ID reader",
+   "category": "identifiers",
+   "classes": 4,
+   "example": "com.google.android.gms.ads.identifier.AdvertisingIdClient"
+  },
+  {
+   "kit": "Google Play Billing",
+   "category": "payments",
+   "classes": 144,
+   "example": "com.android.billingclient.api.AccountIdentifiers"
+  },
+  {
+   "kit": "Google Play Games Services",
+   "category": "platform",
+   "classes": 191,
+   "example": "com.google.android.gms.games.AchievementsClient"
+  },
+  {
+   "kit": "Facebook Gaming Services",
+   "category": "social",
+   "classes": 56,
+   "example": "com.facebook.gamingservices.BuildConfig"
+  },
+  {
+   "kit": "Facebook Login",
+   "category": "social",
+   "classes": 42,
+   "example": "com.facebook.login.BuildConfig"
+  },
+  {
+   "kit": "Facebook Share",
+   "category": "social",
+   "classes": 46,
+   "example": "com.facebook.share.BuildConfig"
+  },
+  {
+   "kit": "Google Sign-In",
+   "category": "social",
+   "classes": 11,
+   "example": "com.google.android.gms.auth.api.signin.GoogleSignInAccount"
+  },
+  {
+   "kit": "Helpshift",
+   "category": "support",
+   "classes": 159,
+   "example": "com.helpshift.HSActivityEventHandler"
+  }
+ ],
+ "applovin_mediation_adapters": [],
+ "ad_components_in_manifest": [
+  "com.google.android.gms.ads.AD_MANAGER_APP",
+  "com.unity3d.ads.adplayer.FullScreenWebViewDisplay"
+ ],
+ "advertising_id_permission": true,
+ "permission_count": 20,
+ "title": "MONOPOLY GO!",
+ "store_declares_contains_ads": false,
+ "gametagger_tags_before": {
+  "monetization_ads": "unknown",
+  "ads_rewarded_video": "unknown",
+  "ads_interstitials": "unknown",
+  "ads_banners": "unknown",
+  "ads_offerwall": "unknown",
+  "ads_removal_purchase": "unknown"
+ }
+}

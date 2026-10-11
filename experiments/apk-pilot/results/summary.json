@@ -1,0 +1,178 @@
+[
+ {
+  "package": "com.scopely.monopolygo",
+  "title": "MONOPOLY GO!",
+  "version": "1.78.2",
+  "engine": [
+   "Unity",
+   "Unity (IL2CPP)"
+  ],
+  "ad_kits": [
+   "Unity Ads"
+  ],
+  "max_adapters": [],
+  "ad_components_in_manifest": 2,
+  "store_declares_contains_ads": false,
+  "gametagger_monetization_ads": "unknown",
+  "attribution": [
+   "Adjust"
+  ],
+  "crm_support": [
+   "Firebase Cloud Messaging",
+   "Helpshift"
+  ],
+  "class_inventory": "complete"
+ },
+ {
+  "package": "com.dreamgames.royalmatch",
+  "title": "Royal Match",
+  "version": "38911",
+  "engine": [
+   "Unity",
+   "Unity (IL2CPP)"
+  ],
+  "ad_kits": [
+   "AppLovin",
+   "AppLovin MAX (mediation)",
+   "Google AdMob",
+   "Google AdMob mediation adapters",
+   "Mintegral",
+   "Moloco",
+   "Unity Ads"
+  ],
+  "max_adapters": [
+   "AppLovin",
+   "Mintegral",
+   "Moloco",
+   "UnityAds"
+  ],
+  "ad_components_in_manifest": 32,
+  "store_declares_contains_ads": false,
+  "gametagger_monetization_ads": "absent",
+  "attribution": [
+   "AppsFlyer"
+  ],
+  "crm_support": [
+   "Firebase Cloud Messaging",
+   "Helpshift"
+  ],
+  "class_inventory": "from REA's raw pages: 28355 names listed, 2 repeated, engine total 28355"
+ },
+ {
+  "package": "com.king.candycrushsaga",
+  "title": "Candy Crush Saga",
+  "version": "1.338.0.2",
+  "engine": [
+   "own engine (no known engine library)"
+  ],
+  "ad_kits": [
+   "AppLovin",
+   "AppLovin MAX (mediation)",
+   "Google AdMob",
+   "Google AdMob mediation adapters",
+   "Liftoff Vungle",
+   "Meta Audience Network",
+   "Moloco",
+   "Unity Ads",
+   "Unity LevelPlay (mediation)",
+   "ironSource / Unity LevelPlay"
+  ],
+  "max_adapters": [
+   "AppLovin"
+  ],
+  "ad_components_in_manifest": 37,
+  "store_declares_contains_ads": true,
+  "gametagger_monetization_ads": "likely",
+  "attribution": [],
+  "crm_support": [
+   "Braze",
+   "Firebase Cloud Messaging"
+  ],
+  "class_inventory": "from REA's raw pages: 27570 names listed, 1 repeated, engine total 27570"
+ },
+ {
+  "package": "com.moonactive.coinmaster",
+  "title": "Coin Master",
+  "version": "3.5.2740",
+  "engine": [
+   "Unity",
+   "Unity (IL2CPP)"
+  ],
+  "ad_kits": [
+   "AppLovin",
+   "AppLovin MAX (mediation)",
+   "Google AdMob",
+   "Google AdMob mediation adapters",
+   "Meta Audience Network",
+   "Unity Ads",
+   "ironSource / Unity LevelPlay"
+  ],
+  "max_adapters": [
+   "AppLovin",
+   "Facebook",
+   "Google",
+   "GoogleAdManager",
+   "UnityAds"
+  ],
+  "ad_components_in_manifest": 31,
+  "store_declares_contains_ads": true,
+  "gametagger_monetization_ads": "strong",
+  "attribution": [
+   "AppsFlyer"
+  ],
+  "crm_support": [
+   "Firebase Cloud Messaging"
+  ],
+  "class_inventory": "from REA's raw pages: 22818 names listed, 6 repeated, engine total 22818"
+ },
+ {
+  "package": "com.cyphergames.royalsmash",
+  "title": "Royal Smash!",
+  "version": "1.16.494",
+  "engine": [
+   "Unity",
+   "Unity (IL2CPP)"
+  ],
+  "ad_kits": [
+   "AppLovin",
+   "AppLovin MAX (mediation)",
+   "DT Exchange (Fyber)",
+   "Google AdMob",
+   "Google AdMob mediation adapters",
+   "InMobi",
+   "Liftoff Vungle",
+   "Meta Audience Network",
+   "Mintegral",
+   "Moloco",
+   "Pangle",
+   "Unity Ads",
+   "Unity LevelPlay (mediation)",
+   "ironSource / Unity LevelPlay"
+  ],
+  "max_adapters": [
+   "AppLovin",
+   "ByteDance",
+   "Facebook",
+   "Google",
+   "GoogleAdManager",
+   "InMobi",
+   "Inneractive",
+   "IronSource",
+   "Mintegral",
+   "Moloco",
+   "UnityAds",
+   "Vungle"
+  ],
+  "ad_components_in_manifest": 39,
+  "store_declares_contains_ads": true,
+  "gametagger_monetization_ads": "strong",
+  "attribution": [
+   "AppsFlyer"
+  ],
+  "crm_support": [
+   "Firebase Cloud Messaging",
+   "Helpshift"
+  ],
+  "class_inventory": "from REA's raw pages: 40965 names listed, 2 repeated, engine total 40965"
+ }
+]
