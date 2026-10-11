@@ -57,3 +57,16 @@ Usercentrics), Google Play Billing everywhere, Facebook login in all five.
 * **Getting the APKs is the real cost:** about 3–5 minutes of download per game, Google Play's
   one-time account setup, an unstable `adb pull` (fixed by streaming in checked pieces), about
   1.1 GB of APKs for five games, and no route for games that refuse emulators.
+
+## Follow-up: what Candy Crush introduces when
+
+The owner asked whether the code shows mechanics and progression, not just ads (and noted that
+legal advice he obtained says a game's economy and progression are not protected by copyright).
+For the Unity games, the game logic is compiled to native code REA does not translate, and tuning
+mostly comes from servers. Candy Crush is the exception: its base APK ships all 23,645 levels as
+JSON in a SQLite file, plus a binary index with each level's hard-level label.
+`candy_crush_levels.py` turns them into derived facts only (`results/candy-crush-levels.json`):
+the first level each game mode, level tag, mechanic setting, board-element code and order item
+appears, and per level band the median move limit, mean colour count, share of levels labelled
+hard and number of new board elements. Board-element and order-item codes are King's numbers; the
+APK does not name them.
