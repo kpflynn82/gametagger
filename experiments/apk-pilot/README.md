@@ -129,13 +129,42 @@ would be. The useful parts:
 * **Downloaded content**: 770 bundles, including 45 feature bundles (tournaments, leagues, jail,
   co-op events, Golden Blitz, minigames and more) and 5 board themes.
 
-**3. The teardown run** (on the owner's Mac, run 20261006-062259) logged when features first
-appeared for an automated free player: Gallery at 37 minutes of play, the Monster Mash album event
-at 153, the landmark build shop at 243, a Board Rush event at 317, the Sara's Bank heist minigame
-at 401, Quick Wins at 408 and the Net Worth gallery at 584. That player was slow (net worth about 2
-after 9 hours), so the order is useful and the times are not a human pace.
+**3. The teardown run, checked screenshot by screenshot** (run 20261006-062259 on the owner's
+Mac, 11.8 hours of automated free play; `results/monopoly-go-unlock-ladder.json`). Monopoly GO
+shows its own unlock list: the **Net Worth Gallery** (the avatar at the top left) is a ladder of
+cards, each with the net worth it needs. Net worth rises as landmarks are built. The run's
+screenshots show the ladder up to 120:
 
-**What is still missing** is the full unlock table (which board or net worth opens each feature).
-It is sent by the servers and not stored where it can be read. The clean way to get it is to
-observe it: have the teardown player read the board number and net worth from the screen at each
-"feature unlocked" moment, over a longer run or several accounts.
+| Net worth | Unlocks |
+|---|---|
+| 4 | Rent Targets (collect rent from more players on your board) |
+| 8 | Auto Roll |
+| 15 | Albums (sticker collections) |
+| 25 | Daily Treats |
+| 35 | Quick Wins (daily tasks; card gives 20 dice) |
+| 45 | Roll Capacity (most rolls you can bank goes from 30 to 40; card gives 80 dice) |
+| 60 | GO! Tile |
+| 75 | Rent Targets, second step |
+| 90 | Emojis |
+| 100 | Community Chest |
+| 120 | Roll Regeneration |
+| above 120 | a Bank Heist card (its number was off screen) |
+
+When they came for this player (play minutes, board): net worth 4 and 8 at 37 and 44 minutes on
+New York (15 builds); London (30 builds) from about 150 minutes, with net worth 15 at 153 and the
+Monster Mash album event starting at once; a Board Rush event (finish all landmarks in 21 hours
+for 30 dice and 60K) at 317; net worth 25 at 383; a bank heist minigame at 401 (heists come
+from railroad tiles, before the gallery's Bank Heist card); net worth 35 at 408; Venice from 419,
+with net worth 45 at 420, an attack on another player's board at 428 and net worth 60 at 445; net
+worth 62 at 584, next up Rent Targets at 75. The build menu sold Paris cards by the end (board 4).
+Events and album seasons (Board Rush, Monster Mash, Spooky Express) are live-ops on their own
+schedules, not ladder steps. The community guide's 8, 15 and 25 match the ladder. The times are
+one automated player's pace, slower than a person's.
+
+The run's own blueprint got the levels wrong after 37 minutes: it read the dice counter under GO
+("78/30": 78 dice, 30 at most refilled) as the level, and its level curve stopped at 4. The
+teardown player now names the level it reads ("Net Worth"), never reads a fraction as the level,
+reads screens like the gallery into a ladder, reports locked features with their stated
+requirement, and lists each unlock with the level and board at that moment (teardown player
+commit 5d85cb7). Its launcher "Start Monopoly GO unlock run" starts a fresh guest on the Android
+15 emulator, leaving the October 6 game on the Android 17 emulator untouched.

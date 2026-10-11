@@ -1,0 +1,153 @@
+{
+ "game": "MONOPOLY GO!",
+ "source": "screenshots of teardown run 20261006-062259 (owner's Mac, Android 17 emulator, 11.8 h of automated free play), read one by one",
+ "net_worth_gallery": [
+  {
+   "net_worth": 4,
+   "unlocks": "Rent Targets",
+   "says": "Collect Rent from more players on your board!",
+   "screenshot_step": 224
+  },
+  {
+   "net_worth": 8,
+   "unlocks": "Auto Roll",
+   "says": "Keep Rolling the Dice without tapping!",
+   "screenshot_step": 277
+  },
+  {
+   "net_worth": 15,
+   "unlocks": "Albums",
+   "screenshot_step": 1367
+  },
+  {
+   "net_worth": 25,
+   "unlocks": "Daily Treats",
+   "screenshot_step": 3736
+  },
+  {
+   "net_worth": 35,
+   "unlocks": "Quick Wins",
+   "says": "Complete a set of daily tasks for quick rewards!",
+   "card_reward": "20 dice",
+   "screenshot_step": 3911
+  },
+  {
+   "net_worth": 45,
+   "unlocks": "Roll Capacity",
+   "says": "Current Max Number of Rolls 40",
+   "card_reward": "80 dice",
+   "screenshot_step": 4007
+  },
+  {
+   "net_worth": 60,
+   "unlocks": "GO! Tile",
+   "screenshot_step": 4203
+  },
+  {
+   "net_worth": 75,
+   "unlocks": "Rent Targets (second step)",
+   "screenshot_step": 5224
+  },
+  {
+   "net_worth": 90,
+   "unlocks": "Emojis",
+   "screenshot_step": 5224
+  },
+  {
+   "net_worth": 100,
+   "unlocks": "Community Chest",
+   "screenshot_step": 5224
+  },
+  {
+   "net_worth": 120,
+   "unlocks": "Roll Regeneration",
+   "screenshot_step": 5224
+  },
+  {
+   "net_worth": null,
+   "unlocks": "Bank Heist",
+   "note": "next card above 120; its number was off screen",
+   "screenshot_step": 5224
+  }
+ ],
+ "observed": [
+  {
+   "play_minutes": 37,
+   "board": "New York City 7/15",
+   "net_worth": 4,
+   "what": "Net Worth Gallery introduced; Rent Targets"
+  },
+  {
+   "play_minutes": 44,
+   "board": "New York City",
+   "net_worth": 8,
+   "what": "Auto Roll"
+  },
+  {
+   "play_minutes": 152,
+   "board": "London 0/30",
+   "what": "second board"
+  },
+  {
+   "play_minutes": 153,
+   "board": "London",
+   "net_worth": 15,
+   "what": "Albums; Monster Mash album event starts"
+  },
+  {
+   "play_minutes": 317,
+   "board": "London",
+   "what": "Board Rush event: all landmarks in 21 h for 30 dice and 60K"
+  },
+  {
+   "play_minutes": 383,
+   "board": "London 14/30",
+   "net_worth": 25,
+   "what": "Daily Treats"
+  },
+  {
+   "play_minutes": 401,
+   "board": "London",
+   "what": "bank heist minigame (railroad tile)"
+  },
+  {
+   "play_minutes": 408,
+   "board": "London 23/30",
+   "net_worth": 35,
+   "what": "Quick Wins"
+  },
+  {
+   "play_minutes": 419,
+   "board": "Venice 1/30",
+   "what": "third board"
+  },
+  {
+   "play_minutes": 420,
+   "board": "Venice",
+   "net_worth": 45,
+   "what": "Roll Capacity (max rolls 30 to 40)"
+  },
+  {
+   "play_minutes": 428,
+   "board": "Venice",
+   "what": "attack on another player's board"
+  },
+  {
+   "play_minutes": 445,
+   "board": "Venice 18/30",
+   "net_worth": 60,
+   "what": "GO! Tile"
+  },
+  {
+   "play_minutes": 584,
+   "board": "Venice 20/30",
+   "net_worth": 62,
+   "what": "next: Rent Targets at 75"
+  }
+ ],
+ "notes": [
+  "One automated free player's pace; a person is faster.",
+  "Events and album seasons run on their own live-ops schedules, not the ladder.",
+  "The dice counter under GO reads 'dice/max rolls' (78/30, later 78/40)."
+ ]
+}

@@ -744,8 +744,22 @@ committed, never game files.
   server settings would be, is unreadable on an unrooted emulator; the localization file and the
   asset-bundle manifest are encrypted or obfuscated and were not decoded.
 
-Left (owner decisions): the full Monopoly GO unlock table needs observation, for example the
-teardown player reading board number and net worth at each "feature unlocked" moment; whether to
-run `unity_systems.py` on the other Unity games (its name reader already opens Royal Match, Coin
-Master and Royal Smash: metadata v31, unencrypted, with game namespaces `Royal`, `MoonActive` and
-none clear for Royal Smash).
+* **Monopoly GO unlock ladder** (owner said yes to observing it): the game lists its unlocks in
+  the Net Worth Gallery. Reading the October 6 teardown run's screenshots one by one gave the
+  ladder to net worth 120 (4 Rent Targets, 8 Auto Roll, 15 Albums, 25 Daily Treats, 35 Quick
+  Wins, 45 Roll Capacity, 60 GO! Tile, 75 Rent Targets, 90 Emojis, 100 Community Chest, 120 Roll
+  Regeneration, then Bank Heist) and when each came, by board (New York, London from 152 min,
+  Venice from 419 min); `results/monopoly-go-unlock-ladder.json`. The run's blueprint had read the
+  dice counter ("78/30") as the level, so its level curve stopped at 4; an earlier note here that
+  the player reached "net worth about 2" was wrong and is corrected in the README.
+* **Teardown player** (separate local repo on the Mac, commit 5d85cb7, 125 tests passing): the
+  level now carries the game's name for it, fractions are never levels, features shown locked are
+  reported with their requirement, level screens such as the gallery are read into a ladder, and
+  the blueprint (v5) lists each unlock with the level and board then. Delivered as a git bundle in
+  `~/Claude Workspace/_transfer/`; the launcher "Start Monopoly GO unlock run" applies it and
+  starts a fresh guest on the Android 15 emulator (8 hours, on the owner's Claude plan,
+  resumable). Not started yet: the Mac was locked.
+
+Left (owner decisions): start the unlock run; whether to run `unity_systems.py` on the other Unity
+games (its name reader already opens Royal Match, Coin Master and Royal Smash: metadata v31,
+unencrypted, with game namespaces `Royal`, `MoonActive` and none clear for Royal Smash).
