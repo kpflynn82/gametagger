@@ -686,3 +686,34 @@ The owner saw that the emulator's chart runs to #171 and asked for ranks 101–1
 Left:
 * Merge the PR to publish.
 * Ranks 151–171 are read but not tagged.
+
+### Android kit pilot with REA (October 10, 2026)
+
+The owner asked whether REA (github.com/morluto/rea, MIT) can help analyze Android games. Branch
+`claude/apk-pilot`; details and the results table in `experiments/apk-pilot/README.md`. No paid
+calls.
+
+* **Setup.** REA 6.3.0 runs in the cloud workspace (Node 22, JDK 21, pinned JADX 0.7.1 with checked
+  SHA-256, 4 GB heap); nothing installed on the Mac. Verified first on REA's public ApiDemos sample.
+* **APKs.** Owner-approved official Play Store installs of MONOPOLY GO!, Royal Match, Candy Crush
+  Saga, Coin Master and Royal Smash! on the Android 15 emulator. Google Play required "Complete
+  account setup" once (owner did it). `adb pull` dropped the emulator connection on large files and
+  `adb exec-out dd` with a host-side redirect mixed dd's status text into the copies; the final
+  copier streams 8 MB pieces with the redirect on the device and checks SHA-256 (13 files, all
+  matching). About 1.1 GB of APKs; they stay git-ignored in `benchmark-runs/apk-pilot/`.
+* **Measured.** REA read each base APK in 30–55 s (9,431–40,965 classes). It refused 4 of 5 class
+  lists because obfuscated builds repeat 1–6 names; `sdk_scan.py` recovers the full list from the
+  raw pages REA keeps in its error. Engines: four Unity (IL2CPP), Candy Crush on King's own engine.
+  Ad kits: 1 (Monopoly GO, Unity Ads), 7 (Royal Match, AppLovin MAX), 10 (Candy Crush), 7 (Coin
+  Master), 14 (Royal Smash). Monopoly GO and Royal Match declare no ads on Google Play yet ship ad
+  SDKs; GameTagger's store-page answer for Royal Match (`monetization_ads` absent) matches the
+  declaration, not the code.
+* **Conclusion.** Kit scanning reliably gives the tech stack (engine, mediation, networks,
+  attribution, CRM, support, consent). It does not prove players see ads or which ad formats; it
+  fits a separate capability tag, with the store's "Contains ads" declaration kept as the signal
+  for "shows ads".
+
+Left (owner decisions): whether to scale to the emulator-compatible top 150 (about 3–5 minutes of
+download per game, uninstalling after copying to save emulator space); whether kits become a
+GameTagger evidence source and a "tech stack" view on the site; reporting REA's duplicate-name
+refusal upstream.
