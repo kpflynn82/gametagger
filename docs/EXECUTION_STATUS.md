@@ -686,3 +686,21 @@ The owner saw that the emulator's chart runs to #171 and asked for ranks 101–1
 Left:
 * Merge the PR to publish.
 * Ranks 151–171 are read but not tagged.
+
+### Android kit pilot with REA (October 10, 2026, in progress)
+
+The owner asked whether REA (github.com/morluto/rea, MIT) can help analyze Android games. Branch
+`claude/apk-pilot`; see `experiments/apk-pilot/README.md`. No paid calls.
+
+* REA 6.3.0 runs in the cloud workspace (Node 22, JDK 21, pinned JADX 0.7.1 with checked SHA-256);
+  verified on REA's public ApiDemos sample (2,876 classes, manifest and permissions).
+* `experiments/apk-pilot/sdk_scan.py` (new) turns REA's class list and the APKs' native library
+  names into a per-game kit list (engine, ad networks and MAX adapters, attribution, analytics,
+  crash reporting, CRM, support, back end, payments, consent).
+* Owner-approved official Play Store installs of 5 games on the Android 15 emulator: MONOPOLY GO!
+  installed; Google Play then required "Complete account setup" on the test account, which is the
+  owner's step. The install launcher now waits for each game's own store page before tapping
+  Install (a stale page once got the tap).
+
+Left: owner completes the account setup; install the other 4; copy the APK sets; run REA and the
+scanner; compare with the current ad tags and Exodus Privacy.
