@@ -763,3 +763,65 @@ committed, never game files.
 Left (owner decisions): start the unlock run; whether to run `unity_systems.py` on the other Unity
 games (its name reader already opens Royal Match, Coin Master and Royal Smash: metadata v31,
 unencrypted, with game namespaces `Royal`, `MoonActive` and none clear for Royal Smash).
+
+### Soft-launch radar + clone pipeline, v3 plan (October 14, 2026)
+
+The owner asked to plan and prototype a new version of the project: a daily radar that spots
+test-market games monetizing unusually well and proposes a fairer, differentiated clone to build.
+Full plan in `docs/RADAR_V3_PLAN.md`. Branch `claude/radar-v3`. No paid calls; all offline.
+
+* **Radar built (`src/gametagger/radar/`).** Reads CA/AU/NZ top-grossing and top-free charts
+  (AppBrain for Google Play CA/AU; Apple's free RSS feed for App Store CA/AU/NZ -- AppBrain has no
+  NZ page), then scores each game on four transparent signals: the monetization fingerprint (high
+  grossing + weak/absent downloads), soft-launch (multi-market, US-absent), novelty (not in the 218
+  tagged catalogue) and trend fit (from the weekly digest). Produces a ranked shortlist, a morning
+  push, and a one-line "build a prototype?" proposal per game. `gametagger-radar scan` /
+  `approve`. Cross-store duplicates are merged by normalized title.
+* **Clone scaffold built (`src/gametagger/clone/`).** From a blueprint or a radar proposal,
+  `gametagger-clone scaffold` writes a runnable web skeleton (Phaser 2D / three.js 3D by genre),
+  `DIRECTIONS.md`, and the Codex art hand-off (`ART_BRIEF.md` + `assets/MANIFEST.json`). Mechanics
+  are Claude's, art is Codex's; they sync through the repo. Unity is the final-build target.
+* **Reuses what exists:** the APK kit/code-name reader and `gametagger-play` for the deep dive, the
+  `game-designer` skill for the GDD, and the weekly digest for trends.
+* **Demo:** `experiments/radar/demo-charts.json` + `demo-hints.json` -- the Heroes of the Wall
+  scenario ranks #1 at 81/100 (soft-launch across CA/AU/NZ, strong monetization, novel); MONOPOLY
+  GO! correctly drops out as a known US grosser.
+* **Tests:** 22 new; whole suite 472 passed, 1 skipped (live); ruff clean.
+
+Left (owner decisions, see the plan): create a private repo for intel outputs (or use Drive); wire
+the digest output to where the radar reads it and schedule the daily scan + push; confirm the
+mirror-download + signature-match acquisition rule and provide a signature reference per studio;
+a first live run to tune the weights.
+
+### Soft-launch radar v3: committed, pushed, digest wired (October 15, 2026)
+
+The v3 soft-launch radar + clone pipeline (built as local commit `2881741`, never pushed) was
+rescued onto branch `claude/radar-clone-system` and opened as a PR, so it is no longer local-only.
+See [RADAR_V3_PLAN.md](RADAR_V3_PLAN.md) for the full design. No paid calls; no downloads.
+
+Added this session on top of `2881741`:
+
+* **Digest → radar wire (`radar/digest.py`, new).** Turns the weekly `trend-digest-*.md` into the
+  `{term: weight}` trend map the trend-fit signal uses, by scoring a fixed mobile-game vocabulary by
+  how much the newest digest dwells on each term. Deterministic, no model call. Wired into the CLI as
+  `gametagger-radar scan --digest <folder-or-file>`; falls back to the built-in defaults when no
+  usable digest is found. This implements the "take in learnings from the weekly digest" requirement.
+* **Two proposal/signal fixes.** (1) The build proposal no longer re-suggests a mechanic the game's
+  standout already is — the overlap test is now token-based, so a "social-tournament ladder" standout
+  correctly rules out adding "social tournaments" and the Heroes-of-the-Wall demo now proposes
+  **gacha**, matching the owner's north-star. (2) Trend-fit matching is punctuation/plural-insensitive
+  (`_flatten`), so "social-tournament" matches the digest term "social tournament"; the demo's trend
+  signal rose from 0.00 to 0.52 and its priority from 81 to 89. The standout mechanic from a hint is
+  now folded into the candidate's hints so trend-fit and the genre guess both see it.
+* **Tests.** `tests/test_radar_digest.py` (5) plus two regression tests for the fixes above. Whole
+  suite: **479 passed, 1 skipped** (the paid live Jev test); `ruff check` and `ruff format --check`
+  clean across 176 files.
+
+Worked example (runnable offline): `gametagger-radar scan --charts-file
+experiments/radar/demo-charts.json --hints experiments/radar/demo-hints.json --root . --digest
+<a folder with a trend-digest-*.md>` produces the Heroes-of-the-Wall morning card and push line.
+
+Left (owner, unchanged from the plan): create the private intel repo (or choose Drive); have the
+digest task drop a copy where a scheduled radar run can read it; schedule the daily radar run with a
+push; confirm the signature-checked acquisition rule and give one published reference game per target
+studio before the first real deep dive; a first live CA/AU/NZ run to tune weights and the priority bar.
