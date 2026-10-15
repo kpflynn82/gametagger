@@ -13,6 +13,22 @@ from gametagger.radar.candidate import Candidate, ChartEntry
 from gametagger.radar.signals import score_candidate
 
 
+def test_proposal_does_not_re_add_the_standout_mechanic():
+    # The standout IS a social tournament, so the added mechanic must be something else (gacha),
+    # even though "social tournaments" is in the RPG playbook -- hyphen/plural must not fool it.
+    c = Candidate(
+        store="google_play",
+        store_id="com.studio.heroesofthewall",
+        title="Heroes of the Wall",
+        hints=("action rpg",),
+    )
+    diff = propose_differentiation(
+        c, standout_mechanic="a live social-tournament ladder (guild vs guild, daily)"
+    )
+    assert "tournament" not in diff.add_mechanic.lower()
+    assert diff.add_mechanic == "gacha"
+
+
 def _rpg_candidate():
     c = Candidate(
         store="google_play",

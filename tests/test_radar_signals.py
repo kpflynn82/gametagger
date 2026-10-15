@@ -77,6 +77,17 @@ def test_trend_fit_matches_hot_terms():
     assert "merge" in sig.trend_fit.reason
 
 
+def test_trend_fit_ignores_punctuation_and_plurals():
+    # A hyphenated standout in the hints must still match a spaced, singular digest term.
+    c = _cand(
+        [ChartEntry("CA", "google_play", "grossing", 20, 100)],
+        hints=("a live social-tournament ladder (guild vs guild)",),
+    )
+    sig = score_candidate(c, us_game_ids=frozenset(), hot_terms={"social tournament": 0.8})
+    assert sig.trend_fit.value > 0.0
+    assert "social tournament" in sig.trend_fit.reason
+
+
 def test_priority_is_0_100_and_weights_normalize():
     c = _cand([ChartEntry("CA", "google_play", "grossing", 3, 100)])
     sig = score_candidate(c, us_game_ids=frozenset(), weights=SignalWeights(1, 1, 1, 1))

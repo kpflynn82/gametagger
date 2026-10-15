@@ -53,10 +53,14 @@ transparent signals, then sends one push and writes a ranked shortlist.
 The score is a weighted blend (default 40/25/20/15) and every number carries a plain-language
 reason, so the morning card can say *why*, not just a number. Weights are data the owner can retune.
 
-**Where the digest plugs in.** The weekly digest already runs as a scheduled task and writes
-`claude/trend-digest-*.md`. The radar reads the newest digest into a `{term: weight}` trend map
-(`radar/trends.py`); that drives the trend-fit signal and biases which fresh mechanic the build
-proposal suggests. (Setup note below: the digest must also drop a copy where the radar can read it.)
+**Where the digest plugs in (BUILT).** The weekly digest already runs as a scheduled task and
+writes `claude/trend-digest-*.md`. `radar/digest.py` reads the newest such file and scores a fixed
+mobile-game vocabulary (merge, collection albums, social tournaments, gacha, season pass, ...) by
+how much that week's digest talks about each, producing the `{term: weight}` map the trend-fit
+signal uses and that biases which fresh mechanic the build proposal suggests. It is deterministic
+(no model call) so the wire works when run by hand; a scheduled run may still replace it with a
+richer model extraction. Use it with `gametagger-radar scan --digest <folder-or-file>`. (Setup note
+below: the digest task must still drop a copy where this session can read it.)
 
 **Cost and safety.** Zero paid model calls, zero downloads. The radar only reads public chart
 positions. Sources: AppBrain's per-country Google Play pages (Canada, Australia) and Apple's free
@@ -165,7 +169,8 @@ it exists, outputs can land in the owner's Google Drive, which the scheduled tas
 
 - `src/gametagger/radar/` -- the full radar: multi-region chart reading (`charts_multi.py`), the
   signal scorer (`signals.py`), candidate assembly with cross-store de-duplication (`candidate.py`),
-  the catalogue loader for novelty (`catalogue.py`), the digest trend map (`trends.py`), the morning
+  the catalogue loader for novelty (`catalogue.py`), the digest trend map (`trends.py`), the
+  digest-markdown parser that builds that map from the weekly digest (`digest.py`), the morning
   brief + build proposal (`brief.py`), and the `gametagger-radar` CLI (`cli.py`).
 - `src/gametagger/clone/` -- `CloneSpec` (`spec.py`), the web-skeleton + Codex-handoff generator
   (`scaffold.py`) and the `gametagger-clone` CLI (`cli.py`).
@@ -180,9 +185,11 @@ All offline. No paid calls, no downloads, no taxonomy changes.
 
 1. **Create the private repo** (`kpflynn82/gametagger-intel` or a name you prefer) for the intel
    outputs, or say "use Google Drive for now".
-2. **Wire the digest to the radar:** have the weekly digest also save its findings where the radar can
-   read them (a committed `claude/trend-digest-*.md` in the intel repo, or a Drive doc). Then schedule
-   `gametagger-radar scan` as a daily cloud task (like the digest and job-search tasks) with a push.
+2. **Wire the digest to the radar:** the parser is built (`digest.py`, `--digest`); the one remaining
+   step is to have the weekly digest task also drop a copy of `trend-digest-*.md` where a scheduled
+   radar run can read it (a committed file in the intel repo, or a Drive doc it fetches). Then schedule
+   `gametagger-radar scan --live --digest <that location>` as a daily cloud task (like the digest and
+   job-search tasks) with a push.
 3. **Confirm the acquisition rule** (mirror download + signature match, emulator-only) before the first
    real deep dive, and point me at one already-published game from each target studio as the signature
    reference.

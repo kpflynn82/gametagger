@@ -72,7 +72,12 @@ def cmd_scan(args) -> int:
         return 1
     catalogue = load_catalogue(Path(args.root)) if args.root else load_catalogue()
     us_ids = frozenset(catalogue)  # the catalogue is the US top-grosser set
-    hot = load_hot_terms(Path(args.trends) if args.trends else None)
+    if args.digest:
+        from gametagger.radar.digest import digest_terms_or_default
+
+        hot = digest_terms_or_default(args.digest)
+    else:
+        hot = load_hot_terms(Path(args.trends) if args.trends else None)
     hints = json.loads(Path(args.hints).read_text()) if args.hints else {}
     weights = SignalWeights()
 
@@ -84,8 +89,13 @@ def cmd_scan(args) -> int:
         hint = hints.get(cand.game_id, {})
         if isinstance(hint, list):
             hint = {"hints": hint}
-        if hint.get("hints"):
-            cand.hints = tuple(hint["hints"])
+        # Fold the standout mechanic into the hints so trend-fit and the genre guess both see it
+        # (e.g. a "social-tournament ladder" standout should match a "social tournament" trend).
+        base_hints = list(hint.get("hints") or [])
+        if hint.get("standout"):
+            base_hints.append(hint["standout"])
+        if base_hints:
+            cand.hints = tuple(base_hints)
         sig = score_candidate(cand, us_game_ids=us_ids, hot_terms=hot, weights=weights)
         if sig.priority < args.min_priority:
             continue
@@ -158,6 +168,10 @@ def build_parser() -> argparse.ArgumentParser:
     scan.add_argument("--live", action="store_true", help="read CA/AU/NZ charts now (free)")
     scan.add_argument("--limit", type=int, default=100, help="ranks to read per Apple chart")
     scan.add_argument("--trends", help="digest trends JSON ({term: weight}); default is built-in")
+    scan.add_argument(
+        "--digest",
+        help="newest trend-digest-*.md folder, or one digest file; builds the trend map from it",
+    )
     scan.add_argument(
         "--hints", help="per-game genre/standout hints JSON ({game_id: {hints, standout, ...}})"
     )

@@ -7,6 +7,7 @@ bare number. The weights are data, not magic: the owner can retune them without 
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from gametagger.radar.candidate import Candidate
@@ -63,6 +64,11 @@ class Signals:
                 },
             },
         }
+
+
+def _flatten(text: str) -> str:
+    """Lowercase, with every run of non-alphanumerics collapsed to one space, for loose matching."""
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
 
 def _rank_quality(rank: int, floor: int) -> float:
@@ -155,11 +161,13 @@ def trend_fit_signal(cand: Candidate, *, hot_terms: dict[str, float]) -> Signal:
 
     if not hot_terms:
         return Signal(0.0, "no digest trends supplied")
-    haystack = " ".join([cand.title.lower(), *[h.lower() for h in cand.hints]])
+    parts = [cand.title, *cand.hints]
     if cand.known_genome:
-        genre = str(cand.known_genome.get("primary_genre") or "").replace("_", " ")
-        haystack += " " + genre.lower()
-    hits = {term: w for term, w in hot_terms.items() if term in haystack}
+        parts.append(str(cand.known_genome.get("primary_genre") or "").replace("_", " "))
+    # Flatten punctuation to spaces so "social-tournament ladder" matches the trend "social
+    # tournament" -- hyphens and plurals in store text should not hide a real match.
+    haystack = _flatten(" ".join(parts))
+    hits = {term: w for term, w in hot_terms.items() if _flatten(term) in haystack}
     if not hits:
         return Signal(0.0, "no current digest trend detected from chart data alone")
     value = min(1.0, max(hits.values()) * 0.7 + 0.3 * min(1.0, len(hits) / 3))

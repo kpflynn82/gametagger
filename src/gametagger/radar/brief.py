@@ -9,6 +9,7 @@ cited reasoning; without it, the rule-based fallback below keeps the card honest
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from gametagger.radar.candidate import Candidate
@@ -104,6 +105,14 @@ GENRE_ALIASES: tuple[tuple[str, str], ...] = (
 )
 
 
+def _word_tokens(text: str) -> set[str]:
+    """Lowercase alphanumeric tokens, naive-singularized, for punctuation-insensitive overlap."""
+    return {
+        t[:-1] if len(t) > 3 and t.endswith("s") else t
+        for t in re.findall(r"[a-z0-9]+", text.lower())
+    }
+
+
 def _family(cand: Candidate) -> str:
     if cand.known_genome and cand.known_genome.get("primary_genre"):
         # Map a specific genre back to its family by its known family probabilities if present.
@@ -133,9 +142,12 @@ def propose_differentiation(
     book = GENRE_PLAYBOOK.get(fam, DEFAULT_PLAYBOOK)
     theme_to = book["fresh_themes"][0] if book["fresh_themes"] else "dragons"
 
-    # Pick an added mechanic the game does not already lean on, biased toward digest trends.
-    standout = (standout_mechanic or "its core loop").lower()
-    candidates = [m for m in book["hot_mechanics"] if m not in standout]
+    # Pick an added mechanic the game does not already lean on, biased toward digest trends. The
+    # overlap test is token-based (singular, punctuation-insensitive) so a "social-tournament
+    # ladder" standout correctly rules out adding "social tournaments" -- it is already the hook.
+    standout = standout_mechanic or "its core loop"
+    standout_tokens = _word_tokens(standout)
+    candidates = [m for m in book["hot_mechanics"] if not _word_tokens(m) <= standout_tokens]
     if hot_terms:
         candidates.sort(key=lambda m: -max((w for t, w in hot_terms.items() if t in m), default=0))
     add = candidates[0] if candidates else "collection albums"
