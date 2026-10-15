@@ -763,3 +763,32 @@ committed, never game files.
 Left (owner decisions): start the unlock run; whether to run `unity_systems.py` on the other Unity
 games (its name reader already opens Royal Match, Coin Master and Royal Smash: metadata v31,
 unencrypted, with game namespaces `Royal`, `MoonActive` and none clear for Royal Smash).
+
+### Soft-launch radar + clone pipeline, v3 plan (October 14, 2026)
+
+The owner asked to plan and prototype a new version of the project: a daily radar that spots
+test-market games monetizing unusually well and proposes a fairer, differentiated clone to build.
+Full plan in `docs/RADAR_V3_PLAN.md`. Branch `claude/radar-v3`. No paid calls; all offline.
+
+* **Radar built (`src/gametagger/radar/`).** Reads CA/AU/NZ top-grossing and top-free charts
+  (AppBrain for Google Play CA/AU; Apple's free RSS feed for App Store CA/AU/NZ -- AppBrain has no
+  NZ page), then scores each game on four transparent signals: the monetization fingerprint (high
+  grossing + weak/absent downloads), soft-launch (multi-market, US-absent), novelty (not in the 218
+  tagged catalogue) and trend fit (from the weekly digest). Produces a ranked shortlist, a morning
+  push, and a one-line "build a prototype?" proposal per game. `gametagger-radar scan` /
+  `approve`. Cross-store duplicates are merged by normalized title.
+* **Clone scaffold built (`src/gametagger/clone/`).** From a blueprint or a radar proposal,
+  `gametagger-clone scaffold` writes a runnable web skeleton (Phaser 2D / three.js 3D by genre),
+  `DIRECTIONS.md`, and the Codex art hand-off (`ART_BRIEF.md` + `assets/MANIFEST.json`). Mechanics
+  are Claude's, art is Codex's; they sync through the repo. Unity is the final-build target.
+* **Reuses what exists:** the APK kit/code-name reader and `gametagger-play` for the deep dive, the
+  `game-designer` skill for the GDD, and the weekly digest for trends.
+* **Demo:** `experiments/radar/demo-charts.json` + `demo-hints.json` -- the Heroes of the Wall
+  scenario ranks #1 at 81/100 (soft-launch across CA/AU/NZ, strong monetization, novel); MONOPOLY
+  GO! correctly drops out as a known US grosser.
+* **Tests:** 22 new; whole suite 472 passed, 1 skipped (live); ruff clean.
+
+Left (owner decisions, see the plan): create a private repo for intel outputs (or use Drive); wire
+the digest output to where the radar reads it and schedule the daily scan + push; confirm the
+mirror-download + signature-match acquisition rule and provide a signature reference per studio;
+a first live run to tune the weights.

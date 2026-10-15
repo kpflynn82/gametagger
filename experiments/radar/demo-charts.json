@@ -1,0 +1,25 @@
+[
+  {"region":"CA","store":"google_play","kind":"grossing","chart_date":"2026-10-14",
+   "rows":{
+     "com.studio.heroesofthewall":[22,"Heroes of the Wall","Wallworks"],
+     "com.mythic.harbormerge":[31,"Harbor Merge Tycoon","Mythic Co"],
+     "com.scopely.monopolygo":[1,"MONOPOLY GO!","Scopely"],
+     "com.casual.bubblepoppals":[64,"Bubble Pop Pals","PopCo"]}},
+  {"region":"AU","store":"google_play","kind":"grossing","chart_date":"2026-10-14",
+   "rows":{
+     "com.studio.heroesofthewall":[19,"Heroes of the Wall","Wallworks"],
+     "com.mythic.harbormerge":[28,"Harbor Merge Tycoon","Mythic Co"],
+     "com.scopely.monopolygo":[1,"MONOPOLY GO!","Scopely"]}},
+  {"region":"NZ","store":"app_store","kind":"grossing","chart_date":"2026-10-14",
+   "rows":{
+     "6612345678":[15,"Heroes of the Wall","Wallworks"]}},
+  {"region":"CA","store":"google_play","kind":"free","chart_date":"2026-10-14",
+   "rows":{
+     "com.mythic.harbormerge":[12,"Harbor Merge Tycoon","Mythic Co"],
+     "com.scopely.monopolygo":[7,"MONOPOLY GO!","Scopely"],
+     "com.casual.bubblepoppals":[3,"Bubble Pop Pals","PopCo"]}},
+  {"region":"AU","store":"google_play","kind":"free","chart_date":"2026-10-14",
+   "rows":{
+     "com.mythic.harbormerge":[15,"Harbor Merge Tycoon","Mythic Co"],
+     "com.scopely.monopolygo":[9,"MONOPOLY GO!","Scopely"]}}
+]

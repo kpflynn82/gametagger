@@ -26,6 +26,8 @@ gametagger-eval = "gametagger.evaluation.runner:main"
 gametagger-genome = "gametagger.genome.cli:main"
 gametagger-compare = "gametagger.comparison.cli:main"
 gametagger-play = "gametagger.play.cli:main"
+gametagger-radar = "gametagger.radar.cli:main"
+gametagger-clone = "gametagger.clone.cli:main"
 
 [build-system]
 requires = ["hatchling"]
