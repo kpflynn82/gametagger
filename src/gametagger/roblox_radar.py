@@ -58,7 +58,7 @@ EXTRA_SORT_IDS = (
 )
 SORT_DEPTH = {"top-playing-now": 300}
 DEFAULT_SORT_DEPTH = 120
-DETAIL_LIMIT = 220  # games that also get passes + badges (busiest first, all risers included)
+DETAIL_LIMIT = 120  # games that also get passes + badges (busiest first, all risers included)
 BADGE_LIMIT = 100
 
 # Platform averages used only for the labeled revenue estimate. Update these from Roblox's latest
@@ -80,11 +80,16 @@ Fetch = Callable[[str], Any]
 # ---------------------------------------------------------------------------------------------
 
 
-def http_json(url: str, *, retries: int = 4, pause: float = 1.5) -> Any:
-    """GET a JSON document, backing off on rate limits and transient errors."""
+def http_json(url: str, *, retries: int = 6, pause: float = 4.0) -> Any:
+    """GET a JSON document, backing off on rate limits and transient errors.
+
+    Roblox rate-limits shared cloud addresses (like GitHub's runners) hard, so this honors
+    Retry-After and waits up to a minute between tries.
+    """
     last: Exception | None = None
     for attempt in range(retries):
         request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+        wait = pause * (2**attempt)
         try:
             with urlopen(request, timeout=30) as response:
                 return json.loads(response.read().decode("utf-8"))
@@ -92,9 +97,13 @@ def http_json(url: str, *, retries: int = 4, pause: float = 1.5) -> Any:
             last = err
             if err.code not in (429, 500, 502, 503, 504):
                 raise
+            retry_after = err.headers.get("Retry-After") if err.headers else None
+            if retry_after and retry_after.strip().isdigit():
+                wait = max(wait, float(retry_after))
         except (URLError, TimeoutError) as err:
             last = err
-        time.sleep(pause * (2**attempt))
+        if attempt < retries - 1:
+            time.sleep(min(wait, 60.0))
     assert last is not None
     raise last
 
@@ -223,11 +232,18 @@ def fetch_charts(fetch: Fetch, session: str) -> tuple[dict[str, Any], list[str]]
     return charts, notes
 
 
-def fetch_details(fetch: Fetch, universe_ids: list[int]) -> dict[int, dict[str, Any]]:
+def fetch_details(
+    fetch: Fetch, universe_ids: list[int], notes: list[str] | None = None
+) -> dict[int, dict[str, Any]]:
     details: dict[int, dict[str, Any]] = {}
     for batch in _chunks(universe_ids, 50):
         ids = ",".join(str(i) for i in batch)
-        payload = fetch(f"{GAMES}/games?universeIds={ids}")
+        try:
+            payload = fetch(f"{GAMES}/games?universeIds={ids}")
+        except Exception as err:  # noqa: BLE001 - chart entries still carry the basics
+            if notes is not None:
+                notes.append(f"game details batch failed ({len(batch)} games): {err}")
+            continue
         for game in payload.get("data", []):
             creator = game.get("creator") or {}
             details[game["id"]] = {
@@ -337,7 +353,22 @@ def collect(fetch: Fetch, *, now: datetime | None = None) -> dict[str, Any]:
         for entry in chart["games"]:
             if not entry["sponsored"] and entry["universeId"] not in ordered:
                 ordered.append(entry["universeId"])
-    details = fetch_details(fetch, ordered)
+    details = fetch_details(fetch, ordered, notes)
+    # Games whose detail call failed still get the basics the charts themselves carry.
+    for chart in charts.values():
+        for entry in chart["games"]:
+            uid = entry["universeId"]
+            if entry["sponsored"] or uid in details:
+                continue
+            details[uid] = {
+                "name": entry["name"],
+                "rootPlaceId": entry["rootPlaceId"],
+                "playing": entry["playerCount"],
+                "upVotes": entry["upVotes"],
+                "downVotes": entry["downVotes"],
+                "genre": entry["genre"],
+                "fromChartOnly": True,
+            }
 
     def busy(uid: int) -> int:
         return (details.get(uid) or {}).get("playing") or 0
@@ -347,10 +378,16 @@ def collect(fetch: Fetch, *, now: datetime | None = None) -> dict[str, Any]:
         risers.update(e["universeId"] for e in charts.get(sort_id, {}).get("games", [])[:60])
     deep = sorted(ordered, key=busy, reverse=True)[:DETAIL_LIMIT]
     deep += [uid for uid in ordered if uid in risers and uid not in deep]
+    misses = 0
     for uid in deep:
-        if uid in details:
-            details[uid]["passes"] = fetch_passes(fetch, uid)
-            details[uid]["badges"] = fetch_badges(fetch, uid)
+        if uid not in details:
+            continue
+        details[uid]["passes"] = fetch_passes(fetch, uid)
+        details[uid]["badges"] = fetch_badges(fetch, uid)
+        misses = misses + 1 if details[uid]["passes"] is None and not details[uid]["badges"] else 0
+        if misses >= 5:  # rate-limited: stop rather than hammer; next run fills the rest
+            notes.append(f"stopped pass/badge lookups after 5 straight failures (at {uid})")
+            break
 
     return {
         "taken_at": now.isoformat(timespec="seconds"),
@@ -580,8 +617,12 @@ def summarize(
         if updated_days is not None and updated_days <= 7:
             flags.append("updated-this-week")
 
+        series = [
+            daily_average(history.get(today - timedelta(days=n)), uid) for n in range(13, -1, -1)
+        ]
         games.append(
             {
+                "series14": [round(v) if v else None for v in series],
                 "universeId": int(uid),
                 "placeId": info.get("rootPlaceId"),
                 "name": info.get("name"),
@@ -661,7 +702,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("command", choices=("collect", "summarize", "run"))
     parser.add_argument("--out", type=Path, required=True, help="data directory")
     parser.add_argument("--basis", type=Path, help="JSON file overriding REVENUE_BASIS")
-    parser.add_argument("--delay", type=float, default=0.35, help="seconds between requests")
+    parser.add_argument("--delay", type=float, default=0.8, help="seconds between requests")
     args = parser.parse_args(argv)
 
     out: Path = args.out
