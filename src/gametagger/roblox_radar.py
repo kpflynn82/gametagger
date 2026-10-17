@@ -248,15 +248,21 @@ def fetch_details(fetch: Fetch, universe_ids: list[int]) -> dict[int, dict[str, 
                 "genre": game.get("genre_l1") or game.get("genre") or "",
                 "subgenre": game.get("genre_l2") or "",
             }
-        votes = fetch(f"{GAMES}/games/votes?universeIds={ids}")
+        try:
+            votes = fetch(f"{GAMES}/games/votes?universeIds={ids}")
+        except Exception:  # noqa: BLE001 - likes are optional; chart entries carry them too
+            votes = {}
         for row in votes.get("data", []):
             if row.get("id") in details:
                 details[row["id"]]["upVotes"] = row.get("upVotes")
                 details[row["id"]]["downVotes"] = row.get("downVotes")
-        icons = fetch(
-            f"{THUMBS}/games/icons?universeIds={ids}&returnPolicy=PlaceHolder"
-            "&size=150x150&format=Png&isCircular=false"
-        )
+        try:
+            icons = fetch(
+                f"{THUMBS}/games/icons?universeIds={ids}&returnPolicy=PlaceHolder"
+                "&size=150x150&format=Png&isCircular=false"
+            )
+        except Exception:  # noqa: BLE001 - icons are cosmetic
+            icons = {}
         for row in icons.get("data", []):
             if row.get("targetId") in details and row.get("state") == "Completed":
                 details[row["targetId"]]["icon"] = row.get("imageUrl")

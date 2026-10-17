@@ -45,7 +45,17 @@ jobs:
           python-version: "3.11"
 
       - name: Collect and summarize
-        run: PYTHONPATH=code/src python -m gametagger.roblox_radar run --out data
+        run: |
+          set +e
+          PYTHONPATH=code/src python -m gametagger.roblox_radar run --out data 2> err.txt
+          status=$?
+          cat err.txt >&2
+          if [ $status -ne 0 ]; then
+            # Surface the end of the error as an annotation, readable without log access.
+            msg=$(tail -c 2500 err.txt | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+            echo "::error title=Roblox radar collector failed::${msg}"
+            exit $status
+          fi
 
       - name: Save to the data branch
         working-directory: data
