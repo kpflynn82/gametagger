@@ -1,0 +1,58 @@
+# Saves a snapshot of Roblox's public charts and game numbers every 6 hours.
+# Snapshots go to the `roblox-data` branch (not main), so main's history stays clean.
+# The Roblox Radar dashboard's scheduled Claude update reads radar.json from that branch.
+name: Roblox radar
+
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [claude/roblox-radar]
+    paths:
+      - src/gametagger/roblox_radar.py
+      - .github/workflows/roblox-radar.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: roblox-radar
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: code
+
+      - name: Check out the data branch (created on the first run)
+        env:
+          REPO_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" roblox-data >/dev/null; then
+            git clone --depth 1 --branch roblox-data "$REPO_URL" data
+          else
+            mkdir data && cd data && git init -q -b roblox-data && git remote add origin "$REPO_URL"
+            printf '# Roblox radar data\n\nAutomated snapshots written by .github/workflows/roblox-radar.yml on main.\nradar.json is the summary; history/ holds one file per UTC day.\n' > README.md
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Collect and summarize
+        run: PYTHONPATH=code/src python -m gametagger.roblox_radar run --out data
+
+      - name: Save to the data branch
+        working-directory: data
+        run: |
+          git config user.name "roblox-radar-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "Roblox radar snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q origin roblox-data
