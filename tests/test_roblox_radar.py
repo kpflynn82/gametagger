@@ -183,4 +183,4 @@ def test_export_dashboard_chunks_and_compacts(tmp_path):
     assert top["id"] == 1 and top["ccu"] == 500_000
     assert top["passes"]["top"][0] == {"n": "VIP", "p": 499}
     assert top["funnel"][0]["s"] == 100.0
-    assert "rev" not in top  # no revenue basis configured
+    assert top["rev"]["spend"][0] > 0  # the default Q2 2026 basis gives a labeled band

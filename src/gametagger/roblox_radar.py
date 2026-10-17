@@ -65,10 +65,10 @@ BADGE_LIMIT = 100
 # quarterly results (shareholder letter): bookings, developer exchange fees, engagement hours.
 REVENUE_BASIS = {
     "quarter": "Q2 2026",
-    "bookings_usd": None,  # set by the dashboard build; None disables the estimate
-    "devex_usd": None,
-    "engagement_hours": None,
-    "source": "",
+    "bookings_usd": 1_557_000_000,
+    "devex_usd": 363_000_000,
+    "engagement_hours": 29_000_000_000,
+    "source": "Roblox Q2 2026 shareholder letter (Jul 30, 2026)",
 }
 ESTIMATE_LOW, ESTIMATE_HIGH = 0.5, 2.0  # genre spread around the platform average
 

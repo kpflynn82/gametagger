@@ -47,7 +47,7 @@ jobs:
       - name: Collect and summarize
         run: |
           set +e
-          PYTHONPATH=code/src python -m gametagger.roblox_radar run --out data 2> err.txt
+          PYTHONPATH=code/src python -m gametagger.roblox_radar run --out data 2> err.txt && PYTHONPATH=code/src python -m gametagger.roblox_radar export --out data --export data/dashboard 2>> err.txt
           status=$?
           cat err.txt >&2
           if [ $status -ne 0 ]; then
