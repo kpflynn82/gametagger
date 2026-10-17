@@ -763,3 +763,32 @@ committed, never game files.
 Left (owner decisions): start the unlock run; whether to run `unity_systems.py` on the other Unity
 games (its name reader already opens Royal Match, Coin Master and Royal Smash: metadata v31,
 unencrypted, with game namespaces `Royal`, `MoonActive` and none clear for Royal Smash).
+
+### Roblox Radar and the first Roblox games (October 17, 2026)
+
+The owner asked for the mobile work's Roblox equivalent: what is trending and earning on Roblox and
+why, a private dashboard, and AI-built games that pair a live trend with a proven Roblox loop.
+
+* **Collector** (`src/gametagger/roblox_radar.py`, stdlib only, 6 offline tests; branch
+  `claude/roblox-radar`, [PR #25](https://github.com/kpflynn82/gametagger/pull/25)). Reads
+  Roblox's public chart, game, vote, pass and badge APIs; keeps one history file per UTC day;
+  computes 1/7/28-day player growth, flags (breakout, new and hot, rising, falling, updated this
+  week), the badge funnel, pass prices and a revenue sanity estimate from Roblox's Q2 2026 totals
+  ($1.557B bookings, $363M DevEx, 29B hours). `export` writes the dashboard's database documents
+  (`radar-latest.json` plus 60-game chunks).
+* **Workflow** `.github/workflows/roblox-radar.yml` runs every 6 hours and writes to the
+  `roblox-data` branch (not main). Rate limits handled with Retry-After, a failure breaker and a
+  120-game detail limit. Last snapshot 2026-10-17 18:42 UTC with 880 games. **The schedule only
+  runs once PR #25 is merged**; until then it runs on pushes to the branch.
+* **Dashboard** is a private claude.ai artifact (Now, Games, Trends, Ideas, Knowledge, Playbook
+  tabs). A daily scheduled task copies the export into it and adds breakdowns, trends and ideas;
+  a Mac task reads the owner's X threads into the Knowledge tab.
+* **Games** live in the gamecrafter repo, not here: "Peanut Butter Jelly Time!" (branch
+  `roblox/pbj-time`, Rojo + Lune, 187 tests, first Studio playtest passed) and Raccoon Trash Heist
+  (branch `roblox/raccoon-heist`, in progress). The owner chose chart-standard monetization for
+  launch; the two lines kept are no fake scarcity or fake purchase toasts, and odds shown on any
+  paid random item.
+
+Spend: no paid model runs and no `--budget-usd` runs; everything ran on the owner's Claude plan.
+Left: merge PR #25; the owner's Roblox age check and 2-Step Verification (publishing is blocked
+without the age check); second Studio playtest, then publish PBJ Time and create its passes.
