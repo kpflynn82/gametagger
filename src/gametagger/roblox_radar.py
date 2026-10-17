@@ -682,6 +682,101 @@ def summarize(
 
 
 # ---------------------------------------------------------------------------------------------
+# Dashboard export
+# ---------------------------------------------------------------------------------------------
+
+DASHBOARD_TOP = 300  # busiest games always included
+DASHBOARD_CHUNK = 60  # games per database document (documents are capped at 256 KiB)
+FOCUS_CHARTS = ("up-and-coming", "top-trending", "top-earning", "top-revisited", "top-rated")
+
+
+def _compact_game(game: dict[str, Any]) -> dict[str, Any]:
+    passes = game.get("passes")
+    rev = game.get("revenueEstimate")
+    out = {
+        "id": game["universeId"],
+        "place": game.get("placeId"),
+        "name": game.get("name"),
+        "creator": game.get("creator"),
+        "genre": game.get("genre"),
+        "sub": game.get("subgenre"),
+        "ccu": game.get("ccu"),
+        "g1": game.get("growth1d"),
+        "g7": game.get("growth7d"),
+        "g28": game.get("growth28d"),
+        "peak": game.get("peakSeen"),
+        "visits": game.get("visits"),
+        "fav": game.get("favorites"),
+        "like": game.get("likePct"),
+        "age": game.get("ageDays"),
+        "upd": game.get("updatedDaysAgo"),
+        "npd": game.get("newPlayersPerDay"),
+        "s14": game.get("series14"),
+        "ranks": {k: v for k, v in (game.get("chartRanks") or {}).items() if v <= 100},
+        "flags": game.get("flags") or [],
+        "desc": (game.get("description") or "")[:240],
+    }
+    if passes:
+        out["passes"] = {
+            "count": passes.get("count"),
+            "forSale": passes.get("forSale"),
+            "min": passes.get("min"),
+            "median": passes.get("median"),
+            "max": passes.get("max"),
+            "top": [{"n": t["name"][:40], "p": t["price"]} for t in passes.get("top", [])[:6]],
+        }
+    if game.get("funnel"):
+        out["funnel"] = [{"n": b["name"][:48], "s": b["share"]} for b in game["funnel"][:6]]
+    if rev:
+        out["rev"] = {"spend": rev["spendPerDay"], "cash": rev["creatorCashPerDay"]}
+    return {k: v for k, v in out.items() if v not in (None, "", [], {})}
+
+
+def export_dashboard(radar: dict[str, Any], export_dir: Path) -> list[Path]:
+    """Write the dashboard's database documents: radar/latest plus radar/games-N chunks.
+
+    Includes the busiest games, every game in a focus chart's top 60, and every flagged riser,
+    so a refresh stays a few hundred KB however many games the charts list.
+    """
+    focus: set[int] = set()
+    for sort_id in FOCUS_CHARTS:
+        focus.update((radar["charts"].get(sort_id) or {}).get("order", [])[:60])
+    keep = []
+    for rank, game in enumerate(radar["games"]):
+        flagged = {"breakout", "new-and-hot", "rising"} & set(game.get("flags") or [])
+        if rank < DASHBOARD_TOP or game["universeId"] in focus or flagged:
+            keep.append(_compact_game(game))
+    kept_ids = {g["id"] for g in keep}
+    chunks = [keep[i : i + DASHBOARD_CHUNK] for i in range(0, len(keep), DASHBOARD_CHUNK)]
+    export_dir.mkdir(parents=True, exist_ok=True)
+    for old in export_dir.glob("radar-*.json"):
+        old.unlink()
+    paths = []
+    meta = {
+        "generatedAt": radar["generated_at"],
+        "historyDays": radar["history_days"],
+        "gamesTracked": radar["games_tracked"],
+        "gamesShown": len(keep),
+        "totalCcu": radar["total_ccu_tracked"],
+        "chunks": len(chunks),
+        "charts": {
+            k: {"name": v["name"], "order": [i for i in v["order"] if i in kept_ids][:60]}
+            for k, v in radar["charts"].items()
+        },
+        "method": radar["method"],
+        "notes": radar.get("notes", [])[:10],
+    }
+    path = export_dir / "radar-latest.json"
+    _write(path, meta)
+    paths.append(path)
+    for n, chunk in enumerate(chunks, start=1):
+        path = export_dir / f"radar-games-{n}.json"
+        _write(path, {"n": n, "games": chunk})
+        paths.append(path)
+    return paths
+
+
+# ---------------------------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------------------------
 
@@ -699,10 +794,11 @@ def load_basis(path: Path | None) -> dict[str, Any]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("command", choices=("collect", "summarize", "run"))
+    parser.add_argument("command", choices=("collect", "summarize", "run", "export"))
     parser.add_argument("--out", type=Path, required=True, help="data directory")
     parser.add_argument("--basis", type=Path, help="JSON file overriding REVENUE_BASIS")
     parser.add_argument("--delay", type=float, default=0.8, help="seconds between requests")
+    parser.add_argument("--export", type=Path, help="export: folder for dashboard documents")
     args = parser.parse_args(argv)
 
     out: Path = args.out
@@ -720,6 +816,11 @@ def main(argv: list[str] | None = None) -> int:
         radar = summarize(snapshot, load_history(out / "history"), basis=basis)
         _write(out / "radar.json", radar)
         print(f"summarized {radar['games_tracked']} games over {radar['history_days']} days")
+    if args.command == "export":
+        radar = json.loads((out / "radar.json").read_text())
+        paths = export_dashboard(radar, args.export or out / "dashboard")
+        sizes = ", ".join(f"{p.name} {p.stat().st_size // 1024}KB" for p in paths)
+        print(f"exported {len(paths)} documents: {sizes}")
     return 0
 
 

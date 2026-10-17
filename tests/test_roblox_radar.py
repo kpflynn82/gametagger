@@ -166,3 +166,21 @@ def test_main_run_writes_files(tmp_path, monkeypatch):
     radar = json.loads((tmp_path / "radar.json").read_text())
     assert radar["games_tracked"] == 4
     assert list((tmp_path / "history").glob("*.json"))
+
+
+def test_export_dashboard_chunks_and_compacts(tmp_path):
+    history_dir = tmp_path / "history"
+    snap = rr.collect(FakeRoblox({1: 500_000, 3: 41_000}), now=NOW)
+    rr.record_history(snap, history_dir)
+    radar = rr.summarize(snap, rr.load_history(history_dir))
+    paths = rr.export_dashboard(radar, tmp_path / "export")
+    names = sorted(p.name for p in paths)
+    assert names == ["radar-games-1.json", "radar-latest.json"]
+    meta = json.loads((tmp_path / "export" / "radar-latest.json").read_text())
+    assert meta["chunks"] == 1 and meta["gamesShown"] == 4
+    chunk = json.loads((tmp_path / "export" / "radar-games-1.json").read_text())
+    top = chunk["games"][0]
+    assert top["id"] == 1 and top["ccu"] == 500_000
+    assert top["passes"]["top"][0] == {"n": "VIP", "p": 499}
+    assert top["funnel"][0]["s"] == 100.0
+    assert "rev" not in top  # no revenue basis configured
