@@ -1,9 +1,8 @@
 # GameTagger trailer
 
 `web/trailer.mp4` (played on the site, poster `web/trailer-poster.jpg`): a silent, square
-(1080 x 1080) video for LinkedIn and the site. The site's copy is the 82-second, ten-part cut.
-This branch's `build.py` renders the 95-second, eleven-part cut, which adds an Evolve part (8)
-between Learn and Build. The first five parts show how the tag database was built and how tags
+(1080 x 1080) video of about 95 seconds, for LinkedIn and the site. It has eleven parts; the
+Evolve part (8, added Nov 4, 2026) sits between Learn and Build. The first five parts show how the tag database was built and how tags
 are assigned; the rest show the newer loop: play a game, learn what makes it work, evolve it
 with chart data, and build the evolved version to find out whether it is fun.
 

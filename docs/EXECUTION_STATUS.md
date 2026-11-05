@@ -806,9 +806,11 @@ screen.
   limits 4, live events 69, daily rewards 49 (Jev strong or likely only). Two are in Fold & Fly
   (BUILT), two are NEXT TEST. Build's title now reads "Then it builds the evolved version. Play
   it: is it fun?". The pitch has five steps (Spot, Play, Learn, Evolve, Build). 95.4 s, 11 parts.
-* `web/trailer.mp4` on the site is unchanged (still the 82-second cut) until the owner approves.
+* The owner approved it the same evening: `web/trailer.mp4` and `web/trailer-poster.jpg` (the Build
+  part at 77.5 s) are replaced, and the How it works copy (in `web/index.html` and the dashboard
+  template) now says 95 seconds and lists the Evolve step. The Play button still jumps to 30.6 s.
 * The on-screen data is dated (Oct 9 chart), not described as daily: the mobile chart is refreshed
   every couple of weeks today; only the Roblox radar runs every 6 hours.
 
 Spend: none (rendering only).
-Left: owner review; if approved, copy the render to `web/trailer.mp4` with a new poster.
+Left: a daily mobile chart refresh, if the owner wants the film to say the data is daily.

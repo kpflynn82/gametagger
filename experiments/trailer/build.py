@@ -1,4 +1,4 @@
-"""Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 82 seconds).
+"""Render the GameTagger marketing trailer (silent, 1080 x 1080, 30 fps, about 95 seconds).
 
     uv run python experiments/trailer/build.py [--fonts fonts.css] [--still SECONDS]
 
