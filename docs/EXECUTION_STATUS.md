@@ -792,3 +792,23 @@ why, a private dashboard, and AI-built games that pair a live trend with a prove
 Spend: no paid model runs and no `--budget-usd` runs; everything ran on the owner's Claude plan.
 Left: merge PR #25; the owner's Roblox age check and 2-Step Verification (publishing is blocked
 without the age check); second Studio playtest, then publish PBJ Time and create its passes.
+
+### Trailer: an Evolve part between Learn and Build (November 4, 2026)
+
+Branch `claude/trailer-evolve`. The owner asked to combine the site trailer with a newer
+"We don't copy games. We evolve them." cut: after Learn (0:52), show how chart data suggests ways
+to evolve the game, a set of options to try, then the evolved build, and add Evolve to the pitch
+screen.
+
+* `experiments/trailer/`: a new part 8, **Evolve** (52.6–66.0 s): "Don't copy the game. Evolve
+  it.", what the top 150 grossing Google Play games do (chart of Oct 9, 2026, from the site data),
+  then four options for the plane game with the matching tag counts: collections 80, energy
+  limits 4, live events 69, daily rewards 49 (Jev strong or likely only). Two are in Fold & Fly
+  (BUILT), two are NEXT TEST. Build's title now reads "Then it builds the evolved version. Play
+  it: is it fun?". The pitch has five steps (Spot, Play, Learn, Evolve, Build). 95.4 s, 11 parts.
+* `web/trailer.mp4` on the site is unchanged (still the 82-second cut) until the owner approves.
+* The on-screen data is dated (Oct 9 chart), not described as daily: the mobile chart is refreshed
+  every couple of weeks today; only the Roblox radar runs every 6 hours.
+
+Spend: none (rendering only).
+Left: owner review; if approved, copy the render to `web/trailer.mp4` with a new poster.

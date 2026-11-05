@@ -243,7 +243,7 @@ text-align:center;font-weight:800;font-size:25px;line-height:1.1;letter-spacing:
 .kcol div{font-weight:700;font-size:22px;line-height:1.25;padding:10px 0;border-bottom:1px solid var(--line);opacity:0}
 .kcol div small{display:block;font:500 17px "Chivo Mono",monospace;color:var(--ink2);margin-top:3px}
 /* build */
-.btitle{left:56px;width:500px;top:150px;font-weight:800;font-size:58px;line-height:1.04;letter-spacing:-.03em}
+.btitle{left:56px;width:500px;top:150px;font-weight:800;font-size:50px;line-height:1.04;letter-spacing:-.03em}
 .bstats{left:56px;width:500px;top:372px}
 .bstat{border-top:2px solid var(--line);padding:14px 0 16px;opacity:0}
 .bstat b{display:block;font-weight:900;font-size:56px;letter-spacing:-.035em;line-height:1}
@@ -252,10 +252,27 @@ text-align:center;font-weight:800;font-size:25px;line-height:1.1;letter-spacing:
 .bphone .screen{background:#000}
 .bphone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .flabel{right:56px;top:116px;font:600 16px "Chivo Mono",monospace;letter-spacing:.12em;color:var(--red)}
+/* evolve */
+.ehead{left:56px;right:56px;top:318px;font:600 18px "Chivo Mono",monospace;letter-spacing:.12em;color:var(--ink2)}
+.erows{left:56px;right:56px;top:364px}
+.erow{position:relative;display:grid;grid-template-columns:1fr 330px;align-items:center;height:118px;border-bottom:1px solid var(--line);opacity:0}
+.erow .lt{position:relative;height:100%}
+.erow .lt>div{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%)}
+.erow .tag{font-weight:800;font-size:34px;letter-spacing:-.01em}
+.erow .opt b{display:block;font-weight:900;font-size:38px;letter-spacing:-.025em;line-height:1.05}
+.erow .opt span{display:block;font:500 19px "Chivo Mono",monospace;color:var(--ink2);margin-top:6px}
+.erow .opt .chip{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:17px;padding:6px 10px}
+.erow .ev{display:grid;grid-template-columns:1fr;gap:8px}
+.erow .ebar{height:16px;background:#2b2a23;border-radius:8px;overflow:hidden}
+.erow .ebar i{display:block;height:100%;width:0;border-radius:8px;background:var(--ink)}
+.erow .ev small{font:600 18px "Chivo Mono",monospace;color:var(--ink2);font-variant-numeric:tabular-nums}
+.esrc{left:56px;right:56px;top:852px;font:500 15px/1.45 "Chivo Mono",monospace;color:var(--mute)}
+.estamp{left:56px;right:56px;top:900px;font-weight:900;font-size:52px;letter-spacing:-.03em}
+.estamp em{font-style:normal;color:var(--red)}
 /* pitch */
 .qtitle{left:56px;right:56px;top:112px;font-weight:900;font-size:70px;line-height:1.02;letter-spacing:-.04em}
 .qsteps{left:56px;right:56px;top:330px}
-.qstep{display:grid;grid-template-columns:110px 220px 1fr;align-items:center;height:104px;border-bottom:1px solid var(--line);opacity:0}
+.qstep{display:grid;grid-template-columns:110px 220px 1fr;align-items:center;height:88px;border-bottom:1px solid var(--line);opacity:0}
 .qstep i{font:700 22px "Chivo Mono",monospace;font-style:normal;color:var(--mute)}
 .qstep b{font-weight:900;font-size:46px;letter-spacing:-.03em}
 .qstep span{font-size:28px;font-weight:700;color:var(--ink2);line-height:1.2}
@@ -431,10 +448,21 @@ color:#16150f}
   <div class="a cap" id="suc" style="bottom:40px">Keep what's fun. Drop what only extracts. Design a fair replacement.</div>
 </div>
 
-<!-- 8: build -->
+<!-- 8: evolve -->
+<div class="scene" id="se">
+  <div class="a kicker" id="sek" style="left:56px;top:112px">EVOLVE</div>
+  <div class="a title" id="set" style="top:150px">Don't copy the game. Evolve it.</div>
+  <div class="a ehead" id="eh1"></div>
+  <div class="a ehead" id="eh2">OPTIONS TO TRY, EACH BACKED BY THE CHARTS</div>
+  <div class="a erows" id="erows"></div>
+  <div class="a esrc" id="esrc"></div>
+  <div class="a estamp" id="estamp">Pick one. Build it. <em>Play it.</em></div>
+</div>
+
+<!-- 9: build -->
 <div class="scene" id="sb">
   <div class="a kicker" id="sbk" style="left:56px;top:112px">BUILD</div>
-  <div class="a btitle" id="sbt">Then it builds a playable prototype.</div>
+  <div class="a btitle" id="sbt">Then it builds the evolved version. Play it: is it fun?</div>
   <div class="a bstats" id="bstats"></div>
   <div class="a flabel" id="flabel">REAL PROTOTYPE FOOTAGE</div>
   <div class="phone a bphone" id="sbp"><div class="screen"><img id="foot" alt=""><div class="ripple" id="rip2"></div></div></div>
@@ -548,6 +576,15 @@ D.learn.kdr.forEach(([head, color, items]) => {
     items.map(([a, b]) => `<div>${a}${b ? `<small>→ ${b}</small>` : ''}</div>`).join('') + `</div>`);
 });
 const kcolEls = [...$('kdr').querySelectorAll('.kcol')];
+// build: evolve options, each with the share of top-grossing games that show it
+$('eh1').textContent = `WHAT THE TOP ${D.evolve.total} GROSSING GAMES DO`;
+$('esrc').textContent = D.evolve.source + '. A tag counts when Jev saw it; not seen is not counted as absent.';
+D.evolve.options.forEach(([label, name, line, seen, status]) => {
+  $('erows').insertAdjacentHTML('beforeend', `<div class="erow"><div class="lt"><div class="tag">${label}</div>` +
+    `<div class="opt" style="opacity:0"><b>${name}</b><span>${line}</span><i class="chip ${status === 'BUILT' ? 'c-green' : 'c-yellow'}" style="font-style:normal">${status}</i></div></div>` +
+    `<div class="ev"><div class="ebar"><i data-w="${seen / D.evolve.total}"></i></div><small data-v="${seen}" data-l="${label.toLowerCase()}">0 of ${D.evolve.total}</small></div></div>`);
+});
+const erowEls = [...$('erows').children];
 // build: the prototype's stats and footage edit
 D.build.stats.forEach(([big, small]) => {
   $('bstats').insertAdjacentHTML('beforeend', `<div class="bstat"><b>${big}</b><span>${small}</span></div>`);
@@ -600,9 +637,9 @@ $('defh').textContent = D.def[0]; $('defp').textContent = D.def[1]; $('defe').te
 // The timeline. The first five scenes keep their original timings (OLD) and play a little
 // faster to make room for the four new ones; the new scenes are drawn in their own local time.
 const SCENES = [['s1', 0, 5], ['s2', 5, 11.6], ['s3', 11.6, 16.8], ['sj', 16.8, 25.2], ['s5', 25.2, 30.6],
-  ['sp', 30.6, 40.8], ['su', 40.8, 52.6], ['sb', 52.6, 69.2], ['sq', 69.2, 76.6], ['s6', 76.6, 81.6]];
+  ['sp', 30.6, 40.8], ['su', 40.8, 52.6], ['se', 52.6, 66.0], ['sb', 66.0, 82.6], ['sq', 82.6, 90.4], ['s6', 90.4, 95.4]];
 const OLD = { s1: [0, 8], s2: [8, 16.4], s3: [16.4, 22.6], sj: [22.6, 32.4], s5: [37.2, 44.0] };
-window.DURATION = 81.6;
+window.DURATION = 95.4;
 
 const DRAW = {
   // 1 · 40,000 hours
@@ -755,7 +792,26 @@ const DRAW = {
     });
     rise($('suc'), u, 9.8, .5, 16);
   },
-  // 8 · builds a playable prototype (real footage)
+  // 8 · evolves: what the top-grossing games do, then options to try
+  se(u) {
+    rise($('sek'), u, .2, .5, 20); rise($('set'), u, .35);
+    const swap = eo(p(u, 5.4, 5.9));
+    rise($('eh1'), u, 1.1, .5, 12); $('eh1').style.opacity *= 1 - swap;
+    rise($('eh2'), u, 5.6, .5, 12);
+    $('erows').style.opacity = 1; $('erows').style.transform = 'none';
+    erowEls.forEach((r, i) => {
+      const a = 1.4 + i * .3; const k = eo(p(u, a, a + .45)); set(r, k, (1 - k) * 30, 0);
+      const bar = r.querySelector('.ebar i'); const kb = eio(p(u, a + .2, a + 1.6));
+      bar.style.width = `${100 * Number(bar.dataset.w) * kb}%`;
+      const c = r.querySelector('small'); c.textContent = `${c.dataset.l}: ${num(Number(c.dataset.v) * kb)} of ${D.evolve.total}`;
+      const ks = eo(p(u, 5.9 + i * .55, 6.4 + i * .55));
+      r.querySelector('.tag').style.opacity = 1 - ks;
+      const o = r.querySelector('.opt'); o.style.opacity = ks; o.style.transform = `translateY(${-50 + (1 - ks) * 30}%)`;
+    });
+    rise($('esrc'), u, 3.2, .5, 10);
+    rise($('estamp'), u, 10.6, .6, 30);
+  },
+  // 9 · builds a playable prototype (real footage)
   sb(u) {
     rise($('sbk'), u, .2, .5, 20); rise($('sbt'), u, .35);
     const kp = eo(p(u, .25, .85)); set($('sbp'), kp, (1 - kp) * 120, 0);
@@ -792,7 +848,7 @@ window.render = function (T) {
   $('prog').style.width = `${100 * T / window.DURATION}%`;
   const idx = Math.max(0, SCENES.findIndex(([, a, b]) => T >= a && T < b));
   $('count').textContent = `${String(idx + 1).padStart(2, '0')} / ${SCENES.length}`;
-  $('count').parentElement.style.opacity = T > 76.8 ? 0 : 1;
+  $('count').parentElement.style.opacity = T > 90.6 ? 0 : 1;
   let wait = null;
   for (const [id, a, b] of SCENES) {
     const el = $(id); const o = id === 's6' ? (T >= a ? 1 : 0) : Math.min(p(T, a - .01, a + .35), 1 - p(T, b - .45, b));

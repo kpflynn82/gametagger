@@ -1,9 +1,11 @@
 # GameTagger trailer
 
 `web/trailer.mp4` (played on the site, poster `web/trailer-poster.jpg`): a silent, square
-(1080 x 1080) video of about 82 seconds, for LinkedIn and the site. It has ten parts. The first
-five show how the tag database was built and how tags are assigned; the last five show the newer
-loop: play a game, learn what makes it work, and build a playable prototype.
+(1080 x 1080) video for LinkedIn and the site. The site's copy is the 82-second, ten-part cut.
+This branch's `build.py` renders the 95-second, eleven-part cut, which adds an Evolve part (8)
+between Learn and Build. The first five parts show how the tag database was built and how tags
+are assigned; the rest show the newer loop: play a game, learn what makes it work, evolve it
+with chart data, and build the evolved version to find out whether it is fun.
 
 1. It started with the 40,000 hours of gameplay (1,000+ games) in NVIDIA's NitroGen dataset.
    Its game list seeded the catalog. No model was trained on it.
@@ -24,13 +26,19 @@ loop: play a game, learn what makes it work, and build a playable prototype.
    "Ad-supported" and "Energy or stamina timers" were "not enough evidence" from the store page;
    playing measured 0.97 forced ads per flight and a 5-flight energy limit. Then the core loop
    and a keep / drop / replace pass.
-8. **Build.** Real footage of the prototype, Fold & Fly: the hangar, the slingshot, the valley
+8. **Evolve.** "Don't copy the game. Evolve it." What the top-grossing games do (the site's
+   top 150 grossing on Google Play, chart of Oct 9, 2026), then four options to try for the plane
+   game, each next to how many of those 150 games show the matching tag: collections 80, energy
+   limits 4, live events 69, daily rewards 49 (Jev "strong" or "likely"; a tag Jev didn't see is
+   not counted, because not seen never means absent). Two options are in Fold & Fly (BUILT) and
+   two are not built yet (NEXT TEST). `evolve()` in `build.py` counts them from `web/index.html`.
+9. **Build.** Real footage of the prototype, Fold & Fly: the hangar, the slingshot, the valley
    course, a finish line, the harbour town with rocket jets, and all six planes. First playable
    overnight; bot-player simulations give 1 forced ad in 9 flights (11% of the original) and
    the first new plane in about 25 minutes.
-9. The pitch: spot a game climbing the charts, play it, learn what makes it work, build a
+10. The pitch: spot a game climbing the charts, play it, learn what makes it work, evolve it, build a
    prototype. "Find out if a feature is fun before you staff a team."
-10. End card.
+11. End card.
 
 ## Sources and honesty rules
 

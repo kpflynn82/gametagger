@@ -42,7 +42,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 CHROME = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell"
-FPS, SECONDS = 30, 81.6
+FPS, SECONDS = 30, 95.4
 
 RENDER_JS = """
 const { chromium } = require('playwright');
@@ -287,6 +287,62 @@ def learn() -> dict:
     }
 
 
+# Evolve: options to try for the plane game, each backed by how many of the top-grossing mobile
+# games on the site show that tag (Jev "strong" or "likely"; a missing tag is not counted, because
+# "not observed" never means "absent"). Built = in the Fold & Fly prototype; next = not built yet.
+EVOLVE_OPTIONS = [
+    [
+        "mechanic_collection",
+        "Collections",
+        "Collect every plane",
+        "a new plane at every finish line",
+        "BUILT",
+    ],
+    [
+        "engagement_energy_system",
+        "Energy limits",
+        "No energy limit",
+        "fly as long as you like",
+        "BUILT",
+    ],
+    [
+        "engagement_live_events",
+        "Live events",
+        "Weekly flying events",
+        "a new course and goal each week",
+        "NEXT TEST",
+    ],
+    [
+        "engagement_daily_rewards",
+        "Daily rewards",
+        "Daily distance goals",
+        "a reason to come back tomorrow",
+        "NEXT TEST",
+    ],
+]
+
+
+def evolve(site: dict) -> dict:
+    """Options to try for the plane game, with the share of top-grossing games that show each."""
+    chart = site["mobile"]
+    games = [g for g in site["games"] if g["list"] == "mobile" and g["detail"].get("jev")]
+    options = []
+    for tag_id, label, name, line, status in EVOLVE_OPTIONS:
+        seen = sum(
+            1 for g in games if (g["detail"]["jev"].get(tag_id) or [""])[0] in ("strong", "likely")
+        )
+        options.append([label, name, line, seen, status])
+    date = chart["chart_date"]  # e.g. 2026-10-09
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    when = f"{months[int(date[5:7]) - 1]} {int(date[8:])}, {date[:4]}"
+    return {
+        "total": len(games),
+        "options": options,
+        "source": f"Top {len(games)} grossing on Google Play, chart of {when}, "
+        "tagged by GameTagger",
+    }
+
+
 def build() -> dict:
     manifest = json.loads((HERE / "footage/prototype.json").read_text())
     clips = {c["name"]: c for c in manifest["clips"]}
@@ -358,12 +414,14 @@ def data() -> dict:
         },
         "play": PLAY,
         "learn": learn(),
+        "evolve": evolve(site),
         "build": build(),
         "pitch": [
             ["01", "Spot", "a game climbing the charts"],
             ["02", "Play", "an AI player plays it for hours"],
             ["03", "Learn", "what makes it work, tag by tag"],
-            ["04", "Build", "a playable prototype, tuned by bot players"],
+            ["04", "Evolve", "options to try, backed by chart data"],
+            ["05", "Build", "the evolved version, tuned by bot players"],
         ],
         "endtitle": "Learn why hit games work.<br>Prototype the next one in days.",
         "endline": "Claude describes · Jev decides, tag by tag · an AI player plays<br>"
