@@ -1,0 +1,73 @@
+# Saves Fortnite Discover's top islands and their daily numbers twice a day.
+# Epic's public Fortnite Data API only serves about a week of history, so anything longer has
+# to be saved as it happens. Snapshots go to the `fortnite-data` branch (not main), so main's
+# history stays clean. Two runs a day means one missed run loses nothing.
+name: Fortnite radar
+
+on:
+  schedule:
+    - cron: "17 9,21 * * *"
+  workflow_dispatch:
+  push:
+    branches: [claude/fortnite-radar]
+    paths:
+      - src/gametagger/fortnite_radar.py
+      - .github/workflows/fortnite-radar.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fortnite-radar
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: code
+
+      - name: Check out the data branch (created on the first run)
+        env:
+          REPO_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" fortnite-data >/dev/null; then
+            git clone --depth 1 --branch fortnite-data "$REPO_URL" data
+          else
+            mkdir data && cd data && git init -q -b fortnite-data && git remote add origin "$REPO_URL"
+            printf '# Fortnite radar data\n\nAutomated snapshots written by .github/workflows/fortnite-radar.yml on main.\nSource: the public Fortnite Data API from Epic Games (api.fortnite.com/ecosystem/v1).\nsummary.json is the overview; rankings/ holds one file per UTC day; metrics/ holds one file per island.\n' > README.md
+            # This branch holds data only. Tell Vercel not to try to build the site from it.
+            mkdir web && printf '{\n  "git": {\n    "deploymentEnabled": false\n  }\n}\n' > web/vercel.json
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Collect
+        run: |
+          set +e
+          PYTHONPATH=code/src python -m gametagger.fortnite_radar run --out data 2> err.txt
+          status=$?
+          cat err.txt >&2
+          if [ $status -ne 0 ]; then
+            # Surface the end of the error as an annotation, readable without log access.
+            msg=$(tail -c 2500 err.txt | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+            echo "::error title=Fortnite radar collector failed::${msg}"
+            exit $status
+          fi
+
+      # Runs even after a failed collection, so last_run.json records what went wrong.
+      - name: Save to the data branch
+        if: always()
+        working-directory: data
+        run: |
+          git config user.name "fortnite-radar-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "Fortnite radar snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q origin fortnite-data

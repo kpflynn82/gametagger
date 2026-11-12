@@ -814,3 +814,36 @@ screen.
 
 Spend: none (rendering only).
 Left: a daily mobile chart refresh, if the owner wants the film to say the data is daily.
+
+### Fortnite Radar: a daily record of Discover's top islands (November 12, 2026)
+
+Branch `claude/fortnite-radar`. The owner is interviewing for Epic's Discovery role and wants a
+demo of GameTagger tagging the islands on Fortnite Discover. This is step 1: save the numbers,
+because Epic's public Fortnite Data API serves about seven days of history and nothing older can
+be fetched later.
+
+* **Collector** (`src/gametagger/fortnite_radar.py`, stdlib only, 7 offline tests). Reads
+  `api.fortnite.com/ecosystem/v1` (public, no login): the 13 genres, each genre's rank order
+  (100 islands), and for the top 50 per genre the title, creator, creator-chosen tags and daily
+  numbers (players, plays, minutes, minutes per player, peak players, favorites, recommendations,
+  D1 and D7 retention). Islands that leave the top 50 stay tracked for 14 days. It records tag
+  changes, never assigns a genre or tag itself, and stores unreported values as null.
+* **Workflow** `.github/workflows/fortnite-radar.yml` runs twice a day (09:17 and 21:17 UTC) and
+  writes to the `fortnite-data` branch (not main; Vercel deploys disabled there). **The schedule
+  only runs once this branch is merged**; until then it runs on pushes to the branch.
+* **First real run** 2026-11-12 20:31 UTC, about 12 minutes: 1,300 islands ranked across 13
+  genres, numbers for 648 of 650 (two returned HTTP 404), seven days of history on the first
+  pull. Checked against direct API calls for island 3225-0366-8885: identical.
+* **Measured in that run** (top 50 per genre, 648 islands): 617 use exactly four tags; "just for
+  fun" is on 252 of them; 111 distinct tags. The top four Simulation & Tycoon islands carry the
+  same four tags (simulator, just for fun, casual, tycoon) while their Nov 11 D7 retention runs
+  from 22% to 50%. The current UTC day's bucket is partial (median island at 53% of the previous
+  day's minutes at 20:30 UTC), so `summary.json` reports the last finished day.
+* **Not solved yet:** the API has no thumbnail, description or video, and fortnite.com's island
+  page refused a plain fetch. Where the Observer gets island evidence (a public media source, the
+  owner's Chrome overnight, or YouTube gameplay) is the next pilot, on 5 islands.
+
+Spend: none (public API, GitHub Actions on a public repo).
+Left: merge the branch so the schedule starts; the 5-island evidence pilot; an island tag list
+for the owner's sign-off (mobile monetization tags do not transfer); then tag the islands, hand
+check a sample, and build the demo page.
