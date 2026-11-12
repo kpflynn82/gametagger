@@ -847,3 +847,39 @@ Spend: none (public API, GitHub Actions on a public repo).
 Left: merge the branch so the schedule starts; the 5-island evidence pilot; an island tag list
 for the owner's sign-off (mobile monetization tags do not transfer); then tag the islands, hand
 check a sample, and build the demo page.
+
+### Fortnite island evidence pilot: five islands, read by hand (November 12, 2026)
+
+Branch `claude/fortnite-evidence-pilot`. Question from the owner: can the top islands be re-tagged
+from what is publicly visible, and is video the right evidence? Five islands from the radar's
+top 50 lists were read in the owner's Chrome (pages only; nothing was played, favorited or
+followed). No tags were assigned: this is an Observer-level read of what evidence exists, and Jev
+has not run. Nothing was downloaded or saved; the notes below are summaries, not page content.
+
+Islands: SCALE (7288-9515-0748), STEAL THE BRAINROT (3225-0366-8885), PILLARS (7786-0958-2481),
+BOMB FOR EGGS (6662-2321-3659), Murder Mystery (5253-8468-3364).
+
+* **Where evidence is reachable.** `api.fortnite.com/ecosystem` has no description or media.
+  fortnite.com and YouTube are blocked from the cloud workspace and from the Cowork sandbox on
+  the owner's Mac (same network allowlist). A real browser loads
+  `fortnite.com/creative/island-codes/<code>` normally.
+* **What an island page holds** that the API does not: the creator's "About this island" text,
+  the age rating with purchase descriptors ("In-Game Purchases", "Includes Random Items"), a media
+  gallery, the creator's dated update posts, follower counts, and the creator's other islands.
+* **Page text decided the main activity on 5 of 5.** It also stated a reason to return on 5 of 5
+  (saved wins, rebirth, offline earnings, collections, upgrades, or a cosmetic shop and map
+  rotation in update posts) and the session shape clearly on 3 of 5.
+* **Gallery video is short and uneven.** 4 of 5 islands had one, each 13 to 15 seconds. Two showed
+  play with the in-island interface visible (STEAL THE BRAINROT: income per second and rarity
+  labels, a base gate, an event countdown board; Murder Mystery: round objective and timer, a
+  rounds quest, two currencies, a VIP sign). Two were footage with no interface (PILLARS, SCALE).
+  BOMB FOR EGGS had no gallery at all. Video alone would have identified the main activity on 3.
+* **Purchase descriptors** appeared on 4 of 5 (not PILLARS); "Includes Random Items" on 2.
+* Limits: five islands, picked by hand from the top of their genres, so smaller islands may have
+  thinner pages. Descriptions are the creator's own claims. One blind click in the pilot opened
+  the ratings-definitions site; the flow now checks that a gallery video exists before clicking.
+
+Spend: none (no Jev run, no API calls; Observer work was this chat session).
+Left (owner decisions): sign off the island tag list; choose page text as the primary evidence
+with gallery video and YouTube as secondary; decide how the 260 pages get read (the owner's
+Chrome overnight, or a Mac launcher like "Start YouTube pilot"); a Jev budget for the first run.
