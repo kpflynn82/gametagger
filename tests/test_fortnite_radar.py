@@ -64,7 +64,7 @@ class FakeFortnite:
         if "/metrics/day" in path:
             if "?" in path and self.refuse_window:
                 raise HTTPError(url, 400, "bad request", None, None)
-            return self.metrics.get(code, _metrics({11: None, 12: 100.0}))
+            return self.metrics.get(code, _metrics({10: None, 11: 100.0, 12: 40.0}))
         return {
             "code": code,
             "creatorCode": "maker",
@@ -99,10 +99,14 @@ def test_collects_ranks_details_and_numbers(tmp_path):
     summary = _load(tmp_path / "summary.json")
     row = summary["genres"]["horror"]["top"][0]
     assert row["code"] == "A" and row["creator_tags"] == ["tycoon"]
-    assert row["latest_bucket"] == _stamp(12) and row["latest"]["plays"] == 100.0
+    # The 12th is today and still filling, so the 11th is the latest finished day.
+    assert row["latest_complete_day"] == _stamp(11) and row["latest"]["plays"] == 100.0
     assert (
-        row["latest"]["d1"] == 0.5 and row["days_of_history"] == 1
+        row["latest"]["d1"] == 0.5 and row["days_of_history"] == 2
     )  # the empty day is not counted
+    assert (
+        _load(tmp_path / "metrics" / "A.json")["days"][_stamp(12)]["plays"] == 40.0
+    )  # still stored
 
 
 def test_history_accumulates_and_empty_values_never_erase_reported_ones(tmp_path):

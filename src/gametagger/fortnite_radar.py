@@ -25,7 +25,8 @@ Outputs in the data directory:
 - islands.json              every island tracked so far: title, creator, creator tags, the
                             genres and best rank it was seen at, first and last ranked dates
 - metrics/<code>.json       one file per island: every daily bucket seen so far, merged
-- summary.json              the latest ranks joined to the latest numbers (what a dashboard reads)
+- summary.json              the latest ranks joined to each island's last finished day of numbers
+                            (what a dashboard reads)
 - last_run.json             when the last run happened, what it covered, and anything that failed
 """
 
@@ -210,10 +211,17 @@ def reported_days(days: dict[str, dict[str, Any]]) -> list[str]:
     return sorted(s for s, values in days.items() if any(v is not None for v in values.values()))
 
 
-def latest_reported(days: dict[str, dict[str, Any]]) -> tuple[str | None, dict[str, Any]]:
-    """The most recent bucket that has at least one reported value."""
-    reported = reported_days(days)
-    return (reported[-1], days[reported[-1]]) if reported else (None, {})
+def latest_complete(
+    days: dict[str, dict[str, Any]], today: date
+) -> tuple[str | None, dict[str, Any]]:
+    """The most recent reported bucket from a finished UTC day.
+
+    A bucket is stamped with the start of its day, and the current day's bucket is still
+    filling: on 2026-11-12 at 20:30 UTC the median island showed 53% of the previous day's
+    minutes. Partial days are stored, but never shown as a day's result.
+    """
+    finished = [stamp for stamp in reported_days(days) if stamp[:10] < today.isoformat()]
+    return (finished[-1], days[finished[-1]]) if finished else (None, {})
 
 
 def choose_tracked(
@@ -359,7 +367,7 @@ def summarize(
             days = _read(out / "metrics" / f"{code}.json", {}).get("days", {})
             reported = reported_days(days)
             longest = max(longest, len(reported))
-            stamp, numbers = latest_reported(days)
+            stamp, numbers = latest_complete(days, now.date())
             rows.append(
                 {
                     "rank": position,
@@ -368,7 +376,7 @@ def summarize(
                     "creatorCode": island.get("creatorCode"),
                     "creator_tags": island.get("tags"),
                     "days_of_history": len(reported),
-                    "latest_bucket": stamp,
+                    "latest_complete_day": stamp,
                     "latest": numbers,
                 }
             )
@@ -383,7 +391,7 @@ def summarize(
         "source": "Epic's public Fortnite Data API (api.fortnite.com/ecosystem/v1)",
         "note": (
             "Genre and tags are the creator's own choices. Empty numbers mean not reported, "
-            "not zero. Bucket timestamps are stored exactly as the API gives them."
+            "not zero. 'latest' is the last finished UTC day; the current day is still filling."
         ),
         "top_per_genre": top,
         "longest_history_days": longest,
