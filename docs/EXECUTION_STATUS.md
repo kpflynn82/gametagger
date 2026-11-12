@@ -883,3 +883,16 @@ Spend: none (no Jev run, no API calls; Observer work was this chat session).
 Left (owner decisions): sign off the island tag list; choose page text as the primary evidence
 with gallery video and YouTube as secondary; decide how the 260 pages get read (the owner's
 Chrome overnight, or a Mac launcher like "Start YouTube pilot"); a Jev budget for the first run.
+
+**YouTube follow-up (same day).** The owner asked whether player-made YouTube videos beat the
+short gallery trailers. Two of the five islands were checked in the owner's Chrome, the two where
+the gallery gave least: SCALE (a 10:40 walkthrough, 5 frames) and BOMB FOR EGGS (a 4:04 play
+video, 4 frames). Both showed the full in-island interface, which neither gallery did. SCALE: a
+cash quota counter, carried items with prices, a cart, a mission quest, an extraction payout, and
+a menu with Shop, VIP Pass, Quests, a collection and Stats tabs. BOMB FOR EGGS: a "train your
+power" objective, a power meter toward the next egg, a server leaderboard with money per second
+and rebirths, Rebirth and Speed Shop stations, a VIP room, a paid starter pack offer, a timed
+x2 power boost and a day and night egg timer. Search returned 8 videos for SCALE (6 to 120
+minutes) and 5 for BOMB FOR EGGS (1 to 4 minutes, mostly "secret codes" clips) though that island
+was a week old. Pre-roll ads have to be waited out or skipped before frames can be read. Not
+checked on YouTube: the other three islands. Spend: none.
