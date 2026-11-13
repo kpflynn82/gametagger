@@ -931,3 +931,15 @@ checked on YouTube: the other three islands. Spend: none.
 - Spend: $0. The $1 Jev test has still not run. No human hand-check yet.
 - Left: manual video search for the 31 gaps; played video or Jev for money and progress
   tags; hand-check about 30 islands; put the gap and video tags on the dashboard.
+
+### Fortnite Radar dashboard now leads with the genre gap (2026-11-12 night)
+
+- Added a `retag` dataset (130 rows: creator genre, assigned genre and subgenre, evidence,
+  art style, camera, interface seen, one day of metrics) and five calcs to the Claude
+  dashboard artifact "Fortnite Radar". New top sections: which genres are wrong, where
+  misfiled islands belong, how each top-10 island was tagged, misfiled vs matching metrics,
+  numbers by assigned subgenre. The earlier creator-tag sections stay below a divider.
+- Measured in the offline smoke test against the real data: 0 script errors, 130 tagged
+  cards, 0 bad provenance marks. Not confirmed on the live page (it was not open).
+- Lead worth testing, not a finding: misfiled islands' median week-later return is 4%
+  against 9% for matching ones (38 vs 90 islands, one day).
