@@ -915,3 +915,19 @@ checked on YouTube: the other three islands. Spend: none.
 - Left: hand-check about 30 islands; YouTube pass for art style, camera and money tags; the
   $1 Jev test from the Mac; add the gap to the Fortnite Radar dashboard. The page text and
   assignments are in the cloud session's scratch folder only (third-party content, not committed).
+
+### Fortnite video pass (2026-11-12 night, scheduled run in the owner's Chrome)
+
+- Covered all 130 islands. Method: one YouTube gameplay video per island found by search
+  (same-origin fetch from a youtube.com tab, one query per 3.5 seconds, no refusals), then
+  the three still frames YouTube generates per video were read in a grid. No video was
+  played, so no ads and nothing added to watch history. This differs from the planned
+  "play and seek" method; frames are small and only three per island.
+- Measured: 99 of 130 had a usable video, 31 did not (wrong island with a similar name,
+  Roblox video, tutorial, streamer-only frames). Art style: 70 Fortnite standard, 13 blocky,
+  8 cartoon, 6 realistic, 1 low-effort, 1 unclear. Camera: 89 third person, 8 first person.
+  No genre call changed; 23 of the 38 misfiled islands had video and all held. Headline stays
+  38 of 128 (30%). Interface counts (shop 17, boosts 11, VIP 5, rebirth 5) are a floor.
+- Spend: $0. The $1 Jev test has still not run. No human hand-check yet.
+- Left: manual video search for the 31 gaps; played video or Jev for money and progress
+  tags; hand-check about 30 islands; put the gap and video tags on the dashboard.
