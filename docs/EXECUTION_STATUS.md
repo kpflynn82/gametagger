@@ -896,3 +896,22 @@ x2 power boost and a day and night egg timer. Search returned 8 videos for SCALE
 minutes) and 5 for BOMB FOR EGGS (1 to 4 minutes, mostly "secret codes" clips) though that island
 was a week old. Pre-roll ads have to be waited out or skipped before frames can be read. Not
 checked on YouTube: the other three islands. Spend: none.
+
+### Fortnite first genre-gap read (2026-11-12 evening, cloud session + owner's Chrome)
+
+- Owner signed off the tag list direction (subgenres under Epic's 13 genres plus description
+  tags; creator genre and assigned genre both recorded). The list lives in the Claude doc
+  "Fortnite island tag list: draft for sign-off". First run size set to top 10 per genre.
+- Read the "About this island" text for all 130 islands (top 10 x 13 genres) through the
+  owner's Chrome, with his yes. fortnite.com returned HTTP 403 after about 77 quick page
+  requests; the rest went through at one request per 7 seconds with no further refusals.
+  Use that pace from the start next time.
+- Assigned genre and subgenre by hand (Claude, page text only). Measured: 38 of 128 judged
+  islands (30%) sit under a creator genre that does not match the page text; 2 could not be
+  judged. 16 of the 38 are simulators filed in other rows (8 of the top 10 in Adventure & RPG).
+  Roguelike's top 10 are all one room-clearing formula; 5 state a random perk per room.
+- Not measured: no video watched, no Jev call, no human hand-check, so no accuracy number.
+- Spend: $0. Owner authorized a $1 cap for a 10-island Jev test; it has not run.
+- Left: hand-check about 30 islands; YouTube pass for art style, camera and money tags; the
+  $1 Jev test from the Mac; add the gap to the Fortnite Radar dashboard. The page text and
+  assignments are in the cloud session's scratch folder only (third-party content, not committed).
