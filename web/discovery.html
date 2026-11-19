@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kevin Flynn: Game Discovery</title>
+<meta name="description" content="Five things a games platform has to get right about discovery, and what Kevin Flynn has built for each one.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Kevin Flynn: Game Discovery">
+<meta property="og:description" content="Five things a games platform has to get right about discovery, and what I have built for each one.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#12161C}
+a{color:#2447D6}a:hover{color:#1A35A8}
+a:focus-visible,video:focus-visible{outline:2px solid #FF9A5C;outline-offset:3px}
+</style>
+</head>
+<body>
+<div style="font-family: Inter, system-ui, sans-serif; color: #12161C; background: #F3F4F1; font-size: 17px; line-height: 1.55">
+
+<header style="background: #12161C; color: #F3F4F1">
+<div style="max-width: 1120px; margin: 0 auto; padding: 0 24px; box-sizing: border-box">
+
+<nav aria-label="Page sections" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0">
+<div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.01em">Kevin Flynn</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px">
+<a href="#pillars" style="color: #C9D0D9; text-decoration: none; font-size: 15px; padding: 12px 0">Pillars</a>
+<a href="#work" style="color: #C9D0D9; text-decoration: none; font-size: 15px; padding: 12px 0">Work</a>
+<a href="#background" style="color: #C9D0D9; text-decoration: none; font-size: 15px; padding: 12px 0">Background</a>
+<a href="mailto:kpflynn@gmail.com" style="color: #F3F4F1; text-decoration: none; font-size: 15px; font-weight: 600; border: 1px solid #5B6675; border-radius: 8px; padding: 11px 18px; min-height: 44px; box-sizing: border-box; display: flex; align-items: center">Get in touch</a>
+</div>
+</nav>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 56px; align-items: center; padding: 64px 0 96px">
+
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.08em; color: #8FA6FF">DISCOVERY · SEARCH · PERSONALIZATION</div>
+<h1 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: clamp(38px, 4.6vw, 60px); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance">Discovery is introducing players to games they will love.</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.5; color: #C9D0D9; max-width: 520px">I worked on that problem at Google Play and Xbox, and I keep working on it in tools I build myself. This page sets out five things a games platform has to get right, and what I have built for each one.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding-top: 8px">
+<a href="mailto:kpflynn@gmail.com" style="background: #F3F4F1; color: #12161C; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 8px; padding: 14px 24px; min-height: 48px; box-sizing: border-box; display: flex; align-items: center">Get in touch</a>
+<a href="#pillars" style="color: #8FA6FF; text-decoration: none; font-weight: 500; font-size: 16px; display: flex; align-items: center; gap: 8px; padding: 12px 0">See the five pillars
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5"></path></svg>
+</a>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="background: #1B212A; border: 1px solid #2C3440; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #A9B2BD">WHAT A STORE KNOWS</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; background: #F3F4F1; color: #12161C; border-radius: 6px; padding: 6px 12px">Puzzle</span>
+<span style="font-size: 15px; color: #A9B2BD">plus up to five tags the developer picked</span>
+</div>
+</div>
+<div style="background: #1B212A; border: 1px solid #2C3440; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #A9B2BD">WHAT A PLAYER FEELS</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; border: 1px solid #8FA6FF; color: #C7D2FF; border-radius: 6px; padding: 6px 12px">Guild?</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; border: 1px solid #8FA6FF; color: #C7D2FF; border-radius: 6px; padding: 6px 12px">Battle pass?</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; border: 1px solid #FF9A5C; color: #FFC6A3; border-radius: 6px; padding: 6px 12px">Energy timer?</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; border: 1px solid #FF9A5C; color: #FFC6A3; border-radius: 6px; padding: 6px 12px">Forced ads?</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; border: 1px solid #8FA6FF; color: #C7D2FF; border-radius: 6px; padding: 6px 12px">Daily rewards?</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; border: 1px solid #8FA6FF; color: #C7D2FF; border-radius: 6px; padding: 6px 12px">Auto-play?</span>
+</div>
+<div style="font-size: 15px; color: #A9B2BD">None of this is on the store page. You find it by watching and playing.</div>
+</div>
+</div>
+
+</div>
+</div>
+</header>
+
+
+
+<section id="pillars">
+<div style="max-width: 1120px; margin: 0 auto; padding: 88px 24px 56px; box-sizing: border-box">
+
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 720px; padding-bottom: 48px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.08em; color: #2447D6">THE FIVE PILLARS</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -0.02em">What a platform has to get right</h2>
+<p style="margin: 0; color: #4B5460">Discovery is not one feature. It is five jobs that depend on each other, and most platforms are strong at one or two. For each job, here is what I believe and what I have done about it.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px 64px; padding: 40px 0; border-top: 1px solid #D5D9D2">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">01 · RECOMMENDATIONS</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em">Know what is inside every game</h3>
+<p style="margin: 0; color: #4B5460">Recommendations can only be as good as the labels under them. A store that knows a game as "Puzzle" cannot tell a quick match-3 break from a game with a guild, a battle pass and an energy timer, so it cannot match either one to the right player.</p>
+</div>
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #4B5460">WHAT I HAVE DONE</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div><strong style="font-weight: 600">GameTagger.</strong> Tags top mobile and Steam games against 189 gameplay tags and 100 genres. One AI describes only what it can see, a second decides each tag on its own, and anything unproven stays marked unknown. <a href="/" style="color: #2447D6; font-weight: 500">gametagger.vercel.app</a></div>
+<div><strong style="font-weight: 600">Xbox AI Discovery Queue.</strong> Built the AI Discovery Queue at Xbox.</div>
+</div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px 64px; padding: 40px 0; border-top: 1px solid #D5D9D2">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">02 · QUALITY</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em">Keep low-quality content out of the way</h3>
+<p style="margin: 0; color: #4B5460">Every slot given to a low-effort game is a slot taken from one a player would love. Quality has to be checked before ranking starts. It cannot be left for players to sort out afterward.</p>
+</div>
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #4B5460">WHAT I HAVE DONE</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div><strong style="font-weight: 600">Quality filter at Xbox.</strong> Worked on a quality filter for game discovery at Xbox. The details belong to Xbox. The principle carries to any large catalog, and I am glad to talk it through.</div>
+</div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px 64px; padding: 40px 0; border-top: 1px solid #D5D9D2">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">03 · DEVELOPERS</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em">Teach developers what works</h3>
+<p style="margin: 0; color: #4B5460">Filtering and ranking only sort the catalog you already have. The platform sees what keeps players and what earns, and most developers do not. Sharing that is the cheapest way to get better games to recommend.</p>
+</div>
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #4B5460">WHAT I HAVE DONE</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div><strong style="font-weight: 600">Google Play launch consultations.</strong> Created a launch consultation growth report that drove $200M in incremental revenue in its first year and $250M in its second. Tuned at least 30 mobile game economies from top to bottom.</div>
+<div><strong style="font-weight: 600">Teardowns and Roblox Radar.</strong> Tools that work out why a rising game works and turn it into lessons a developer can use. More on both below.</div>
+<div><strong style="font-weight: 600">Talks.</strong> <a href="https://gdcvault.com/play/1025501/Mobile-Game-Launch-Best-Practices" style="color: #2447D6; font-weight: 500">Mobile Game Launch Best Practices</a> at GDC, and Google Playtime sessions in Milan, London and São Paulo.</div>
+</div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px 64px; padding: 40px 0; border-top: 1px solid #D5D9D2">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">04 · SEARCH</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em">Make search find the game</h3>
+<p style="margin: 0; color: #4B5460">A player who types what they want should get it, whether they type it into the store or into Google. Search is the one moment a player tells you exactly what they are looking for.</p>
+</div>
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #4B5460">WHAT I HAVE DONE</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div><strong style="font-weight: 600">Xbox search visibility.</strong> Fixed a 15-year-old search problem at Xbox in weeks, using AI tools I built. Top-10 visibility on Google rose 64%.</div>
+</div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px 64px; padding: 40px 0; border-top: 1px solid #D5D9D2">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">05 · BEYOND THE STORE</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em">Meet players where they already watch</h3>
+<p style="margin: 0; color: #4B5460">A lot of discovery happens before a player opens the store: on a stream, in a clip, from a creator they trust. A platform that only works on its own shelves is working on the last step.</p>
+</div>
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #4B5460">WHAT I HAVE DONE</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div><strong style="font-weight: 600">Streamer-Genre Intelligence.</strong> Finds mid-size streamers on Twitch, Kick and YouTube who already play a game's genre and can be reached for a launch. <a href="https://streamer-genre-dashboard.vercel.app" style="color: #2447D6; font-weight: 500">streamer-genre-dashboard.vercel.app</a></div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="work" style="background: #E8EAE5">
+<div style="max-width: 1120px; margin: 0 auto; padding: 88px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 56px">
+
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 720px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.08em; color: #2447D6">THE WORK</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -0.02em">How GenomeTagger became GameTagger</h2>
+<p style="margin: 0; color: #4B5460">The first version read store pages. Each version after it went one step closer to the game itself, because each step answered questions the one before could not.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 24px">
+
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">01 · READ</div>
+<div style="font-size: 14px; color: #4B5460">GenomeTagger</div>
+</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2">Descriptions and screenshots</h3>
+<p style="margin: 0; color: #4B5460; font-size: 16px">Reads what the store shows. Good for genre, theme and art style. Weak on anything a developer has no reason to advertise.</p>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 8px">
+<div style="display: flex; align-items: baseline; gap: 10px">
+<div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 40px; line-height: 1">9%</div>
+<div style="font-size: 14px; color: #4B5460">of questions settled</div>
+</div>
+<div role="img" aria-label="9 percent" style="height: 10px; background: #D5D9D2; border-radius: 5px; overflow: hidden"><div style="width: 9%; height: 100%; background: #2447D6"></div></div>
+<div style="font-size: 14px; color: #4B5460">51 newer mobile tags (ads, live events, long-term systems) across the Google Play top 50</div>
+</div>
+</div>
+
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #2447D6">02 · WATCH</div>
+<div style="font-size: 14px; color: #4B5460">GameTagger</div>
+</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2">Trailers and gameplay video</h3>
+<p style="margin: 0; color: #4B5460; font-size: 16px">Video shows shops, menus and systems the store page leaves out. It helps, but a video is still someone else choosing what to show.</p>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 8px">
+<div style="display: flex; align-items: baseline; gap: 10px">
+<div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 40px; line-height: 1">15%</div>
+<div style="font-size: 14px; color: #4B5460">of questions settled</div>
+</div>
+<div role="img" aria-label="15 percent" style="height: 10px; background: #D5D9D2; border-radius: 5px; overflow: hidden"><div style="width: 15%; height: 100%; background: #2447D6"></div></div>
+<div style="font-size: 14px; color: #4B5460">Same tags, five-game pilot with YouTube gameplay added. It still could not confirm ads in any of them.</div>
+</div>
+</div>
+
+<div style="background: #12161C; color: #F3F4F1; border: 1px solid #12161C; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #FF9A5C">03 · PLAY</div>
+<div style="font-size: 14px; color: #A9B2BD">GameTagger</div>
+</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2">An AI player plays the game</h3>
+<p style="margin: 0; color: #C9D0D9; font-size: 16px">When the evidence runs out, an AI player plays for hours on an Android emulator and measures what it meets. One 13-hour test on a slingshot plane game found:</p>
+<div style="display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 8px">
+<div style="display: flex; align-items: baseline; gap: 12px"><div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 22px; color: #FF9A5C; min-width: 96px; white-space: nowrap">154</div><div style="font-size: 15px; color: #C9D0D9">forced ads in the first 8 hours, about one per flight</div></div>
+<div style="display: flex; align-items: baseline; gap: 12px"><div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 22px; color: #FF9A5C; min-width: 96px; white-space: nowrap">Hour 11</div><div style="font-size: 15px; color: #C9D0D9">the energy limit first stopped play</div></div>
+<div style="display: flex; align-items: baseline; gap: 12px"><div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 22px; color: #FF9A5C; min-width: 96px; white-space: nowrap">0</div><div style="font-size: 15px; color: #C9D0D9">new planes unlocked in 13 hours</div></div>
+</div>
+</div>
+
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; border-top: 1px solid #C4C9C0; padding-top: 28px">
+<p style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 500; font-size: 22px; line-height: 1.3; max-width: 640px">The lesson: you cannot categorize a game from its store page. What defines how a game feels only shows up when you play it.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px 28px">
+<a href="/" style="color: #2447D6; font-weight: 600; text-decoration: none; padding: 12px 0">See GameTagger</a>
+<a href="/play-testing" style="color: #2447D6; font-weight: 600; text-decoration: none; padding: 12px 0">See the 13-hour play-test</a>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 720px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.08em; color: #2447D6">WATCH IT WORK</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em">Three short films, no sound needed</h3>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 24px">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<video controls="controls" playsinline="playsinline" preload="metadata" poster="discovery-media/tagging-poster.jpg" src="discovery-media/tagging.mp4" aria-label="Film: can we fix game discovery with better game tagging" style="width: 100%; aspect-ratio: 1 / 1; background: #12161C; border-radius: 12px; display: block"></video>
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<h4 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 20px; line-height: 1.2">Why tag one question at a time</h4>
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #4B5460; white-space: nowrap">53 sec</div>
+</div>
+<p style="margin: 0; color: #4B5460; font-size: 15px">One big prompt makes one big guess. Asked as separate questions, the same evidence gave a median of 35 tags per game against 17.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<video controls="controls" playsinline="playsinline" preload="metadata" poster="trailer-poster.jpg" src="trailer.mp4" aria-label="Film: GameTagger in 95 seconds" style="width: 100%; aspect-ratio: 1 / 1; background: #12161C; border-radius: 12px; display: block"></video>
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<h4 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 20px; line-height: 1.2">GameTagger in 95 seconds</h4>
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #4B5460; white-space: nowrap">95 sec</div>
+</div>
+<p style="margin: 0; color: #4B5460; font-size: 15px">The whole method from start to finish: tag the top games, play one, work out why it works, then build an evolved version.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<video controls="controls" playsinline="playsinline" preload="metadata" poster="discovery-media/prototype-poster.jpg" src="discovery-media/prototype.mp4" aria-label="Footage of the Fold and Fly prototype" style="width: 100%; aspect-ratio: 1 / 1; background: #12161C; border-radius: 12px; display: block"></video>
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<h4 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 20px; line-height: 1.2">The prototype it built</h4>
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #4B5460; white-space: nowrap">19 sec</div>
+</div>
+<p style="margin: 0; color: #4B5460; font-size: 15px">Footage of Fold &amp; Fly, the playable prototype built from the 13-hour play-test. In simulated play, 1 flight in 9 ends in a forced ad. The original showed about one per flight.</p>
+</div>
+
+</div>
+</div>
+
+<section aria-label="Results" style="border-bottom: 1px solid #D5D9D2">
+<div style="max-width: 1120px; margin: 0 auto; padding: 56px 24px; box-sizing: border-box; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 52px; line-height: 1; letter-spacing: -0.02em">189</div>
+<div style="font-size: 15px; color: #4B5460">gameplay tags and 100 genres in GameTagger, each with a definition and the evidence allowed to prove it</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 52px; line-height: 1; letter-spacing: -0.02em">47 of 50</div>
+<div style="font-size: 15px; color: #4B5460">top-grossing Google Play games where the store page and trailer could not show whether the game has energy timers</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 52px; line-height: 1; letter-spacing: -0.02em">64%</div>
+<div style="font-size: 15px; color: #4B5460">lift in Xbox's top-10 Google visibility, from a search fix I built with my own AI tools</div>
+</div>
+</div>
+</section><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px">
+
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #B8470F">PILLAR 05</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2">Streamer-Genre Intelligence</h3>
+<p style="margin: 0; color: #4B5460; font-size: 16px">A launch team's question is "who should we send this game to?" This dashboard answers it by genre. It covers Twitch, Kick and YouTube, refreshes weekly, and gives each streamer an outreach score from 0 to 100 based on genre fit, the variety of their recent games, audience size, language and whether they can be reached. The sweet spot is 500 to 5,000 average viewers: large enough to matter, small enough to answer.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: auto">
+<a href="https://streamer-genre-dashboard.vercel.app" style="color: #2447D6; font-weight: 600; text-decoration: none; padding: 12px 0">Open the dashboard</a>
+<a href="https://streamer-genre-dashboard.vercel.app/how-it-works.mp4" style="color: #2447D6; font-weight: 600; text-decoration: none; padding: 12px 0">Watch the 55-second walkthrough</a>
+</div>
+</div>
+
+<div style="background: #FBFBF9; border: 1px solid #D5D9D2; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em; color: #B8470F">PILLAR 03</div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2">Roblox Radar and teardowns</h3>
+<p style="margin: 0; color: #4B5460; font-size: 16px">Roblox Radar pulls Roblox's public data every six hours and turns it into a weekly digest: the biggest movers, what the new breakouts have in common, and which trends are fading. The teardowns go deeper on single games: study a hit from what anyone can observe, write down why it works, then design an original game that improves on it. Evolve, don't copy. One teardown became Hoard &amp; Hatch, a playable dice-board prototype built in about a day.</p>
+<a href="/hoard-and-hatch" style="color: #2447D6; font-weight: 600; text-decoration: none; padding: 12px 0; margin-top: auto">See the Hoard &amp; Hatch case study</a>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section id="background">
+<div style="max-width: 1120px; margin: 0 auto; padding: 88px 24px; box-sizing: border-box; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 40px 64px">
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.08em; color: #2447D6">BACKGROUND</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -0.02em">Fifteen years in games, on both sides of the store</h2>
+<p style="margin: 0; color: #4B5460">I started in game publishing and consulting, then moved to the platforms that decide which games get seen. Kabam, Z2, Mobile Game Partners, Google Play, Xbox.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid #D5D9D2; padding-top: 20px">
+<div style="font-weight: 600">Xbox · Principal Product Manager, Commerce Growth</div>
+<div style="color: #4B5460; font-size: 16px">Led the Xbox mobile app store from zero to one with a six-person team and secured commitments from more than 40 top titles. Built the AI Discovery Queue. Raised AI adoption on the product team from 12% to 92%.</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid #D5D9D2; padding-top: 20px">
+<div style="font-weight: 600">Google Play</div>
+<div style="color: #4B5460; font-size: 16px">Worked with more than 25 of the biggest mobile game developers on launches, pricing and in-game economies. Built Google Play's first AI forecast tool.</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid #D5D9D2; padding-top: 20px">
+<div style="font-weight: 600">Speaking</div>
+<div style="color: #4B5460; font-size: 16px">GDC, and Google Playtime in Milan, London and São Paulo.</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<footer style="background: #12161C; color: #F3F4F1">
+<div style="max-width: 1120px; margin: 0 auto; padding: 96px 24px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: clamp(32px, 3.8vw, 48px); line-height: 1.08; letter-spacing: -0.02em; max-width: 820px; text-wrap: balance">I am looking for a full-time role leading discovery, search and personalization at a games platform.</h2>
+<p style="margin: 0; font-size: 19px; color: #C9D0D9; max-width: 600px">If your team is working on how players find games, I would like to hear about it.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+<a href="mailto:kpflynn@gmail.com" style="background: #F3F4F1; color: #12161C; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 8px; padding: 14px 24px; min-height: 48px; box-sizing: border-box; display: flex; align-items: center">Get in touch</a>
+<div style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; color: #A9B2BD">kpflynn@gmail.com</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 28px; border-top: 1px solid #2C3440; margin-top: 40px; padding-top: 24px; font-size: 14px; color: #A9B2BD">
+<div>Kevin Flynn</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px 28px">
+<a href="/" style="color: #C9D0D9; text-decoration: none; padding: 12px 0">GameTagger</a>
+<a href="https://streamer-genre-dashboard.vercel.app" style="color: #C9D0D9; text-decoration: none; padding: 12px 0">Streamer-Genre Intelligence</a>
+</div>
+</div>
+</div>
+</footer>
+
+</div>
+</body>
+</html>

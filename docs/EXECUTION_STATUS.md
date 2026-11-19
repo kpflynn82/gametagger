@@ -847,3 +847,25 @@ Spend: none (public API, GitHub Actions on a public repo).
 Left: merge the branch so the schedule starts; the 5-island evidence pilot; an island tag list
 for the owner's sign-off (mobile monetization tags do not transfer); then tag the islands, hand
 check a sample, and build the demo page.
+
+### Discovery landing page, unlinked (November 19, 2026)
+
+The owner asked for his game-discovery landing page to live on the site at an address nothing
+links to, so he can hand the URL out.
+
+* **Page:** `web/discovery.html`, served at `/discovery` (`cleanUrls`). One static file with
+  inline styles and no script. It is not in the site's navigation, no other page links to it,
+  and it carries `<meta name="robots" content="noindex">`. It is separate from
+  `dashboard-template.html`, so `refresh_web.py` does not touch it.
+* **Source of the copy and layout:** the owner's design canvas (his edits included), converted
+  by stripping the canvas wrapper. Edit the page directly from here on.
+* **Media:** `web/discovery-media/` holds copies of `experiments/jev-vs-legacy/video/gametagger-jev.mp4`
+  (`tagging.mp4`) and `experiments/trailer/footage/prototype.mp4`, plus one poster frame each.
+  The third film is the existing `web/trailer.mp4`.
+* **Checked:** rendered at 1280 and 390 px wide in Chromium: no sideways scrolling, all three
+  videos load and play, every local file the page names exists. Google Fonts could not load in
+  the build sandbox, so the screenshots used fallback fonts.
+* **By the owner's choice the page leaves out** the Fortnite Discover work.
+
+Spend: none.
+Left: nothing required. The streamer walkthrough is linked from its own site, not embedded.
